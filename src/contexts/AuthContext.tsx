@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       
       const mockUser: User = {
-        id: 'user-123',
+        id: crypto.randomUUID(),
         email: 'user@xxvpn.app',
         fullName: 'John Doe',
         subscriptionTier: 'premium',
@@ -98,7 +98,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       
       const mockUser: User = {
-        id: 'user-' + Date.now(),
+        id: crypto.randomUUID(),
         email: 'user@xxvpn.app',
         fullName,
         subscriptionTier: 'free',
