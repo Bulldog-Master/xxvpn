@@ -5,6 +5,8 @@ import { Loader2 } from 'lucide-react';
 
 const Index = () => {
   const { user, loading } = useAuth();
+  
+  console.log('Index render - loading:', loading, 'user:', user ? 'exists' : 'null');
 
   if (loading) {
     return (

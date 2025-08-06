@@ -46,7 +46,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const savedUser = localStorage.getItem('xxvpn_user');
         if (savedUser) {
           console.log('Found saved user, logging in...');
-          setUser(JSON.parse(savedUser));
+          const parsedUser = JSON.parse(savedUser);
+          console.log('Parsed user:', parsedUser);
+          setUser(parsedUser);
+          console.log('User set successfully');
         } else {
           console.log('No saved user found, showing login page');
           setUser(null);
@@ -55,7 +58,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.error('Session check error:', error);
         setUser(null);
       } finally {
+        console.log('Setting loading to false');
         setLoading(false);
+        console.log('Loading set to false');
       }
     };
 
