@@ -18,20 +18,26 @@ import {
   Server,
   ShieldCheck,
   Network,
-  Route
+  Route,
+  User,
+  Coins
 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
 import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
+import UserProfile from './UserProfile';
 
 type VPNMode = 'gaming' | 'privacy' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
+  const { user } = useAuth();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   const connectVPN = (mode: VPNMode) => {
     setConnectionStatus('connecting');
@@ -74,19 +80,38 @@ const VPNDashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={shieldIcon} alt="xxVPN" className="w-12 h-12" />
-            <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
-              xxVPN
-            </h1>
+            <div>
+              <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
+                xxVPN
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Welcome back, {user?.fullName || 'User'}
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
+              <Coins className="w-4 h-4 text-warning" />
+              <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
+            </div>
             <Badge variant="outline" className="bg-card/50">
               {selectedServer}
             </Badge>
-            <Button variant="outline" size="icon">
-              <Settings className="w-4 h-4" />
-            </Button>
           </div>
         </div>
+
+        {/* Navigation Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-6 bg-muted/50">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="servers">Servers</TabsTrigger>
+            <TabsTrigger value="network">Network</TabsTrigger>
+            <TabsTrigger value="apps">App Routing</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="dashboard" className="space-y-6">
 
         {/* Connection Status */}
         <Card className="bg-card/80 backdrop-blur-sm border-border quantum-glow">
@@ -191,48 +216,102 @@ const VPNDashboard = () => {
           </Card>
         </div>
 
-        {/* Additional Features */}
-        <Tabs defaultValue="stats" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5 bg-muted/50">
-            <TabsTrigger value="stats">Statistics</TabsTrigger>
-            <TabsTrigger value="servers">Servers</TabsTrigger>
-            <TabsTrigger value="network">Network</TabsTrigger>
-            <TabsTrigger value="apps">App Routing</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-          </TabsList>
+            {/* Additional Features - Sub Tabs */}
+            <Tabs defaultValue="stats" className="space-y-4">
+              <TabsList className="grid w-full grid-cols-3 bg-muted/30">
+                <TabsTrigger value="stats">Statistics</TabsTrigger>
+                <TabsTrigger value="usage">Usage</TabsTrigger>
+                <TabsTrigger value="history">History</TabsTrigger>
+              </TabsList>
 
-          <TabsContent value="stats" className="space-y-4">
-            <div className="grid md:grid-cols-3 gap-4">
-              <Card className="bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Data Transfer</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-primary">2.4 GB</div>
-                  <div className="text-xs text-muted-foreground">↗ 1.2 GB ↙ 1.2 GB</div>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Session Time</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-success">2h 34m</div>
-                  <div className="text-xs text-muted-foreground">Current session</div>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Network Latency</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-warning">42ms</div>
-                  <div className="text-xs text-muted-foreground">Average ping</div>
-                </CardContent>
-              </Card>
-            </div>
+              <TabsContent value="stats" className="space-y-4">
+                <div className="grid md:grid-cols-3 gap-4">
+                  <Card className="bg-card/80 backdrop-blur-sm">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Data Transfer</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-primary">2.4 GB</div>
+                      <div className="text-xs text-muted-foreground">↗ 1.2 GB ↙ 1.2 GB</div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-card/80 backdrop-blur-sm">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Session Time</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-success">2h 34m</div>
+                      <div className="text-xs text-muted-foreground">Current session</div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-card/80 backdrop-blur-sm">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Network Latency</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-warning">42ms</div>
+                      <div className="text-xs text-muted-foreground">Average ping</div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="usage" className="space-y-4">
+                <Card className="bg-card/80 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle>Today's Usage</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm">Gaming Mode</span>
+                          <span className="text-sm font-medium">1h 45m</span>
+                        </div>
+                        <Progress value={70} className="h-2" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm">Privacy Mode</span>
+                          <span className="text-sm font-medium">49m</span>
+                        </div>
+                        <Progress value={30} className="h-2" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="history" className="space-y-4">
+                <Card className="bg-card/80 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle>Recent Sessions</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {[
+                        { time: '2h ago', mode: 'Gaming', duration: '1h 23m', server: 'US East' },
+                        { time: '5h ago', mode: 'Privacy', duration: '45m', server: 'Switzerland' },
+                        { time: 'Yesterday', mode: 'Gaming', duration: '3h 12m', server: 'Singapore' }
+                      ].map((session, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 rounded-lg border bg-muted/20">
+                          <div>
+                            <div className="font-medium">{session.mode} Mode</div>
+                            <div className="text-sm text-muted-foreground">{session.time}</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-medium">{session.duration}</div>
+                            <div className="text-xs text-muted-foreground">{session.server}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
@@ -334,7 +413,7 @@ const VPNDashboard = () => {
                     <div className="p-3 rounded-lg bg-muted/20 border">
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">Current Balance</span>
-                        <span className="text-sm text-primary">0.00 XX</span>
+                        <span className="text-sm text-primary">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
                       </div>
                     </div>
                   </div>
@@ -342,10 +421,14 @@ const VPNDashboard = () => {
               </Card>
             </div>
           </TabsContent>
+
+          <TabsContent value="profile" className="space-y-4">
+            <UserProfile />
+          </TabsContent>
         </Tabs>
 
         {/* Quick Connect Button */}
-        {connectionStatus === 'disconnected' && (
+        {connectionStatus === 'disconnected' && activeTab === 'dashboard' && (
           <div className="fixed bottom-6 right-6">
             <Button 
               size="lg" 

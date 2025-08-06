@@ -1,0 +1,338 @@
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { 
+  User, 
+  Crown, 
+  Coins, 
+  Settings, 
+  Shield, 
+  Smartphone,
+  Download,
+  LogOut,
+  Edit3
+} from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+
+const UserProfile = () => {
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
+  const [isEditing, setIsEditing] = useState(false);
+  const [fullName, setFullName] = useState(user?.fullName || '');
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out",
+        description: "Successfully signed out of xxVPN.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveProfile = () => {
+    // TODO: Implement profile update
+    setIsEditing(false);
+    toast({
+      title: "Profile updated",
+      description: "Your profile has been successfully updated.",
+    });
+  };
+
+  const getSubscriptionBadge = (tier: string) => {
+    switch (tier) {
+      case 'enterprise':
+        return <Badge className="bg-gradient-primary">Enterprise</Badge>;
+      case 'premium':
+        return <Badge className="bg-gradient-neural">Premium</Badge>;
+      default:
+        return <Badge variant="outline">Free</Badge>;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Profile Header */}
+      <Card className="bg-card/80 backdrop-blur-sm">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center">
+                <User className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  {isEditing ? (
+                    <Input
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="text-lg font-semibold"
+                    />
+                  ) : (
+                    user?.fullName || 'Anonymous User'
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => isEditing ? handleSaveProfile() : setIsEditing(true)}
+                  >
+                    <Edit3 className="w-4 h-4" />
+                  </Button>
+                </CardTitle>
+                <CardDescription className="flex items-center gap-2">
+                  {user?.email}
+                  {getSubscriptionBadge(user?.subscriptionTier || 'free')}
+                </CardDescription>
+              </div>
+            </div>
+            <Button variant="outline" onClick={handleSignOut}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
+        </CardHeader>
+      </Card>
+
+      <Tabs defaultValue="account" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="subscription">Subscription</TabsTrigger>
+          <TabsTrigger value="rewards">XX Rewards</TabsTrigger>
+          <TabsTrigger value="downloads">Downloads</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="account" className="space-y-4">
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>Account Settings</CardTitle>
+              <CardDescription>Manage your account preferences</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" value={user?.email} disabled />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="fullname">Full Name</Label>
+                  <Input 
+                    id="fullname" 
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    disabled={!isEditing}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium">Preferences</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h5 className="font-medium">Default VPN Mode</h5>
+                      <p className="text-sm text-muted-foreground">
+                        Choose your preferred connection mode
+                      </p>
+                    </div>
+                    <Select defaultValue="gaming">
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="gaming">Gaming</SelectItem>
+                        <SelectItem value="privacy">Privacy</SelectItem>
+                        <SelectItem value="auto">Auto</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h5 className="font-medium">Auto-Connect</h5>
+                      <p className="text-sm text-muted-foreground">
+                        Connect automatically when app starts
+                      </p>
+                    </div>
+                    <Switch />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h5 className="font-medium">Network Notifications</h5>
+                      <p className="text-sm text-muted-foreground">
+                        Get notified about network status changes
+                      </p>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="subscription" className="space-y-4">
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Crown className="w-5 h-5 text-warning" />
+                Subscription Plan
+              </CardTitle>
+              <CardDescription>
+                Upgrade for unlimited access and premium features
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {user?.subscriptionTier === 'free' ? (
+                  <div className="space-y-4">
+                    <div className="p-4 border rounded-lg bg-muted/20">
+                      <h4 className="font-medium">Free Plan</h4>
+                      <p className="text-sm text-muted-foreground">Limited features</p>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• 1 GB monthly data</li>
+                        <li>• 3 server locations</li>
+                        <li>• Gaming mode only</li>
+                      </ul>
+                    </div>
+                    <Button className="w-full gradient-primary">
+                      Upgrade to Premium
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="p-4 border rounded-lg bg-primary/10">
+                      <h4 className="font-medium text-primary">Premium Plan</h4>
+                      <p className="text-sm text-muted-foreground">Full access</p>
+                      <ul className="text-sm mt-2 space-y-1">
+                        <li>• Unlimited data</li>
+                        <li>• All server locations</li>
+                        <li>• Gaming & Privacy modes</li>
+                        <li>• XX Network integration</li>
+                        <li>• Cross-platform support</li>
+                      </ul>
+                    </div>
+                    <Button variant="outline" className="w-full">
+                      Manage Subscription
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="rewards" className="space-y-4">
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Coins className="w-5 h-5 text-warning" />
+                XX Coin Rewards
+              </CardTitle>
+              <CardDescription>
+                Earn XX tokens by contributing to network security
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="text-center p-6 border rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10">
+                  <div className="text-3xl font-bold text-primary">
+                    {user?.xxCoinBalance?.toFixed(2) || '0.00'} XX
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Current balance
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <h4 className="font-medium">Earning Opportunities</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center p-3 border rounded-lg">
+                      <div>
+                        <h5 className="font-medium">Daily Connection</h5>
+                        <p className="text-sm text-muted-foreground">Connect daily for 30+ minutes</p>
+                      </div>
+                      <Badge variant="outline">+5 XX</Badge>
+                    </div>
+                    <div className="flex justify-between items-center p-3 border rounded-lg">
+                      <div>
+                        <h5 className="font-medium">Node Contribution</h5>
+                        <p className="text-sm text-muted-foreground">Share bandwidth for mixnet</p>
+                      </div>
+                      <Badge variant="outline">+20 XX/day</Badge>
+                    </div>
+                    <div className="flex justify-between items-center p-3 border rounded-lg">
+                      <div>
+                        <h5 className="font-medium">Privacy Mode Usage</h5>
+                        <p className="text-sm text-muted-foreground">Use 5-hop protection</p>
+                      </div>
+                      <Badge variant="outline">+2 XX/session</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="downloads" className="space-y-4">
+          <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="w-5 h-5" />
+                Download xxVPN
+              </CardTitle>
+              <CardDescription>
+                Get xxVPN on all your devices
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {[
+                  { platform: 'Windows', icon: '🪟', status: 'Available', version: 'v2.1.0' },
+                  { platform: 'macOS', icon: '🍎', status: 'Available', version: 'v2.1.0' },
+                  { platform: 'Linux', icon: '🐧', status: 'Available', version: 'v2.1.0' },
+                  { platform: 'Android', icon: '🤖', status: 'Available', version: 'v2.0.5' },
+                  { platform: 'iOS', icon: '📱', status: 'Available', version: 'v2.0.5' },
+                  { platform: 'Chrome Extension', icon: '🌐', status: 'Beta', version: 'v1.0.0' },
+                  { platform: 'Router Firmware', icon: '📡', status: 'Coming Soon', version: 'TBA' },
+                ].map((item) => (
+                  <div key={item.platform} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{item.icon}</span>
+                      <div>
+                        <h4 className="font-medium">{item.platform}</h4>
+                        <p className="text-sm text-muted-foreground">{item.version}</p>
+                      </div>
+                    </div>
+                    <Button 
+                      variant={item.status === 'Available' ? 'default' : 'outline'}
+                      disabled={item.status !== 'Available'}
+                    >
+                      {item.status === 'Available' ? 'Download' : item.status}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};
+
+export default UserProfile;
