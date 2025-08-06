@@ -255,42 +255,37 @@ const VPNDashboard = () => {
                 </div>
               </div>
 
-              {/* User Info and Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto">
-                    <div className="text-left hidden sm:block">
-                      <div className="flex items-center gap-2">
-                        {editingName ? (
-                          <div className="flex items-center gap-1">
-                            <Input
-                              value={tempName}
-                              onChange={(e) => setTempName(e.target.value)}
-                              className="h-6 text-sm px-2 w-24"
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') handleNameSave();
-                                if (e.key === 'Escape') handleNameCancel();
-                              }}
-                              autoFocus
-                            />
-                            <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameSave}>
-                              <Check className="w-3 h-3" />
-                            </Button>
-                            <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameCancel}>
-                              <X className="w-3 h-3" />
-                            </Button>
-                          </div>
-                        ) : (
-                          <>
-                            <span className="text-sm font-medium">{user?.fullName || 'User'}</span>
-                          </>
-                        )}
-                      </div>
-                      <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
-                    </div>
-                    <ChevronDown className="w-3 h-3" />
+              {/* User Info Display/Edit */}
+              {editingName ? (
+                <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
+                  <Input
+                    value={tempName}
+                    onChange={(e) => setTempName(e.target.value)}
+                    className="h-6 text-sm px-2 w-32"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleNameSave();
+                      if (e.key === 'Escape') handleNameCancel();
+                    }}
+                    autoFocus
+                  />
+                  <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameSave}>
+                    <Check className="w-3 h-3" />
                   </Button>
-                </DropdownMenuTrigger>
+                  <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameCancel}>
+                    <X className="w-3 h-3" />
+                  </Button>
+                </div>
+              ) : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto">
+                      <div className="text-left hidden sm:block">
+                        <div className="text-sm font-medium">{user?.fullName || 'User'}</div>
+                        <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
+                      </div>
+                      <ChevronDown className="w-3 h-3" />
+                    </Button>
+                  </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
                   <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
                     <Settings className="w-4 h-4 mr-2" />
@@ -321,7 +316,8 @@ const VPNDashboard = () => {
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenu>
+              )}
             </div>
           </div>
         </div>
