@@ -13,8 +13,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, fullName: string) => Promise<void>;
+  signIn: (email: string, password: string, passphrase?: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName: string, passphrase?: string) => Promise<void>;
   signOut: () => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -46,18 +46,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const savedUser = localStorage.getItem('xxvpn_user');
         if (savedUser) {
           setUser(JSON.parse(savedUser));
-        } else {
-          // Auto-login for demo purposes
-          const demoUser: User = {
-            id: 'demo-user-123',
-            email: 'demo@xxvpn.app',
-            fullName: 'Demo User',
-            subscriptionTier: 'premium',
-            xxCoinBalance: 125.50,
-            referrals: 12
-          };
-          setUser(demoUser);
-          localStorage.setItem('xxvpn_user', JSON.stringify(demoUser));
         }
       } catch (error) {
         console.error('Session check error:', error);
@@ -69,43 +57,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkSession();
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, passphrase?: string) => {
     try {
-      // TODO: Implement Supabase authentication
-      // For now, simulate sign in
+      // Validate passphrase if provided
+      if (passphrase) {
+        const words = passphrase.trim().split(/\s+/);
+        if (words.length !== 24) {
+          throw new Error('Invalid passphrase: must be exactly 24 words');
+        }
+      }
+      
       const mockUser: User = {
-        id: '1',
-        email,
-        fullName: 'Demo User',
+        id: 'user-123',
+        email: 'user@xxvpn.app',
+        fullName: 'John Doe',
         subscriptionTier: 'premium',
         xxCoinBalance: 125.50,
-        referrals: 12
+        referrals: 8
       };
       
       setUser(mockUser);
       localStorage.setItem('xxvpn_user', JSON.stringify(mockUser));
     } catch (error) {
-      throw new Error('Invalid credentials');
+      throw error;
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string) => {
+  const signUp = async (email: string, password: string, fullName: string, passphrase?: string) => {
     try {
-      // TODO: Implement Supabase authentication
-      // For now, simulate sign up
+      // Validate passphrase if provided
+      if (passphrase) {
+        const words = passphrase.trim().split(/\s+/);
+        if (words.length !== 24) {
+          throw new Error('Invalid passphrase: must be exactly 24 words');
+        }
+      }
+      
       const mockUser: User = {
-        id: '1',
-        email,
+        id: 'user-' + Date.now(),
+        email: 'user@xxvpn.app',
         fullName,
         subscriptionTier: 'free',
-        xxCoinBalance: 0,
+        xxCoinBalance: 10, // Welcome bonus
         referrals: 0
       };
       
       setUser(mockUser);
       localStorage.setItem('xxvpn_user', JSON.stringify(mockUser));
     } catch (error) {
-      throw new Error('Failed to create account');
+      throw error;
     }
   };
 

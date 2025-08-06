@@ -5,16 +5,45 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Shield, Mail, Lock, User, Loader2 } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Shield, Key, Shuffle, User, Loader2, Copy, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+
+// Word list for passphrase generation (simplified subset)
+const WORDS = [
+  'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'absurd', 'abuse',
+  'access', 'accident', 'account', 'accuse', 'achieve', 'acid', 'acoustic', 'acquire', 'across', 'act',
+  'action', 'actor', 'actress', 'actual', 'adapt', 'add', 'addict', 'address', 'adjust', 'admit',
+  'adult', 'advance', 'advice', 'aerobic', 'affair', 'afford', 'afraid', 'again', 'agent', 'agree',
+  'ahead', 'aim', 'air', 'airport', 'aisle', 'alarm', 'album', 'alcohol', 'alert', 'alien',
+  'quantum', 'network', 'privacy', 'secure', 'tunnel', 'shield', 'protect', 'anonymous', 'freedom', 'liberty'
+];
 
 const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [passphrase, setPassphrase] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
+  const [showPassphrase, setShowPassphrase] = useState(false);
   const { toast } = useToast();
+  const { signIn, signUp } = useAuth();
+
+  const generatePassphrase = () => {
+    const randomWords = [];
+    for (let i = 0; i < 24; i++) {
+      randomWords.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
+    }
+    setPassphrase(randomWords.join(' '));
+  };
+
+  const copyPassphrase = () => {
+    navigator.clipboard.writeText(passphrase);
+    toast({
+      title: "Copied!",
+      description: "Passphrase copied to clipboard.",
+    });
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +51,21 @@ const AuthPage = () => {
     setError('');
 
     try {
-      // TODO: Implement Supabase signup
+      if (!passphrase.trim()) {
+        setError('Please generate or enter a 24-word passphrase');
+        return;
+      }
+
+      const words = passphrase.trim().split(/\s+/);
+      if (words.length !== 24) {
+        setError('Passphrase must be exactly 24 words');
+        return;
+      }
+
+      await signUp('', '', fullName, passphrase);
       toast({
         title: "Account created!",
-        description: "Please check your email to verify your account.",
+        description: "Your xxVPN account has been created successfully.",
       });
     } catch (err: any) {
       setError(err.message || 'An error occurred during signup');
@@ -40,7 +80,18 @@ const AuthPage = () => {
     setError('');
 
     try {
-      // TODO: Implement Supabase signin
+      if (!passphrase.trim()) {
+        setError('Please enter your 24-word passphrase');
+        return;
+      }
+
+      const words = passphrase.trim().split(/\s+/);
+      if (words.length !== 24) {
+        setError('Passphrase must be exactly 24 words');
+        return;
+      }
+
+      await signIn('', '', passphrase);
       toast({
         title: "Welcome back!",
         description: "Successfully signed in to xxVPN.",
@@ -70,7 +121,7 @@ const AuthPage = () => {
             Welcome to xxVPN
           </CardTitle>
           <CardDescription>
-            Quantum-resistant privacy protection for all your devices
+            Secure login with XX Network sleeve wallet technology
           </CardDescription>
         </CardHeader>
 
@@ -90,35 +141,30 @@ const AuthPage = () => {
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signin-email">Email</Label>
+                  <Label htmlFor="signin-passphrase">24-Word Passphrase</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="signin-email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10"
+                    <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Textarea
+                      id="signin-passphrase"
+                      placeholder="Enter your 24-word passphrase..."
+                      value={passphrase}
+                      onChange={(e) => setPassphrase(e.target.value)}
+                      className="pl-10 min-h-[100px] resize-none"
                       required
                     />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2"
+                      onClick={() => setShowPassphrase(!showPassphrase)}
+                    >
+                      {showPassphrase ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </Button>
                   </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="signin-password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="signin-password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Enter the 24-word passphrase from your XX Network sleeve wallet
+                  </p>
                 </div>
 
                 <Button 
@@ -157,36 +203,53 @@ const AuthPage = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="signup-passphrase">24-Word Passphrase</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={generatePassphrase}
+                      className="text-xs"
+                    >
+                      <Shuffle className="mr-1 h-3 w-3" />
+                      Generate
+                    </Button>
+                  </div>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10"
+                    <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Textarea
+                      id="signup-passphrase"
+                      placeholder="Generate or enter your 24-word passphrase..."
+                      value={showPassphrase ? passphrase : passphrase.replace(/./g, '•')}
+                      onChange={(e) => setPassphrase(e.target.value)}
+                      className="pl-10 min-h-[120px] resize-none"
                       required
                     />
+                    <div className="absolute right-2 top-2 flex gap-1">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowPassphrase(!showPassphrase)}
+                      >
+                        {showPassphrase ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </Button>
+                      {passphrase && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={copyPassphrase}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      placeholder="Create a strong password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="pl-10"
-                      minLength={6}
-                      required
-                    />
-                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    This 24-word passphrase uses XX Network sleeve wallet technology. Keep it safe and secure.
+                  </p>
                 </div>
 
                 <Button 
@@ -215,19 +278,19 @@ const AuthPage = () => {
 
           {/* Feature highlights */}
           <div className="mt-6 space-y-3">
-            <h4 className="text-sm font-medium text-center">Why choose xxVPN?</h4>
+            <h4 className="text-sm font-medium text-center">XX Network Security</h4>
             <div className="grid grid-cols-1 gap-2 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-primary rounded-full" />
-                <span>Quantum-resistant encryption</span>
+                <span>24-word sleeve wallet technology</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-secondary rounded-full" />
-                <span>5-hop mixnet protection</span>
+                <span>Quantum-resistant encryption</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-accent rounded-full" />
-                <span>Cross-platform support</span>
+                <span>5-hop mixnet protection</span>
               </div>
             </div>
           </div>
