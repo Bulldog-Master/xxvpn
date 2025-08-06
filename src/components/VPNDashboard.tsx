@@ -283,18 +283,6 @@ const VPNDashboard = () => {
                         ) : (
                           <>
                             <span className="text-sm font-medium">{user?.fullName || 'User'}</span>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-4 w-4 p-0 opacity-60 hover:opacity-100"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setEditingName(true);
-                                setTempName(user?.fullName || '');
-                              }}
-                            >
-                              <Edit2 className="w-3 h-3" />
-                            </Button>
                           </>
                         )}
                       </div>
@@ -303,11 +291,18 @@ const VPNDashboard = () => {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
-                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
-                  <Settings className="w-4 h-4 mr-2" />
-                  Settings
-                </DropdownMenuItem>
+                <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
+                    <Settings className="w-4 h-4 mr-2" />
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => {
+                    setEditingName(true);
+                    setTempName(user?.fullName || '');
+                  }}>
+                    <Edit2 className="w-4 h-4 mr-2" />
+                    Edit Name
+                  </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => setSupportOpen(true)}>
                   <HelpCircle className="w-4 h-4 mr-2" />
                   Customer Support
@@ -386,32 +381,31 @@ const VPNDashboard = () => {
         </Card>
 
         {/* VPN Mode Selection */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4">
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
                 onClick={() => vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN()}>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-white" />
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Ultra-fast Mode</CardTitle>
-                  <CardDescription>Gaming & Streaming</CardDescription>
+                  <CardTitle className="text-base">Ultra-fast Mode</CardTitle>
+                  <CardDescription className="text-xs">Gaming & Streaming</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
+            <CardContent className="pt-0">
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">DIRECT</Badge>
-                  <span className="text-sm text-muted-foreground">No VPN</span>
+                  <span className="text-xs text-muted-foreground">No VPN</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Ultra-fast connection for gaming and streaming with minimal latency.
-                  Direct internet access for maximum speed.
                 </p>
-                <div className="flex items-center gap-2 text-sm">
-                  <Zap className="w-4 h-4 text-warning" />
+                <div className="flex items-center gap-2 text-xs">
+                  <Zap className="w-3 h-3 text-warning" />
                   <span>Maximum speed</span>
                 </div>
               </div>
@@ -420,29 +414,28 @@ const VPNDashboard = () => {
 
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
                 onClick={() => vpnMode !== 'secure' ? connectVPN('secure') : disconnectVPN()}>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-white" />
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+                  <Shield className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Secure Mode</CardTitle>
-                  <CardDescription>Standard VPN Protection</CardDescription>
+                  <CardTitle className="text-base">Secure Mode</CardTitle>
+                  <CardDescription className="text-xs">Standard VPN Protection</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
+            <CardContent className="pt-0">
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">VPN</Badge>
-                  <span className="text-sm text-muted-foreground">OpenVPN/WireGuard</span>
+                  <span className="text-xs text-muted-foreground">OpenVPN/WireGuard</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Encrypted VPN tunnel providing standard privacy protection
-                  with good speed and security balance.
+                <p className="text-xs text-muted-foreground">
+                  Encrypted VPN tunnel providing standard privacy protection.
                 </p>
-                <div className="flex items-center gap-2 text-sm">
-                  <Shield className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-2 text-xs">
+                  <Shield className="w-3 h-3 text-primary" />
                   <span>Encrypted tunnel</span>
                 </div>
               </div>
@@ -451,29 +444,28 @@ const VPNDashboard = () => {
 
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:neural-glow transition-all cursor-pointer"
                 onClick={() => vpnMode !== 'ultra-secure' ? connectVPN('ultra-secure') : disconnectVPN()}>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-gradient-neural flex items-center justify-center">
-                  <Lock className="w-6 h-6 text-white" />
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-neural flex items-center justify-center">
+                  <Lock className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Ultra Secure Mode</CardTitle>
-                  <CardDescription>Metadata Shredding</CardDescription>
+                  <CardTitle className="text-base">Ultra Secure Mode</CardTitle>
+                  <CardDescription className="text-xs">Metadata Shredding</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
+            <CardContent className="pt-0">
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">CMIXX</Badge>
-                  <span className="text-sm text-muted-foreground">XX Network</span>
+                  <span className="text-xs text-muted-foreground">XX Network</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Metadata-shredding using cMixx via XX Network.
-                  Quantum-resistant protection for ultimate privacy.
                 </p>
-                <div className="flex items-center gap-2 text-sm">
-                  <Eye className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-2 text-xs">
+                  <Eye className="w-3 h-3 text-primary" />
                   <span>Metadata protection</span>
                 </div>
               </div>
