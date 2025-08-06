@@ -44,6 +44,7 @@ import shieldIcon from '@/assets/vpn-shield-icon.jpg';
 import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
+import UserProfile from './UserProfile';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
