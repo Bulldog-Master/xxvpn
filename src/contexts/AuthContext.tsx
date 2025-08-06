@@ -42,11 +42,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // For now, simulate checking session
     const checkSession = async () => {
       try {
-        // Simulate session check with auto-login for demo
-        const savedUser = localStorage.getItem('xxvpn_user');
-        if (savedUser) {
-          setUser(JSON.parse(savedUser));
-        }
+        // Temporarily clear localStorage to show login page
+        localStorage.removeItem('xxvpn_user');
+        setUser(null);
       } catch (error) {
         console.error('Session check error:', error);
       } finally {
