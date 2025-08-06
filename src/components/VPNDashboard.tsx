@@ -54,6 +54,7 @@ import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
+import ServerSelector from './ServerSelector';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -579,22 +580,7 @@ const VPNDashboard = () => {
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
-            <div className="grid gap-3">
-              {['Auto (Fastest)', 'United States', 'Netherlands', 'Switzerland', 'Singapore'].map((server) => (
-                <Card key={server} className="bg-card/80 backdrop-blur-sm cursor-pointer hover:bg-card/90 transition-colors">
-                  <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-3">
-                      <Server className="w-4 h-4 text-primary" />
-                      <span>{server}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-success rounded-full" />
-                      <span className="text-sm text-muted-foreground">24ms</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <ServerSelector />
           </TabsContent>
 
           <TabsContent value="network" className="space-y-4">
