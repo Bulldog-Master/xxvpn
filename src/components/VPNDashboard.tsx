@@ -43,7 +43,7 @@ import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
 import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
-import UserProfile from './UserProfile';
+import DeviceManagement from './DeviceManagement';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -203,7 +203,7 @@ const VPNDashboard = () => {
                   <HelpCircle className="w-4 h-4 mr-2" />
                   Customer Support
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Device Management", description: "Opening device settings..." })}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('devices')}>
                   <Monitor className="w-4 h-4 mr-2" />
                   Devices
                 </DropdownMenuItem>
@@ -228,8 +228,8 @@ const VPNDashboard = () => {
             <TabsTrigger value="servers">Servers</TabsTrigger>
             <TabsTrigger value="network">Network</TabsTrigger>
             <TabsTrigger value="apps">App Routing</TabsTrigger>
+            <TabsTrigger value="devices">Devices</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-6">
@@ -584,8 +584,8 @@ const VPNDashboard = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="profile" className="space-y-4">
-            <UserProfile />
+          <TabsContent value="devices" className="space-y-4">
+            <DeviceManagement />
           </TabsContent>
         </Tabs>
 
