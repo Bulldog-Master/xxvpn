@@ -19,7 +19,6 @@ import {
   Circle,
   AlertTriangle
 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
 type Device = {
@@ -63,32 +62,33 @@ const DeviceManagement = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchDevices();
-    }
-  }, [user]);
-
-  const fetchDevices = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('devices')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('last_seen', { ascending: false });
-
-      if (error) throw error;
-      setDevices((data || []) as Device[]);
-    } catch (error) {
-      console.error('Error fetching devices:', error);
-      toast({
-        title: "Error loading devices",
-        description: "Please try again later.",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Mock devices for demo
+    const mockDevices: Device[] = [
+      {
+        id: '1',
+        device_name: 'MacBook Pro',
+        device_type: 'desktop',
+        operating_system: 'macOS 14.0',
+        ip_address: '192.168.1.100',
+        last_seen: new Date(Date.now() - 2 * 60 * 1000).toISOString(), // 2 minutes ago
+        is_active: true,
+        created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      {
+        id: '2',
+        device_name: 'iPhone 15 Pro',
+        device_type: 'mobile',
+        operating_system: 'iOS 17.1',
+        ip_address: '192.168.1.101',
+        last_seen: new Date(Date.now() - 10 * 60 * 1000).toISOString(), // 10 minutes ago
+        is_active: false,
+        created_at: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
+      }
+    ];
+    
+    setDevices(mockDevices);
+    setLoading(false);
+  }, []);
 
   const addDevice = async () => {
     if (!newDevice.device_name.trim()) {
@@ -100,75 +100,48 @@ const DeviceManagement = () => {
       return;
     }
 
-    try {
-      const { error } = await supabase
-        .from('devices')
-        .insert({
-          user_id: user?.id,
-          device_name: newDevice.device_name,
-          device_type: newDevice.device_type,
-          operating_system: newDevice.operating_system || null,
-          ip_address: null, // Will be set when device connects
-        });
-
-      if (error) {
-        if (error.message.includes('Device limit exceeded')) {
-          toast({
-            title: "Device limit reached",
-            description: "You can only have 10 devices. Remove an old device first.",
-            variant: "destructive"
-          });
-        } else {
-          throw error;
-        }
-        return;
-      }
-
+    if (activeDevices.length >= deviceLimit) {
       toast({
-        title: "Device added successfully",
-        description: "Your new device has been registered."
-      });
-
-      setNewDevice({
-        device_name: '',
-        device_type: 'desktop',
-        operating_system: ''
-      });
-      setAddDeviceOpen(false);
-      fetchDevices();
-    } catch (error) {
-      console.error('Error adding device:', error);
-      toast({
-        title: "Error adding device",
-        description: "Please try again later.",
+        title: "Device limit reached",
+        description: "You can only have 10 devices. Remove an old device first.",
         variant: "destructive"
       });
+      return;
     }
+
+    const newDeviceData: Device = {
+      id: crypto.randomUUID(),
+      device_name: newDevice.device_name,
+      device_type: newDevice.device_type,
+      operating_system: newDevice.operating_system || undefined,
+      ip_address: '192.168.1.' + Math.floor(Math.random() * 200 + 100),
+      last_seen: new Date().toISOString(),
+      is_active: true,
+      created_at: new Date().toISOString()
+    };
+
+    setDevices(prev => [...prev, newDeviceData]);
+
+    toast({
+      title: "Device added successfully",
+      description: "Your new device has been registered."
+    });
+
+    setNewDevice({
+      device_name: '',
+      device_type: 'desktop',
+      operating_system: ''
+    });
+    setAddDeviceOpen(false);
   };
 
-  const removeDevice = async (deviceId: string, deviceName: string) => {
-    try {
-      const { error } = await supabase
-        .from('devices')
-        .delete()
-        .eq('id', deviceId);
+  const removeDevice = (deviceId: string, deviceName: string) => {
+    setDevices(prev => prev.filter(device => device.id !== deviceId));
 
-      if (error) throw error;
-
-      toast({
-        title: "Device removed",
-        description: `${deviceName} has been removed from your account.`
-      });
-
-      fetchDevices();
-    } catch (error) {
-      console.error('Error removing device:', error);
-      toast({
-        title: "Error removing device",
-        description: "Please try again later.",
-        variant: "destructive"
-      });
-    }
+    toast({
+      title: "Device removed",
+      description: `${deviceName} has been removed from your account.`
+    });
   };
 
   const activeDevices = devices.filter(d => d.is_active);
