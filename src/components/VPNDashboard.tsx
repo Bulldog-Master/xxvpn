@@ -20,24 +20,54 @@ import {
   Network,
   Route,
   User,
-  Coins
+  Coins,
+  Users,
+  Link,
+  Monitor,
+  CreditCard,
+  HelpCircle,
+  LogOut,
+  ChevronDown
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
 import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
 import UserProfile from './UserProfile';
 
-type VPNMode = 'gaming' | 'privacy' | 'off';
+type VPNMode = 'fast' | 'privacy' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
   const [activeTab, setActiveTab] = useState('dashboard');
+  
+  // Mock data for referrals and total users
+  const userReferrals = user?.referrals || 12;
+  const totalUsers = 847592;
+  const userReferralLink = `https://xxvpn.app/ref/${user?.id || 'user123'}`;
+
+  const copyReferralLink = () => {
+    navigator.clipboard.writeText(userReferralLink);
+    toast({
+      title: "Referral link copied!",
+      description: "Share it with friends to earn XX coins.",
+    });
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logged out successfully",
+      description: "See you soon!",
+    });
+  };
 
   const connectVPN = (mode: VPNMode) => {
     setConnectionStatus('connecting');
@@ -90,13 +120,63 @@ const VPNDashboard = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
+            {/* Referral Section */}
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer" onClick={copyReferralLink}>
+              <CardContent className="flex items-center gap-3 p-3">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-primary" />
+                  <div className="text-xs">
+                    <div className="font-medium">{userReferrals} referrals</div>
+                    <div className="text-muted-foreground">{totalUsers.toLocaleString()} users</div>
+                  </div>
+                </div>
+                <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                  <Link className="w-3 h-3" />
+                </Button>
+              </CardContent>
+            </Card>
+
             <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
               <Coins className="w-4 h-4 text-warning" />
               <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
             </div>
+            
             <Badge variant="outline" className="bg-card/50">
               {selectedServer}
             </Badge>
+
+            {/* User Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2">
+                  <User className="w-4 h-4" />
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
+                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
+                  <Settings className="w-4 h-4 mr-2" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Customer Support", description: "Opening support chat..." })}>
+                  <HelpCircle className="w-4 h-4 mr-2" />
+                  Customer Support
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Device Management", description: "Opening device settings..." })}>
+                  <Monitor className="w-4 h-4 mr-2" />
+                  Devices
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Payment Settings", description: "Opening billing portal..." })}>
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Payments
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer text-destructive" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -138,7 +218,7 @@ const VPNDashboard = () => {
               {statusText[connectionStatus]}
             </CardTitle>
             <CardDescription>
-              {connectionStatus === 'connected' && vpnMode === 'gaming' && 
+              {connectionStatus === 'connected' && vpnMode === 'fast' && 
                 'Fast Mode: 2-hop AmneziaWG™ connection active'
               }
               {connectionStatus === 'connected' && vpnMode === 'privacy' && 
@@ -154,14 +234,14 @@ const VPNDashboard = () => {
         {/* VPN Mode Selection */}
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
-                onClick={() => vpnMode !== 'gaming' ? connectVPN('gaming') : disconnectVPN()}>
+                onClick={() => vpnMode !== 'fast' ? connectVPN('fast') : disconnectVPN()}>
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Gaming Mode</CardTitle>
+                  <CardTitle className="text-lg">Fast Mode</CardTitle>
                   <CardDescription>Fast & Responsive</CardDescription>
                 </div>
               </div>
@@ -265,13 +345,13 @@ const VPNDashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm">Gaming Mode</span>
-                          <span className="text-sm font-medium">1h 45m</span>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm">Fast Mode</span>
+                            <span className="text-sm font-medium">1h 45m</span>
+                          </div>
+                          <Progress value={70} className="h-2" />
                         </div>
-                        <Progress value={70} className="h-2" />
-                      </div>
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span className="text-sm">Privacy Mode</span>
@@ -292,9 +372,9 @@ const VPNDashboard = () => {
                   <CardContent>
                     <div className="space-y-3">
                       {[
-                        { time: '2h ago', mode: 'Gaming', duration: '1h 23m', server: 'US East' },
+                        { time: '2h ago', mode: 'Fast', duration: '1h 23m', server: 'US East' },
                         { time: '5h ago', mode: 'Privacy', duration: '45m', server: 'Switzerland' },
-                        { time: 'Yesterday', mode: 'Gaming', duration: '3h 12m', server: 'Singapore' }
+                        { time: 'Yesterday', mode: 'Fast', duration: '3h 12m', server: 'Singapore' }
                       ].map((session, index) => (
                         <div key={index} className="flex items-center justify-between p-3 rounded-lg border bg-muted/20">
                           <div>
@@ -433,7 +513,7 @@ const VPNDashboard = () => {
             <Button 
               size="lg" 
               className="rounded-full w-16 h-16 gradient-primary shadow-quantum"
-              onClick={() => connectVPN('gaming')}
+              onClick={() => connectVPN('fast')}
             >
               <Shield className="w-6 h-6" />
             </Button>

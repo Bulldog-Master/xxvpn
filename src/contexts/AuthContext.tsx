@@ -7,6 +7,7 @@ interface User {
   avatarUrl?: string;
   subscriptionTier: 'free' | 'premium' | 'enterprise';
   xxCoinBalance: number;
+  referrals?: number;
 }
 
 interface AuthContextType {
@@ -15,6 +16,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, fullName: string) => Promise<void>;
   signOut: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -64,7 +66,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         fullName: 'Demo User',
         subscriptionTier: 'premium',
-        xxCoinBalance: 125.50
+        xxCoinBalance: 125.50,
+        referrals: 12
       };
       
       setUser(mockUser);
@@ -83,7 +86,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         fullName,
         subscriptionTier: 'free',
-        xxCoinBalance: 0
+        xxCoinBalance: 0,
+        referrals: 0
       };
       
       setUser(mockUser);
@@ -109,6 +113,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signIn,
     signUp,
     signOut,
+    logout: signOut,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
