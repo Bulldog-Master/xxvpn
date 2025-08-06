@@ -28,11 +28,16 @@ import {
   HelpCircle,
   LogOut,
   ChevronDown,
-  Copy
+  Copy,
+  Bitcoin,
+  Banknote,
+  X
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
@@ -49,6 +54,9 @@ const VPNDashboard = () => {
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [supportOpen, setSupportOpen] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [supportMessage, setSupportMessage] = useState('');
   
   // Mock data for referrals and total users
   const userReferrals = user?.referrals || 12;
@@ -191,7 +199,7 @@ const VPNDashboard = () => {
                   <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Customer Support", description: "Opening support chat..." })}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => setSupportOpen(true)}>
                   <HelpCircle className="w-4 h-4 mr-2" />
                   Customer Support
                 </DropdownMenuItem>
@@ -199,7 +207,7 @@ const VPNDashboard = () => {
                   <Monitor className="w-4 h-4 mr-2" />
                   Devices
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => toast({ title: "Payment Settings", description: "Opening billing portal..." })}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => setPaymentOpen(true)}>
                   <CreditCard className="w-4 h-4 mr-2" />
                   Payments
                 </DropdownMenuItem>
@@ -594,6 +602,108 @@ const VPNDashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Customer Support Modal */}
+      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-primary" />
+              Customer Support
+            </DialogTitle>
+            <DialogDescription>
+              Need help? Send us a message and we'll get back to you within 24 hours.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Textarea
+              placeholder="Describe your issue or question..."
+              value={supportMessage}
+              onChange={(e) => setSupportMessage(e.target.value)}
+              className="min-h-[100px]"
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setSupportOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => {
+                toast({
+                  title: "Support ticket created",
+                  description: "We'll get back to you within 24 hours!"
+                });
+                setSupportMessage('');
+                setSupportOpen(false);
+              }}>
+                Send Message
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Payment Options Modal */}
+      <Dialog open={paymentOpen} onOpenChange={setPaymentOpen}>
+        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-primary" />
+              Payment Options
+            </DialogTitle>
+            <DialogDescription>
+              Choose your preferred payment method for xxVPN premium features.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4">
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+              <CardContent className="flex items-center gap-3 p-4">
+                <CreditCard className="w-6 h-6 text-primary" />
+                <div className="flex-1">
+                  <h3 className="font-medium">Credit/Debit Card</h3>
+                  <p className="text-sm text-muted-foreground">Visa, Mastercard, Amex</p>
+                </div>
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+              <CardContent className="flex items-center gap-3 p-4">
+                <Banknote className="w-6 h-6 text-primary" />
+                <div className="flex-1">
+                  <h3 className="font-medium">eTransfer</h3>
+                  <p className="text-sm text-muted-foreground">Interac e-Transfer (Canada)</p>
+                </div>
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            
+            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+              <CardContent className="flex items-center gap-3 p-4">
+                <Bitcoin className="w-6 h-6 text-primary" />
+                <div className="flex-1">
+                  <h3 className="font-medium">Cryptocurrency</h3>
+                  <p className="text-sm text-muted-foreground">Bitcoin, Ethereum, XX Coin</p>
+                </div>
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              </CardContent>
+            </Card>
+            
+            <div className="flex justify-end gap-2 pt-4 border-t border-border">
+              <Button variant="outline" onClick={() => setPaymentOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => {
+                toast({
+                  title: "Payment setup",
+                  description: "Redirecting to secure payment portal..."
+                });
+                setPaymentOpen(false);
+              }}>
+                Continue
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
