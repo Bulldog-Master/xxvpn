@@ -36,9 +36,12 @@ import {
   Camera,
   Edit2,
   Upload,
-  Check
+  Check,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from 'next-themes';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -57,6 +60,7 @@ type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
   const { user, logout, updateUser } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
@@ -603,6 +607,34 @@ const VPNDashboard = () => {
 
           <TabsContent value="settings" className="space-y-4">
             <div className="grid gap-6">
+              {/* Appearance Settings */}
+              <Card className="bg-card/80 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle>Appearance</CardTitle>
+                  <CardDescription>
+                    Customize the app's appearance and theme
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-medium">Theme</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Choose between light and dark mode
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Sun className="w-4 h-4" />
+                      <Switch 
+                        checked={theme === 'dark'}
+                        onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+                      />
+                      <Moon className="w-4 h-4" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               <Card className="bg-card/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle>Protocol Settings</CardTitle>
