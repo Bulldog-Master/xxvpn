@@ -235,73 +235,74 @@ const VPNDashboard = () => {
             </Badge>
 
             {/* User Menu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-3 bg-card/50 hover:bg-card/70 px-4 py-2 h-auto">
-                  <div 
-                    className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setAvatarOpen(true);
-                    }}
-                  >
-                    {user?.avatarUrl ? (
-                      <img 
-                        src={user.avatarUrl} 
-                        alt="Profile" 
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    ) : (
-                      user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
-                    )}
-                    <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <Camera className="w-3 h-3 text-white" />
+            <div className="flex items-center gap-3">
+              {/* Clickable Avatar */}
+              <div 
+                className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
+                onClick={() => setAvatarOpen(true)}
+              >
+                {user?.avatarUrl ? (
+                  <img 
+                    src={user.avatarUrl} 
+                    alt="Profile" 
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
+                )}
+                <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Camera className="w-3 h-3 text-white" />
+                </div>
+              </div>
+
+              {/* User Info and Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto">
+                    <div className="text-left hidden sm:block">
+                      <div className="flex items-center gap-2">
+                        {editingName ? (
+                          <div className="flex items-center gap-1">
+                            <Input
+                              value={tempName}
+                              onChange={(e) => setTempName(e.target.value)}
+                              className="h-6 text-sm px-2 w-24"
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleNameSave();
+                                if (e.key === 'Escape') handleNameCancel();
+                              }}
+                              autoFocus
+                            />
+                            <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameSave}>
+                              <Check className="w-3 h-3" />
+                            </Button>
+                            <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameCancel}>
+                              <X className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <>
+                            <span className="text-sm font-medium">{user?.fullName || 'User'}</span>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-4 w-4 p-0 opacity-60 hover:opacity-100"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingName(true);
+                                setTempName(user?.fullName || '');
+                              }}
+                            >
+                              <Edit2 className="w-3 h-3" />
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                      <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
                     </div>
-                  </div>
-                  <div className="text-left hidden sm:block">
-                    <div className="flex items-center gap-2">
-                      {editingName ? (
-                        <div className="flex items-center gap-1">
-                          <Input
-                            value={tempName}
-                            onChange={(e) => setTempName(e.target.value)}
-                            className="h-6 text-sm px-2 w-24"
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') handleNameSave();
-                              if (e.key === 'Escape') handleNameCancel();
-                            }}
-                            autoFocus
-                          />
-                          <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameSave}>
-                            <Check className="w-3 h-3" />
-                          </Button>
-                          <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameCancel}>
-                            <X className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <>
-                          <span className="text-sm font-medium">{user?.fullName || 'User'}</span>
-                          <Button 
-                            size="sm" 
-                            variant="ghost" 
-                            className="h-4 w-4 p-0 opacity-60 hover:opacity-100"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingName(true);
-                              setTempName(user?.fullName || '');
-                            }}
-                          >
-                            <Edit2 className="w-3 h-3" />
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                    <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
-                  </div>
-                  <ChevronDown className="w-3 h-3" />
-                </Button>
-              </DropdownMenuTrigger>
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
                 <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
                   <Settings className="w-4 h-4 mr-2" />
@@ -326,6 +327,7 @@ const VPNDashboard = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
           </div>
         </div>
 
