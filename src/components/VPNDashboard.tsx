@@ -190,8 +190,14 @@ const VPNDashboard = () => {
             {/* User Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2">
-                  <User className="w-4 h-4" />
+                <Button variant="ghost" className="flex items-center gap-3 bg-card/50 hover:bg-card/70 px-4 py-2 h-auto">
+                  <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm">
+                    {user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'}
+                  </div>
+                  <div className="text-left hidden sm:block">
+                    <div className="text-sm font-medium">{user?.fullName || 'User'}</div>
+                    <div className="text-xs text-muted-foreground">{user?.subscriptionTier || 'free'}</div>
+                  </div>
                   <ChevronDown className="w-3 h-3" />
                 </Button>
               </DropdownMenuTrigger>
