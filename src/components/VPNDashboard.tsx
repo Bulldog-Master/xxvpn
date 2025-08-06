@@ -27,10 +27,12 @@ import {
   CreditCard,
   HelpCircle,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Copy
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
@@ -121,20 +123,51 @@ const VPNDashboard = () => {
           </div>
           <div className="flex items-center gap-4">
             {/* Referral Section */}
-            <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer" onClick={copyReferralLink}>
-              <CardContent className="flex items-center gap-3 p-3">
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-primary" />
-                  <div className="text-xs">
-                    <div className="font-medium">{userReferrals} referrals</div>
-                    <div className="text-muted-foreground">{totalUsers.toLocaleString()} users</div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer">
+                  <CardContent className="flex items-center gap-3 p-3">
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-primary" />
+                      <div className="text-xs">
+                        <div className="font-medium">{userReferrals} referrals</div>
+                        <div className="text-muted-foreground">{totalUsers.toLocaleString()} users</div>
+                      </div>
+                    </div>
+                    <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-sm mb-2">Referral Program</h4>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                      <div>
+                        <div className="text-muted-foreground">Your Referrals</div>
+                        <div className="font-semibold text-lg">{userReferrals}</div>
+                      </div>
+                      <div>
+                        <div className="text-muted-foreground">Total Users</div>
+                        <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
+                      </div>
+                    </div>
                   </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs mb-2">Your Referral Link</div>
+                    <div className="flex items-center gap-2 p-2 bg-muted rounded border">
+                      <code className="text-xs flex-1 truncate">{userReferralLink}</code>
+                      <Button size="sm" variant="ghost" onClick={copyReferralLink} className="h-6 w-6 p-0">
+                        <Copy className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Share your referral link to earn XX coins for each new user who joins!
+                  </p>
                 </div>
-                <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
-                  <Link className="w-3 h-3" />
-                </Button>
-              </CardContent>
-            </Card>
+              </PopoverContent>
+            </Popover>
 
             <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
               <Coins className="w-4 h-4 text-warning" />
