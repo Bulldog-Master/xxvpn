@@ -38,15 +38,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Check for existing session
-    // For now, simulate checking session
+    // Check for existing session
     const checkSession = async () => {
       try {
-        // Temporarily clear localStorage to show login page
-        localStorage.removeItem('xxvpn_user');
-        setUser(null);
+        console.log('Checking session...');
+        const savedUser = localStorage.getItem('xxvpn_user');
+        if (savedUser) {
+          console.log('Found saved user, logging in...');
+          setUser(JSON.parse(savedUser));
+        } else {
+          console.log('No saved user found, showing login page');
+          setUser(null);
+        }
       } catch (error) {
         console.error('Session check error:', error);
+        setUser(null);
       } finally {
         setLoading(false);
       }
