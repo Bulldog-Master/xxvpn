@@ -147,8 +147,8 @@ const AuthPage = () => {
                     <Textarea
                       id="signin-passphrase"
                       placeholder="Enter your 24-word passphrase..."
-                      value={passphrase}
-                      onChange={(e) => setPassphrase(e.target.value)}
+                      value={showPassphrase ? passphrase : passphrase.replace(/\S/g, '•')}
+                      onChange={(e) => setPassphrase(showPassphrase ? e.target.value : e.target.value)}
                       className="pl-10 min-h-[100px] resize-none"
                       required
                     />
@@ -221,8 +221,8 @@ const AuthPage = () => {
                     <Textarea
                       id="signup-passphrase"
                       placeholder="Generate or enter your 24-word passphrase..."
-                      value={showPassphrase ? passphrase : passphrase.replace(/./g, '•')}
-                      onChange={(e) => setPassphrase(e.target.value)}
+                      value={showPassphrase ? passphrase : passphrase.replace(/\S/g, '•')}
+                      onChange={(e) => setPassphrase(showPassphrase ? e.target.value : e.target.value)}
                       className="pl-10 min-h-[120px] resize-none"
                       required
                     />
