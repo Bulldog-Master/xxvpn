@@ -31,9 +31,14 @@ import {
   Copy,
   Bitcoin,
   Banknote,
-  X
+  X,
+  Camera,
+  Edit2,
+  Upload,
+  Check
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -50,7 +55,7 @@ type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
@@ -58,6 +63,9 @@ const VPNDashboard = () => {
   const [supportOpen, setSupportOpen] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [supportMessage, setSupportMessage] = useState('');
+  const [avatarOpen, setAvatarOpen] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [tempName, setTempName] = useState(user?.fullName || '');
   
   // Mock data for referrals and total users
   const userReferrals = user?.referrals || 12;
@@ -98,6 +106,39 @@ const VPNDashboard = () => {
     connected: 'text-success',
     connecting: 'text-warning',
     disconnected: 'text-muted-foreground'
+  };
+
+  const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const avatarUrl = e.target?.result as string;
+        updateUser({ avatarUrl });
+        setAvatarOpen(false);
+        toast({
+          title: "Avatar updated",
+          description: "Your profile picture has been updated successfully."
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleNameSave = () => {
+    if (tempName.trim() && tempName !== user?.fullName) {
+      updateUser({ fullName: tempName.trim() });
+      toast({
+        title: "Name updated",
+        description: "Your display name has been updated successfully."
+      });
+    }
+    setEditingName(false);
+  };
+
+  const handleNameCancel = () => {
+    setTempName(user?.fullName || '');
+    setEditingName(false);
   };
 
   const statusText = {
@@ -191,12 +232,66 @@ const VPNDashboard = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-3 bg-card/50 hover:bg-card/70 px-4 py-2 h-auto">
-                  <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm">
-                    {user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'}
+                  <div 
+                    className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setAvatarOpen(true);
+                    }}
+                  >
+                    {user?.avatarUrl ? (
+                      <img 
+                        src={user.avatarUrl} 
+                        alt="Profile" 
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
+                    )}
+                    <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Camera className="w-3 h-3 text-white" />
+                    </div>
                   </div>
                   <div className="text-left hidden sm:block">
-                    <div className="text-sm font-medium">{user?.fullName || 'User'}</div>
-                    <div className="text-xs text-muted-foreground">{user?.subscriptionTier || 'free'}</div>
+                    <div className="flex items-center gap-2">
+                      {editingName ? (
+                        <div className="flex items-center gap-1">
+                          <Input
+                            value={tempName}
+                            onChange={(e) => setTempName(e.target.value)}
+                            className="h-6 text-sm px-2 w-24"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') handleNameSave();
+                              if (e.key === 'Escape') handleNameCancel();
+                            }}
+                            autoFocus
+                          />
+                          <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameSave}>
+                            <Check className="w-3 h-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={handleNameCancel}>
+                            <X className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <>
+                          <span className="text-sm font-medium">{user?.fullName || 'User'}</span>
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-4 w-4 p-0 opacity-60 hover:opacity-100"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingName(true);
+                              setTempName(user?.fullName || '');
+                            }}
+                          >
+                            <Edit2 className="w-3 h-3" />
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
                   </div>
                   <ChevronDown className="w-3 h-3" />
                 </Button>
@@ -706,6 +801,74 @@ const VPNDashboard = () => {
                 setPaymentOpen(false);
               }}>
                 Continue
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Avatar Upload Modal */}
+      <Dialog open={avatarOpen} onOpenChange={setAvatarOpen}>
+        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Camera className="w-5 h-5 text-primary" />
+              Update Profile Picture
+            </DialogTitle>
+            <DialogDescription>
+              Upload a new profile picture or remove your current one.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="flex justify-center">
+              <div className="relative w-24 h-24 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-2xl">
+                {user?.avatarUrl ? (
+                  <img 
+                    src={user.avatarUrl} 
+                    alt="Current avatar" 
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
+                )}
+              </div>
+            </div>
+            
+            <div className="grid gap-3">
+              <label htmlFor="avatar-upload">
+                <Button asChild className="w-full">
+                  <div className="cursor-pointer">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload New Picture
+                  </div>
+                </Button>
+                <input
+                  id="avatar-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarUpload}
+                  className="hidden"
+                />
+              </label>
+              
+              {user?.avatarUrl && (
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    updateUser({ avatarUrl: undefined });
+                    setAvatarOpen(false);
+                    toast({
+                      title: "Avatar removed",
+                      description: "Your profile picture has been removed."
+                    });
+                  }}
+                >
+                  Remove Current Picture
+                </Button>
+              )}
+              
+              <Button variant="outline" onClick={() => setAvatarOpen(false)}>
+                Cancel
               </Button>
             </div>
           </div>
