@@ -40,7 +40,7 @@ import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
 import UserProfile from './UserProfile';
 
-type VPNMode = 'fast' | 'privacy' | 'off';
+type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
@@ -251,11 +251,14 @@ const VPNDashboard = () => {
               {statusText[connectionStatus]}
             </CardTitle>
             <CardDescription>
-              {connectionStatus === 'connected' && vpnMode === 'fast' && 
-                'Fast Mode: 2-hop AmneziaWG™ connection active'
+              {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
+                'Ultra-fast Mode: Direct connection for gaming and streaming'
               }
-              {connectionStatus === 'connected' && vpnMode === 'privacy' && 
-                'Privacy Mode: 5-hop XX Network cMixx protection active'
+              {connectionStatus === 'connected' && vpnMode === 'secure' && 
+                'Secure Mode: Encrypted VPN tunnel (OpenVPN/WireGuard) active'
+              }
+              {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
+                'Ultra Secure Mode: Metadata-shredding via XX Network cMixx active'
               }
               {connectionStatus === 'disconnected' && 
                 'Your traffic is not protected'
@@ -265,60 +268,91 @@ const VPNDashboard = () => {
         </Card>
 
         {/* VPN Mode Selection */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
-                onClick={() => vpnMode !== 'fast' ? connectVPN('fast') : disconnectVPN()}>
+                onClick={() => vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN()}>
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Fast Mode</CardTitle>
-                  <CardDescription>Fast & Responsive</CardDescription>
+                  <CardTitle className="text-lg">Ultra-fast Mode</CardTitle>
+                  <CardDescription>Gaming & Streaming</CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">2-HOP</Badge>
-                  <span className="text-sm text-muted-foreground">AmneziaWG™</span>
+                  <Badge variant="secondary" className="text-xs">DIRECT</Badge>
+                  <span className="text-sm text-muted-foreground">No VPN</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Optimized for streaming and gaming with minimal latency. 
-                  Bypasses VPN blockers while maintaining speed.
+                  Ultra-fast connection for gaming and streaming with minimal latency.
+                  Direct internet access for maximum speed.
                 </p>
                 <div className="flex items-center gap-2 text-sm">
                   <Zap className="w-4 h-4 text-warning" />
-                  <span>Ultra-fast connection</span>
+                  <span>Maximum speed</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
+                onClick={() => vpnMode !== 'secure' ? connectVPN('secure') : disconnectVPN()}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Secure Mode</CardTitle>
+                  <CardDescription>Standard VPN Protection</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="text-xs">VPN</Badge>
+                  <span className="text-sm text-muted-foreground">OpenVPN/WireGuard</span>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Encrypted VPN tunnel providing standard privacy protection
+                  with good speed and security balance.
+                </p>
+                <div className="flex items-center gap-2 text-sm">
+                  <Shield className="w-4 h-4 text-primary" />
+                  <span>Encrypted tunnel</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:neural-glow transition-all cursor-pointer"
-                onClick={() => vpnMode !== 'privacy' ? connectVPN('privacy') : disconnectVPN()}>
+                onClick={() => vpnMode !== 'ultra-secure' ? connectVPN('ultra-secure') : disconnectVPN()}>
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg bg-gradient-neural flex items-center justify-center">
                   <Lock className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Privacy Mode</CardTitle>
-                  <CardDescription>Maximum Anonymity</CardDescription>
+                  <CardTitle className="text-lg">Ultra Secure Mode</CardTitle>
+                  <CardDescription>Metadata Shredding</CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">5-HOP</Badge>
-                  <span className="text-sm text-muted-foreground">XX Network cMixx</span>
+                  <Badge variant="secondary" className="text-xs">CMIXX</Badge>
+                  <span className="text-sm text-muted-foreground">XX Network</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Quantum-resistant protection with metadata shredding. 
-                  Perfect for sensitive communications and transactions.
+                  Metadata-shredding using cMixx via XX Network.
+                  Quantum-resistant protection for ultimate privacy.
                 </p>
                 <div className="flex items-center gap-2 text-sm">
                   <Eye className="w-4 h-4 text-primary" />
@@ -377,21 +411,28 @@ const VPNDashboard = () => {
                     <CardTitle>Today's Usage</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                      <div className="space-y-4">
                         <div className="space-y-2">
                           <div className="flex justify-between">
-                            <span className="text-sm">Fast Mode</span>
-                            <span className="text-sm font-medium">1h 45m</span>
+                            <span className="text-sm">Ultra-fast Mode</span>
+                            <span className="text-sm font-medium">1h 15m</span>
                           </div>
-                          <Progress value={70} className="h-2" />
+                          <Progress value={50} className="h-2" />
                         </div>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm">Privacy Mode</span>
-                          <span className="text-sm font-medium">49m</span>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm">Secure Mode</span>
+                            <span className="text-sm font-medium">45m</span>
+                          </div>
+                          <Progress value={30} className="h-2" />
                         </div>
-                        <Progress value={30} className="h-2" />
-                      </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-sm">Ultra Secure Mode</span>
+                            <span className="text-sm font-medium">34m</span>
+                          </div>
+                          <Progress value={20} className="h-2" />
+                        </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -546,7 +587,7 @@ const VPNDashboard = () => {
             <Button 
               size="lg" 
               className="rounded-full w-16 h-16 gradient-primary shadow-quantum"
-              onClick={() => connectVPN('fast')}
+              onClick={() => connectVPN('secure')}
             >
               <Shield className="w-6 h-6" />
             </Button>
