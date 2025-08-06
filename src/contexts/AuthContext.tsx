@@ -42,10 +42,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // For now, simulate checking session
     const checkSession = async () => {
       try {
-        // Simulate session check
+        // Simulate session check with auto-login for demo
         const savedUser = localStorage.getItem('xxvpn_user');
         if (savedUser) {
           setUser(JSON.parse(savedUser));
+        } else {
+          // Auto-login for demo purposes
+          const demoUser: User = {
+            id: 'demo-user-123',
+            email: 'demo@xxvpn.app',
+            fullName: 'Demo User',
+            subscriptionTier: 'premium',
+            xxCoinBalance: 125.50,
+            referrals: 12
+          };
+          setUser(demoUser);
+          localStorage.setItem('xxvpn_user', JSON.stringify(demoUser));
         }
       } catch (error) {
         console.error('Session check error:', error);
