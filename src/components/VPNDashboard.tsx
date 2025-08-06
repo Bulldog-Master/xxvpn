@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -71,6 +72,11 @@ const VPNDashboard = () => {
   const userReferrals = user?.referrals || 12;
   const totalUsers = 847592;
   const userReferralLink = `https://xxvpn.app/ref/${user?.id || 'user123'}`;
+
+  // Sync tempName with user's fullName when user changes
+  React.useEffect(() => {
+    setTempName(user?.fullName || '');
+  }, [user?.fullName]);
 
   const copyReferralLink = () => {
     navigator.clipboard.writeText(userReferralLink);
