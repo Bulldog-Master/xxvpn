@@ -381,7 +381,7 @@ const VPNDashboard = () => {
         </Card>
 
         {/* VPN Mode Selection */}
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-3">
           <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
                 onClick={() => vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN()}>
             <CardHeader className="pb-3">
