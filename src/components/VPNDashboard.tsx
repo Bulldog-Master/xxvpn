@@ -174,19 +174,19 @@ const VPNDashboard = () => {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto p-6 space-y-6">
       {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src={shieldIcon} alt="xxVPN" className="w-12 h-12" />
-            <div>
+        <div className="flex items-start justify-between flex-wrap gap-4 lg:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0">
+            <img src={shieldIcon} alt="xxVPN" className="w-12 h-12 flex-shrink-0" />
+            <div className="min-w-0">
               <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
                 xxVPN
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground truncate">
                 Welcome back, {user?.fullName || 'User'}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 flex-wrap justify-end lg:gap-4">
             {/* Referral Section */}
             <Popover>
               <PopoverTrigger asChild>
