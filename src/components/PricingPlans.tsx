@@ -95,6 +95,7 @@ const paymentMethods = [
   { name: 'Apple Pay', icon: '🍎' },
   { name: 'Google Pay', icon: 'G' },
   { name: 'PayPal', icon: '💙' },
+  { name: 'Nym', icon: '🔮' },
   { name: 'Cash', icon: '💵' }
 ];
 
@@ -225,11 +226,11 @@ export default function PricingPlans({ onPlanSelect }: PricingPlansProps) {
             <h2 className="text-2xl font-bold text-center">You can pay with</h2>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-center items-center gap-4 overflow-x-auto">
+            <div className="flex flex-wrap justify-center gap-6">
               {paymentMethods.map((method, index) => (
-                <div key={index} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 whitespace-nowrap">
+                <div key={index} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-background/50">
                   <span className="text-lg">{method.icon}</span>
-                  <span className="font-medium text-sm">{method.name}</span>
+                  <span className="font-medium">{method.name}</span>
                 </div>
               ))}
             </div>
