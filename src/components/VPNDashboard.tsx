@@ -48,6 +48,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import PaymentsPage from './PaymentsPage';
 import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
@@ -334,12 +335,13 @@ const VPNDashboard = () => {
 
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-7 bg-muted/50">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="network">Network</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
             <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
+            <TabsTrigger value="payments">Payments</TabsTrigger>
             <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
           </TabsList>
 
@@ -707,6 +709,10 @@ const VPNDashboard = () => {
 
           <TabsContent value="devices" className="space-y-4">
             <DeviceManagement />
+          </TabsContent>
+
+          <TabsContent value="payments" className="space-y-4">
+            <PaymentsPage />
           </TabsContent>
         </Tabs>
 
