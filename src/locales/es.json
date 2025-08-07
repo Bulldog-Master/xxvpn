@@ -72,11 +72,6 @@
       "ultraSecureActive": "Modo Ultra-seguro: Destrucción de metadatos vía XX Network cMixx activo",
       "notProtected": "Tu tráfico no está protegido"
     },
-    "connectionModes": {
-      "metadataShredding": "Destrucción de Metadatos",
-      "metadataShredDesc": "Destrucción de metadatos usando cMixx vía XX Network.",
-      "metadataProtection": "Protección de metadatos"
-    },
     "referrals": {
       "program": "Programa de Referencias",
       "yourReferrals": "Tus Referencias",
