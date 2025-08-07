@@ -289,12 +289,12 @@ const VPNDashboard = () => {
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto">
+                    <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto group">
                       <div className="text-left hidden sm:block">
                         <div className="text-sm font-medium">{user?.fullName || 'User'}</div>
                         <div className="text-xs text-muted-foreground capitalize">{user?.subscriptionTier || 'free'}</div>
                       </div>
-                      <ChevronDown className="w-3 h-3" />
+                      <ChevronDown className="w-3 h-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                     </Button>
                   </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
