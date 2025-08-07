@@ -77,5 +77,54 @@
     "warning": "تحذير",
     "error": "خطأ",
     "success": "نجح"
+  },
+  "payments": {
+    "title": "المدفوعات",
+    "sidebar": {
+      "account": "الحساب",
+      "devices": "الأجهزة", 
+      "payments": "المدفوعات",
+      "download": "تحميل",
+      "support": "الدعم"
+    },
+    "methods": {
+      "title": "طرق الدفع",
+      "card": {
+        "title": "بطاقة ائتمان/خصم",
+        "description": "Visa، Mastercard، American Express",
+        "action": "إضافة بطاقة"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "مدفوعات سريعة وآمنة",
+        "action": "اتصال"
+      },
+      "crypto": {
+        "title": "العملة المشفرة", 
+        "description": "Bitcoin، Ethereum، XX Coin",
+        "action": "إعداد"
+      }
+    },
+    "orders": {
+      "title": "طلباتك",
+      "privacy": "بالتصميم، يفصل xxVPN معلومات الدفع والهوية عن نشاطك على الإنترنت. هذا يضمن حماية قوية ضد المراقبة غير المصرح بها لحركة المرور والبيانات الخاصة.",
+      "table": {
+        "id": "المعرف",
+        "date": "التاريخ",
+        "subscription": "الاشتراك",
+        "status": "الحالة",
+        "amount": "المبلغ"
+      },
+      "status": {
+        "active": "نشط",
+        "expired": "منتهي الصلاحية", 
+        "pending": "معلق"
+      },
+      "noOrders": "لم يتم العثور على طلبات",
+      "invoice": {
+        "text": "إذا كنت بحاجة إلى فاتورة احترافية تحتوي على اسم شركتك وعنوانها، يرجى الاتصال بـ",
+        "link": "فريق الدعم"
+      }
+    }
   }
 }

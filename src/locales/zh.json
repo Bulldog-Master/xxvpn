@@ -77,5 +77,54 @@
     "warning": "警告",
     "error": "错误",
     "success": "成功"
+  },
+  "payments": {
+    "title": "支付",
+    "sidebar": {
+      "account": "账户",
+      "devices": "设备", 
+      "payments": "支付",
+      "download": "下载",
+      "support": "支持"
+    },
+    "methods": {
+      "title": "支付方式",
+      "card": {
+        "title": "信用卡/借记卡",
+        "description": "Visa、Mastercard、American Express",
+        "action": "添加卡片"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "快速安全的支付",
+        "action": "连接"
+      },
+      "crypto": {
+        "title": "加密货币", 
+        "description": "Bitcoin、Ethereum、XX Coin",
+        "action": "设置"
+      }
+    },
+    "orders": {
+      "title": "您的订单",
+      "privacy": "通过设计，xxVPN将您的支付信息和身份与您的在线活动分离。这确保了对您的流量和私人数据的未授权监控的强有力保护。",
+      "table": {
+        "id": "ID",
+        "date": "日期",
+        "subscription": "订阅",
+        "status": "状态",
+        "amount": "金额"
+      },
+      "status": {
+        "active": "活跃",
+        "expired": "已过期", 
+        "pending": "待处理"
+      },
+      "noOrders": "未找到订单",
+      "invoice": {
+        "text": "如果您需要包含公司名称和地址的专业发票，请联系我们的",
+        "link": "支持团队"
+      }
+    }
   }
 }

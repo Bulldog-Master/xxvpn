@@ -77,5 +77,54 @@
     "warning": "Aviso",
     "error": "Erro",
     "success": "Sucesso"
+  },
+  "payments": {
+    "title": "Pagamentos",
+    "sidebar": {
+      "account": "Conta",
+      "devices": "Dispositivos", 
+      "payments": "Pagamentos",
+      "download": "Download",
+      "support": "Suporte"
+    },
+    "methods": {
+      "title": "Métodos de Pagamento",
+      "card": {
+        "title": "Cartão de Crédito/Débito",
+        "description": "Visa, Mastercard, American Express",
+        "action": "Adicionar Cartão"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "Pagamentos rápidos e seguros",
+        "action": "Conectar"
+      },
+      "crypto": {
+        "title": "Criptomoeda", 
+        "description": "Bitcoin, Ethereum, XX Coin",
+        "action": "Configurar"
+      }
+    },
+    "orders": {
+      "title": "Seus pedidos",
+      "privacy": "Por design, xxVPN desvincula suas informações de pagamento e identidade de sua atividade online. Isso garante uma proteção robusta contra monitoramento não autorizado de seu tráfego e dados privados.",
+      "table": {
+        "id": "ID",
+        "date": "Data",
+        "subscription": "Assinatura",
+        "status": "Status",
+        "amount": "Valor"
+      },
+      "status": {
+        "active": "Ativo",
+        "expired": "Expirado", 
+        "pending": "Pendente"
+      },
+      "noOrders": "Nenhum pedido encontrado",
+      "invoice": {
+        "text": "Se você precisar de uma fatura profissional com o nome e endereço da sua empresa, entre em contato com nossa",
+        "link": "Equipe de suporte"
+      }
+    }
   }
 }

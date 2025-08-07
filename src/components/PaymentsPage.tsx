@@ -53,23 +53,23 @@ const PaymentsPage = () => {
         <div className="space-y-1">
           <Button variant="ghost" className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground">
             <User className="w-4 h-4" />
-            Account
+            {t('payments.sidebar.account')}
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground">
             <Smartphone className="w-4 h-4" />
-            Devices
+            {t('payments.sidebar.devices')}
           </Button>
           <Button variant="secondary" className="w-full justify-start gap-3 bg-primary/10 text-primary">
             <CreditCard className="w-4 h-4" />
-            Payments
+            {t('payments.sidebar.payments')}
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground">
             <Download className="w-4 h-4" />
-            Download
+            {t('payments.sidebar.download')}
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground">
             <HelpCircle className="w-4 h-4" />
-            Support
+            {t('payments.sidebar.support')}
           </Button>
         </div>
       </div>
@@ -78,22 +78,22 @@ const PaymentsPage = () => {
       <div className="flex-1 p-6 space-y-6">
         <Card className="bg-card/95 backdrop-blur-sm border-border">
           <CardHeader>
-            <CardTitle className="text-2xl font-semibold">Payments</CardTitle>
+            <CardTitle className="text-2xl font-semibold">{t('payments.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Payment Methods Section */}
             <div className="space-y-4">
-              <h2 className="text-xl font-medium">Payment Methods</h2>
+              <h2 className="text-xl font-medium">{t('payments.methods.title')}</h2>
               
               <div className="grid gap-3">
                 <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
                   <CardContent className="flex items-center gap-3 p-4">
                     <CreditCard className="w-6 h-6 text-primary" />
                     <div className="flex-1">
-                      <h3 className="font-medium">Credit/Debit Card</h3>
-                      <p className="text-sm text-muted-foreground">Visa, Mastercard, American Express</p>
+                      <h3 className="font-medium">{t('payments.methods.card.title')}</h3>
+                      <p className="text-sm text-muted-foreground">{t('payments.methods.card.description')}</p>
                     </div>
-                    <Button variant="outline" size="sm">Add Card</Button>
+                    <Button variant="outline" size="sm">{t('payments.methods.card.action')}</Button>
                   </CardContent>
                 </Card>
                 
@@ -103,10 +103,10 @@ const PaymentsPage = () => {
                       P
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium">PayPal</h3>
-                      <p className="text-sm text-muted-foreground">Fast and secure payments</p>
+                      <h3 className="font-medium">{t('payments.methods.paypal.title')}</h3>
+                      <p className="text-sm text-muted-foreground">{t('payments.methods.paypal.description')}</p>
                     </div>
-                    <Button variant="outline" size="sm">Connect</Button>
+                    <Button variant="outline" size="sm">{t('payments.methods.paypal.action')}</Button>
                   </CardContent>
                 </Card>
                 
@@ -118,10 +118,10 @@ const PaymentsPage = () => {
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium">Cryptocurrency</h3>
-                      <p className="text-sm text-muted-foreground">Bitcoin, Ethereum, XX Coin</p>
+                      <h3 className="font-medium">{t('payments.methods.crypto.title')}</h3>
+                      <p className="text-sm text-muted-foreground">{t('payments.methods.crypto.description')}</p>
                     </div>
-                    <Button variant="outline" size="sm">Setup</Button>
+                    <Button variant="outline" size="sm">{t('payments.methods.crypto.action')}</Button>
                   </CardContent>
                 </Card>
               </div>
@@ -129,14 +129,13 @@ const PaymentsPage = () => {
 
             {/* Your Orders Section */}
             <div className="space-y-4">
-              <h2 className="text-xl font-medium">Your orders</h2>
+              <h2 className="text-xl font-medium">{t('payments.orders.title')}</h2>
               
               {/* Privacy Description */}
               <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg border border-border">
                 <Shield className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  By design, xxVPN unlinks your payment information and identity from your online activity. 
-                  This ensures a robust safeguard against unauthorized monitoring of your traffic and private data.
+                  {t('payments.orders.privacy')}
                 </p>
               </div>
 
@@ -145,11 +144,11 @@ const PaymentsPage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="font-medium">ID</TableHead>
-                      <TableHead className="font-medium">Date</TableHead>
-                      <TableHead className="font-medium">Subscription</TableHead>
-                      <TableHead className="font-medium">Status</TableHead>
-                      <TableHead className="font-medium text-right">Amount</TableHead>
+                      <TableHead className="font-medium">{t('payments.orders.table.id')}</TableHead>
+                      <TableHead className="font-medium">{t('payments.orders.table.date')}</TableHead>
+                      <TableHead className="font-medium">{t('payments.orders.table.subscription')}</TableHead>
+                      <TableHead className="font-medium">{t('payments.orders.table.status')}</TableHead>
+                      <TableHead className="font-medium text-right">{t('payments.orders.table.amount')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -161,7 +160,7 @@ const PaymentsPage = () => {
                           <TableCell>{order.subscription}</TableCell>
                           <TableCell>
                             <span className={`font-medium ${getStatusColor(order.status)}`}>
-                              {order.status}
+                              {t(`payments.orders.status.${order.status.toLowerCase()}`)}
                             </span>
                           </TableCell>
                           <TableCell className="text-right font-medium">{order.amount}</TableCell>
@@ -170,7 +169,7 @@ const PaymentsPage = () => {
                     ) : (
                       <TableRow>
                         <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                          No orders found
+                          {t('payments.orders.noOrders')}
                         </TableCell>
                       </TableRow>
                     )}
@@ -180,9 +179,9 @@ const PaymentsPage = () => {
 
               {/* Invoice Information */}
               <div className="text-sm text-muted-foreground">
-                If you need a professional invoice with your company name and address, please contact our{' '}
+                {t('payments.orders.invoice.text')}{' '}
                 <Button variant="link" className="p-0 h-auto text-primary hover:underline">
-                  Support team
+                  {t('payments.orders.invoice.link')}
                 </Button>
                 .
               </div>

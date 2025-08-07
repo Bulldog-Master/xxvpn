@@ -77,5 +77,54 @@
     "warning": "警告",
     "error": "エラー",
     "success": "成功"
+  },
+  "payments": {
+    "title": "お支払い",
+    "sidebar": {
+      "account": "アカウント",
+      "devices": "デバイス", 
+      "payments": "お支払い",
+      "download": "ダウンロード",
+      "support": "サポート"
+    },
+    "methods": {
+      "title": "支払い方法",
+      "card": {
+        "title": "クレジット/デビットカード",
+        "description": "Visa、Mastercard、American Express",
+        "action": "カードを追加"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "迅速で安全な支払い",
+        "action": "接続"
+      },
+      "crypto": {
+        "title": "暗号通貨", 
+        "description": "Bitcoin、Ethereum、XX Coin",
+        "action": "設定"
+      }
+    },
+    "orders": {
+      "title": "ご注文履歴",
+      "privacy": "設計上、xxVPNはお客様の支払い情報と身元をオンライン活動から切り離します。これにより、トラフィックや個人データの不正監視に対する堅牢な保護が確保されます。",
+      "table": {
+        "id": "ID",
+        "date": "日付",
+        "subscription": "サブスクリプション",
+        "status": "ステータス",
+        "amount": "金額"
+      },
+      "status": {
+        "active": "アクティブ",
+        "expired": "期限切れ", 
+        "pending": "保留中"
+      },
+      "noOrders": "注文が見つかりません",
+      "invoice": {
+        "text": "会社名と住所を記載した正式な請求書が必要な場合は、",
+        "link": "サポートチーム"
+      }
+    }
   }
 }
