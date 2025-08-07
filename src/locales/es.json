@@ -30,40 +30,29 @@
       "settings": "Configuración"
     }
   },
-  "auth": {
-    "title": "Bienvenido a xxVPN",
-    "subtitle": "Protección VPN segura, privada y resistente a la computación cuántica",
-    "signIn": "Iniciar Sesión",
-    "signUp": "Registrarse",
-    "email": "Correo Electrónico",
-    "password": "Contraseña",
-    "confirmPassword": "Confirmar Contraseña",
-    "forgotPassword": "¿Olvidaste tu contraseña?",
-    "noAccount": "¿No tienes una cuenta?",
-    "hasAccount": "¿Ya tienes una cuenta?",
-    "signInWithGoogle": "Iniciar sesión con Google",
-    "signUpWithGoogle": "Registrarse con Google"
-  },
   "settings": {
+    "title": "Configuración",
     "appearance": {
-      "title": "Apariencia",
-      "theme": "Tema",
-      "light": "Claro",
-      "dark": "Oscuro", 
-      "system": "Sistema"
+      "title": "Apariencia"
     },
     "protocol": {
       "title": "Configuración de Protocolo",
-      "description": "Elige tu protocolo de conexión"
+      "description": "Configura tus preferencias de protocolo VPN",
+      "autoSelection": "Selección Automática de Protocolo",
+      "autoSelectionDesc": "Elegir automáticamente el mejor protocolo basado en las condiciones de red",
+      "killSwitch": "Interruptor de Emergencia",
+      "killSwitchDesc": "Bloquear internet si la conexión VPN se desconecta",
+      "autoConnect": "Conexión Automática",
+      "autoConnectDesc": "Conectar automáticamente cuando la aplicación se inicie"
     },
     "xxNetwork": {
-      "title": "Integración de Red XX",
-      "enabled": "Habilitado",
-      "description": "Mensajería resistente a computación cuántica y protección de metadatos"
-    },
-    "language": {
-      "title": "Idioma",
-      "description": "Elige tu idioma preferido"
+      "title": "Integración XX Network",
+      "description": "Funciones blockchain resistentes a quánticos",
+      "coinRewards": "Recompensas XX Coin",
+      "coinRewardsDesc": "Ganar tokens XX contribuyendo a la seguridad de la red",
+      "nodeContribution": "Contribución de Nodo",
+      "nodeContributionDesc": "Permitir que tu dispositivo contribuya a la mixnet",
+      "currentBalance": "Saldo Actual"
     }
   },
   "common": {

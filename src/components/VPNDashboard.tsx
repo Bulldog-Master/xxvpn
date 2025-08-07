@@ -300,7 +300,7 @@ const VPNDashboard = () => {
                 <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
                   <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
                     <Settings className="w-4 h-4 mr-2" />
-                    Settings
+                    {t('settings.title')}
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => {
                     setEditingName(true);
@@ -630,36 +630,36 @@ const VPNDashboard = () => {
 
               <Card className="bg-card/80 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle>Protocol Settings</CardTitle>
+                  <CardTitle>{t('settings.protocol.title')}</CardTitle>
                   <CardDescription>
-                    Configure your VPN protocol preferences
+                    {t('settings.protocol.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Auto Protocol Selection</h4>
+                        <h4 className="font-medium">{t('settings.protocol.autoSelection')}</h4>
                         <p className="text-sm text-muted-foreground">
-                          Automatically choose the best protocol based on network conditions
+                          {t('settings.protocol.autoSelectionDesc')}
                         </p>
                       </div>
                       <Switch defaultChecked />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Kill Switch</h4>
+                        <h4 className="font-medium">{t('settings.protocol.killSwitch')}</h4>
                         <p className="text-sm text-muted-foreground">
-                          Block internet if VPN connection drops
+                          {t('settings.protocol.killSwitchDesc')}
                         </p>
                       </div>
                       <Switch defaultChecked />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Auto-Connect</h4>
+                        <h4 className="font-medium">{t('settings.protocol.autoConnect')}</h4>
                         <p className="text-sm text-muted-foreground">
-                          Connect automatically when app starts
+                          {t('settings.protocol.autoConnectDesc')}
                         </p>
                       </div>
                       <Switch />
@@ -670,34 +670,34 @@ const VPNDashboard = () => {
 
               <Card className="bg-card/80 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle>XX Network Integration</CardTitle>
+                  <CardTitle>{t('settings.xxNetwork.title')}</CardTitle>
                   <CardDescription>
-                    Quantum-resistant blockchain features
+                    {t('settings.xxNetwork.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">XX Coin Rewards</h4>
+                        <h4 className="font-medium">{t('settings.xxNetwork.coinRewards')}</h4>
                         <p className="text-sm text-muted-foreground">
-                          Earn XX tokens by contributing to network security
+                          {t('settings.xxNetwork.coinRewardsDesc')}
                         </p>
                       </div>
                       <Switch />
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium">Node Contribution</h4>
+                        <h4 className="font-medium">{t('settings.xxNetwork.nodeContribution')}</h4>
                         <p className="text-sm text-muted-foreground">
-                          Allow your device to contribute to the mixnet
+                          {t('settings.xxNetwork.nodeContributionDesc')}
                         </p>
                       </div>
                       <Switch />
                     </div>
                     <div className="p-3 rounded-lg bg-muted/20 border">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Current Balance</span>
+                        <span className="text-sm font-medium">{t('settings.xxNetwork.currentBalance')}</span>
                         <span className="text-sm text-primary">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
                       </div>
                     </div>

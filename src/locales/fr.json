@@ -45,6 +45,7 @@
     "signUpWithGoogle": "S'inscrire avec Google"
   },
   "settings": {
+    "title": "Paramètres",
     "appearance": {
       "title": "Apparence",
       "theme": "Thème",
@@ -54,12 +55,22 @@
     },
     "protocol": {
       "title": "Paramètres de Protocole",
-      "description": "Choisissez votre protocole de connexion"
+      "description": "Configurez vos préférences de protocole VPN",
+      "autoSelection": "Sélection Automatique de Protocole",
+      "autoSelectionDesc": "Choisir automatiquement le meilleur protocole basé sur les conditions réseau",
+      "killSwitch": "Commutateur d'Arrêt",
+      "killSwitchDesc": "Bloquer internet si la connexion VPN se déconnecte",
+      "autoConnect": "Connexion Automatique",
+      "autoConnectDesc": "Se connecter automatiquement au démarrage de l'application"
     },
     "xxNetwork": {
       "title": "Intégration du Réseau XX",
-      "enabled": "Activé",
-      "description": "Messagerie résistante aux ordinateurs quantiques et protection des métadonnées"
+      "description": "Fonctionnalités blockchain résistantes aux ordinateurs quantiques",
+      "coinRewards": "Récompenses XX Coin",
+      "coinRewardsDesc": "Gagner des tokens XX en contribuant à la sécurité du réseau",
+      "nodeContribution": "Contribution de Nœud",
+      "nodeContributionDesc": "Permettre à votre appareil de contribuer au mixnet",
+      "currentBalance": "Solde Actuel"
     },
     "language": {
       "title": "Langue",

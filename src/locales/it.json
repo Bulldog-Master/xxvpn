@@ -45,6 +45,7 @@
     "signUpWithGoogle": "Registrati con Google"
   },
   "settings": {
+    "title": "Impostazioni",
     "appearance": {
       "title": "Aspetto",
       "theme": "Tema",
@@ -54,12 +55,22 @@
     },
     "protocol": {
       "title": "Impostazioni Protocollo",
-      "description": "Scegli il tuo protocollo di connessione"
+      "description": "Configura le tue preferenze del protocollo VPN",
+      "autoSelection": "Selezione Automatica Protocollo",
+      "autoSelectionDesc": "Scegli automaticamente il miglior protocollo basato sulle condizioni di rete",
+      "killSwitch": "Kill Switch",
+      "killSwitchDesc": "Blocca internet se la connessione VPN si interrompe",
+      "autoConnect": "Connessione Automatica",
+      "autoConnectDesc": "Connetti automaticamente all'avvio dell'app"
     },
     "xxNetwork": {
       "title": "Integrazione Rete XX",
-      "enabled": "Abilitato",
-      "description": "Messaggistica resistente ai computer quantistici e protezione metadati"
+      "description": "Funzionalità blockchain resistenti ai computer quantistici",
+      "coinRewards": "Ricompense XX Coin",
+      "coinRewardsDesc": "Guadagna token XX contribuendo alla sicurezza della rete",
+      "nodeContribution": "Contributo Nodo",
+      "nodeContributionDesc": "Consenti al tuo dispositivo di contribuire al mixnet",
+      "currentBalance": "Saldo Attuale"
     },
     "language": {
       "title": "Lingua",
