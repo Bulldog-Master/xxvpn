@@ -55,6 +55,7 @@ import AppTunneling from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
 import ServerSelector from './ServerSelector';
+import LanguageSelector from './LanguageSelector';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -238,6 +239,8 @@ const VPNDashboard = () => {
             <Badge variant="outline" className="bg-card/50">
               {selectedServer}
             </Badge>
+
+            <LanguageSelector />
 
             {/* User Menu */}
             <div className="flex items-center gap-3">
