@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-interface PricingPlan {
+export interface PricingPlan {
   id: string;
   duration: string;
   price: string;
@@ -99,7 +99,7 @@ const paymentMethods = [
 ];
 
 interface PricingPlansProps {
-  onPlanSelect: (planId: string) => void;
+  onPlanSelect: (plan: PricingPlan) => void;
 }
 
 export default function PricingPlans({ onPlanSelect }: PricingPlansProps) {
@@ -188,7 +188,7 @@ export default function PricingPlans({ onPlanSelect }: PricingPlansProps) {
                       ? 'bg-primary hover:bg-primary/90' 
                       : 'bg-secondary hover:bg-secondary/80'
                   }`}
-                  onClick={() => onPlanSelect(plan.id)}
+                  onClick={() => onPlanSelect(plan)}
                 >
                   Get {plan.duration} plan
                 </Button>

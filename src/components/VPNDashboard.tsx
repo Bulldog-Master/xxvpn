@@ -55,7 +55,8 @@ import AppTunneling from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
 import ServerSelector from './ServerSelector';
-import PricingPlans from './PricingPlans';
+import PricingPlans, { PricingPlan } from './PricingPlans';
+import CheckoutPage from './CheckoutPage';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -73,6 +74,8 @@ const VPNDashboard = () => {
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(user?.fullName || '');
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+  const [showCheckout, setShowCheckout] = useState(false);
   
   // Mock data for referrals and total users
   const userReferrals = user?.referrals || 12;
@@ -759,20 +762,39 @@ const VPNDashboard = () => {
       </Dialog>
 
       {/* Pricing Plans Modal */}
-      <Dialog open={paymentOpen} onOpenChange={setPaymentOpen}>
+      <Dialog open={paymentOpen} onOpenChange={(open) => {
+        setPaymentOpen(open);
+        if (!open) {
+          setShowCheckout(false);
+          setSelectedPlan(null);
+        }
+      }}>
         <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader className="sr-only">
             <DialogTitle>Pricing Plans</DialogTitle>
           </DialogHeader>
-          <PricingPlans 
-            onPlanSelect={(planId) => {
-              toast({
-                title: "Plan selected",
-                description: `Redirecting to checkout for ${planId} plan...`
-              });
-              setPaymentOpen(false);
-            }}
-          />
+          {!showCheckout ? (
+            <PricingPlans 
+              onPlanSelect={(plan) => {
+                setSelectedPlan(plan);
+                setShowCheckout(true);
+              }}
+            />
+          ) : selectedPlan && (
+            <CheckoutPage
+              selectedPlan={selectedPlan}
+              onBack={() => setShowCheckout(false)}
+              onComplete={(paymentData) => {
+                toast({
+                  title: "Payment completed",
+                  description: `Welcome to ${selectedPlan.duration} plan!`
+                });
+                setPaymentOpen(false);
+                setShowCheckout(false);
+                setSelectedPlan(null);
+              }}
+            />
+          )}
         </DialogContent>
       </Dialog>
 
