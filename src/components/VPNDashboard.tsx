@@ -173,8 +173,8 @@ const VPNDashboard = () => {
       
       {/* Main Content */}
       <div className="relative z-10 container mx-auto p-6 space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      {/* Header */}
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-3">
             <img src={shieldIcon} alt="xxVPN" className="w-12 h-12" />
             <div>
@@ -186,7 +186,7 @@ const VPNDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap justify-end">
             {/* Referral Section */}
             <Popover>
               <PopoverTrigger asChild>
