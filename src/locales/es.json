@@ -10,7 +10,17 @@
       "ultraFast": "Ultra-rápido",
       "secure": "Seguro", 
       "ultraSecure": "Ultra-seguro",
-      "off": "Desactivado"
+      "off": "Desactivado",
+      "gamingStreaming": "Juegos y Streaming",
+      "standardProtection": "Protección VPN Estándar",
+      "noVPN": "Sin VPN",
+      "ultraFastDesc": "Conexión ultra-rápida para juegos y streaming con latencia mínima.",
+      "maximumSpeed": "Velocidad máxima",
+      "secureDesc": "Túnel VPN encriptado que proporciona protección de privacidad estándar.",
+      "encryptedTunnel": "Túnel encriptado",
+      "metadataShredding": "Destrucción de Metadatos",
+      "metadataShredDesc": "Destrucción de metadatos usando cMixx vía XX Network.",
+      "metadataProtection": "Protección de metadatos"
     },
     "connect": "Conectar",
     "disconnect": "Desconectar",
@@ -55,7 +65,10 @@
   "settings": {
     "title": "Configuración",
     "appearance": {
-      "title": "Apariencia"
+      "title": "Apariencia",
+      "description": "Personaliza la apariencia y tema de la aplicación",
+      "theme": "Tema",
+      "themeDesc": "Elige entre modo claro y oscuro"
     },
     "protocol": {
       "title": "Configuración de Protocolo",

@@ -399,7 +399,7 @@ const VPNDashboard = () => {
                 </div>
                 <div>
                   <CardTitle className="text-base">{t('dashboard.connectionModes.ultraFast')}</CardTitle>
-                  <CardDescription className="text-xs">Gaming & Streaming</CardDescription>
+                  <CardDescription className="text-xs">{t('dashboard.connectionModes.gamingStreaming')}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -407,14 +407,14 @@ const VPNDashboard = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">DIRECT</Badge>
-                  <span className="text-xs text-muted-foreground">No VPN</span>
+                  <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.noVPN')}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Ultra-fast connection for gaming and streaming with minimal latency.
+                  {t('dashboard.connectionModes.ultraFastDesc')}
                 </p>
                 <div className="flex items-center gap-2 text-xs">
                   <Zap className="w-3 h-3 text-warning" />
-                  <span>Maximum speed</span>
+                  <span>{t('dashboard.connectionModes.maximumSpeed')}</span>
                 </div>
               </div>
             </CardContent>
@@ -429,7 +429,7 @@ const VPNDashboard = () => {
                 </div>
                 <div>
                   <CardTitle className="text-base">{t('dashboard.connectionModes.secure')}</CardTitle>
-                  <CardDescription className="text-xs">Standard VPN Protection</CardDescription>
+                  <CardDescription className="text-xs">{t('dashboard.connectionModes.standardProtection')}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -440,11 +440,11 @@ const VPNDashboard = () => {
                   <span className="text-xs text-muted-foreground">OpenVPN/WireGuard</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Encrypted VPN tunnel providing standard privacy protection.
+                  {t('dashboard.connectionModes.secureDesc')}
                 </p>
                 <div className="flex items-center gap-2 text-xs">
                   <Shield className="w-3 h-3 text-primary" />
-                  <span>Encrypted tunnel</span>
+                  <span>{t('dashboard.connectionModes.encryptedTunnel')}</span>
                 </div>
               </div>
             </CardContent>
@@ -605,15 +605,15 @@ const VPNDashboard = () => {
                 <CardHeader>
                   <CardTitle>{t('settings.appearance.title')}</CardTitle>
                   <CardDescription>
-                    Customize the app's appearance and theme
+                    {t('settings.appearance.description')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-medium">Theme</h4>
+                      <h4 className="font-medium">{t('settings.appearance.theme')}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Choose between light and dark mode
+                        {t('settings.appearance.themeDesc')}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
