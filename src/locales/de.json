@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN Dashboard",
+    "status": {
+      "connected": "Verbunden",
+      "connecting": "Verbindung wird hergestellt...",
+      "disconnected": "Getrennt"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-schnell",
+      "secure": "Sicher", 
+      "ultraSecure": "Ultra-sicher",
+      "off": "Aus"
+    },
+    "connect": "Verbinden",
+    "disconnect": "Trennen",
+    "location": "Standort",
+    "auto": "Automatisch",
+    "statistics": {
+      "title": "Statistiken",
+      "dataTransferred": "Übertragene Daten",
+      "sessionTime": "Sitzungszeit",
+      "xxCoinsEarned": "XX Coins Verdient"
+    },
+    "tabs": {
+      "main": "Hauptseite",
+      "servers": "Server", 
+      "apps": "Apps",
+      "devices": "Geräte",
+      "settings": "Einstellungen"
+    }
+  },
+  "auth": {
+    "title": "Willkommen bei xxVPN",
+    "subtitle": "Sichere, private und quantenresistente VPN-Schutz",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort Bestätigen",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Haben Sie noch kein Konto?",
+    "hasAccount": "Haben Sie bereits ein Konto?",
+    "signInWithGoogle": "Mit Google anmelden",
+    "signUpWithGoogle": "Mit Google registrieren"
+  },
+  "settings": {
+    "appearance": {
+      "title": "Erscheinungsbild",
+      "theme": "Design",
+      "light": "Hell",
+      "dark": "Dunkel", 
+      "system": "System"
+    },
+    "protocol": {
+      "title": "Protokoll-Einstellungen",
+      "description": "Wählen Sie Ihr Verbindungsprotokoll"
+    },
+    "xxNetwork": {
+      "title": "XX-Netzwerk Integration",
+      "enabled": "Aktiviert",
+      "description": "Quantenresistente Nachrichtenübertragung und Metadaten-Schutz"
+    },
+    "language": {
+      "title": "Sprache",
+      "description": "Wählen Sie Ihre bevorzugte Sprache"
+    }
+  },
+  "common": {
+    "loading": "xxVPN wird geladen...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "warning": "Warnung",
+    "error": "Fehler",
+    "success": "Erfolg"
+  }
+}

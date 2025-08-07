@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN 대시보드",
+    "status": {
+      "connected": "연결됨",
+      "connecting": "연결 중...",
+      "disconnected": "연결 끊김"
+    },
+    "connectionModes": {
+      "ultraFast": "초고속",
+      "secure": "보안", 
+      "ultraSecure": "초보안",
+      "off": "끄기"
+    },
+    "connect": "연결",
+    "disconnect": "연결 끊기",
+    "location": "위치",
+    "auto": "자동",
+    "statistics": {
+      "title": "통계",
+      "dataTransferred": "전송된 데이터",
+      "sessionTime": "세션 시간",
+      "xxCoinsEarned": "획득한 XX 코인"
+    },
+    "tabs": {
+      "main": "메인",
+      "servers": "서버", 
+      "apps": "앱",
+      "devices": "기기",
+      "settings": "설정"
+    }
+  },
+  "auth": {
+    "title": "xxVPN에 오신 것을 환영합니다",
+    "subtitle": "안전하고 사적이며 양자 저항성 VPN 보호",
+    "signIn": "로그인",
+    "signUp": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "noAccount": "계정이 없으신가요?",
+    "hasAccount": "이미 계정이 있으신가요?",
+    "signInWithGoogle": "Google로 로그인",
+    "signUpWithGoogle": "Google로 회원가입"
+  },
+  "settings": {
+    "appearance": {
+      "title": "외관",
+      "theme": "테마",
+      "light": "밝음",
+      "dark": "어두움", 
+      "system": "시스템"
+    },
+    "protocol": {
+      "title": "프로토콜 설정",
+      "description": "연결 프로토콜 선택"
+    },
+    "xxNetwork": {
+      "title": "XX 네트워크 통합",
+      "enabled": "활성화됨",
+      "description": "양자 저항성 메시징 및 메타데이터 보호"
+    },
+    "language": {
+      "title": "언어",
+      "description": "선호하는 언어 선택"
+    }
+  },
+  "common": {
+    "loading": "xxVPN 로딩 중...",
+    "save": "저장",
+    "cancel": "취소",
+    "close": "닫기",
+    "edit": "편집",
+    "delete": "삭제",
+    "confirm": "확인",
+    "warning": "경고",
+    "error": "오류",
+    "success": "성공"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "Painel xxVPN",
+    "status": {
+      "connected": "Conectado",
+      "connecting": "Conectando...",
+      "disconnected": "Desconectado"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-rápido",
+      "secure": "Seguro", 
+      "ultraSecure": "Ultra-seguro",
+      "off": "Desligado"
+    },
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "location": "Localização",
+    "auto": "Automático",
+    "statistics": {
+      "title": "Estatísticas",
+      "dataTransferred": "Dados Transferidos",
+      "sessionTime": "Tempo de Sessão",
+      "xxCoinsEarned": "XX Coins Ganhas"
+    },
+    "tabs": {
+      "main": "Principal",
+      "servers": "Servidores", 
+      "apps": "Apps",
+      "devices": "Dispositivos",
+      "settings": "Configurações"
+    }
+  },
+  "auth": {
+    "title": "Bem-vindo ao xxVPN",
+    "subtitle": "Proteção VPN segura, privada e resistente a computadores quânticos",
+    "signIn": "Entrar",
+    "signUp": "Registrar",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "noAccount": "Não tem uma conta?",
+    "hasAccount": "Já tem uma conta?",
+    "signInWithGoogle": "Entrar com Google",
+    "signUpWithGoogle": "Registrar com Google"
+  },
+  "settings": {
+    "appearance": {
+      "title": "Aparência",
+      "theme": "Tema",
+      "light": "Claro",
+      "dark": "Escuro", 
+      "system": "Sistema"
+    },
+    "protocol": {
+      "title": "Configurações de Protocolo",
+      "description": "Escolha seu protocolo de conexão"
+    },
+    "xxNetwork": {
+      "title": "Integração da Rede XX",
+      "enabled": "Ativado",
+      "description": "Mensagens resistentes a computadores quânticos e proteção de metadados"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Escolha seu idioma preferido"
+    }
+  },
+  "common": {
+    "loading": "Carregando xxVPN...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "confirm": "Confirmar",
+    "warning": "Aviso",
+    "error": "Erro",
+    "success": "Sucesso"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "لوحة تحكم xxVPN",
+    "status": {
+      "connected": "متصل",
+      "connecting": "جاري الاتصال...",
+      "disconnected": "منقطع"
+    },
+    "connectionModes": {
+      "ultraFast": "فائق السرعة",
+      "secure": "آمن", 
+      "ultraSecure": "فائق الأمان",
+      "off": "مطفئ"
+    },
+    "connect": "اتصال",
+    "disconnect": "قطع الاتصال",
+    "location": "الموقع",
+    "auto": "تلقائي",
+    "statistics": {
+      "title": "الإحصائيات",
+      "dataTransferred": "البيانات المنقولة",
+      "sessionTime": "وقت الجلسة",
+      "xxCoinsEarned": "عملات XX المكتسبة"
+    },
+    "tabs": {
+      "main": "الرئيسية",
+      "servers": "الخوادم", 
+      "apps": "التطبيقات",
+      "devices": "الأجهزة",
+      "settings": "الإعدادات"
+    }
+  },
+  "auth": {
+    "title": "مرحباً بك في xxVPN",
+    "subtitle": "حماية VPN آمنة وخاصة ومقاومة للحوسبة الكمية",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "signInWithGoogle": "تسجيل الدخول بـ Google",
+    "signUpWithGoogle": "إنشاء حساب بـ Google"
+  },
+  "settings": {
+    "appearance": {
+      "title": "المظهر",
+      "theme": "المظهر",
+      "light": "فاتح",
+      "dark": "داكن", 
+      "system": "النظام"
+    },
+    "protocol": {
+      "title": "إعدادات البروتوكول",
+      "description": "اختر بروتوكول الاتصال"
+    },
+    "xxNetwork": {
+      "title": "تكامل شبكة XX",
+      "enabled": "مفعل",
+      "description": "رسائل مقاومة للحوسبة الكمية وحماية البيانات الوصفية"
+    },
+    "language": {
+      "title": "اللغة",
+      "description": "اختر لغتك المفضلة"
+    }
+  },
+  "common": {
+    "loading": "جاري تحميل xxVPN...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "edit": "تحرير",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "warning": "تحذير",
+    "error": "خطأ",
+    "success": "نجح"
+  }
+}

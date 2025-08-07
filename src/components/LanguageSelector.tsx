@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useTranslation } from 'react-i18next';
 import languagesData from '@/data/languages.json';
 
 interface Language {
@@ -12,11 +13,14 @@ interface Language {
 }
 
 const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(languagesData.languages[0]);
+  const { i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>(
+    languagesData.languages.find(lang => lang.code === i18n.language) || languagesData.languages[0]
+  );
 
   const handleLanguageChange = (language: Language) => {
     setSelectedLanguage(language);
-    // TODO: Implement actual language switching logic
+    i18n.changeLanguage(language.code);
     console.log('Language changed to:', language.code);
   };
 

@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN 仪表板",
+    "status": {
+      "connected": "已连接",
+      "connecting": "连接中...",
+      "disconnected": "已断开"
+    },
+    "connectionModes": {
+      "ultraFast": "超高速",
+      "secure": "安全", 
+      "ultraSecure": "超安全",
+      "off": "关闭"
+    },
+    "connect": "连接",
+    "disconnect": "断开",
+    "location": "位置",
+    "auto": "自动",
+    "statistics": {
+      "title": "统计",
+      "dataTransferred": "传输数据",
+      "sessionTime": "会话时间",
+      "xxCoinsEarned": "获得的XX币"
+    },
+    "tabs": {
+      "main": "主页",
+      "servers": "服务器", 
+      "apps": "应用",
+      "devices": "设备",
+      "settings": "设置"
+    }
+  },
+  "auth": {
+    "title": "欢迎使用xxVPN",
+    "subtitle": "安全、私密、抗量子VPN保护",
+    "signIn": "登录",
+    "signUp": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "forgotPassword": "忘记密码？",
+    "noAccount": "没有账户？",
+    "hasAccount": "已有账户？",
+    "signInWithGoogle": "使用Google登录",
+    "signUpWithGoogle": "使用Google注册"
+  },
+  "settings": {
+    "appearance": {
+      "title": "外观",
+      "theme": "主题",
+      "light": "浅色",
+      "dark": "深色", 
+      "system": "系统"
+    },
+    "protocol": {
+      "title": "协议设置",
+      "description": "选择您的连接协议"
+    },
+    "xxNetwork": {
+      "title": "XX网络集成",
+      "enabled": "已启用",
+      "description": "抗量子消息传递和元数据保护"
+    },
+    "language": {
+      "title": "语言",
+      "description": "选择您的首选语言"
+    }
+  },
+  "common": {
+    "loading": "加载xxVPN中...",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "edit": "编辑",
+    "delete": "删除",
+    "confirm": "确认",
+    "warning": "警告",
+    "error": "错误",
+    "success": "成功"
+  }
+}

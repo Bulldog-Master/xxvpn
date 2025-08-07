@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN डैशबोर्ड",
+    "status": {
+      "connected": "जुड़ा हुआ",
+      "connecting": "जुड़ रहा है...",
+      "disconnected": "डिस्कनेक्ट"
+    },
+    "connectionModes": {
+      "ultraFast": "अल्ट्रा-फास्ट",
+      "secure": "सुरक्षित", 
+      "ultraSecure": "अल्ट्रा-सुरक्षित",
+      "off": "बंद"
+    },
+    "connect": "कनेक्ट",
+    "disconnect": "डिस्कनेक्ट",
+    "location": "स्थान",
+    "auto": "ऑटो",
+    "statistics": {
+      "title": "आंकड़े",
+      "dataTransferred": "डेटा स्थानांतरित",
+      "sessionTime": "सत्र समय",
+      "xxCoinsEarned": "अर्जित XX सिक्के"
+    },
+    "tabs": {
+      "main": "मुख्य",
+      "servers": "सर्वर", 
+      "apps": "ऐप्स",
+      "devices": "डिवाइस",
+      "settings": "सेटिंग्स"
+    }
+  },
+  "auth": {
+    "title": "xxVPN में आपका स्वागत है",
+    "subtitle": "सुरक्षित, निजी और क्वांटम प्रतिरोधी VPN सुरक्षा",
+    "signIn": "साइन इन",
+    "signUp": "साइन अप",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "noAccount": "खाता नहीं है?",
+    "hasAccount": "पहले से खाता है?",
+    "signInWithGoogle": "Google से साइन इन करें",
+    "signUpWithGoogle": "Google से साइन अप करें"
+  },
+  "settings": {
+    "appearance": {
+      "title": "दिखावट",
+      "theme": "थीम",
+      "light": "हल्का",
+      "dark": "गहरा", 
+      "system": "सिस्टम"
+    },
+    "protocol": {
+      "title": "प्रोटोकॉल सेटिंग्स",
+      "description": "अपना कनेक्शन प्रोटोकॉल चुनें"
+    },
+    "xxNetwork": {
+      "title": "XX नेटवर्क एकीकरण",
+      "enabled": "सक्षम",
+      "description": "क्वांटम प्रतिरोधी संदेश और मेटाडेटा सुरक्षा"
+    },
+    "language": {
+      "title": "भाषा",
+      "description": "अपनी पसंदीदा भाषा चुनें"
+    }
+  },
+  "common": {
+    "loading": "xxVPN लोड हो रहा है...",
+    "save": "सेव करें",
+    "cancel": "रद्द करें",
+    "close": "बंद करें",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "confirm": "पुष्टि करें",
+    "warning": "चेतावनी",
+    "error": "त्रुटि",
+    "success": "सफलता"
+  }
+}

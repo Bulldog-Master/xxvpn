@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN ダッシュボード",
+    "status": {
+      "connected": "接続済み",
+      "connecting": "接続中...",
+      "disconnected": "切断中"
+    },
+    "connectionModes": {
+      "ultraFast": "超高速",
+      "secure": "セキュア", 
+      "ultraSecure": "超セキュア",
+      "off": "オフ"
+    },
+    "connect": "接続",
+    "disconnect": "切断",
+    "location": "場所",
+    "auto": "自動",
+    "statistics": {
+      "title": "統計",
+      "dataTransferred": "転送データ",
+      "sessionTime": "セッション時間",
+      "xxCoinsEarned": "獲得XX コイン"
+    },
+    "tabs": {
+      "main": "メイン",
+      "servers": "サーバー", 
+      "apps": "アプリ",
+      "devices": "デバイス",
+      "settings": "設定"
+    }
+  },
+  "auth": {
+    "title": "xxVPNへようこそ",
+    "subtitle": "安全でプライベート、量子耐性VPN保護",
+    "signIn": "サインイン",
+    "signUp": "サインアップ",
+    "email": "メール",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "noAccount": "アカウントをお持ちでない方",
+    "hasAccount": "すでにアカウントをお持ちの方",
+    "signInWithGoogle": "Googleでサインイン",
+    "signUpWithGoogle": "Googleでサインアップ"
+  },
+  "settings": {
+    "appearance": {
+      "title": "外観",
+      "theme": "テーマ",
+      "light": "ライト",
+      "dark": "ダーク", 
+      "system": "システム"
+    },
+    "protocol": {
+      "title": "プロトコル設定",
+      "description": "接続プロトコルを選択"
+    },
+    "xxNetwork": {
+      "title": "XXネットワーク統合",
+      "enabled": "有効",
+      "description": "量子耐性メッセージングとメタデータ保護"
+    },
+    "language": {
+      "title": "言語",
+      "description": "お好みの言語を選択"
+    }
+  },
+  "common": {
+    "loading": "xxVPN読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "edit": "編集",
+    "delete": "削除",
+    "confirm": "確認",
+    "warning": "警告",
+    "error": "エラー",
+    "success": "成功"
+  }
+}

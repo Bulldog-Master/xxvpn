@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "Panel de xxVPN",
+    "status": {
+      "connected": "Conectado",
+      "connecting": "Conectando...",
+      "disconnected": "Desconectado"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-rápido",
+      "secure": "Seguro", 
+      "ultraSecure": "Ultra-seguro",
+      "off": "Desactivado"
+    },
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "location": "Ubicación",
+    "auto": "Automático",
+    "statistics": {
+      "title": "Estadísticas",
+      "dataTransferred": "Datos Transferidos",
+      "sessionTime": "Tiempo de Sesión",
+      "xxCoinsEarned": "XX Coins Ganadas"
+    },
+    "tabs": {
+      "main": "Principal",
+      "servers": "Servidores", 
+      "apps": "Aplicaciones",
+      "devices": "Dispositivos",
+      "settings": "Configuración"
+    }
+  },
+  "auth": {
+    "title": "Bienvenido a xxVPN",
+    "subtitle": "Protección VPN segura, privada y resistente a la computación cuántica",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes una cuenta?",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "signInWithGoogle": "Iniciar sesión con Google",
+    "signUpWithGoogle": "Registrarse con Google"
+  },
+  "settings": {
+    "appearance": {
+      "title": "Apariencia",
+      "theme": "Tema",
+      "light": "Claro",
+      "dark": "Oscuro", 
+      "system": "Sistema"
+    },
+    "protocol": {
+      "title": "Configuración de Protocolo",
+      "description": "Elige tu protocolo de conexión"
+    },
+    "xxNetwork": {
+      "title": "Integración de Red XX",
+      "enabled": "Habilitado",
+      "description": "Mensajería resistente a computación cuántica y protección de metadatos"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Elige tu idioma preferido"
+    }
+  },
+  "common": {
+    "loading": "Cargando xxVPN...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "warning": "Advertencia",
+    "error": "Error",
+    "success": "Éxito"
+  }
+}

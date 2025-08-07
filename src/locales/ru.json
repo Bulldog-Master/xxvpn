@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "Панель xxVPN",
+    "status": {
+      "connected": "Подключено",
+      "connecting": "Подключение...",
+      "disconnected": "Отключено"
+    },
+    "connectionModes": {
+      "ultraFast": "Ультра-быстрый",
+      "secure": "Безопасный", 
+      "ultraSecure": "Ультра-безопасный",
+      "off": "Выключен"
+    },
+    "connect": "Подключить",
+    "disconnect": "Отключить",
+    "location": "Местоположение",
+    "auto": "Автоматически",
+    "statistics": {
+      "title": "Статистика",
+      "dataTransferred": "Данные Переданы",
+      "sessionTime": "Время Сессии",
+      "xxCoinsEarned": "XX Коинов Заработано"
+    },
+    "tabs": {
+      "main": "Главная",
+      "servers": "Серверы", 
+      "apps": "Приложения",
+      "devices": "Устройства",
+      "settings": "Настройки"
+    }
+  },
+  "auth": {
+    "title": "Добро пожаловать в xxVPN",
+    "subtitle": "Безопасная, приватная и квантово-устойчивая VPN защита",
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердить Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "signInWithGoogle": "Войти через Google",
+    "signUpWithGoogle": "Регистрация через Google"
+  },
+  "settings": {
+    "appearance": {
+      "title": "Внешний вид",
+      "theme": "Тема",
+      "light": "Светлая",
+      "dark": "Тёмная", 
+      "system": "Системная"
+    },
+    "protocol": {
+      "title": "Настройки Протокола",
+      "description": "Выберите ваш протокол подключения"
+    },
+    "xxNetwork": {
+      "title": "Интеграция XX Сети",
+      "enabled": "Включено",
+      "description": "Квантово-устойчивые сообщения и защита метаданных"
+    },
+    "language": {
+      "title": "Язык",
+      "description": "Выберите предпочитаемый язык"
+    }
+  },
+  "common": {
+    "loading": "Загрузка xxVPN...",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "confirm": "Подтвердить",
+    "warning": "Предупреждение",
+    "error": "Ошибка",
+    "success": "Успех"
+  }
+}

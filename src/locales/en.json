@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "xxVPN Dashboard",
+    "status": {
+      "connected": "Connected",
+      "connecting": "Connecting...",
+      "disconnected": "Disconnected"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-fast",
+      "secure": "Secure", 
+      "ultraSecure": "Ultra-secure",
+      "off": "Off"
+    },
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "location": "Location",
+    "auto": "Auto",
+    "statistics": {
+      "title": "Statistics",
+      "dataTransferred": "Data Transferred",
+      "sessionTime": "Session Time",
+      "xxCoinsEarned": "XX Coins Earned"
+    },
+    "tabs": {
+      "main": "Main",
+      "servers": "Servers", 
+      "apps": "Apps",
+      "devices": "Devices",
+      "settings": "Settings"
+    }
+  },
+  "auth": {
+    "title": "Welcome to xxVPN",
+    "subtitle": "Secure, private, and quantum-resistant VPN protection",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInWithGoogle": "Sign in with Google",
+    "signUpWithGoogle": "Sign up with Google"
+  },
+  "settings": {
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark", 
+      "system": "System"
+    },
+    "protocol": {
+      "title": "Protocol Settings",
+      "description": "Choose your connection protocol"
+    },
+    "xxNetwork": {
+      "title": "XX Network Integration",
+      "enabled": "Enabled",
+      "description": "Quantum-resistant messaging and metadata protection"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language"
+    }
+  },
+  "common": {
+    "loading": "Loading xxVPN...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "warning": "Warning",
+    "error": "Error",
+    "success": "Success"
+  }
+}
