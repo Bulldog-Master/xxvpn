@@ -225,11 +225,11 @@ export default function PricingPlans({ onPlanSelect }: PricingPlansProps) {
             <h2 className="text-2xl font-bold text-center">You can pay with</h2>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex justify-center items-center gap-4 overflow-x-auto">
               {paymentMethods.map((method, index) => (
-                <div key={index} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-background/50">
+                <div key={index} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 whitespace-nowrap">
                   <span className="text-lg">{method.icon}</span>
-                  <span className="font-medium">{method.name}</span>
+                  <span className="font-medium text-sm">{method.name}</span>
                 </div>
               ))}
             </div>
