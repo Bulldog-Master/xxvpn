@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "Tableau de bord xxVPN",
+    "welcomeBack": "Bon retour",
     "status": {
       "connected": "Connecté",
       "connecting": "Connexion...",
@@ -50,6 +51,20 @@
       "metadataShredding": "Destruction des Métadonnées",
       "metadataShredDesc": "Destruction des métadonnées en utilisant cMixx via XX Network.",
       "metadataProtection": "Protection des métadonnées"
+    },
+    "referrals": {
+      "program": "Programme de Parrainage",
+      "yourReferrals": "Vos Parrainages",
+      "totalUsers": "Utilisateurs Totaux", 
+      "yourLink": "Votre Lien de Parrainage",
+      "shareMessage": "Partagez votre lien de parrainage pour gagner des XX coins pour chaque nouvel utilisateur qui rejoint !",
+      "referrals": "parrainages",
+      "users": "utilisateurs"
+    },
+    "subscriptionTier": {
+      "free": "Gratuit",
+      "premium": "Premium", 
+      "enterprise": "Entreprise"
     }
   },
   "auth": {

@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "Dashboard xxVPN",
+    "welcomeBack": "Bentornato",
     "status": {
       "connected": "Connesso",
       "connecting": "Connessione in corso...",
@@ -50,6 +51,20 @@
       "metadataShredding": "Distruzione Metadati",
       "metadataShredDesc": "Distruzione metadati usando cMixx via XX Network.",
       "metadataProtection": "Protezione metadati"
+    },
+    "referrals": {
+      "program": "Programma Referral",
+      "yourReferrals": "I Tuoi Referral",
+      "totalUsers": "Utenti Totali", 
+      "yourLink": "Il Tuo Link Referral",
+      "shareMessage": "Condividi il tuo link referral per guadagnare XX coins per ogni nuovo utente che si iscrive!",
+      "referrals": "referral",
+      "users": "utenti"
+    },
+    "subscriptionTier": {
+      "free": "Gratuito",
+      "premium": "Premium", 
+      "enterprise": "Enterprise"
     }
   },
   "auth": {

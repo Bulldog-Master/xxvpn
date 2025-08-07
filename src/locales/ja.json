@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "xxVPN ダッシュボード",
+    "welcomeBack": "おかえりなさい",
     "status": {
       "connected": "接続済み",
       "connecting": "接続中...",
@@ -28,6 +29,20 @@
       "apps": "アプリ",
       "devices": "デバイス",
       "settings": "設定"
+    },
+    "referrals": {
+      "program": "紹介プログラム",
+      "yourReferrals": "あなたの紹介",
+      "totalUsers": "総ユーザー数", 
+      "yourLink": "あなたの紹介リンク",
+      "shareMessage": "紹介リンクを共有して、新規ユーザーごとにXXコインを獲得しましょう！",
+      "referrals": "紹介",
+      "users": "ユーザー"
+    },
+    "subscriptionTier": {
+      "free": "無料",
+      "premium": "プレミアム", 
+      "enterprise": "エンタープライズ"
     }
   },
   "auth": {

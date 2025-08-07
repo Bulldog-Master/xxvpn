@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "لوحة تحكم xxVPN",
+    "welcomeBack": "مرحباً بعودتك",
     "status": {
       "connected": "متصل",
       "connecting": "جاري الاتصال...",

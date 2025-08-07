@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "xxVPN डैशबोर्ड",
+    "welcomeBack": "वापसी पर स्वागत है",
     "status": {
       "connected": "जुड़ा हुआ",
       "connecting": "जुड़ रहा है...",

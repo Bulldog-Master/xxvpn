@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "xxVPN 대시보드",
+    "welcomeBack": "다시 오신 것을 환영합니다",
     "status": {
       "connected": "연결됨",
       "connecting": "연결 중...",

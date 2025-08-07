@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "xxVPN 仪表板",
+    "welcomeBack": "欢迎回来",
     "status": {
       "connected": "已连接",
       "connecting": "连接中...",
@@ -28,6 +29,20 @@
       "apps": "应用",
       "devices": "设备",
       "settings": "设置"
+    },
+    "referrals": {
+      "program": "推荐计划",
+      "yourReferrals": "您的推荐",
+      "totalUsers": "总用户数", 
+      "yourLink": "您的推荐链接",
+      "shareMessage": "分享您的推荐链接，为每个加入的新用户赚取XX币！",
+      "referrals": "推荐",
+      "users": "用户"
+    },
+    "subscriptionTier": {
+      "free": "免费",
+      "premium": "高级版", 
+      "enterprise": "企业版"
     }
   },
   "auth": {

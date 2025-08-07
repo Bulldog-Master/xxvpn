@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "Painel xxVPN",
+    "welcomeBack": "Bem-vindo de volta",
     "status": {
       "connected": "Conectado",
       "connecting": "Conectando...",
@@ -28,6 +29,20 @@
       "apps": "Apps",
       "devices": "Dispositivos",
       "settings": "Configurações"
+    },
+    "referrals": {
+      "program": "Programa de Indicações",
+      "yourReferrals": "Suas Indicações",
+      "totalUsers": "Total de Usuários", 
+      "yourLink": "Seu Link de Indicação",
+      "shareMessage": "Compartilhe seu link de indicação para ganhar XX coins para cada novo usuário que se juntar!",
+      "referrals": "indicações",
+      "users": "usuários"
+    },
+    "subscriptionTier": {
+      "free": "Gratuito",
+      "premium": "Premium", 
+      "enterprise": "Empresarial"
     }
   },
   "auth": {
