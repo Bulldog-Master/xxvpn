@@ -182,7 +182,7 @@ const VPNDashboard = () => {
                 xxVPN
               </h1>
               <p className="text-sm text-muted-foreground">
-                Welcome back, {user?.fullName || 'User'}
+                {t('dashboard.welcomeBack')}, {user?.fullName || 'User'}
               </p>
             </div>
           </div>

@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "Panel de xxVPN",
+    "welcomeBack": "Bienvenido de vuelta",
     "status": {
       "connected": "Conectado",
       "connecting": "Conectando...",
