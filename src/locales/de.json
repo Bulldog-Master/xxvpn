@@ -77,6 +77,30 @@
       "description": "Wählen Sie Ihre bevorzugte Sprache"
     }
   },
+  "servers": {
+    "title": "Server-Auswahl",
+    "description": "Wählen Sie Ihren VPN-Server-Standort",
+    "quickConnect": "Schnellverbindung",
+    "searchPlaceholder": "Länder oder Städte suchen...",
+    "stats": {
+      "availableServers": "Verfügbare Server",
+      "acrossCountries": "In 12 Ländern",
+      "averageLoad": "Durchschnittliche Auslastung",
+      "optimalPerformance": "Optimale Leistung",
+      "yourLatency": "Ihre Latenz",
+      "toSelectedServer": "Zum ausgewählten Server"
+    },
+    "list": {
+      "title": "Verfügbare Server",
+      "description": "Wählen Sie einen Server-Standort für Ihre VPN-Verbindung",
+      "favorites": "Favoriten",
+      "allLocations": "Alle Standorte",
+      "premium": "Premium",
+      "serverId": "Server-ID",
+      "latency": "Latenz",
+      "load": "Auslastung"
+    }
+  },
   "common": {
     "loading": "xxVPN wird geladen...",
     "save": "Speichern",

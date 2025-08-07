@@ -55,6 +55,30 @@
       "currentBalance": "Saldo Actual"
     }
   },
+  "servers": {
+    "title": "Selección de Servidor",
+    "description": "Elige la ubicación de tu servidor VPN",
+    "quickConnect": "Conexión Rápida",
+    "searchPlaceholder": "Buscar países o ciudades...",
+    "stats": {
+      "availableServers": "Servidores Disponibles",
+      "acrossCountries": "A través de 12 países",
+      "averageLoad": "Carga Promedio",
+      "optimalPerformance": "Rendimiento óptimo",
+      "yourLatency": "Tu Latencia",
+      "toSelectedServer": "Al servidor seleccionado"
+    },
+    "list": {
+      "title": "Servidores Disponibles",
+      "description": "Selecciona una ubicación de servidor para tu conexión VPN",
+      "favorites": "Favoritos",
+      "allLocations": "Todas las Ubicaciones",
+      "premium": "Premium",
+      "serverId": "ID del Servidor",
+      "latency": "latencia",
+      "load": "carga"
+    }
+  },
   "common": {
     "loading": "Cargando xxVPN...",
     "save": "Guardar",

@@ -77,6 +77,30 @@
       "description": "Choose your preferred language"
     }
   },
+  "servers": {
+    "title": "Server Selection",
+    "description": "Choose your VPN server location",
+    "quickConnect": "Quick Connect",
+    "searchPlaceholder": "Search countries or cities...",
+    "stats": {
+      "availableServers": "Available Servers",
+      "acrossCountries": "Across 12 countries",
+      "averageLoad": "Average Load",
+      "optimalPerformance": "Optimal performance",
+      "yourLatency": "Your Latency",
+      "toSelectedServer": "To selected server"
+    },
+    "list": {
+      "title": "Available Servers",
+      "description": "Select a server location for your VPN connection",
+      "favorites": "Favorites",
+      "allLocations": "All Locations",
+      "premium": "Premium",
+      "serverId": "Server ID",
+      "latency": "latency",
+      "load": "load"
+    }
+  },
   "common": {
     "loading": "Loading xxVPN...",
     "save": "Save",
