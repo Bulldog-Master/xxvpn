@@ -26,6 +26,7 @@ const LanguageSelector = () => {
         <Button variant="ghost" size="sm" className="bg-card/50 hover:bg-card/70 px-3 py-2 h-8">
           <Languages className="w-4 h-4 mr-2" />
           <span className="text-sm">{selectedLanguage.flag}</span>
+          <span className="text-xs ml-1 hidden sm:inline">{selectedLanguage.code.toUpperCase()}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
