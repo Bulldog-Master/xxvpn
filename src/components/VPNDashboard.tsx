@@ -190,7 +190,7 @@ const VPNDashboard = () => {
             {/* Referral Section */}
             <Popover>
               <PopoverTrigger asChild>
-                <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer">
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer group">
                   <CardContent className="flex items-center gap-3 p-3">
                     <div className="flex items-center gap-2">
                       <Users className="w-4 h-4 text-primary" />
@@ -199,7 +199,7 @@ const VPNDashboard = () => {
                         <div className="text-muted-foreground">{totalUsers.toLocaleString()} users</div>
                       </div>
                     </div>
-                    <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                    <ChevronDown className="w-3 h-3 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </CardContent>
                 </Card>
               </PopoverTrigger>
