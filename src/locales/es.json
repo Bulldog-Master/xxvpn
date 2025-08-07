@@ -30,7 +30,10 @@
       "title": "Estadísticas",
       "dataTransferred": "Datos Transferidos",
       "sessionTime": "Tiempo de Sesión",
-      "xxCoinsEarned": "XX Coins Ganadas"
+      "networkLatency": "Latencia de Red",
+      "xxCoinsEarned": "XX Coins Ganadas",
+      "currentSession": "Sesión actual",
+      "averagePing": "Ping promedio"
     },
     "tabs": {
       "main": "Principal",
@@ -42,6 +45,18 @@
       "settings": "Configuración",
       "usage": "Uso",
       "history": "Historial"
+    },
+    "usage": {
+      "todaysUsage": "Uso de Hoy",
+      "ultraFastMode": "Modo Ultra-rápido",
+      "secureMode": "Modo Seguro",
+      "ultraSecureMode": "Modo Ultra-seguro"
+    },
+    "history": {
+      "recentSessions": "Sesiones Recientes",
+      "fastMode": "Modo Rápido",
+      "privacyMode": "Modo Privacidad",
+      "mode": "Modo"
     },
     "menu": {
       "editName": "Editar Nombre",

@@ -174,7 +174,7 @@ const VPNDashboard = () => {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto p-6 space-y-6">
       {/* Header */}
-        <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={shieldIcon} alt="xxVPN" className="w-12 h-12" />
             <div>
@@ -186,7 +186,7 @@ const VPNDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4 flex-wrap justify-end">
+          <div className="flex items-center gap-4">
             {/* Referral Section */}
             <Popover>
               <PopoverTrigger asChild>
@@ -493,7 +493,7 @@ const VPNDashboard = () => {
                 <div className="grid md:grid-cols-3 gap-4">
                   <Card className="bg-card/80 backdrop-blur-sm">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">Data Transfer</CardTitle>
+                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.dataTransferred')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-primary">2.4 GB</div>
@@ -503,21 +503,21 @@ const VPNDashboard = () => {
                   
                   <Card className="bg-card/80 backdrop-blur-sm">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">Session Time</CardTitle>
+                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.sessionTime')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-success">2h 34m</div>
-                      <div className="text-xs text-muted-foreground">Current session</div>
+                      <div className="text-xs text-muted-foreground">{t('dashboard.statistics.currentSession')}</div>
                     </CardContent>
                   </Card>
                   
                   <Card className="bg-card/80 backdrop-blur-sm">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">Network Latency</CardTitle>
+                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.networkLatency')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-warning">42ms</div>
-                      <div className="text-xs text-muted-foreground">Average ping</div>
+                      <div className="text-xs text-muted-foreground">{t('dashboard.statistics.averagePing')}</div>
                     </CardContent>
                   </Card>
                 </div>
