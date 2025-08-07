@@ -10,7 +10,17 @@
       "ultraFast": "Ultra-fast",
       "secure": "Secure", 
       "ultraSecure": "Ultra-secure",
-      "off": "Off"
+      "off": "Off",
+      "gamingStreaming": "Gaming & Streaming",
+      "standardProtection": "Standard VPN Protection",
+      "metadataShredding": "Metadata Shredding",
+      "noVPN": "No VPN",
+      "ultraFastDesc": "Ultra-fast connection for gaming and streaming with minimal latency.",
+      "maximumSpeed": "Maximum speed",
+      "secureDesc": "Encrypted VPN tunnel providing standard privacy protection.",
+      "encryptedTunnel": "Encrypted tunnel",
+      "metadataShredDesc": "Metadata-shredding using cMixx via XX Network.",
+      "metadataProtection": "Metadata protection"
     },
     "connect": "Connect",
     "disconnect": "Disconnect",
@@ -25,9 +35,26 @@
     "tabs": {
       "main": "Main",
       "servers": "Servers", 
-      "apps": "Apps",
+      "network": "Network",
+      "apps": "Applications",
       "devices": "Devices",
-      "settings": "Settings"
+      "payments": "Payments",
+      "settings": "Settings",
+      "usage": "Usage",
+      "history": "History"
+    },
+    "menu": {
+      "editName": "Edit Name",
+      "customerSupport": "Customer Support",
+      "devices": "Devices",
+      "payments": "Payments",
+      "logout": "Logout"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "Ultra-fast Mode: Direct connection for gaming and streaming",
+      "secureActive": "Secure Mode: Encrypted VPN tunnel (OpenVPN/WireGuard) active",
+      "ultraSecureActive": "Ultra Secure Mode: Metadata-shredding via XX Network cMixx active",
+      "notProtected": "Your traffic is not protected"
     }
   },
   "auth": {
@@ -48,7 +75,9 @@
     "title": "Settings",
     "appearance": {
       "title": "Appearance",
+      "description": "Customize the app's appearance and theme",
       "theme": "Theme",
+      "themeDesc": "Choose between light and dark mode",
       "light": "Light",
       "dark": "Dark", 
       "system": "System"
