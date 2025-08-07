@@ -82,9 +82,9 @@
       "users": "usuarios"
     },
     "subscriptionTier": {
-      "free": "gratuito",
-      "premium": "premium", 
-      "enterprise": "empresarial"
+      "free": "Gratuito",
+      "premium": "Premium", 
+      "enterprise": "Empresarial"
     }
   },
   "settings": {
