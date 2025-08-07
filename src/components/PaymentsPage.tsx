@@ -81,6 +81,52 @@ const PaymentsPage = () => {
             <CardTitle className="text-2xl font-semibold">Payments</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Payment Methods Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-medium">Payment Methods</h2>
+              
+              <div className="grid gap-3">
+                <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <CreditCard className="w-6 h-6 text-primary" />
+                    <div className="flex-1">
+                      <h3 className="font-medium">Credit/Debit Card</h3>
+                      <p className="text-sm text-muted-foreground">Visa, Mastercard, American Express</p>
+                    </div>
+                    <Button variant="outline" size="sm">Add Card</Button>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
+                      P
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium">PayPal</h3>
+                      <p className="text-sm text-muted-foreground">Fast and secure payments</p>
+                    </div>
+                    <Button variant="outline" size="sm">Connect</Button>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <div className="w-6 h-6 text-primary">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium">Cryptocurrency</h3>
+                      <p className="text-sm text-muted-foreground">Bitcoin, Ethereum, XX Coin</p>
+                    </div>
+                    <Button variant="outline" size="sm">Setup</Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
             {/* Your Orders Section */}
             <div className="space-y-4">
               <h2 className="text-xl font-medium">Your orders</h2>

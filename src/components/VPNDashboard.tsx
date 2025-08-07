@@ -71,7 +71,7 @@ const VPNDashboard = () => {
   const [selectedServer, setSelectedServer] = useState('Auto');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [supportOpen, setSupportOpen] = useState(false);
-  const [paymentOpen, setPaymentOpen] = useState(false);
+  
   const [supportMessage, setSupportMessage] = useState('');
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [editingName, setEditingName] = useState(false);
@@ -317,7 +317,7 @@ const VPNDashboard = () => {
                   <Monitor className="w-4 h-4 mr-2" />
                   Devices
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => setPaymentOpen(true)}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('payments')}>
                   <CreditCard className="w-4 h-4 mr-2" />
                   Payments
                 </DropdownMenuItem>
@@ -768,69 +768,6 @@ const VPNDashboard = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Payment Options Modal */}
-      <Dialog open={paymentOpen} onOpenChange={setPaymentOpen}>
-        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
-              Payment Options
-            </DialogTitle>
-            <DialogDescription>
-              Choose your preferred payment method for xxVPN premium features.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
-              <CardContent className="flex items-center gap-3 p-4">
-                <CreditCard className="w-6 h-6 text-primary" />
-                <div className="flex-1">
-                  <h3 className="font-medium">Credit/Debit Card</h3>
-                  <p className="text-sm text-muted-foreground">Visa, Mastercard, Amex</p>
-                </div>
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
-              </CardContent>
-            </Card>
-            
-            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
-              <CardContent className="flex items-center gap-3 p-4">
-                <Banknote className="w-6 h-6 text-primary" />
-                <div className="flex-1">
-                  <h3 className="font-medium">eTransfer</h3>
-                  <p className="text-sm text-muted-foreground">Interac e-Transfer (Canada)</p>
-                </div>
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
-              </CardContent>
-            </Card>
-            
-            <Card className="border-border hover:border-primary/50 transition-colors cursor-pointer">
-              <CardContent className="flex items-center gap-3 p-4">
-                <Bitcoin className="w-6 h-6 text-primary" />
-                <div className="flex-1">
-                  <h3 className="font-medium">Cryptocurrency</h3>
-                  <p className="text-sm text-muted-foreground">Bitcoin, Ethereum, XX Coin</p>
-                </div>
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
-              </CardContent>
-            </Card>
-            
-            <div className="flex justify-end gap-2 pt-4 border-t border-border">
-              <Button variant="outline" onClick={() => setPaymentOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={() => {
-                toast({
-                  title: "Payment setup",
-                  description: "Redirecting to secure payment portal..."
-                });
-                setPaymentOpen(false);
-              }}>
-                Continue
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
 
       {/* Avatar Upload Modal */}
       <Dialog open={avatarOpen} onOpenChange={setAvatarOpen}>
