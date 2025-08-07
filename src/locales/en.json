@@ -1,6 +1,7 @@
 {
   "dashboard": {
     "title": "xxVPN Dashboard",
+    "welcomeBack": "Welcome back",
     "status": {
       "connected": "Connected",
       "connecting": "Connecting...",
@@ -61,7 +62,14 @@
       "yourReferrals": "Your Referrals",
       "totalUsers": "Total Users", 
       "yourLink": "Your Referral Link",
-      "shareMessage": "Share your referral link to earn XX coins for each new user who joins!"
+      "shareMessage": "Share your referral link to earn XX coins for each new user who joins!",
+      "referrals": "referrals",
+      "users": "users"
+    },
+    "subscriptionTier": {
+      "free": "Free",
+      "premium": "Premium", 
+      "enterprise": "Enterprise"
     }
   },
   "auth": {
