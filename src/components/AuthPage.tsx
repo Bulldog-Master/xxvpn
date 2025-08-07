@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Shield, Key, Shuffle, User, Loader2, Copy, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 // Word list for passphrase generation (simplified subset)
 const WORDS = [
@@ -28,6 +29,7 @@ const AuthPage = () => {
   const [showPassphrase, setShowPassphrase] = useState(false);
   const { toast } = useToast();
   const { signIn, signUp } = useAuth();
+  const { t } = useTranslation();
 
   const generatePassphrase = () => {
     const randomWords = [];
@@ -118,18 +120,18 @@ const AuthPage = () => {
             <Shield className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl gradient-primary bg-clip-text text-transparent">
-            Welcome to xxVPN
+            {t('auth.title')}
           </CardTitle>
           <CardDescription>
-            Secure login with XX Network sleeve wallet technology
+            {t('auth.subtitle')}
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <Tabs defaultValue="signin" className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="signin">{t('auth.signIn')}</TabsTrigger>
+              <TabsTrigger value="signup">{t('auth.signUp')}</TabsTrigger>
             </TabsList>
 
             {error && (

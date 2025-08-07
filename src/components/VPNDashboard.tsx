@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from 'next-themes';
+import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -63,6 +64,7 @@ type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 const VPNDashboard = () => {
   const { user, logout, updateUser } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
@@ -154,9 +156,9 @@ const VPNDashboard = () => {
   };
 
   const statusText = {
-    connected: 'Protected',
-    connecting: 'Connecting...',
-    disconnected: 'Unprotected'
+    connected: t('dashboard.status.connected'),
+    connecting: t('dashboard.status.connecting'),
+    disconnected: t('dashboard.status.disconnected')
   };
 
   return (
@@ -333,12 +335,12 @@ const VPNDashboard = () => {
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-6 bg-muted/50">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="servers">Servers</TabsTrigger>
+            <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
+            <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="network">Network</TabsTrigger>
-            <TabsTrigger value="apps">App Routing</TabsTrigger>
-            <TabsTrigger value="devices">Devices</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
+            <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
+            <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-6">
@@ -394,7 +396,7 @@ const VPNDashboard = () => {
                   <Zap className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-base">Ultra-fast Mode</CardTitle>
+                  <CardTitle className="text-base">{t('dashboard.connectionModes.ultraFast')}</CardTitle>
                   <CardDescription className="text-xs">Gaming & Streaming</CardDescription>
                 </div>
               </div>
@@ -424,7 +426,7 @@ const VPNDashboard = () => {
                   <Shield className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-base">Secure Mode</CardTitle>
+                  <CardTitle className="text-base">{t('dashboard.connectionModes.secure')}</CardTitle>
                   <CardDescription className="text-xs">Standard VPN Protection</CardDescription>
                 </div>
               </div>
@@ -454,7 +456,7 @@ const VPNDashboard = () => {
                   <Lock className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-base">Ultra Secure Mode</CardTitle>
+                  <CardTitle className="text-base">{t('dashboard.connectionModes.ultraSecure')}</CardTitle>
                   <CardDescription className="text-xs">Metadata Shredding</CardDescription>
                 </div>
               </div>
@@ -480,7 +482,7 @@ const VPNDashboard = () => {
             {/* Additional Features - Sub Tabs */}
             <Tabs defaultValue="stats" className="space-y-4">
               <TabsList className="grid w-full grid-cols-3 bg-muted/30">
-                <TabsTrigger value="stats">Statistics</TabsTrigger>
+                <TabsTrigger value="stats">{t('dashboard.statistics.title')}</TabsTrigger>
                 <TabsTrigger value="usage">Usage</TabsTrigger>
                 <TabsTrigger value="history">History</TabsTrigger>
               </TabsList>
@@ -599,7 +601,7 @@ const VPNDashboard = () => {
               {/* Appearance Settings */}
               <Card className="bg-card/80 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle>Appearance</CardTitle>
+                  <CardTitle>{t('settings.appearance.title')}</CardTitle>
                   <CardDescription>
                     Customize the app's appearance and theme
                   </CardDescription>
