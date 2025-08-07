@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Languages } from 'lucide-react';
+import { Languages, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useTranslation } from 'react-i18next';
@@ -27,10 +27,11 @@ const LanguageSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="bg-card/50 hover:bg-card/70 px-3 py-2 h-8">
+        <Button variant="ghost" size="sm" className="bg-card/50 hover:bg-card/70 px-3 py-2 h-8 group">
           <Languages className="w-4 h-4 mr-2" />
           <span className="text-sm">{selectedLanguage.flag}</span>
           <span className="text-xs ml-1 hidden sm:inline">{selectedLanguage.code.toUpperCase()}</span>
+          <ChevronDown className="w-3 h-3 ml-1 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
