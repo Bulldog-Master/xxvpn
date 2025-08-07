@@ -25,9 +25,31 @@
     "tabs": {
       "main": "Principal",
       "servers": "Serveurs", 
+      "network": "Réseau",
       "apps": "Applications",
       "devices": "Appareils",
-      "settings": "Paramètres"
+      "payments": "Paiements",
+      "settings": "Paramètres",
+      "usage": "Utilisation",
+      "history": "Historique"
+    },
+    "menu": {
+      "editName": "Modifier le Nom",
+      "customerSupport": "Support Client",
+      "devices": "Appareils",
+      "payments": "Paiements",
+      "logout": "Se Déconnecter"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "Mode Ultra-rapide: Connexion directe pour les jeux et le streaming",
+      "secureActive": "Mode Sécurisé: Tunnel VPN chiffré (OpenVPN/WireGuard) actif",
+      "ultraSecureActive": "Mode Ultra-sécurisé: Destruction des métadonnées via XX Network cMixx actif",
+      "notProtected": "Votre trafic n'est pas protégé"
+    },
+    "connectionModes": {
+      "metadataShredding": "Destruction des Métadonnées",
+      "metadataShredDesc": "Destruction des métadonnées en utilisant cMixx via XX Network.",
+      "metadataProtection": "Protection des métadonnées"
     }
   },
   "auth": {

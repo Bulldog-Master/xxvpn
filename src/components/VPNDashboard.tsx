@@ -307,24 +307,24 @@ const VPNDashboard = () => {
                     setTempName(user?.fullName || '');
                   }}>
                     <Edit2 className="w-4 h-4 mr-2" />
-                    Edit Name
+                    {t('dashboard.menu.editName')}
                   </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => setSupportOpen(true)}>
                   <HelpCircle className="w-4 h-4 mr-2" />
-                  Customer Support
+                  {t('dashboard.menu.customerSupport')}
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('devices')}>
                   <Monitor className="w-4 h-4 mr-2" />
-                  Devices
+                  {t('dashboard.menu.devices')}
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('payments')}>
                   <CreditCard className="w-4 h-4 mr-2" />
-                  Payments
+                  {t('dashboard.menu.payments')}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer text-destructive" onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" />
-                  Logout
+                  {t('dashboard.menu.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
                 </DropdownMenu>
@@ -338,10 +338,10 @@ const VPNDashboard = () => {
           <TabsList className="grid w-full grid-cols-7 bg-muted/50">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
-            <TabsTrigger value="network">Network</TabsTrigger>
+            <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
             <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
-            <TabsTrigger value="payments">Payments</TabsTrigger>
+            <TabsTrigger value="payments">{t('dashboard.tabs.payments')}</TabsTrigger>
             <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
           </TabsList>
 
@@ -373,16 +373,16 @@ const VPNDashboard = () => {
             </CardTitle>
             <CardDescription>
               {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
-                'Ultra-fast Mode: Direct connection for gaming and streaming'
+                t('dashboard.connectionStatus.ultraFastActive')
               }
               {connectionStatus === 'connected' && vpnMode === 'secure' && 
-                'Secure Mode: Encrypted VPN tunnel (OpenVPN/WireGuard) active'
+                t('dashboard.connectionStatus.secureActive')
               }
               {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
-                'Ultra Secure Mode: Metadata-shredding via XX Network cMixx active'
+                t('dashboard.connectionStatus.ultraSecureActive')
               }
               {connectionStatus === 'disconnected' && 
-                'Your traffic is not protected'
+                t('dashboard.connectionStatus.notProtected')
               }
             </CardDescription>
           </CardHeader>
@@ -459,7 +459,7 @@ const VPNDashboard = () => {
                 </div>
                 <div>
                   <CardTitle className="text-base">{t('dashboard.connectionModes.ultraSecure')}</CardTitle>
-                  <CardDescription className="text-xs">Metadata Shredding</CardDescription>
+                  <CardDescription className="text-xs">{t('dashboard.connectionModes.metadataShredding')}</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -470,11 +470,11 @@ const VPNDashboard = () => {
                   <span className="text-xs text-muted-foreground">XX Network</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Metadata-shredding using cMixx via XX Network.
+                  {t('dashboard.connectionModes.metadataShredDesc')}
                 </p>
                 <div className="flex items-center gap-2 text-xs">
                   <Eye className="w-3 h-3 text-primary" />
-                  <span>Metadata protection</span>
+                  <span>{t('dashboard.connectionModes.metadataProtection')}</span>
                 </div>
               </div>
             </CardContent>
@@ -485,8 +485,8 @@ const VPNDashboard = () => {
             <Tabs defaultValue="stats" className="space-y-4">
               <TabsList className="grid w-full grid-cols-3 bg-muted/30">
                 <TabsTrigger value="stats">{t('dashboard.statistics.title')}</TabsTrigger>
-                <TabsTrigger value="usage">Usage</TabsTrigger>
-                <TabsTrigger value="history">History</TabsTrigger>
+                <TabsTrigger value="usage">{t('dashboard.tabs.usage')}</TabsTrigger>
+                <TabsTrigger value="history">{t('dashboard.tabs.history')}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="stats" className="space-y-4">
