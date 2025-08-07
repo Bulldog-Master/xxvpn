@@ -71,18 +71,18 @@ const AppTunneling = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Settings className="w-5 h-5" />
-            AI-Powered Split Tunneling
+            {t('apps.aiPoweredTitle')}
           </CardTitle>
           <CardDescription>
-            Let AI automatically route apps based on their security needs
+            {t('apps.aiPoweredDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-medium">Smart Routing</h4>
+              <h4 className="font-medium">{t('apps.smartRouting')}</h4>
               <p className="text-sm text-muted-foreground">
-                Automatically detect and route apps through optimal tunnels
+                {t('apps.smartRoutingDesc')}
               </p>
             </div>
             <Switch 
@@ -97,36 +97,36 @@ const AppTunneling = () => {
       <div className="grid md:grid-cols-3 gap-4">
         <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-warning">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-warning">Direct</CardTitle>
-            <CardDescription>No VPN protection</CardDescription>
+            <CardTitle className="text-lg text-warning">{t('apps.tunnels.direct')}</CardTitle>
+            <CardDescription>{t('apps.tunnels.directSubtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Best for gaming and latency-sensitive apps. No protection overhead.
+              {t('apps.tunnels.directDescription')}
             </p>
           </CardContent>
         </Card>
 
         <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-primary">VPN Tunnel</CardTitle>
-            <CardDescription>WireGuard/AmneziaWG</CardDescription>
+            <CardTitle className="text-lg text-primary">{t('apps.tunnels.vpn')}</CardTitle>
+            <CardDescription>{t('apps.tunnels.vpnSubtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Balanced security and speed. DPI bypass for streaming and browsing.
+              {t('apps.tunnels.vpnDescription')}
             </p>
           </CardContent>
         </Card>
 
         <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-secondary">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-secondary">Mixnet</CardTitle>
-            <CardDescription>XX Network cMixx</CardDescription>
+            <CardTitle className="text-lg text-secondary">{t('apps.tunnels.mixnet')}</CardTitle>
+            <CardDescription>{t('apps.tunnels.mixnetSubtitle')}</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Maximum anonymity with metadata protection. Perfect for crypto and messaging.
+              {t('apps.tunnels.mixnetDescription')}
             </p>
           </CardContent>
         </Card>
@@ -135,9 +135,9 @@ const AppTunneling = () => {
       {/* App List */}
       <Card className="bg-card/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Application Routing</CardTitle>
+          <CardTitle>{t('apps.applicationRouting')}</CardTitle>
           <CardDescription>
-            Configure how each app connects to the internet
+            {t('apps.applicationRoutingDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>

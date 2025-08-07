@@ -55,6 +55,13 @@
       "secureActive": "Secure Mode: Encrypted VPN tunnel (OpenVPN/WireGuard) active",
       "ultraSecureActive": "Ultra Secure Mode: Metadata-shredding via XX Network cMixx active",
       "notProtected": "Your traffic is not protected"
+    },
+    "referrals": {
+      "program": "Referral Program",
+      "yourReferrals": "Your Referrals",
+      "totalUsers": "Total Users", 
+      "yourLink": "Your Referral Link",
+      "shareMessage": "Share your referral link to earn XX coins for each new user who joins!"
     }
   },
   "auth": {
@@ -189,6 +196,63 @@
         "text": "If you need a professional invoice with your company name and address, please contact our",
         "link": "Support team"
       }
+    }
+  },
+  "network": {
+    "health": "Network Health",
+    "nodesOperational": "5 nodes operational",
+    "throughput": "Throughput",
+    "protectionLevel": "Protection Level",
+    "quantum": "Quantum",
+    "encryptionActive": "cMixx encryption active",
+    "topology": "Network Topology",
+    "topologyDesc": "5-hop mixnet connection through XX Network",
+    "hop": "Hop",
+    "latency": "latency",
+    "load": "load",
+    "securityFeatures": "Active Security Features",
+    "securityFeaturesDesc": "Quantum-resistant protection mechanisms",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Mix Node 1",
+      "mixNode2": "Mix Node 2", 
+      "mixNode3": "Mix Node 3",
+      "exitNode": "Exit Node"
+    },
+    "status": {
+      "active": "active",
+      "standby": "standby",
+      "offline": "offline"
+    },
+    "features": {
+      "metadataShredding": "Metadata Shredding",
+      "quantumEncryption": "Quantum-Resistant Encryption",
+      "trafficMixing": "Traffic Mixing",
+      "dpiBypass": "DPI Bypass",
+      "precomputation": "Precomputation Phase",
+      "realtimeMixing": "Real-time Mixing"
+    }
+  },
+  "apps": {
+    "aiPoweredTitle": "AI-Powered Split Tunneling",
+    "aiPoweredDesc": "Let AI automatically route apps based on their security needs",
+    "smartRouting": "Smart Routing",
+    "smartRoutingDesc": "Automatically detect and route apps through optimal tunnels",
+    "applicationRouting": "Application Routing",
+    "applicationRoutingDesc": "Configure how each app connects to the internet",
+    "tunnels": {
+      "direct": "Direct",
+      "directSubtitle": "No VPN protection",
+      "directDescription": "Best for gaming and latency-sensitive apps. No protection overhead.",
+      "vpn": "VPN Tunnel", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Balanced security and speed. DPI bypass for streaming and browsing.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Maximum anonymity with metadata protection. Perfect for crypto and messaging.",
+      "directDesc": "No VPN - Fastest",
+      "vpnDesc": "VPN - Balanced",
+      "mixnetDesc": "Mixnet - Most Secure"
     }
   }
 }

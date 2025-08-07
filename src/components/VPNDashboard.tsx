@@ -206,20 +206,20 @@ const VPNDashboard = () => {
               <PopoverContent className="w-80 p-4">
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-sm mb-2">Referral Program</h4>
+                    <h4 className="font-semibold text-sm mb-2">{t('dashboard.referrals.program')}</h4>
                     <div className="grid grid-cols-2 gap-4 text-xs">
                       <div>
-                        <div className="text-muted-foreground">Your Referrals</div>
+                        <div className="text-muted-foreground">{t('dashboard.referrals.yourReferrals')}</div>
                         <div className="font-semibold text-lg">{userReferrals}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Total Users</div>
+                        <div className="text-muted-foreground">{t('dashboard.referrals.totalUsers')}</div>
                         <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <div className="text-muted-foreground text-xs mb-2">Your Referral Link</div>
+                    <div className="text-muted-foreground text-xs mb-2">{t('dashboard.referrals.yourLink')}</div>
                     <div className="flex items-center gap-2 p-2 bg-muted rounded border">
                       <code className="text-xs flex-1 truncate">{userReferralLink}</code>
                       <Button size="sm" variant="ghost" onClick={copyReferralLink} className="h-6 w-6 p-0">
@@ -228,7 +228,7 @@ const VPNDashboard = () => {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Share your referral link to earn XX coins for each new user who joins!
+                    {t('dashboard.referrals.shareMessage')}
                   </p>
                 </div>
               </PopoverContent>

@@ -16,11 +16,11 @@ interface NetworkNode {
 const NetworkStatus = () => {
   const { t } = useTranslation();
   const [nodes] = useState<NetworkNode[]>([
-    { id: '1', location: 'Gateway', status: 'active', latency: 12, load: 45 },
-    { id: '2', location: 'Mix Node 1', status: 'active', latency: 28, load: 62 },
-    { id: '3', location: 'Mix Node 2', status: 'active', latency: 34, load: 38 },
-    { id: '4', location: 'Mix Node 3', status: 'active', latency: 41, load: 71 },
-    { id: '5', location: 'Exit Node', status: 'active', latency: 56, load: 29 }
+    { id: '1', location: t('network.nodes.gateway'), status: 'active', latency: 12, load: 45 },
+    { id: '2', location: t('network.nodes.mixNode1'), status: 'active', latency: 28, load: 62 },
+    { id: '3', location: t('network.nodes.mixNode2'), status: 'active', latency: 34, load: 38 },
+    { id: '4', location: t('network.nodes.mixNode3'), status: 'active', latency: 41, load: 71 },
+    { id: '5', location: t('network.nodes.exitNode'), status: 'active', latency: 56, load: 29 }
   ]);
 
   const [throughput, setThroughput] = useState(0);
@@ -106,7 +106,7 @@ const NetworkStatus = () => {
                   <div>
                     <div className="font-medium">{node.location}</div>
                     <div className="text-sm text-muted-foreground">
-                      Hop {index + 1}
+                      {t('network.hop')} {index + 1}
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ const NetworkStatus = () => {
                     <div className="text-xs text-muted-foreground">load</div>
                   </div>
                   <Badge variant={node.status === 'active' ? 'default' : 'secondary'}>
-                    {node.status}
+                    {t(`network.status.${node.status}`)}
                   </Badge>
                 </div>
               </div>

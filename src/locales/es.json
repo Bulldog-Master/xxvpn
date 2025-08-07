@@ -60,6 +60,13 @@
       "metadataShredding": "Destrucción de Metadatos",
       "metadataShredDesc": "Destrucción de metadatos usando cMixx vía XX Network.",
       "metadataProtection": "Protección de metadatos"
+    },
+    "referrals": {
+      "program": "Programa de Referencias",
+      "yourReferrals": "Tus Referencias",
+      "totalUsers": "Usuarios Totales",
+      "yourLink": "Tu Enlace de Referencia", 
+      "shareMessage": "¡Comparte tu enlace de referencia para ganar XX coins por cada nuevo usuario que se una!"
     }
   },
   "settings": {
@@ -252,10 +259,23 @@
     "encryptionActive": "Encriptación cMixx activa",
     "topology": "Topología de Red",
     "topologyDesc": "Conexión mixnet de 5 saltos a través de XX Network",
+    "hop": "Salto",
     "latency": "latencia",
     "load": "carga",
     "securityFeatures": "Características de Seguridad Activas",
     "securityFeaturesDesc": "Mecanismos de protección resistentes a la computación cuántica",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Nodo Mix 1",
+      "mixNode2": "Nodo Mix 2", 
+      "mixNode3": "Nodo Mix 3",
+      "exitNode": "Nodo de Salida"
+    },
+    "status": {
+      "active": "activo",
+      "standby": "en espera",
+      "offline": "fuera de línea"
+    },
     "features": {
       "metadataShredding": "Destrucción de Metadatos",
       "quantumEncryption": "Encriptación Resistente a Cuánticos",
@@ -263,6 +283,28 @@
       "dpiBypass": "Bypass DPI",
       "precomputation": "Fase de Precomputación",
       "realtimeMixing": "Mezcla en Tiempo Real"
+    }
+  },
+  "apps": {
+    "aiPoweredTitle": "Túnel Dividido con IA",
+    "aiPoweredDesc": "Permite que la IA enrute automáticamente las aplicaciones según sus necesidades de seguridad",
+    "smartRouting": "Enrutamiento Inteligente",
+    "smartRoutingDesc": "Detecta y enruta automáticamente las aplicaciones a través de túneles óptimos",
+    "applicationRouting": "Enrutamiento de Aplicaciones",
+    "applicationRoutingDesc": "Configura cómo cada aplicación se conecta a internet",
+    "tunnels": {
+      "direct": "Directo",
+      "directSubtitle": "Sin protección VPN",
+      "directDescription": "Ideal para juegos y aplicaciones sensibles a la latencia. Sin sobrecarga de protección.",
+      "vpn": "Túnel VPN", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Seguridad y velocidad equilibradas. Bypass DPI para streaming y navegación.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
+      "directDesc": "Sin VPN - Más rápido",
+      "vpnDesc": "VPN - Equilibrado",
+      "mixnetDesc": "Mixnet - Más seguro"
     }
   }
 }
