@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,6 +25,7 @@ import { useToast } from '@/hooks/use-toast';
 const UserProfile = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(user?.fullName || '');
 
@@ -31,13 +33,13 @@ const UserProfile = () => {
     try {
       await signOut();
       toast({
-        title: "Signed out",
-        description: "Successfully signed out of xxVPN.",
+        title: t('profile.signedOut'),
+        description: t('profile.signedOutDesc'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to sign out. Please try again.",
+        title: t('common.error'),
+        description: t('profile.signOutError'),
         variant: "destructive",
       });
     }
@@ -47,19 +49,19 @@ const UserProfile = () => {
     // TODO: Implement profile update
     setIsEditing(false);
     toast({
-      title: "Profile updated",
-      description: "Your profile has been successfully updated.",
+      title: t('profile.updated'),
+      description: t('profile.updatedDesc'),
     });
   };
 
   const getSubscriptionBadge = (tier: string) => {
     switch (tier) {
       case 'enterprise':
-        return <Badge className="bg-gradient-primary">Enterprise</Badge>;
+        return <Badge className="bg-gradient-primary">{t('profile.subscription.enterprise')}</Badge>;
       case 'premium':
-        return <Badge className="bg-gradient-neural">Premium</Badge>;
+        return <Badge className="bg-gradient-neural">{t('profile.subscription.premium')}</Badge>;
       default:
-        return <Badge variant="outline">Free</Badge>;
+        return <Badge variant="outline">{t('profile.subscription.free')}</Badge>;
     }
   };
 
@@ -82,7 +84,7 @@ const UserProfile = () => {
                       className="text-lg font-semibold"
                     />
                   ) : (
-                    user?.fullName || 'Anonymous User'
+                    user?.fullName || t('profile.anonymousUser')
                   )}
                   <Button
                     variant="ghost"
@@ -100,7 +102,7 @@ const UserProfile = () => {
             </div>
             <Button variant="outline" onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
+              {t('profile.signOut')}
             </Button>
           </div>
         </CardHeader>
@@ -108,10 +110,10 @@ const UserProfile = () => {
 
       <Tabs defaultValue="account" className="space-y-4">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="subscription">Subscription</TabsTrigger>
-          <TabsTrigger value="rewards">XX Rewards</TabsTrigger>
-          <TabsTrigger value="downloads">Downloads</TabsTrigger>
+          <TabsTrigger value="account">{t('profile.tabs.account')}</TabsTrigger>
+          <TabsTrigger value="subscription">{t('profile.tabs.subscription')}</TabsTrigger>
+          <TabsTrigger value="rewards">{t('profile.tabs.rewards')}</TabsTrigger>
+          <TabsTrigger value="downloads">{t('profile.tabs.downloads')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="account" className="space-y-4">

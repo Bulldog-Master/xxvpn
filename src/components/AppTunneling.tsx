@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +28,7 @@ interface AppRoute {
 }
 
 const AppTunneling = () => {
+  const { t } = useTranslation();
   const [apps, setApps] = useState<AppRoute[]>([
     { id: '1', name: 'Steam', icon: Gamepad2, category: 'gaming', tunnel: 'direct', autoDetected: true },
     { id: '2', name: 'YouTube', icon: Youtube, category: 'streaming', tunnel: 'vpn', autoDetected: true },
@@ -55,9 +57,9 @@ const AppTunneling = () => {
 
   const getTunnelDescription = (tunnel: string) => {
     switch (tunnel) {
-      case 'direct': return 'No VPN - Fastest';
-      case 'vpn': return 'VPN - Balanced';
-      case 'mixnet': return 'Mixnet - Most Secure';
+      case 'direct': return t('apps.tunnels.directDesc');
+      case 'vpn': return t('apps.tunnels.vpnDesc');
+      case 'mixnet': return t('apps.tunnels.mixnetDesc');
       default: return '';
     }
   };

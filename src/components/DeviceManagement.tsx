@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -34,6 +35,7 @@ type Device = {
 
 const DeviceManagement = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [addDeviceOpen, setAddDeviceOpen] = useState(false);
@@ -53,12 +55,12 @@ const DeviceManagement = () => {
   };
 
   const deviceTypeLabels = {
-    desktop: 'Desktop',
-    mobile: 'Mobile',
-    tablet: 'Tablet',
-    router: 'Router',
-    tv: 'TV',
-    other: 'Other'
+    desktop: t('devices.types.desktop'),
+    mobile: t('devices.types.mobile'),
+    tablet: t('devices.types.tablet'),
+    router: t('devices.types.router'),
+    tv: t('devices.types.tv'),
+    other: t('devices.types.other')
   };
 
   useEffect(() => {
@@ -93,8 +95,8 @@ const DeviceManagement = () => {
   const addDevice = async () => {
     if (!newDevice.device_name.trim()) {
       toast({
-        title: "Device name required",
-        description: "Please enter a name for your device.",
+        title: t('devices.toast.nameRequired'),
+        description: t('devices.toast.nameRequiredDesc'),
         variant: "destructive"
       });
       return;
@@ -102,8 +104,8 @@ const DeviceManagement = () => {
 
     if (activeDevices.length >= deviceLimit) {
       toast({
-        title: "Device limit reached",
-        description: "You can only have 10 devices. Remove an old device first.",
+        title: t('devices.toast.limitReached'),
+        description: t('devices.toast.limitReachedDesc'),
         variant: "destructive"
       });
       return;
@@ -123,8 +125,8 @@ const DeviceManagement = () => {
     setDevices(prev => [...prev, newDeviceData]);
 
     toast({
-      title: "Device added successfully",
-      description: "Your new device has been registered."
+      title: t('devices.toast.added'),
+      description: t('devices.toast.addedDesc')
     });
 
     setNewDevice({
@@ -139,8 +141,8 @@ const DeviceManagement = () => {
     setDevices(prev => prev.filter(device => device.id !== deviceId));
 
     toast({
-      title: "Device removed",
-      description: `${deviceName} has been removed from your account.`
+      title: t('devices.toast.removed'),
+      description: t('devices.toast.removedDesc', { deviceName })
     });
   };
 
@@ -151,11 +153,11 @@ const DeviceManagement = () => {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Device Management</h2>
+          <h2 className="text-2xl font-bold">{t('devices.title')}</h2>
         </div>
         <Card>
           <CardContent className="p-6">
-            <p className="text-muted-foreground">Loading devices...</p>
+            <p className="text-muted-foreground">{t('common.loading')}</p>
           </CardContent>
         </Card>
       </div>
@@ -166,9 +168,9 @@ const DeviceManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Device Management</h2>
+          <h2 className="text-2xl font-bold">{t('devices.title')}</h2>
           <p className="text-muted-foreground">
-            Manage your connected devices ({activeDevices.length}/{deviceLimit} devices used)
+            {t('devices.description', { used: activeDevices.length, total: deviceLimit })}
           </p>
         </div>
         
@@ -176,28 +178,28 @@ const DeviceManagement = () => {
           <DialogTrigger asChild>
             <Button disabled={activeDevices.length >= deviceLimit}>
               <Plus className="w-4 h-4 mr-2" />
-              Add Device
+              {t('devices.addDevice')}
             </Button>
           </DialogTrigger>
           <DialogContent className="bg-card/95 backdrop-blur-sm border-border">
             <DialogHeader>
-              <DialogTitle>Add New Device</DialogTitle>
+              <DialogTitle>{t('devices.addNew')}</DialogTitle>
               <DialogDescription>
-                Register a new device to use with xxVPN. You can have up to {deviceLimit} devices.
+                {t('devices.addDescription', { limit: deviceLimit })}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="device_name">Device Name</Label>
+                <Label htmlFor="device_name">{t('devices.form.deviceName')}</Label>
                 <Input
                   id="device_name"
-                  placeholder="My MacBook Pro"
+                  placeholder={t('devices.form.deviceNamePlaceholder')}
                   value={newDevice.device_name}
                   onChange={(e) => setNewDevice(prev => ({ ...prev, device_name: e.target.value }))}
                 />
               </div>
               <div>
-                <Label htmlFor="device_type">Device Type</Label>
+                <Label htmlFor="device_type">{t('devices.form.deviceType')}</Label>
                 <Select 
                   value={newDevice.device_type} 
                   onValueChange={(value: Device['device_type']) => setNewDevice(prev => ({ ...prev, device_type: value }))}
@@ -206,29 +208,29 @@ const DeviceManagement = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="desktop">Desktop</SelectItem>
-                    <SelectItem value="mobile">Mobile</SelectItem>
-                    <SelectItem value="tablet">Tablet</SelectItem>
-                    <SelectItem value="router">Router</SelectItem>
-                    <SelectItem value="tv">TV</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="desktop">{t('devices.types.desktop')}</SelectItem>
+                    <SelectItem value="mobile">{t('devices.types.mobile')}</SelectItem>
+                    <SelectItem value="tablet">{t('devices.types.tablet')}</SelectItem>
+                    <SelectItem value="router">{t('devices.types.router')}</SelectItem>
+                    <SelectItem value="tv">{t('devices.types.tv')}</SelectItem>
+                    <SelectItem value="other">{t('devices.types.other')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <Label htmlFor="operating_system">Operating System (Optional)</Label>
+                <Label htmlFor="operating_system">{t('devices.form.operatingSystem')}</Label>
                 <Input
                   id="operating_system"
-                  placeholder="macOS 14.0, Windows 11, iOS 17.0, etc."
+                  placeholder={t('devices.form.osPlaceholder')}
                   value={newDevice.operating_system}
                   onChange={(e) => setNewDevice(prev => ({ ...prev, operating_system: e.target.value }))}
                 />
               </div>
               <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setAddDeviceOpen(false)}>
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
-                <Button onClick={addDevice}>Add Device</Button>
+                <Button onClick={addDevice}>{t('devices.addDevice')}</Button>
               </div>
             </div>
           </DialogContent>
@@ -243,14 +245,14 @@ const DeviceManagement = () => {
             <div>
               <p className="font-medium text-warning">
                 {activeDevices.length >= deviceLimit 
-                  ? "Device limit reached" 
-                  : "Approaching device limit"
+                  ? t('devices.limitReached') 
+                  : t('devices.approachingLimit')
                 }
               </p>
               <p className="text-sm text-muted-foreground">
                 {activeDevices.length >= deviceLimit 
-                  ? "Remove a device to add a new one." 
-                  : `You have ${deviceLimit - activeDevices.length} device slots remaining.`
+                  ? t('devices.removeToAdd') 
+                  : t('devices.slotsRemaining', { count: deviceLimit - activeDevices.length })
                 }
               </p>
             </div>
@@ -264,13 +266,13 @@ const DeviceManagement = () => {
           <Card>
             <CardContent className="flex flex-col items-center justify-center p-8 text-center">
               <Monitor className="w-12 h-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No devices registered</h3>
+              <h3 className="text-lg font-medium mb-2">{t('devices.noDevices')}</h3>
               <p className="text-muted-foreground mb-4">
-                Add your first device to start using xxVPN
+                {t('devices.noDevicesDesc')}
               </p>
               <Button onClick={() => setAddDeviceOpen(true)}>
                 <Plus className="w-4 h-4 mr-2" />
-                Add Device
+                {t('devices.addDevice')}
               </Button>
             </CardContent>
           </Card>
@@ -300,7 +302,7 @@ const DeviceManagement = () => {
                           <span>{device.operating_system}</span>
                         )}
                         <span>
-                          Last seen: {lastSeen.toLocaleString()}
+                          {t('devices.lastSeen')}: {lastSeen.toLocaleString()}
                         </span>
                       </div>
                     </div>

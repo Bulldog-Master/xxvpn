@@ -161,5 +161,95 @@
         "link": "Team di supporto"
       }
     }
+  },
+  "devices": {
+    "title": "Gestione Dispositivi",
+    "description": "Gestisci i tuoi dispositivi connessi ({{used}}/{{total}} dispositivi utilizzati)",
+    "addDevice": "Aggiungi Dispositivo",
+    "addNew": "Aggiungi Nuovo Dispositivo",
+    "addDescription": "Registra un nuovo dispositivo da utilizzare con xxVPN. Puoi avere fino a {{limit}} dispositivi.",
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Altro"
+    },
+    "form": {
+      "deviceName": "Nome Dispositivo",
+      "deviceNamePlaceholder": "Il mio MacBook Pro",
+      "deviceType": "Tipo di Dispositivo",
+      "operatingSystem": "Sistema Operativo (Opzionale)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, ecc."
+    },
+    "toast": {
+      "nameRequired": "Nome dispositivo richiesto",
+      "nameRequiredDesc": "Inserisci un nome per il tuo dispositivo.",
+      "limitReached": "Limite dispositivi raggiunto",
+      "limitReachedDesc": "Puoi avere solo 10 dispositivi. Rimuovi prima un dispositivo vecchio.",
+      "added": "Dispositivo aggiunto con successo",
+      "addedDesc": "Il tuo nuovo dispositivo è stato registrato.",
+      "removed": "Dispositivo rimosso",
+      "removedDesc": "{{deviceName}} è stato rimosso dal tuo account."
+    },
+    "limitReached": "Limite dispositivi raggiunto",
+    "approachingLimit": "Avvicinandosi al limite dispositivi",
+    "removeToAdd": "Rimuovi un dispositivo per aggiungerne uno nuovo.",
+    "slotsRemaining": "Hai {{count}} slot dispositivo rimanenti.",
+    "noDevices": "Nessun dispositivo registrato",
+    "noDevicesDesc": "Aggiungi il tuo primo dispositivo per iniziare a usare xxVPN",
+    "lastSeen": "Visto l'ultima volta",
+    "latency": "latenza",
+    "load": "carico"
+  },
+  "profile": {
+    "signedOut": "Disconnesso",
+    "signedOutDesc": "Disconnesso con successo da xxVPN.",
+    "signOutError": "Disconnessione fallita. Riprova.",
+    "updated": "Profilo aggiornato",
+    "updatedDesc": "Il tuo profilo è stato aggiornato con successo.",
+    "anonymousUser": "Utente Anonimo",
+    "signOut": "Disconnettiti",
+    "subscription": {
+      "enterprise": "Enterprise",
+      "premium": "Premium",
+      "free": "Gratuito"
+    },
+    "tabs": {
+      "account": "Account",
+      "subscription": "Abbonamento",
+      "rewards": "Ricompense XX",
+      "downloads": "Download"
+    }
+  },
+  "apps": {
+    "tunnels": {
+      "directDesc": "Nessun VPN - Più veloce",
+      "vpnDesc": "VPN - Bilanciato",
+      "mixnetDesc": "Mixnet - Più sicuro"
+    }
+  },
+  "network": {
+    "health": "Salute della Rete",
+    "nodesOperational": "5 nodi operativi",
+    "throughput": "Throughput",
+    "protectionLevel": "Livello di Protezione",
+    "quantum": "Quantistico",
+    "encryptionActive": "Crittografia cMixx attiva",
+    "topology": "Topologia di Rete",
+    "topologyDesc": "Connessione mixnet a 5 salti tramite XX Network",
+    "latency": "latenza",
+    "load": "carico",
+    "securityFeatures": "Funzionalità di Sicurezza Attive",
+    "securityFeaturesDesc": "Meccanismi di protezione resistenti ai computer quantistici",
+    "features": {
+      "metadataShredding": "Distruzione Metadati",
+      "quantumEncryption": "Crittografia Resistente ai Quantici",
+      "trafficMixing": "Mescolamento Traffico",
+      "dpiBypass": "Bypass DPI",
+      "precomputation": "Fase di Precalcolo",
+      "realtimeMixing": "Mescolamento in Tempo Reale"
+    }
   }
 }

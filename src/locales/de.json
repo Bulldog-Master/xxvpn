@@ -161,5 +161,95 @@
         "link": "Support-Team"
       }
     }
+  },
+  "devices": {
+    "title": "Geräteverwaltung",
+    "description": "Verwalten Sie Ihre verbundenen Geräte ({{used}}/{{total}} Geräte verwendet)",
+    "addDevice": "Gerät Hinzufügen",
+    "addNew": "Neues Gerät Hinzufügen",
+    "addDescription": "Registrieren Sie ein neues Gerät für die Verwendung mit xxVPN. Sie können bis zu {{limit}} Geräte haben.",
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Mobil",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Andere"
+    },
+    "form": {
+      "deviceName": "Gerätename",
+      "deviceNamePlaceholder": "Mein MacBook Pro",
+      "deviceType": "Gerätetyp",
+      "operatingSystem": "Betriebssystem (Optional)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, etc."
+    },
+    "toast": {
+      "nameRequired": "Gerätename erforderlich",
+      "nameRequiredDesc": "Bitte geben Sie einen Namen für Ihr Gerät ein.",
+      "limitReached": "Gerätelimit erreicht",
+      "limitReachedDesc": "Sie können nur 10 Geräte haben. Entfernen Sie zuerst ein altes Gerät.",
+      "added": "Gerät erfolgreich hinzugefügt",
+      "addedDesc": "Ihr neues Gerät wurde registriert.",
+      "removed": "Gerät entfernt",
+      "removedDesc": "{{deviceName}} wurde von Ihrem Konto entfernt."
+    },
+    "limitReached": "Gerätelimit erreicht",
+    "approachingLimit": "Nähert sich dem Gerätelimit",
+    "removeToAdd": "Entfernen Sie ein Gerät, um ein neues hinzuzufügen.",
+    "slotsRemaining": "Sie haben {{count}} Geräteplätze übrig.",
+    "noDevices": "Keine Geräte registriert",
+    "noDevicesDesc": "Fügen Sie Ihr erstes Gerät hinzu, um xxVPN zu verwenden",
+    "lastSeen": "Zuletzt gesehen",
+    "latency": "Latenz",
+    "load": "Auslastung"
+  },
+  "profile": {
+    "signedOut": "Abgemeldet",
+    "signedOutDesc": "Erfolgreich von xxVPN abgemeldet.",
+    "signOutError": "Abmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "updated": "Profil aktualisiert",
+    "updatedDesc": "Ihr Profil wurde erfolgreich aktualisiert.",
+    "anonymousUser": "Anonymer Benutzer",
+    "signOut": "Abmelden",
+    "subscription": {
+      "enterprise": "Unternehmen",
+      "premium": "Premium",
+      "free": "Kostenlos"
+    },
+    "tabs": {
+      "account": "Konto",
+      "subscription": "Abonnement",
+      "rewards": "XX Belohnungen",
+      "downloads": "Downloads"
+    }
+  },
+  "apps": {
+    "tunnels": {
+      "directDesc": "Kein VPN - Schnellster",
+      "vpnDesc": "VPN - Ausgewogen",
+      "mixnetDesc": "Mixnet - Sicherster"
+    }
+  },
+  "network": {
+    "health": "Netzwerk-Gesundheit",
+    "nodesOperational": "5 Knoten in Betrieb",
+    "throughput": "Durchsatz",
+    "protectionLevel": "Schutzebene",
+    "quantum": "Quantom",
+    "encryptionActive": "cMixx-Verschlüsselung aktiv",
+    "topology": "Netzwerk-Topologie",
+    "topologyDesc": "5-Hop-Mixnet-Verbindung über XX Network",
+    "latency": "Latenz",
+    "load": "Auslastung",
+    "securityFeatures": "Aktive Sicherheitsfeatures",
+    "securityFeaturesDesc": "Quantenresistente Schutzmechanismen",
+    "features": {
+      "metadataShredding": "Metadaten-Vernichtung",
+      "quantumEncryption": "Quantenresistente Verschlüsselung",
+      "trafficMixing": "Verkehrsmischung",
+      "dpiBypass": "DPI-Umgehung",
+      "precomputation": "Vorberechnungsphase",
+      "realtimeMixing": "Echtzeit-Mischung"
+    }
   }
 }
