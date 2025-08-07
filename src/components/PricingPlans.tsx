@@ -95,7 +95,6 @@ const paymentMethods = [
   { name: 'Apple Pay', icon: '🍎' },
   { name: 'Google Pay', icon: 'G' },
   { name: 'PayPal', icon: '💙' },
-  { name: 'Nym', icon: '🔮' },
   { name: 'Cash', icon: '💵' }
 ];
 
