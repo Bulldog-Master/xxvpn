@@ -227,7 +227,7 @@
     "addNew": "Tilføj Ny Enhed",
     "addDescription": "Registrer en ny enhed til brug med xxVPN. Du kan have op til {{limit}} enheder.",
     "types": {
-      "desktop": "Desktop",
+      "desktop": "Computer",
       "mobile": "Mobil",
       "tablet": "Tablet",
       "router": "Router",
