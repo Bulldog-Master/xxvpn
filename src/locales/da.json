@@ -320,8 +320,8 @@
       "mixnetDescription": "Maksimal anonymitet med metadata beskyttelse. Perfekt til kryptovaluta og beskedudveksling.",
       "directDesc": "Ingen VPN - Hurtigere",
       "vpnDesc": "VPN - Balanceret",
-       "mixnetDesc": "Mixnet - Mere sikkert"
-     },
+      "mixnetDesc": "Mixnet - Mere sikkert"
+    }
   },
   "network": {
     "health": "Netværks Helbred",
