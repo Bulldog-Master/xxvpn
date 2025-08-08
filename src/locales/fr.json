@@ -204,7 +204,9 @@
         "date": "Date",
         "subscription": "Abonnement",
         "status": "Statut",
-        "amount": "Montant"
+        "amount": "Montant",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Basique"
       },
       "status": {
         "active": "Actif",

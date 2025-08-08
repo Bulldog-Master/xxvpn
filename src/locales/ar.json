@@ -114,7 +114,9 @@
         "date": "التاريخ",
         "subscription": "الاشتراك",
         "status": "الحالة",
-        "amount": "المبلغ"
+        "amount": "المبلغ",
+        "xxVPNPremium": "xxVPN المتميز",
+        "xxVPNBasic": "xxVPN الأساسي"
       },
       "status": {
         "active": "نشط",

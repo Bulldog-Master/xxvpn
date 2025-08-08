@@ -186,7 +186,9 @@
         "date": "Dato",
         "subscription": "Abonnement",
         "status": "Status",
-        "amount": "Beløb"
+        "amount": "Beløb",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Grundlæggende"
       },
       "status": {
         "active": "Aktiv",

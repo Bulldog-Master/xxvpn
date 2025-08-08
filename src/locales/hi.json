@@ -202,9 +202,11 @@
       "table": {
         "id": "ID",
         "date": "दिनांक",
-        "subscription": "सब्सक्रिप्शन",
+        "subscription": "सब्स्क्रिप्शन",
         "status": "स्थिति",
-        "amount": "राशि"
+        "amount": "राशि",
+        "xxVPNPremium": "xxVPN प्रीमियम",
+        "xxVPNBasic": "xxVPN बेसिक"
       },
       "status": {
         "active": "सक्रिय",

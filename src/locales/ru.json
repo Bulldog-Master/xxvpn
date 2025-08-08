@@ -204,7 +204,9 @@
         "date": "Дата",
         "subscription": "Подписка",
         "status": "Статус",
-        "amount": "Сумма"
+        "amount": "Сумма",
+        "xxVPNPremium": "xxVPN Премиум",
+        "xxVPNBasic": "xxVPN Базовый"
       },
       "status": {
         "active": "Активен",

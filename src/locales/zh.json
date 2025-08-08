@@ -204,7 +204,9 @@
         "date": "日期",
         "subscription": "订阅",
         "status": "状态",
-        "amount": "金额"
+        "amount": "金额",
+        "xxVPNPremium": "xxVPN 高级版",
+        "xxVPNBasic": "xxVPN 基础版"
       },
       "status": {
         "active": "有效",

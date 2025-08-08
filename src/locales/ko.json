@@ -204,7 +204,9 @@
         "date": "날짜",
         "subscription": "구독",
         "status": "상태",
-        "amount": "금액"
+        "amount": "금액",
+        "xxVPNPremium": "xxVPN 프리미엄",
+        "xxVPNBasic": "xxVPN 베이직"
       },
       "status": {
         "active": "활성",

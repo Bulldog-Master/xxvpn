@@ -186,7 +186,9 @@
         "date": "Fecha",
         "subscription": "Suscripción",
         "status": "Estado",
-        "amount": "Cantidad"
+        "amount": "Cantidad",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Básico"
       },
       "status": {
         "active": "Activo",

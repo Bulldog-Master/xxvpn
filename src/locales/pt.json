@@ -204,7 +204,9 @@
         "date": "Data",
         "subscription": "Assinatura",
         "status": "Status",
-        "amount": "Valor"
+        "amount": "Valor",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Básico"
       },
       "status": {
         "active": "Ativo",

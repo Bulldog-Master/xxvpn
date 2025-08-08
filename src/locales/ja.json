@@ -204,7 +204,9 @@
         "date": "日付",
         "subscription": "サブスクリプション",
         "status": "ステータス",
-        "amount": "金額"
+        "amount": "金額",
+        "xxVPNPremium": "xxVPN プレミアム",
+        "xxVPNBasic": "xxVPN ベーシック"
       },
       "status": {
         "active": "アクティブ",

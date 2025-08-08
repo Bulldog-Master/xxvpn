@@ -186,7 +186,9 @@
         "date": "Tarih",
         "subscription": "Abonelik",
         "status": "Durum",
-        "amount": "Tutar"
+        "amount": "Tutar",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Temel"
       },
       "status": {
         "active": "Aktif",
