@@ -154,7 +154,7 @@
     "crossPlatformDesc": "xxVPN está disponível em todos os seus dispositivos",
     "categories": {
       "gaming": "jogos",
-      "streaming": "streaming",
+      "streaming": "transmissão",
       "crypto": "crypto",
       "messaging": "mensagens",
       "browser": "navegador"
@@ -181,7 +181,7 @@
      },
      "appNames": {
        "chrome": "Navegador Chrome",
-       "twitch": "Streaming Twitch"
+       "twitch": "Twitch Transmissão"
      }
   }
 }
