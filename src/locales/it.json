@@ -17,8 +17,8 @@
       "noVPN": "Nessuna VPN",
       "ultraFastDesc": "Connessione ultra-veloce per gaming e streaming con latenza minima.",
       "maximumSpeed": "Velocità massima",
-      "secureDesc": "Tunnel VPN crittografato che fornisce protezione privacy standard.",
-      "encryptedTunnel": "Tunnel crittografato",
+      "secureDesc": "Connessione VPN crittografata che fornisce protezione privacy standard.",
+      "encryptedTunnel": "Connessione crittografata",
       "metadataShredding": "Distruzione Metadati",
       "metadataShredDesc": "Distruzione metadati usando cMixx via XX Network.",
       "metadataProtection": "Protezione metadati"
@@ -68,7 +68,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Modalità Ultra-veloce: Connessione diretta per gaming e streaming",
-      "secureActive": "Modalità Sicura: Tunnel VPN crittografato attivo",
+      "secureActive": "Modalità Sicura: Connessione VPN crittografata attiva",
       "ultraSecureActive": "Modalità Ultra-sicura: Distruzione metadati via XX Network cMixx attivo",
       "notProtected": "Il tuo traffico non è protetto"
     },
@@ -316,10 +316,10 @@
     }
   },
   "apps": {
-    "aiPoweredTitle": "Tunnel Diviso con IA",
+    "aiPoweredTitle": "Routing Diviso con IA",
     "aiPoweredDesc": "Permette all'IA di instradare automaticamente le applicazioni in base alle loro esigenze di sicurezza",
     "smartRouting": "Instradamento Intelligente",
-    "smartRoutingDesc": "Rileva e instrada automaticamente le applicazioni attraverso tunnel ottimali",
+    "smartRoutingDesc": "Rileva e instrada automaticamente le applicazioni attraverso percorsi ottimali",
     "applicationRouting": "Instradamento Applicazioni",
     "applicationRoutingDesc": "Configura come ogni applicazione si connette a internet",
     "scanForApps": "Cerca Nuove Applicazioni",
@@ -346,7 +346,7 @@
       "direct": "Diretto",
       "directSubtitle": "Nessuna protezione VPN",
       "directDescription": "Ideale per giochi e applicazioni sensibili alla latenza. Nessun overhead di protezione.",
-      "vpn": "Tunnel VPN", 
+      "vpn": "Connessione VPN", 
       "vpnSubtitle": "Protocollo VPN",
       "vpnDescription": "Sicurezza e velocità bilanciate. Bypass DPI per streaming e navigazione.",
       "mixnet": "Mixnet",
