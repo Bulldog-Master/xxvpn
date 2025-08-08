@@ -87,6 +87,20 @@
       "enterprise": "Virksomhed"
     }
   },
+  "auth": {
+    "title": "Velkommen til xxVPN",
+    "subtitle": "Sikker, privat og kvante-resistent VPN beskyttelse",
+    "signIn": "Log Ind",
+    "signUp": "Tilmeld",
+    "email": "E-mail",
+    "password": "Adgangskode",
+    "confirmPassword": "Bekræft Adgangskode",
+    "forgotPassword": "Glemt adgangskode?",
+    "noAccount": "Har du ikke en konto?",
+    "hasAccount": "Har du allerede en konto?",
+    "signInWithGoogle": "Log ind med Google",
+    "signUpWithGoogle": "Tilmeld med Google"
+  },
   "settings": {
     "title": "Indstillinger",
     "appearance": {
@@ -100,7 +114,7 @@
       "description": "Konfigurer dine VPN protokol præferencer",
       "autoSelection": "Automatisk Protokol Valg",
       "autoSelectionDesc": "Vælg automatisk den bedste protokol baseret på netværksforhold",
-      "killSwitch": "Kill Switch",
+      "killSwitch": "Nødstop",
       "killSwitchDesc": "Bloker internet hvis VPN forbindelsen afbrydes",
       "autoConnect": "Auto Forbind",
       "autoConnectDesc": "Forbind automatisk når appen starter"
@@ -113,6 +127,10 @@
       "nodeContribution": "Node Bidrag",
       "nodeContributionDesc": "Tillad din enhed at bidrage til mixnet",
       "currentBalance": "Nuværende Saldo"
+    },
+    "language": {
+      "title": "Sprog",
+      "description": "Vælg dit foretrukne sprog"
     }
   },
   "servers": {
@@ -295,8 +313,8 @@
       "directSubtitle": "Ingen VPN beskyttelse",
       "directDescription": "Ideelt til gaming og latency-følsomme applikationer. Ingen beskyttelses-overhead.",
       "vpn": "VPN Tunnel", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
-      "vpnDescription": "Balanceret sikkerhed og hastighed. DPI bypass til streaming og browsing.",
+      "vpnSubtitle": "VPN Protokol",
+      "vpnDescription": "Balanceret sikkerhed og hastighed. DPI omgåelse til streaming og browsing.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
       "mixnetDescription": "Maksimal anonymitet med metadata beskyttelse. Perfekt til kryptovaluta og beskedudveksling.",
@@ -335,7 +353,7 @@
       "metadataShredding": "Metadata Makulering",
       "quantumEncryption": "Kvante-Resistent Kryptering",
       "trafficMixing": "Trafik Blanding",
-      "dpiBypass": "DPI Bypass",
+      "dpiBypass": "DPI Omgåelse",
       "precomputation": "Forberegnings Fase",
       "realtimeMixing": "Realtids Blanding"
     }

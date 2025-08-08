@@ -87,6 +87,20 @@
       "enterprise": "Kurumsal"
     }
   },
+  "auth": {
+    "title": "xxVPN'e Hoş Geldiniz",
+    "subtitle": "Güvenli, özel ve kuantum dirençli VPN koruması",
+    "signIn": "Giriş Yap",
+    "signUp": "Kaydol",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "forgotPassword": "Şifremi Unuttum?",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "signInWithGoogle": "Google ile Giriş Yap",
+    "signUpWithGoogle": "Google ile Kaydol"
+  },
   "settings": {
     "title": "Ayarlar",
     "appearance": {
@@ -100,7 +114,7 @@
       "description": "VPN protokol tercihlerinizi yapılandırın",
       "autoSelection": "Otomatik Protokol Seçimi",
       "autoSelectionDesc": "Ağ koşullarına göre en iyi protokolü otomatik seç",
-      "killSwitch": "Kill Switch",
+      "killSwitch": "Acil Durdurma",
       "killSwitchDesc": "VPN bağlantısı kesilirse interneti engelle",
       "autoConnect": "Otomatik Bağlantı",
       "autoConnectDesc": "Uygulama başladığında otomatik bağlan"
@@ -113,6 +127,10 @@
       "nodeContribution": "Node Katkısı",
       "nodeContributionDesc": "Cihazınızın mixnet'e katkıda bulunmasına izin verin",
       "currentBalance": "Mevcut Bakiye"
+    },
+    "language": {
+      "title": "Dil",
+      "description": "Tercih ettiğiniz dili seçin"
     }
   },
   "servers": {
@@ -295,8 +313,8 @@
       "directSubtitle": "VPN koruması yok",
       "directDescription": "Oyun ve gecikmeye duyarlı uygulamalar için ideal. Koruma ek yükü yok.",
       "vpn": "VPN Tüneli", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
-      "vpnDescription": "Dengeli güvenlik ve hız. Yayın ve gezinti için DPI bypass.",
+      "vpnSubtitle": "VPN Protokolü",
+      "vpnDescription": "Dengeli güvenlik ve hız. Yayın ve gezinti için DPI atlama.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
       "mixnetDescription": "Metadata koruması ile maksimum anonimlik. Kripto para ve mesajlaşma için mükemmel.",
@@ -335,7 +353,7 @@
       "metadataShredding": "Metadata İmhası",
       "quantumEncryption": "Kuantum Dirençli Şifreleme",
       "trafficMixing": "Trafik Karıştırma",
-      "dpiBypass": "DPI Bypass",
+      "dpiBypass": "DPI Atlama",
       "precomputation": "Ön Hesaplama Aşaması",
       "realtimeMixing": "Gerçek Zamanlı Karıştırma"
     }
