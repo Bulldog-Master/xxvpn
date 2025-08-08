@@ -68,7 +68,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Modo Ultra-rápido: Conexión directa para juegos y streaming",
-      "secureActive": "Modo Seguro: Túnel VPN encriptado (OpenVPN/WireGuard) activo",
+      "secureActive": "Modo Seguro: Túnel VPN encriptado activo",
       "ultraSecureActive": "Modo Ultra-seguro: Destrucción de metadatos vía XX Network cMixx activo",
       "notProtected": "Tu tráfico no está protegido"
     },

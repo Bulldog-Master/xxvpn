@@ -68,7 +68,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Mode Ultra-rapide: Connexion directe pour les jeux et le streaming",
-      "secureActive": "Mode Sécurisé: Tunnel VPN chiffré (OpenVPN/WireGuard) actif",
+      "secureActive": "Mode Sécurisé: Tunnel VPN chiffré actif",
       "ultraSecureActive": "Mode Ultra-sécurisé: Destruction des métadonnées via XX Network cMixx actif",
       "notProtected": "Votre trafic n'est pas protégé"
     },
