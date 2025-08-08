@@ -84,7 +84,8 @@
     "subscriptionTier": {
       "free": "Gratuito",
       "premium": "Premium", 
-      "enterprise": "Enterprise"
+      "enterprise": "Aziendale",
+      "basic": "Base"
     }
   },
   "auth": {
@@ -269,9 +270,10 @@
     "anonymousUser": "Utente Anonimo",
     "signOut": "Disconnettiti",
     "subscription": {
-      "enterprise": "Enterprise",
+      "enterprise": "Aziendale",
       "premium": "Premium",
-      "free": "Gratuito"
+      "free": "Gratuito",
+      "basic": "Base"
     },
     "tabs": {
       "account": "Account",
