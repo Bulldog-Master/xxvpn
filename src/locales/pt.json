@@ -127,6 +127,10 @@
       "nodeContribution": "Contribuição de Nó",
       "nodeContributionDesc": "Permitir que seu dispositivo contribua para a mixnet",
       "currentBalance": "Saldo Atual"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Escolha seu idioma preferido"
     }
   },
   "servers": {
@@ -327,8 +331,8 @@
     "topology": "Topologia da Rede",
     "topologyDesc": "Conexão mixnet de 5 saltos através da Rede XX",
     "hop": "Salto",
-    "latency": "latência",
-    "load": "carga",
+    "latency": "Latência",
+    "load": "Carga",
     "securityFeatures": "Recursos de Segurança Ativos",
     "securityFeaturesDesc": "Mecanismos de proteção resistentes a quantum",
     "nodes": {
