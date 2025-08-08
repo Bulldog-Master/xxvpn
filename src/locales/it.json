@@ -31,7 +31,10 @@
       "title": "Statistiche",
       "dataTransferred": "Dati Trasferiti",
       "sessionTime": "Tempo di Sessione",
-      "xxCoinsEarned": "XX Coins Guadagnate"
+      "networkLatency": "Latenza di Rete",
+      "xxCoinsEarned": "XX Coins Guadagnate",
+      "currentSession": "Sessione corrente",
+      "averagePing": "Ping medio"
     },
     "tabs": {
       "main": "Principale",
@@ -43,6 +46,18 @@
       "settings": "Impostazioni",
       "usage": "Utilizzo",
       "history": "Cronologia"
+    },
+    "usage": {
+      "todaysUsage": "Utilizzo di Oggi",
+      "ultraFastMode": "Modalità Ultra-veloce",
+      "secureMode": "Modalità Sicura",
+      "ultraSecureMode": "Modalità Ultra-sicura"
+    },
+    "history": {
+      "recentSessions": "Sessioni Recenti",
+      "fastMode": "Modalità Veloce",
+      "privacyMode": "Modalità Privacy",
+      "mode": "Modalità"
     },
     "menu": {
       "editName": "Modifica Nome",
@@ -57,18 +72,13 @@
       "ultraSecureActive": "Modalità Ultra-sicura: Distruzione metadati via XX Network cMixx attivo",
       "notProtected": "Il tuo traffico non è protetto"
     },
-    "connectionModes": {
-      "metadataShredding": "Distruzione Metadati",
-      "metadataShredDesc": "Distruzione metadati usando cMixx via XX Network.",
-      "metadataProtection": "Protezione metadati"
-    },
     "referrals": {
-      "program": "Programma Referral",
-      "yourReferrals": "I Tuoi Referral",
+      "program": "Programma Referenze",
+      "yourReferrals": "Le Tue Referenze",
       "totalUsers": "Utenti Totali", 
-      "yourLink": "Il Tuo Link Referral",
-      "shareMessage": "Condividi il tuo link referral per guadagnare XX coins per ogni nuovo utente che si iscrive!",
-      "referrals": "referral",
+      "yourLink": "Il Tuo Link di Referenza",
+      "shareMessage": "Condividi il tuo link di referenza per guadagnare XX coins per ogni nuovo utente che si iscrive!",
+      "referrals": "referenze",
       "users": "utenti"
     },
     "subscriptionTier": {
@@ -279,10 +289,23 @@
     "encryptionActive": "Crittografia cMixx attiva",
     "topology": "Topologia di Rete",
     "topologyDesc": "Connessione mixnet a 5 salti tramite XX Network",
-    "latency": "latenza",
-    "load": "carico",
+    "hop": "Salto",
+    "latency": "Latenza",
+    "load": "Carico",
     "securityFeatures": "Funzionalità di Sicurezza Attive",
     "securityFeaturesDesc": "Meccanismi di protezione resistenti ai computer quantistici",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Nodo Mix 1",
+      "mixNode2": "Nodo Mix 2", 
+      "mixNode3": "Nodo Mix 3",
+      "exitNode": "Nodo di Uscita"
+    },
+    "status": {
+      "active": "attivo",
+      "standby": "standby",
+      "offline": "offline"
+    },
     "features": {
       "metadataShredding": "Distruzione Metadati",
       "quantumEncryption": "Crittografia Resistente ai Quantici",
@@ -324,7 +347,7 @@
       "directSubtitle": "Nessuna protezione VPN",
       "directDescription": "Ideale per giochi e applicazioni sensibili alla latenza. Nessun overhead di protezione.",
       "vpn": "Tunnel VPN", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnSubtitle": "Protocollo VPN",
       "vpnDescription": "Sicurezza e velocità bilanciate. Bypass DPI per streaming e navigazione.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
