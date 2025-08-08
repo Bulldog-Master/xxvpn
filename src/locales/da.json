@@ -1,0 +1,337 @@
+{
+  "dashboard": {
+    "title": "xxVPN Dashboard",
+    "welcomeBack": "Velkommen tilbage",
+    "status": {
+      "connected": "Forbundet",
+      "connecting": "Forbinder...",
+      "disconnected": "Afbrudt"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-hurtig",
+      "secure": "Sikker", 
+      "ultraSecure": "Ultra-sikker",
+      "off": "Slukket",
+      "gamingStreaming": "Gaming og Streaming",
+      "standardProtection": "Standard VPN Beskyttelse",
+      "noVPN": "Ingen VPN",
+      "ultraFastDesc": "Ultra-hurtig forbindelse til gaming og streaming med minimal latency.",
+      "maximumSpeed": "Maksimal hastighed",
+      "secureDesc": "Krypteret VPN tunnel der giver standard privatlivsbeskyttelse.",
+      "encryptedTunnel": "Krypteret tunnel",
+      "metadataShredding": "Metadata Makulering",
+      "metadataShredDesc": "Metadata makulering ved hjælp af cMixx via XX Network.",
+      "metadataProtection": "Metadata beskyttelse"
+    },
+    "connect": "Forbind",
+    "disconnect": "Afbryd",
+    "location": "Placering",
+    "auto": "Automatisk",
+    "statistics": {
+      "title": "Statistik",
+      "dataTransferred": "Data Overført",
+      "sessionTime": "Session Tid",
+      "networkLatency": "Netværk Latency",
+      "xxCoinsEarned": "XX Coins Tjent",
+      "currentSession": "Nuværende session",
+      "averagePing": "Gennemsnitlig ping"
+    },
+    "tabs": {
+      "main": "Hoved",
+      "servers": "Servere", 
+      "network": "Netværk",
+      "apps": "Apps",
+      "devices": "Enheder",
+      "payments": "Betalinger",
+      "settings": "Indstillinger",
+      "usage": "Forbrug",
+      "history": "Historik"
+    },
+    "usage": {
+      "todaysUsage": "Dagens Forbrug",
+      "ultraFastMode": "Ultra-hurtig Tilstand",
+      "secureMode": "Sikker Tilstand",
+      "ultraSecureMode": "Ultra-sikker Tilstand"
+    },
+    "history": {
+      "recentSessions": "Seneste Sessioner",
+      "fastMode": "Hurtig Tilstand",
+      "privacyMode": "Privatliv Tilstand",
+      "mode": "Tilstand"
+    },
+    "menu": {
+      "editName": "Rediger Navn",
+      "customerSupport": "Kundesupport",
+      "devices": "Enheder",
+      "payments": "Betalinger",
+      "logout": "Log ud"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "Ultra-hurtig Tilstand: Direkte forbindelse til gaming og streaming",
+      "secureActive": "Sikker Tilstand: Krypteret VPN tunnel (OpenVPN/WireGuard) aktiv",
+      "ultraSecureActive": "Ultra-sikker Tilstand: Metadata makulering via XX Network cMixx aktiv",
+      "notProtected": "Din trafik er ikke beskyttet"
+    },
+    "referrals": {
+      "program": "Henvisnings Program",
+      "yourReferrals": "Dine Henvisninger",
+      "totalUsers": "Samlede Brugere",
+      "yourLink": "Dit Henvisnings Link", 
+      "shareMessage": "Del dit henvisnings link for at tjene XX coins for hver ny bruger der tilmelder sig!",
+      "referrals": "henvisninger",
+      "users": "brugere"
+    },
+    "subscriptionTier": {
+      "free": "Gratis",
+      "premium": "Premium", 
+      "enterprise": "Virksomhed"
+    }
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "appearance": {
+      "title": "Udseende",
+      "description": "Tilpas appens udseende og tema",
+      "theme": "Tema",
+      "themeDesc": "Vælg mellem lys og mørk tilstand"
+    },
+    "protocol": {
+      "title": "Protokol Indstillinger",
+      "description": "Konfigurer dine VPN protokol præferencer",
+      "autoSelection": "Automatisk Protokol Valg",
+      "autoSelectionDesc": "Vælg automatisk den bedste protokol baseret på netværksforhold",
+      "killSwitch": "Kill Switch",
+      "killSwitchDesc": "Bloker internet hvis VPN forbindelsen afbrydes",
+      "autoConnect": "Auto Forbind",
+      "autoConnectDesc": "Forbind automatisk når appen starter"
+    },
+    "xxNetwork": {
+      "title": "XX Network Integration",
+      "description": "Kvante-resistente blockchain funktioner",
+      "coinRewards": "XX Coin Belønninger",
+      "coinRewardsDesc": "Tjen XX tokens ved at bidrage til netværkssikkerhed",
+      "nodeContribution": "Node Bidrag",
+      "nodeContributionDesc": "Tillad din enhed at bidrage til mixnet",
+      "currentBalance": "Nuværende Saldo"
+    }
+  },
+  "servers": {
+    "title": "Server Valg",
+    "description": "Vælg din VPN server placering",
+    "quickConnect": "Hurtig Forbindelse",
+    "searchPlaceholder": "Søg lande eller byer...",
+    "stats": {
+      "availableServers": "Tilgængelige Servere",
+      "acrossCountries": "På tværs af 12 lande",
+      "averageLoad": "Gennemsnitlig Belastning",
+      "optimalPerformance": "Optimal ydelse",
+      "yourLatency": "Din Latency",
+      "toSelectedServer": "Til valgt server"
+    },
+    "list": {
+      "title": "Tilgængelige Servere",
+      "description": "Vælg en server placering for din VPN forbindelse",
+      "favorites": "Favoritter",
+      "allLocations": "Alle Placeringer",
+      "premium": "Premium",
+      "serverId": "Server ID",
+      "latency": "latency",
+      "load": "belastning"
+    }
+  },
+  "common": {
+    "loading": "Indlæser xxVPN...",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "close": "Luk",
+    "edit": "Rediger",
+    "delete": "Slet",
+    "confirm": "Bekræft",
+    "warning": "Advarsel",
+    "error": "Fejl",
+    "success": "Succes"
+  },
+  "payments": {
+    "title": "Betalinger",
+    "sidebar": {
+      "account": "Konto",
+      "devices": "Enheder", 
+      "payments": "Betalinger",
+      "download": "Download",
+      "support": "Support"
+    },
+    "methods": {
+      "title": "Betalingsmetoder",
+      "card": {
+        "title": "Kredit/Debitkort",
+        "description": "Visa, Mastercard, American Express",
+        "action": "Tilføj Kort"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "Hurtige og sikre betalinger",
+        "action": "Forbind"
+      },
+      "crypto": {
+        "title": "Kryptovaluta", 
+        "description": "Bitcoin, Ethereum, XX Coin",
+        "action": "Opsæt"
+      }
+    },
+    "orders": {
+      "title": "Dine ordrer",
+      "privacy": "Ved design adskiller xxVPN dine betalingsoplysninger og identitet fra din online aktivitet. Dette sikrer robust beskyttelse mod uautoriseret overvågning af din trafik og private data.",
+      "table": {
+        "id": "ID",
+        "date": "Dato",
+        "subscription": "Abonnement",
+        "status": "Status",
+        "amount": "Beløb"
+      },
+      "status": {
+        "active": "Aktiv",
+        "expired": "Udløbet", 
+        "pending": "Afventende"
+      },
+      "noOrders": "Ingen ordrer fundet",
+      "invoice": {
+        "text": "Hvis du har brug for en professionel faktura med dit firmanavn og adresse, kontakt vores",
+        "link": "Support Team"
+      }
+    }
+  },
+  "devices": {
+    "title": "Enhedshåndtering",
+    "description": "Administrer dine tilsluttede enheder ({{used}}/{{total}} enheder brugt)",
+    "addDevice": "Tilføj Enhed",
+    "addNew": "Tilføj Ny Enhed",
+    "addDescription": "Registrer en ny enhed til brug med xxVPN. Du kan have op til {{limit}} enheder.",
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Mobil",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Andet"
+    },
+    "form": {
+      "deviceName": "Enhedsnavn",
+      "deviceNamePlaceholder": "Min MacBook Pro",
+      "deviceType": "Enhedstype",
+      "operatingSystem": "Operativsystem (Valgfrit)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, osv."
+    },
+    "toast": {
+      "nameRequired": "Enhedsnavn påkrævet",
+      "nameRequiredDesc": "Indtast venligst et navn til din enhed.",
+      "limitReached": "Enhedsgrænse nået",
+      "limitReachedDesc": "Du kan kun have 10 enheder. Fjern en gammel enhed først.",
+      "added": "Enhed tilføjet succesfuldt",
+      "addedDesc": "Din nye enhed er blevet registreret.",
+      "removed": "Enhed fjernet",
+      "removedDesc": "{{deviceName}} er blevet fjernet fra din konto."
+    },
+    "limitReached": "Enhedsgrænse nået",
+    "approachingLimit": "Nærmer sig enhedsgrænse",
+    "removeToAdd": "Fjern en enhed for at tilføje en ny.",
+    "slotsRemaining": "Du har {{count}} enheds-slots tilbage.",
+    "noDevices": "Ingen enheder registreret",
+    "noDevicesDesc": "Tilføj din første enhed for at begynde at bruge xxVPN",
+    "lastSeen": "Sidst set",
+    "latency": "latency",
+    "load": "belastning"
+  },
+  "profile": {
+    "signedOut": "Logget ud",
+    "signedOutDesc": "Succesfuldt logget ud af xxVPN.",
+    "signOutError": "Log ud mislykkedes. Prøv venligst igen.",
+    "updated": "Profil opdateret",
+    "updatedDesc": "Din profil er blevet opdateret succesfuldt.",
+    "anonymousUser": "Anonym Bruger",
+    "signOut": "Log ud",
+    "subscription": {
+      "enterprise": "Virksomhed",
+      "premium": "Premium",
+      "free": "Gratis"
+    },
+    "tabs": {
+      "account": "Konto",
+      "subscription": "Abonnement",
+      "rewards": "XX Belønninger",
+      "downloads": "Downloads"
+    }
+  },
+  "apps": {
+    "aiPoweredTitle": "AI-Drevet Split Tunnel",
+    "aiPoweredDesc": "Tillader AI at automatisk route applikationer baseret på deres sikkerhedsbehov",
+    "smartRouting": "Smart Routing",
+    "smartRoutingDesc": "Opdager og router automatisk applikationer gennem optimale tunneler",
+    "applicationRouting": "Applikations Routing",
+    "applicationRoutingDesc": "Konfigurer hvordan hver applikation forbinder til internettet",
+    "scanForApps": "Scan for Nye Applikationer",
+    "crossPlatformSupport": "Krydsplatform Support",
+    "crossPlatformDesc": "xxVPN er tilgængelig på alle dine enheder",
+    "categories": {
+      "gaming": "gaming",
+      "streaming": "streaming",
+      "crypto": "crypto",
+      "messaging": "beskedudveksling",
+      "browser": "browser"
+    },
+    "status": {
+      "available": "Tilgængelig",
+      "beta": "Beta",
+      "comingSoon": "Kommer Snart",
+      "extension": "Udvidelse"
+    },
+    "tunnels": {
+      "direct": "Direkte",
+      "directSubtitle": "Ingen VPN beskyttelse",
+      "directDescription": "Ideelt til gaming og latency-følsomme applikationer. Ingen beskyttelses-overhead.",
+      "vpn": "VPN Tunnel", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Balanceret sikkerhed og hastighed. DPI bypass til streaming og browsing.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Maksimal anonymitet med metadata beskyttelse. Perfekt til kryptovaluta og beskedudveksling.",
+      "directDesc": "Ingen VPN - Hurtigere",
+      "vpnDesc": "VPN - Balanceret",
+      "mixnetDesc": "Mixnet - Mere sikkert"
+    }
+  },
+  "network": {
+    "health": "Netværks Helbred",
+    "nodesOperational": "5 noder operationelle",
+    "throughput": "Gennemstrømning",
+    "protectionLevel": "Beskyttelsesniveau",
+    "quantum": "Kvante",
+    "encryptionActive": "cMixx kryptering aktiv",
+    "topology": "Netværks Topologi",
+    "topologyDesc": "5-hop mixnet forbindelse gennem XX Network",
+    "hop": "Hop",
+    "latency": "latency",
+    "load": "belastning",
+    "securityFeatures": "Aktive Sikkerhedsfunktioner",
+    "securityFeaturesDesc": "Kvante-resistente beskyttelsesmekanismer",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Mix Node 1",
+      "mixNode2": "Mix Node 2", 
+      "mixNode3": "Mix Node 3",
+      "exitNode": "Exit Node"
+    },
+    "status": {
+      "active": "aktiv",
+      "standby": "standby",
+      "offline": "offline"
+    },
+    "features": {
+      "metadataShredding": "Metadata Makulering",
+      "quantumEncryption": "Kvante-Resistent Kryptering",
+      "trafficMixing": "Trafik Blanding",
+      "dpiBypass": "DPI Bypass",
+      "precomputation": "Forberegnings Fase",
+      "realtimeMixing": "Realtids Blanding"
+    }
+  }
+}

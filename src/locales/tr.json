@@ -1,0 +1,337 @@
+{
+  "dashboard": {
+    "title": "xxVPN Paneli",
+    "welcomeBack": "Tekrar hoş geldiniz",
+    "status": {
+      "connected": "Bağlı",
+      "connecting": "Bağlanıyor...",
+      "disconnected": "Bağlantı Kesildi"
+    },
+    "connectionModes": {
+      "ultraFast": "Ultra-hızlı",
+      "secure": "Güvenli", 
+      "ultraSecure": "Ultra-güvenli",
+      "off": "Kapalı",
+      "gamingStreaming": "Oyun ve Yayın",
+      "standardProtection": "Standart VPN Koruması",
+      "noVPN": "VPN Yok",
+      "ultraFastDesc": "Oyun ve yayın için minimum gecikme ile ultra-hızlı bağlantı.",
+      "maximumSpeed": "Maksimum hız",
+      "secureDesc": "Standart gizlilik koruması sağlayan şifrelenmiş VPN tüneli.",
+      "encryptedTunnel": "Şifrelenmiş tünel",
+      "metadataShredding": "Metadata İmhası",
+      "metadataShredDesc": "XX Network üzerinden cMixx kullanarak metadata imhası.",
+      "metadataProtection": "Metadata koruması"
+    },
+    "connect": "Bağlan",
+    "disconnect": "Bağlantıyı Kes",
+    "location": "Konum",
+    "auto": "Otomatik",
+    "statistics": {
+      "title": "İstatistikler",
+      "dataTransferred": "Aktarılan Veri",
+      "sessionTime": "Oturum Süresi",
+      "networkLatency": "Ağ Gecikmesi",
+      "xxCoinsEarned": "Kazanılan XX Coinler",
+      "currentSession": "Mevcut oturum",
+      "averagePing": "Ortalama ping"
+    },
+    "tabs": {
+      "main": "Ana",
+      "servers": "Sunucular", 
+      "network": "Ağ",
+      "apps": "Uygulamalar",
+      "devices": "Cihazlar",
+      "payments": "Ödemeler",
+      "settings": "Ayarlar",
+      "usage": "Kullanım",
+      "history": "Geçmiş"
+    },
+    "usage": {
+      "todaysUsage": "Bugünkü Kullanım",
+      "ultraFastMode": "Ultra-hızlı Mod",
+      "secureMode": "Güvenli Mod",
+      "ultraSecureMode": "Ultra-güvenli Mod"
+    },
+    "history": {
+      "recentSessions": "Son Oturumlar",
+      "fastMode": "Hızlı Mod",
+      "privacyMode": "Gizlilik Modu",
+      "mode": "Mod"
+    },
+    "menu": {
+      "editName": "İsmi Düzenle",
+      "customerSupport": "Müşteri Desteği",
+      "devices": "Cihazlar",
+      "payments": "Ödemeler",
+      "logout": "Çıkış Yap"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "Ultra-hızlı Mod: Oyun ve yayın için doğrudan bağlantı",
+      "secureActive": "Güvenli Mod: Şifrelenmiş VPN tüneli (OpenVPN/WireGuard) aktif",
+      "ultraSecureActive": "Ultra-güvenli Mod: XX Network cMixx üzerinden metadata imhası aktif",
+      "notProtected": "Trafiğiniz korunmuyor"
+    },
+    "referrals": {
+      "program": "Yönlendirme Programı",
+      "yourReferrals": "Yönlendirmeleriniz",
+      "totalUsers": "Toplam Kullanıcı",
+      "yourLink": "Yönlendirme Bağlantınız", 
+      "shareMessage": "Katılan her yeni kullanıcı için XX coin kazanmak üzere yönlendirme bağlantınızı paylaşın!",
+      "referrals": "yönlendirme",
+      "users": "kullanıcı"
+    },
+    "subscriptionTier": {
+      "free": "Ücretsiz",
+      "premium": "Premium", 
+      "enterprise": "Kurumsal"
+    }
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "appearance": {
+      "title": "Görünüm",
+      "description": "Uygulamanın görünümünü ve temasını özelleştirin",
+      "theme": "Tema",
+      "themeDesc": "Açık ve koyu mod arasında seçim yapın"
+    },
+    "protocol": {
+      "title": "Protokol Ayarları",
+      "description": "VPN protokol tercihlerinizi yapılandırın",
+      "autoSelection": "Otomatik Protokol Seçimi",
+      "autoSelectionDesc": "Ağ koşullarına göre en iyi protokolü otomatik seç",
+      "killSwitch": "Kill Switch",
+      "killSwitchDesc": "VPN bağlantısı kesilirse interneti engelle",
+      "autoConnect": "Otomatik Bağlantı",
+      "autoConnectDesc": "Uygulama başladığında otomatik bağlan"
+    },
+    "xxNetwork": {
+      "title": "XX Network Entegrasyonu",
+      "description": "Kuantum dirençli blockchain özellikleri",
+      "coinRewards": "XX Coin Ödülleri",
+      "coinRewardsDesc": "Ağ güvenliğine katkıda bulunarak XX token kazanın",
+      "nodeContribution": "Node Katkısı",
+      "nodeContributionDesc": "Cihazınızın mixnet'e katkıda bulunmasına izin verin",
+      "currentBalance": "Mevcut Bakiye"
+    }
+  },
+  "servers": {
+    "title": "Sunucu Seçimi",
+    "description": "VPN sunucu konumunuzu seçin",
+    "quickConnect": "Hızlı Bağlantı",
+    "searchPlaceholder": "Ülke veya şehir ara...",
+    "stats": {
+      "availableServers": "Mevcut Sunucular",
+      "acrossCountries": "12 ülkede",
+      "averageLoad": "Ortalama Yük",
+      "optimalPerformance": "Optimal performans",
+      "yourLatency": "Gecikmeniz",
+      "toSelectedServer": "Seçilen sunucuya"
+    },
+    "list": {
+      "title": "Mevcut Sunucular",
+      "description": "VPN bağlantınız için sunucu konumu seçin",
+      "favorites": "Favoriler",
+      "allLocations": "Tüm Konumlar",
+      "premium": "Premium",
+      "serverId": "Sunucu ID",
+      "latency": "gecikme",
+      "load": "yük"
+    }
+  },
+  "common": {
+    "loading": "xxVPN yükleniyor...",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "confirm": "Onayla",
+    "warning": "Uyarı",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "payments": {
+    "title": "Ödemeler",
+    "sidebar": {
+      "account": "Hesap",
+      "devices": "Cihazlar", 
+      "payments": "Ödemeler",
+      "download": "İndir",
+      "support": "Destek"
+    },
+    "methods": {
+      "title": "Ödeme Yöntemleri",
+      "card": {
+        "title": "Kredi/Banka Kartı",
+        "description": "Visa, Mastercard, American Express",
+        "action": "Kart Ekle"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "Hızlı ve güvenli ödemeler",
+        "action": "Bağlan"
+      },
+      "crypto": {
+        "title": "Kripto Para", 
+        "description": "Bitcoin, Ethereum, XX Coin",
+        "action": "Kur"
+      }
+    },
+    "orders": {
+      "title": "Siparişleriniz",
+      "privacy": "Tasarım gereği, xxVPN ödeme bilgilerinizi ve kimliğinizi çevrimiçi etkinliğinizden ayırır. Bu, trafiğinizin ve özel verilerinizin yetkisiz izlenmesine karşı güçlü koruma sağlar.",
+      "table": {
+        "id": "ID",
+        "date": "Tarih",
+        "subscription": "Abonelik",
+        "status": "Durum",
+        "amount": "Tutar"
+      },
+      "status": {
+        "active": "Aktif",
+        "expired": "Süresi Dolmuş", 
+        "pending": "Beklemede"
+      },
+      "noOrders": "Sipariş bulunamadı",
+      "invoice": {
+        "text": "Şirket adı ve adresinizle profesyonel fatura gerekiyorsa,",
+        "link": "Destek Ekibimiz"
+      }
+    }
+  },
+  "devices": {
+    "title": "Cihaz Yönetimi",
+    "description": "Bağlı cihazlarınızı yönetin ({{used}}/{{total}} cihaz kullanıldı)",
+    "addDevice": "Cihaz Ekle",
+    "addNew": "Yeni Cihaz Ekle",
+    "addDescription": "xxVPN ile kullanmak üzere yeni cihaz kaydedin. {{limit}} cihaza kadar sahip olabilirsiniz.",
+    "types": {
+      "desktop": "Masaüstü",
+      "mobile": "Mobil",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Diğer"
+    },
+    "form": {
+      "deviceName": "Cihaz Adı",
+      "deviceNamePlaceholder": "MacBook Pro'm",
+      "deviceType": "Cihaz Türü",
+      "operatingSystem": "İşletim Sistemi (Opsiyonel)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, vb."
+    },
+    "toast": {
+      "nameRequired": "Cihaz adı gerekli",
+      "nameRequiredDesc": "Lütfen cihazınız için bir ad girin.",
+      "limitReached": "Cihaz limitine ulaşıldı",
+      "limitReachedDesc": "Sadece 10 cihaza sahip olabilirsiniz. Önce eski bir cihazı kaldırın.",
+      "added": "Cihaz başarıyla eklendi",
+      "addedDesc": "Yeni cihazınız kaydedildi.",
+      "removed": "Cihaz kaldırıldı",
+      "removedDesc": "{{deviceName}} hesabınızdan kaldırıldı."
+    },
+    "limitReached": "Cihaz limitine ulaşıldı",
+    "approachingLimit": "Cihaz limitine yaklaşılıyor",
+    "removeToAdd": "Yeni eklemek için cihaz kaldırın.",
+    "slotsRemaining": "{{count}} cihaz slotunuz kaldı.",
+    "noDevices": "Kayıtlı cihaz yok",
+    "noDevicesDesc": "xxVPN kullanmaya başlamak için ilk cihazınızı ekleyin",
+    "lastSeen": "Son görülme",
+    "latency": "gecikme",
+    "load": "yük"
+  },
+  "profile": {
+    "signedOut": "Çıkış yapıldı",
+    "signedOutDesc": "xxVPN'den başarıyla çıkış yapıldı.",
+    "signOutError": "Çıkış yapma başarısız. Lütfen tekrar deneyin.",
+    "updated": "Profil güncellendi",
+    "updatedDesc": "Profiliniz başarıyla güncellendi.",
+    "anonymousUser": "Anonim Kullanıcı",
+    "signOut": "Çıkış Yap",
+    "subscription": {
+      "enterprise": "Kurumsal",
+      "premium": "Premium",
+      "free": "Ücretsiz"
+    },
+    "tabs": {
+      "account": "Hesap",
+      "subscription": "Abonelik",
+      "rewards": "XX Ödülleri",
+      "downloads": "İndirmeler"
+    }
+  },
+  "apps": {
+    "aiPoweredTitle": "AI Destekli Split Tünel",
+    "aiPoweredDesc": "AI'ın güvenlik ihtiyaçlarına göre uygulamaları otomatik yönlendirmesine izin verir",
+    "smartRouting": "Akıllı Yönlendirme",
+    "smartRoutingDesc": "Uygulamaları otomatik algılar ve optimal tüneller üzerinden yönlendirir",
+    "applicationRouting": "Uygulama Yönlendirme",
+    "applicationRoutingDesc": "Her uygulamanın internete nasıl bağlandığını yapılandırın",
+    "scanForApps": "Yeni Uygulamaları Tara",
+    "crossPlatformSupport": "Çapraz Platform Desteği",
+    "crossPlatformDesc": "xxVPN tüm cihazlarınızda mevcut",
+    "categories": {
+      "gaming": "oyun",
+      "streaming": "yayın",
+      "crypto": "kripto",
+      "messaging": "mesajlaşma",
+      "browser": "tarayıcı"
+    },
+    "status": {
+      "available": "Mevcut",
+      "beta": "Beta",
+      "comingSoon": "Yakında",
+      "extension": "Uzantı"
+    },
+    "tunnels": {
+      "direct": "Doğrudan",
+      "directSubtitle": "VPN koruması yok",
+      "directDescription": "Oyun ve gecikmeye duyarlı uygulamalar için ideal. Koruma ek yükü yok.",
+      "vpn": "VPN Tüneli", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Dengeli güvenlik ve hız. Yayın ve gezinti için DPI bypass.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Metadata koruması ile maksimum anonimlik. Kripto para ve mesajlaşma için mükemmel.",
+      "directDesc": "VPN yok - Daha hızlı",
+      "vpnDesc": "VPN - Dengeli",
+      "mixnetDesc": "Mixnet - Daha güvenli"
+    }
+  },
+  "network": {
+    "health": "Ağ Sağlığı",
+    "nodesOperational": "5 node operasyonel",
+    "throughput": "Verim",
+    "protectionLevel": "Koruma Seviyesi",
+    "quantum": "Kuantum",
+    "encryptionActive": "cMixx şifreleme aktif",
+    "topology": "Ağ Topolojisi",
+    "topologyDesc": "XX Network üzerinden 5-hop mixnet bağlantısı",
+    "hop": "Hop",
+    "latency": "gecikme",
+    "load": "yük",
+    "securityFeatures": "Aktif Güvenlik Özellikleri",
+    "securityFeaturesDesc": "Kuantum dirençli koruma mekanizmaları",
+    "nodes": {
+      "gateway": "Geçit",
+      "mixNode1": "Mix Node 1",
+      "mixNode2": "Mix Node 2", 
+      "mixNode3": "Mix Node 3",
+      "exitNode": "Çıkış Node"
+    },
+    "status": {
+      "active": "aktif",
+      "standby": "beklemede",
+      "offline": "çevrimdışı"
+    },
+    "features": {
+      "metadataShredding": "Metadata İmhası",
+      "quantumEncryption": "Kuantum Dirençli Şifreleme",
+      "trafficMixing": "Trafik Karıştırma",
+      "dpiBypass": "DPI Bypass",
+      "precomputation": "Ön Hesaplama Aşaması",
+      "realtimeMixing": "Gerçek Zamanlı Karıştırma"
+    }
+  }
+}

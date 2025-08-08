@@ -71,6 +71,18 @@
       "name": "Hindi",
       "nativeName": "हिन्दी",
       "flag": "🇮🇳"
+    },
+    {
+      "code": "tr",
+      "name": "Turkish",
+      "nativeName": "Türkçe",
+      "flag": "🇹🇷"
+    },
+    {
+      "code": "da",
+      "name": "Danish",
+      "nativeName": "Dansk",
+      "flag": "🇩🇰"
     }
   ]
 }
