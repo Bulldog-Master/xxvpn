@@ -47,6 +47,18 @@
       "usage": "Utilisation",
       "history": "Historique"
     },
+    "usage": {
+      "todaysUsage": "Utilisation d'Aujourd'hui",
+      "ultraFastMode": "Mode Ultra-rapide",
+      "secureMode": "Mode Sécurisé",
+      "ultraSecureMode": "Mode Ultra-sécurisé"
+    },
+    "history": {
+      "recentSessions": "Sessions Récentes",
+      "fastMode": "Mode Rapide",
+      "privacyMode": "Mode Confidentialité",
+      "mode": "Mode"
+    },
     "menu": {
       "editName": "Modifier le Nom",
       "customerSupport": "Support Client",
@@ -59,11 +71,6 @@
       "secureActive": "Mode Sécurisé: Tunnel VPN chiffré (OpenVPN/WireGuard) actif",
       "ultraSecureActive": "Mode Ultra-sécurisé: Destruction des métadonnées via XX Network cMixx actif",
       "notProtected": "Votre trafic n'est pas protégé"
-    },
-    "connectionModes": {
-      "metadataShredding": "Destruction des Métadonnées",
-      "metadataShredDesc": "Destruction des métadonnées en utilisant cMixx via XX Network.",
-      "metadataProtection": "Protection des métadonnées"
     },
     "referrals": {
       "program": "Programme de Parrainage",
@@ -306,18 +313,6 @@
       "precomputation": "Phase de Précalcul",
       "realtimeMixing": "Mélange en Temps Réel"
     }
-  },
-  "usage": {
-    "todaysUsage": "Utilisation d'Aujourd'hui",
-    "ultraFastMode": "Mode Ultra-rapide",
-    "secureMode": "Mode Sécurisé",
-    "ultraSecureMode": "Mode Ultra-sécurisé"
-  },
-  "history": {
-    "recentSessions": "Sessions Récentes",
-    "fastMode": "Mode Rapide",
-    "privacyMode": "Mode Confidentialité",
-    "mode": "Mode"
   },
   "apps": {
     "aiPoweredTitle": "Tunnel Divisé par IA",

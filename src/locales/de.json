@@ -47,6 +47,18 @@
       "usage": "Nutzung",
       "history": "Verlauf"
     },
+    "usage": {
+      "todaysUsage": "Heutige Nutzung",
+      "ultraFastMode": "Ultra-schnell Modus",
+      "secureMode": "Sicher Modus",
+      "ultraSecureMode": "Ultra-sicher Modus"
+    },
+    "history": {
+      "recentSessions": "Neueste Sitzungen",
+      "fastMode": "Schnell Modus",
+      "privacyMode": "Privatsphäre Modus",
+      "mode": "Modus"
+    },
     "menu": {
       "editName": "Name Bearbeiten",
       "customerSupport": "Kundensupport",
@@ -59,11 +71,6 @@
       "secureActive": "Sicher Modus: Verschlüsselter VPN-Tunnel (OpenVPN/WireGuard) aktiv",
       "ultraSecureActive": "Ultra-sicher Modus: Metadaten-Vernichtung über XX Network cMixx aktiv",
       "notProtected": "Ihr Datenverkehr ist nicht geschützt"
-    },
-    "connectionModes": {
-      "metadataShredding": "Metadaten-Vernichtung",
-      "metadataShredDesc": "Metadaten-Vernichtung mit cMixx über XX Network.",
-      "metadataProtection": "Metadaten-Schutz"
     },
     "referrals": {
       "program": "Empfehlungsprogramm",
@@ -146,8 +153,8 @@
       "allLocations": "Alle Standorte",
       "premium": "Premium",
       "serverId": "Server-ID",
-      "latency": "Latenz",
-      "load": "Auslastung"
+      "latency": "latenz",
+      "load": "auslastung"
     }
   },
   "common": {
@@ -249,8 +256,8 @@
     "noDevices": "Keine Geräte registriert",
     "noDevicesDesc": "Fügen Sie Ihr erstes Gerät hinzu, um xxVPN zu verwenden",
     "lastSeen": "Zuletzt gesehen",
-    "latency": "Latenz",
-    "load": "Auslastung"
+    "latency": "latenz",
+    "load": "auslastung"
   },
   "profile": {
     "signedOut": "Abgemeldet",
@@ -277,13 +284,13 @@
     "nodesOperational": "5 Knoten in Betrieb",
     "throughput": "Durchsatz",
     "protectionLevel": "Schutzebene",
-    "quantum": "Quantom",
+    "quantum": "Quantum",
     "encryptionActive": "cMixx-Verschlüsselung aktiv",
     "topology": "Netzwerk-Topologie",
     "topologyDesc": "5-Hop-Mixnet-Verbindung über XX Network",
     "hop": "Hop",
-    "latency": "Latenz",
-    "load": "Auslastung",
+    "latency": "latenz",
+    "load": "auslastung",
     "securityFeatures": "Aktive Sicherheitsfeatures",
     "securityFeaturesDesc": "Quantenresistente Schutzmechanismen",
     "nodes": {
@@ -306,18 +313,6 @@
       "precomputation": "Vorberechnungsphase",
       "realtimeMixing": "Echtzeit-Mischung"
     }
-  },
-  "usage": {
-    "todaysUsage": "Heutige Nutzung",
-    "ultraFastMode": "Ultra-schnell Modus",
-    "secureMode": "Sicher Modus",
-    "ultraSecureMode": "Ultra-sicher Modus"
-  },
-  "history": {
-    "recentSessions": "Neueste Sitzungen",
-    "fastMode": "Schnell Modus",
-    "privacyMode": "Privatsphäre Modus",
-    "mode": "Modus"
   },
   "apps": {
     "aiPoweredTitle": "KI-gestützter Split-Tunnel",
