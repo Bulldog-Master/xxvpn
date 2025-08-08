@@ -278,8 +278,8 @@
     "topology": "Topología de Red",
     "topologyDesc": "Conexión mixnet de 5 saltos a través de XX Network",
     "hop": "Salto",
-    "latency": "latencia",
-    "load": "carga",
+    "latency": "Latencia",
+    "load": "Carga",
     "securityFeatures": "Características de Seguridad Activas",
     "securityFeaturesDesc": "Mecanismos de protección resistentes a la computación cuántica",
     "nodes": {
