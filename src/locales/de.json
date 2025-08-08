@@ -11,7 +11,17 @@
       "ultraFast": "Ultra-schnell",
       "secure": "Sicher", 
       "ultraSecure": "Ultra-sicher",
-      "off": "Aus"
+      "off": "Aus",
+      "gamingStreaming": "Gaming und Streaming",
+      "standardProtection": "Standard VPN Schutz",
+      "noVPN": "Kein VPN",
+      "ultraFastDesc": "Ultra-schnelle Verbindung für Gaming und Streaming mit minimaler Latenz.",
+      "maximumSpeed": "Maximale Geschwindigkeit",
+      "secureDesc": "Verschlüsselter VPN-Tunnel der Standard-Datenschutz bietet.",
+      "encryptedTunnel": "Verschlüsselter Tunnel",
+      "metadataShredding": "Metadaten-Vernichtung",
+      "metadataShredDesc": "Metadaten-Vernichtung mit cMixx über XX Network.",
+      "metadataProtection": "Metadaten-Schutz"
     },
     "connect": "Verbinden",
     "disconnect": "Trennen",
@@ -21,7 +31,10 @@
       "title": "Statistiken",
       "dataTransferred": "Übertragene Daten",
       "sessionTime": "Sitzungszeit",
-      "xxCoinsEarned": "XX Coins Verdient"
+      "networkLatency": "Netzwerk-Latenz",
+      "xxCoinsEarned": "XX Coins Verdient",
+      "currentSession": "Aktuelle Sitzung",
+      "averagePing": "Durchschnittlicher Ping"
     },
     "tabs": {
       "main": "Hauptseite",
@@ -85,10 +98,9 @@
     "title": "Einstellungen",
     "appearance": {
       "title": "Erscheinungsbild",
+      "description": "Anpassen des App-Erscheinungsbilds und Themas",
       "theme": "Design",
-      "light": "Hell",
-      "dark": "Dunkel", 
-      "system": "System"
+      "themeDesc": "Zwischen hellem und dunklem Modus wählen"
     },
     "protocol": {
       "title": "Protokoll-Einstellungen",
@@ -269,10 +281,23 @@
     "encryptionActive": "cMixx-Verschlüsselung aktiv",
     "topology": "Netzwerk-Topologie",
     "topologyDesc": "5-Hop-Mixnet-Verbindung über XX Network",
+    "hop": "Hop",
     "latency": "Latenz",
     "load": "Auslastung",
     "securityFeatures": "Aktive Sicherheitsfeatures",
     "securityFeaturesDesc": "Quantenresistente Schutzmechanismen",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Mix Node 1",
+      "mixNode2": "Mix Node 2", 
+      "mixNode3": "Mix Node 3",
+      "exitNode": "Exit Node"
+    },
+    "status": {
+      "active": "aktiv",
+      "standby": "standby",
+      "offline": "offline"
+    },
     "features": {
       "metadataShredding": "Metadaten-Vernichtung",
       "quantumEncryption": "Quantenresistente Verschlüsselung",
@@ -281,6 +306,18 @@
       "precomputation": "Vorberechnungsphase",
       "realtimeMixing": "Echtzeit-Mischung"
     }
+  },
+  "usage": {
+    "todaysUsage": "Heutige Nutzung",
+    "ultraFastMode": "Ultra-schnell Modus",
+    "secureMode": "Sicher Modus",
+    "ultraSecureMode": "Ultra-sicher Modus"
+  },
+  "history": {
+    "recentSessions": "Neueste Sitzungen",
+    "fastMode": "Schnell Modus",
+    "privacyMode": "Privatsphäre Modus",
+    "mode": "Modus"
   },
   "apps": {
     "aiPoweredTitle": "KI-gestützter Split-Tunnel",

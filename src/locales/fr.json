@@ -11,7 +11,17 @@
       "ultraFast": "Ultra-rapide",
       "secure": "Sécurisé", 
       "ultraSecure": "Ultra-sécurisé",
-      "off": "Désactivé"
+      "off": "Désactivé",
+      "gamingStreaming": "Jeux et Streaming",
+      "standardProtection": "Protection VPN Standard",
+      "noVPN": "Pas de VPN",
+      "ultraFastDesc": "Connexion ultra-rapide pour jeux et streaming avec latence minimale.",
+      "maximumSpeed": "Vitesse maximale",
+      "secureDesc": "Tunnel VPN chiffré qui fournit une protection de confidentialité standard.",
+      "encryptedTunnel": "Tunnel chiffré",
+      "metadataShredding": "Destruction des Métadonnées",
+      "metadataShredDesc": "Destruction des métadonnées en utilisant cMixx via XX Network.",
+      "metadataProtection": "Protection des métadonnées"
     },
     "connect": "Connecter",
     "disconnect": "Déconnecter",
@@ -21,7 +31,10 @@
       "title": "Statistiques",
       "dataTransferred": "Données Transférées",
       "sessionTime": "Temps de Session",
-      "xxCoinsEarned": "XX Coins Gagnées"
+      "networkLatency": "Latence Réseau",
+      "xxCoinsEarned": "XX Coins Gagnées",
+      "currentSession": "Session actuelle",
+      "averagePing": "Ping moyen"
     },
     "tabs": {
       "main": "Principal",
@@ -85,10 +98,9 @@
     "title": "Paramètres",
     "appearance": {
       "title": "Apparence",
+      "description": "Personnalisez l'apparence et le thème de l'application",
       "theme": "Thème",
-      "light": "Clair",
-      "dark": "Sombre", 
-      "system": "Système"
+      "themeDesc": "Choisir entre mode clair et sombre"
     },
     "protocol": {
       "title": "Paramètres de Protocole",
@@ -198,6 +210,114 @@
         "link": "Équipe de support"
       }
     }
+  },
+  "devices": {
+    "title": "Gestion des Appareils",
+    "description": "Gérez vos appareils connectés ({{used}}/{{total}} appareils utilisés)",
+    "addDevice": "Ajouter un Appareil",
+    "addNew": "Ajouter un Nouvel Appareil",
+    "addDescription": "Enregistrez un nouvel appareil pour utiliser avec xxVPN. Vous pouvez avoir jusqu'à {{limit}} appareils.",
+    "types": {
+      "desktop": "Bureau",
+      "mobile": "Mobile",
+      "tablet": "Tablette",
+      "router": "Routeur",
+      "tv": "TV",
+      "other": "Autre"
+    },
+    "form": {
+      "deviceName": "Nom de l'Appareil",
+      "deviceNamePlaceholder": "Mon MacBook Pro",
+      "deviceType": "Type d'Appareil",
+      "operatingSystem": "Système d'Exploitation (Optionnel)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, etc."
+    },
+    "toast": {
+      "nameRequired": "Nom d'appareil requis",
+      "nameRequiredDesc": "Veuillez entrer un nom pour votre appareil.",
+      "limitReached": "Limite d'appareils atteinte",
+      "limitReachedDesc": "Vous ne pouvez avoir que 10 appareils. Supprimez d'abord un ancien appareil.",
+      "added": "Appareil ajouté avec succès",
+      "addedDesc": "Votre nouvel appareil a été enregistré.",
+      "removed": "Appareil supprimé",
+      "removedDesc": "{{deviceName}} a été supprimé de votre compte."
+    },
+    "limitReached": "Limite d'appareils atteinte",
+    "approachingLimit": "Approche de la limite d'appareils",
+    "removeToAdd": "Supprimez un appareil pour en ajouter un nouveau.",
+    "slotsRemaining": "Il vous reste {{count}} emplacements d'appareils.",
+    "noDevices": "Aucun appareil enregistré",
+    "noDevicesDesc": "Ajoutez votre premier appareil pour commencer à utiliser xxVPN",
+    "lastSeen": "Vu pour la dernière fois",
+    "latency": "latence",
+    "load": "charge"
+  },
+  "profile": {
+    "signedOut": "Déconnecté",
+    "signedOutDesc": "Déconnecté avec succès de xxVPN.",
+    "signOutError": "Échec de la déconnexion. Veuillez réessayer.",
+    "updated": "Profil mis à jour",
+    "updatedDesc": "Votre profil a été mis à jour avec succès.",
+    "anonymousUser": "Utilisateur Anonyme",
+    "signOut": "Se Déconnecter",
+    "subscription": {
+      "enterprise": "Entreprise",
+      "premium": "Premium",
+      "free": "Gratuit"
+    },
+    "tabs": {
+      "account": "Compte",
+      "subscription": "Abonnement",
+      "rewards": "Récompenses XX",
+      "downloads": "Téléchargements"
+    }
+  },
+  "network": {
+    "health": "Santé du Réseau",
+    "nodesOperational": "5 nœuds opérationnels",
+    "throughput": "Débit",
+    "protectionLevel": "Niveau de Protection",
+    "quantum": "Quantique",
+    "encryptionActive": "Chiffrement cMixx actif",
+    "topology": "Topologie du Réseau",
+    "topologyDesc": "Connexion mixnet à 5 sauts via XX Network",
+    "hop": "Saut",
+    "latency": "latence",
+    "load": "charge",
+    "securityFeatures": "Fonctionnalités de Sécurité Actives",
+    "securityFeaturesDesc": "Mécanismes de protection résistants à l'informatique quantique",
+    "nodes": {
+      "gateway": "Passerelle",
+      "mixNode1": "Nœud Mix 1",
+      "mixNode2": "Nœud Mix 2", 
+      "mixNode3": "Nœud Mix 3",
+      "exitNode": "Nœud de Sortie"
+    },
+    "status": {
+      "active": "actif",
+      "standby": "en attente",
+      "offline": "hors ligne"
+    },
+    "features": {
+      "metadataShredding": "Destruction des Métadonnées",
+      "quantumEncryption": "Chiffrement Résistant aux Quantiques",
+      "trafficMixing": "Mélange de Trafic",
+      "dpiBypass": "Contournement DPI",
+      "precomputation": "Phase de Précalcul",
+      "realtimeMixing": "Mélange en Temps Réel"
+    }
+  },
+  "usage": {
+    "todaysUsage": "Utilisation d'Aujourd'hui",
+    "ultraFastMode": "Mode Ultra-rapide",
+    "secureMode": "Mode Sécurisé",
+    "ultraSecureMode": "Mode Ultra-sécurisé"
+  },
+  "history": {
+    "recentSessions": "Sessions Récentes",
+    "fastMode": "Mode Rapide",
+    "privacyMode": "Mode Confidentialité",
+    "mode": "Mode"
   },
   "apps": {
     "aiPoweredTitle": "Tunnel Divisé par IA",
