@@ -177,7 +177,11 @@
       "mixnetDescription": "メタデータ保護による最大限の匿名性。暗号通貨とメッセージングに最適。",
       "directDesc": "VPNなし - より高速",
       "vpnDesc": "VPN - バランス",
-      "mixnetDesc": "ミックスネット - より安全"
-    }
+       "mixnetDesc": "ミックスネット - より安全"
+     },
+     "appNames": {
+       "chrome": "Chromeブラウザ",
+       "twitch": "Twitchストリーミング"
+     }
   }
 }

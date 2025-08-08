@@ -177,7 +177,11 @@
       "mixnetDescription": "具有元数据保护的最大匿名性。完美适用于加密货币和消息传递。",
       "directDesc": "无VPN - 更快",
       "vpnDesc": "VPN - 平衡",
-      "mixnetDesc": "混合网络 - 更安全"
-    }
+       "mixnetDesc": "混合网络 - 更安全"
+     },
+     "appNames": {
+       "chrome": "Chrome浏览器",
+       "twitch": "Twitch直播"
+     }
   }
 }

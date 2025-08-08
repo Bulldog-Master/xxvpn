@@ -177,7 +177,11 @@
       "mixnetDescription": "Максимальная анонимность с защитой метаданных. Идеально для криптовалют и сообщений.",
       "directDesc": "Без VPN - Быстрее",
       "vpnDesc": "VPN - Сбалансированный",
-      "mixnetDesc": "Mixnet - Безопаснее"
-    }
+       "mixnetDesc": "Mixnet - Безопаснее"
+     },
+     "appNames": {
+       "chrome": "Браузер Chrome",
+       "twitch": "Стриминг Twitch"
+     }
   }
 }

@@ -177,7 +177,11 @@
       "mixnetDescription": "Máximo anonimato com proteção de metadados. Perfeito para criptomoedas e mensagens.",
       "directDesc": "Sem VPN - Mais rápido",
       "vpnDesc": "VPN - Equilibrado",
-      "mixnetDesc": "Mixnet - Mais seguro"
-    }
+       "mixnetDesc": "Mixnet - Mais seguro"
+     },
+     "appNames": {
+       "chrome": "Navegador Chrome",
+       "twitch": "Streaming Twitch"
+     }
   }
 }
