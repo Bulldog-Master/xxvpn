@@ -300,7 +300,7 @@
       "metadataShredding": "Destrucción de Metadatos",
       "quantumEncryption": "Encriptación Resistente a Cuánticos",
       "trafficMixing": "Mezcla de Tráfico",
-      "dpiBypass": "Bypass DPI",
+      "dpiBypass": "Elusión DPI",
       "precomputation": "Fase de Precomputación",
       "realtimeMixing": "Mezcla en Tiempo Real"
     }
@@ -338,7 +338,7 @@
        "directDescription": "Ideal para juegos y aplicaciones sensibles a la latencia. Sin sobrecarga de protección.",
        "vpn": "Túnel VPN", 
         "vpnSubtitle": "Protocolo VPN",
-        "vpnDescription": "Seguridad y velocidad equilibradas. Bypass DPI para transmisión y navegación.",
+        "vpnDescription": "Seguridad y velocidad equilibradas. Elusión DPI para transmisión y navegación.",
        "mixnet": "Mixnet",
        "mixnetSubtitle": "XX Network cMixx", 
        "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
