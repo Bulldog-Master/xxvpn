@@ -342,7 +342,7 @@
       "extension": "Extension"
     },
     "tunnels": {
-      "direct": "Direct",
+      "direct": "Directe",
       "directSubtitle": "Aucune protection VPN",
       "directDescription": "Idéal pour les jeux et applications sensibles à la latence. Aucune surcharge de protection.",
       "vpn": "Tunnel VPN", 
