@@ -231,8 +231,8 @@
     "addNew": "Aggiungi Nuovo Dispositivo",
     "addDescription": "Registra un nuovo dispositivo da utilizzare con xxVPN. Puoi avere fino a {{limit}} dispositivi.",
     "types": {
-      "desktop": "Desktop",
-      "mobile": "Mobile",
+      "desktop": "Computer fisso",
+      "mobile": "Cellulare",
       "tablet": "Tablet",
       "router": "Router",
       "tv": "TV",
