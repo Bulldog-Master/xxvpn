@@ -348,7 +348,7 @@
       "directSubtitle": "Aucune protection VPN",
       "directDescription": "Idéal pour les jeux et applications sensibles à la latence. Aucune surcharge de protection.",
       "vpn": "Tunnel VPN", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnSubtitle": "Protocole VPN",
       "vpnDescription": "Sécurité et vitesse équilibrées. Contournement DPI pour le streaming et la navigation.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
