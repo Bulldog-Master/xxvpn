@@ -143,7 +143,7 @@
       "acrossCountries": "På tværs af 12 lande",
       "averageLoad": "Gennemsnitlig Belastning",
       "optimalPerformance": "Optimal ydelse",
-      "yourLatency": "Din Latency",
+      "yourLatency": "Din Forsinkelse",
       "toSelectedServer": "Til valgt server"
     },
     "list": {
@@ -153,7 +153,7 @@
       "allLocations": "Alle Placeringer",
       "premium": "Premium",
       "serverId": "Server ID",
-      "latency": "latency",
+      "latency": "forsinkelse",
       "load": "belastning"
     }
   },
@@ -258,7 +258,7 @@
     "noDevices": "Ingen enheder registreret",
     "noDevicesDesc": "Tilføj din første enhed for at begynde at bruge xxVPN",
     "lastSeen": "Sidst set",
-    "latency": "latency",
+    "latency": "forsinkelse",
     "load": "belastning"
   },
   "profile": {
@@ -337,7 +337,7 @@
     "topology": "Netværks Topologi",
     "topologyDesc": "5-hop mixnet forbindelse gennem XX Network",
     "hop": "Hop",
-    "latency": "latency",
+    "latency": "forsinkelse",
     "load": "belastning",
     "securityFeatures": "Aktive Sikkerhedsfunktioner",
     "securityFeaturesDesc": "Kvante-resistente beskyttelsesmekanismer",
