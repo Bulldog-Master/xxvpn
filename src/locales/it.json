@@ -116,7 +116,7 @@
       "description": "Configura le tue preferenze del protocollo VPN",
       "autoSelection": "Selezione Automatica Protocollo",
       "autoSelectionDesc": "Scegli automaticamente il miglior protocollo basato sulle condizioni di rete",
-      "killSwitch": "Kill Switch",
+      "killSwitch": "Interruttore di Emergenza",
       "killSwitchDesc": "Blocca internet se la connessione VPN si interrompe",
       "autoConnect": "Connessione Automatica",
       "autoConnectDesc": "Connetti automaticamente all'avvio dell'app"
