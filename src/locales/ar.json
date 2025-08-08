@@ -141,8 +141,28 @@
   },
   "subscriptionTier": {
     "free": "مجاني",
-    "premium": "بريميوم", 
+    "premium": "متميز", 
     "enterprise": "المؤسسات"
+  },
+  "profile": {
+    "signedOut": "تم تسجيل الخروج",
+    "signedOutDesc": "تم تسجيل الخروج بنجاح من xxVPN.",
+    "signOutError": "فشل تسجيل الخروج. حاول مرة أخرى.",
+    "updated": "تم تحديث الملف الشخصي",
+    "updatedDesc": "تم تحديث ملفك الشخصي بنجاح.",
+    "anonymousUser": "مستخدم مجهول",
+    "signOut": "تسجيل الخروج",
+    "subscription": {
+      "enterprise": "المؤسسات",
+      "premium": "متميز",
+      "free": "مجاني"
+    },
+    "tabs": {
+      "account": "الحساب",
+      "subscription": "الاشتراك",
+      "rewards": "مكافآت XX",
+      "downloads": "التحميلات"
+    }
   },
   "apps": {
     "aiPoweredTitle": "نفق مقسم بالذكاء الاصطناعي",
