@@ -406,7 +406,7 @@ const VPNDashboard = () => {
             <CardContent className="pt-0">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">DIRECT</Badge>
+                  <Badge variant="secondary" className="text-xs">{t('apps.tunnels.direct').toUpperCase()}</Badge>
                   <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.noVPN')}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
