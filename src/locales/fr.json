@@ -271,8 +271,12 @@
     "signOut": "Se Déconnecter",
     "subscription": {
       "enterprise": "Entreprise",
-      "premium": "Premium",
-      "free": "Gratuit"
+      "premium": "Premiums",
+      "free": "Gratuit",
+      "upgradeDescription": "Passez à la version supérieure pour un accès illimité et des fonctionnalités premium",
+      "upgradeToPremium": "Passer à Premium",
+      "premiumPlan": "Plan Premium",
+      "fullAccess": "Accès complet"
     },
     "tabs": {
       "account": "Compte",

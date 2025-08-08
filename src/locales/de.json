@@ -272,7 +272,11 @@
     "subscription": {
       "enterprise": "Unternehmen",
       "premium": "Premium",
-      "free": "Kostenlos"
+      "free": "Kostenlos",
+      "upgradeDescription": "Upgrade für unbegrenzten Zugang und Premium-Funktionen",
+      "upgradeToPremium": "Auf Premium upgraden",
+      "premiumPlan": "Premium-Plan",
+      "fullAccess": "Vollzugriff"
     },
     "tabs": {
       "account": "Konto",

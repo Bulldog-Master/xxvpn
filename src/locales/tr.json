@@ -271,11 +271,11 @@
     "signOut": "Çıkış Yap",
     "subscription": {
       "enterprise": "Kurumsal",
-      "premium": "Premium",
+      "premium": "Prémium",
       "free": "Ücretsiz",
       "upgradeDescription": "Sınırsız erişim ve premium özellikler için yükseltin",
-      "upgradeToPremium": "Premium'a Yükselt",
-      "premiumPlan": "Premium Plan",
+      "upgradeToPremium": "Prémium'a Yükselt",
+      "premiumPlan": "Prémium Plan",
       "fullAccess": "Tam erişim"
     },
     "tabs": {

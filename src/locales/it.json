@@ -277,7 +277,11 @@
       "enterprise": "Aziendale",
       "premium": "Premium",
       "free": "Gratuito",
-      "basic": "Base"
+      "basic": "Base",
+      "upgradeDescription": "Aggiorna per accesso illimitato e funzionalità premium",
+      "upgradeToPremium": "Aggiorna a Premium",
+      "premiumPlan": "Piano Premium",
+      "fullAccess": "Accesso completo"
     },
     "tabs": {
       "account": "Account",

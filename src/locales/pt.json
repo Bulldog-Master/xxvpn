@@ -314,7 +314,11 @@
     "subscription": {
       "enterprise": "Empresarial",
       "premium": "Premium",
-      "free": "Gratuito"
+      "free": "Gratuito",
+      "upgradeDescription": "Atualize para acesso ilimitado e recursos premium",
+      "upgradeToPremium": "Atualizar para Premium",
+      "premiumPlan": "Plano Premium",
+      "fullAccess": "Acesso completo"
     },
     "tabs": {
       "account": "Conta",

@@ -272,7 +272,11 @@
     "subscription": {
       "enterprise": "Корпоративный",
       "premium": "Премиум",
-      "free": "Бесплатно"
+      "free": "Бесплатно",
+      "upgradeDescription": "Обновитесь для получения неограниченного доступа и премиум-функций",
+      "upgradeToPremium": "Обновить до Премиум",
+      "premiumPlan": "Премиум План",
+      "fullAccess": "Полный доступ"
     },
     "tabs": {
       "account": "Аккаунт",

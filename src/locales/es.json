@@ -253,8 +253,12 @@
     "signOut": "Cerrar Sesión",
     "subscription": {
       "enterprise": "Empresarial",
-      "premium": "Premium",
-      "free": "Gratuito"
+      "premium": "Prémium",
+      "free": "Gratuito",
+      "upgradeDescription": "Actualiza para acceso ilimitado y funciones premium",
+      "upgradeToPremium": "Actualizar a Premium",
+      "premiumPlan": "Plan Premium",
+      "fullAccess": "Acceso completo"
     },
     "tabs": {
       "account": "Cuenta",
