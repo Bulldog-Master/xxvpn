@@ -296,8 +296,12 @@
       "mixnetDescription": "Maksimal anonymitet med metadata beskyttelse. Perfekt til kryptovaluta og beskedudveksling.",
       "directDesc": "Ingen VPN - Hurtigere",
       "vpnDesc": "VPN - Balanceret",
-      "mixnetDesc": "Mixnet - Mere sikkert"
-    }
+       "mixnetDesc": "Mixnet - Mere sikkert"
+     },
+     "appNames": {
+       "chrome": "Chrome Browser",
+       "twitch": "Twitch Streaming"
+     }
   },
   "network": {
     "health": "Netværks Helbred",

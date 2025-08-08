@@ -296,8 +296,12 @@
       "mixnetDescription": "Metadata koruması ile maksimum anonimlik. Kripto para ve mesajlaşma için mükemmel.",
       "directDesc": "VPN yok - Daha hızlı",
       "vpnDesc": "VPN - Dengeli",
-      "mixnetDesc": "Mixnet - Daha güvenli"
-    }
+       "mixnetDesc": "Mixnet - Daha güvenli"
+     },
+     "appNames": {
+       "chrome": "Chrome Tarayıcı",
+       "twitch": "Twitch Yayını"
+     }
   },
   "network": {
     "health": "Ağ Sağlığı",

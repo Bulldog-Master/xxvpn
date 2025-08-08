@@ -177,7 +177,11 @@
       "mixnetDescription": "أقصى درجات إخفاء الهوية مع حماية البيانات الوصفية. مثالي للعملات المشفرة والمراسلة.",
       "directDesc": "بدون VPN - أسرع",
       "vpnDesc": "VPN - متوازن",
-      "mixnetDesc": "شبكة مختلطة - أكثر أماناً"
-    }
+       "mixnetDesc": "شبكة مختلطة - أكثر أماناً"
+     },
+     "appNames": {
+       "chrome": "متصفح Chrome",
+       "twitch": "بث Twitch"
+     }
   }
 }
