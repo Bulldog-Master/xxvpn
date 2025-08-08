@@ -332,8 +332,8 @@
       "browser": "browser"
     },
     "appNames": {
-      "chrome": "Chrome Browser",
-      "twitch": "Twitch Streaming"
+      "chrome": "Chrome-Browser",
+      "twitch": "Twitch-Streaming"
     },
     "status": {
       "available": "Verfügbar",
