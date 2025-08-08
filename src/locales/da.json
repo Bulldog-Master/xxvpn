@@ -292,7 +292,7 @@
     "smartRoutingDesc": "Opdager og router automatisk applikationer gennem optimale tunneler",
     "applicationRouting": "Applikations Routing",
     "applicationRoutingDesc": "Konfigurer hvordan hver applikation forbinder til internettet",
-    "scanForApps": "Scan for Nye Applikationer",
+    "scanForApps": "Scan efter Nye Applikationer",
     "crossPlatformSupport": "Krydsplatform Support",
     "crossPlatformDesc": "xxVPN er tilgængelig på alle dine enheder",
     "categories": {
