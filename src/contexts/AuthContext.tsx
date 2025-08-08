@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface User {
   id: string;
@@ -59,114 +58,79 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        const mappedUser: User = {
-          id: session.user.id,
-          email: session.user.email ?? '',
-          fullName: (session.user.user_metadata?.full_name as string) || '',
-          avatarUrl: (session.user.user_metadata?.avatar_url as string) || undefined,
-          subscriptionTier: 'free',
-          xxCoinBalance: 0,
-          referrals: 0,
-        };
-        setUser(mappedUser);
+    try {
+      const saved = sessionStorage.getItem('xxvpn_session');
+      if (saved) {
+        setUser(JSON.parse(saved));
       } else {
         setUser(null);
       }
+    } catch {
+      setUser(null);
+    } finally {
       setLoading(false);
-    });
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        const mappedUser: User = {
-          id: session.user.id,
-          email: session.user.email ?? '',
-          fullName: (session.user.user_metadata?.full_name as string) || '',
-          avatarUrl: (session.user.user_metadata?.avatar_url as string) || undefined,
-          subscriptionTier: 'free',
-          xxCoinBalance: 0,
-          referrals: 0,
-        };
-        setUser(mappedUser);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    }
   }, []);
 
   const signIn = async (email: string, password: string, passphrase?: string) => {
-    // Validate passphrase if provided (not stored)
-    if (passphrase) {
-      const words = passphrase.trim().split(/\s+/);
-      if (words.length !== 24) {
-        throw new Error('Invalid passphrase: must be exactly 24 words');
-      }
+    if (!passphrase) throw new Error('Passphrase is required');
+    const words = passphrase.trim().split(/\s+/);
+    if (words.length !== 24) {
+      throw new Error('Invalid passphrase: must be exactly 24 words');
     }
 
-    cleanupAuthState();
-    try {
-      // Attempt global sign out to avoid limbo states
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch {
-        // ignore
-      }
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      // Force page reload to ensure a clean state
-      window.location.href = '/';
-    } catch (error) {
-      throw error;
-    }
+    // Derive a deterministic user id from the passphrase (no storage of the phrase)
+    const enc = new TextEncoder().encode(passphrase.trim());
+    const hashBuf = await crypto.subtle.digest('SHA-256', enc);
+    const id = Array.from(new Uint8Array(hashBuf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    const mockUser: User = {
+      id,
+      email: '',
+      fullName: '',
+      subscriptionTier: 'premium',
+      xxCoinBalance: 125.5,
+      referrals: 8,
+    };
+
+    setUser(mockUser);
+    sessionStorage.setItem('xxvpn_session', JSON.stringify(mockUser));
   };
 
   const signUp = async (email: string, password: string, fullName: string, passphrase?: string) => {
-    if (passphrase) {
-      const words = passphrase.trim().split(/\s+/);
-      if (words.length !== 24) {
-        throw new Error('Invalid passphrase: must be exactly 24 words');
-      }
+    if (!passphrase) throw new Error('Passphrase is required');
+    const words = passphrase.trim().split(/\s+/);
+    if (words.length !== 24) {
+      throw new Error('Invalid passphrase: must be exactly 24 words');
     }
 
-    cleanupAuthState();
-    try {
-      const redirectUrl = `${window.location.origin}/`;
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: { full_name: fullName },
-        },
-      });
-      if (error) throw error;
-      if (data.session) {
-        // Force page reload when session is created immediately
-        window.location.href = '/';
-      }
-    } catch (error) {
-      throw error;
-    }
+    // Derive deterministic id from passphrase
+    const enc = new TextEncoder().encode(passphrase.trim());
+    const hashBuf = await crypto.subtle.digest('SHA-256', enc);
+    const id = Array.from(new Uint8Array(hashBuf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    const mockUser: User = {
+      id,
+      email: '',
+      fullName,
+      subscriptionTier: 'free',
+      xxCoinBalance: 10,
+      referrals: 0,
+    };
+
+    setUser(mockUser);
+    sessionStorage.setItem('xxvpn_session', JSON.stringify(mockUser));
   };
 
   const signOut = async () => {
     try {
       cleanupAuthState();
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch {
-        // ignore errors
-      }
-      // Redirect to root for a clean state
-      window.location.href = '/';
+      sessionStorage.removeItem('xxvpn_session');
+      setUser(null);
     } catch (error) {
       console.error('Sign out error:', error);
     }
