@@ -68,7 +68,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Ultra-hurtig Tilstand: Direkte forbindelse til gaming og streaming",
-      "secureActive": "Sikker Tilstand: Krypteret VPN tunnel (OpenVPN/WireGuard) aktiv",
+      "secureActive": "Sikker Tilstand: Krypteret VPN tunnel aktiv",
       "ultraSecureActive": "Ultra-sikker Tilstand: Metadata makulering via XX Network cMixx aktiv",
       "notProtected": "Din trafik er ikke beskyttet"
     },

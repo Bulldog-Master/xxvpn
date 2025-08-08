@@ -11,7 +11,17 @@
       "ultraFast": "Ultra-veloce",
       "secure": "Sicuro", 
       "ultraSecure": "Ultra-sicuro",
-      "off": "Spento"
+      "off": "Spento",
+      "gamingStreaming": "Gaming e Streaming",
+      "standardProtection": "Protezione VPN Standard",
+      "noVPN": "Nessuna VPN",
+      "ultraFastDesc": "Connessione ultra-veloce per gaming e streaming con latenza minima.",
+      "maximumSpeed": "Velocità massima",
+      "secureDesc": "Tunnel VPN crittografato che fornisce protezione privacy standard.",
+      "encryptedTunnel": "Tunnel crittografato",
+      "metadataShredding": "Distruzione Metadati",
+      "metadataShredDesc": "Distruzione metadati usando cMixx via XX Network.",
+      "metadataProtection": "Protezione metadati"
     },
     "connect": "Connetti",
     "disconnect": "Disconnetti",
@@ -43,7 +53,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Modalità Ultra-veloce: Connessione diretta per gaming e streaming",
-      "secureActive": "Modalità Sicura: Tunnel VPN crittografato (OpenVPN/WireGuard) attivo",
+      "secureActive": "Modalità Sicura: Tunnel VPN crittografato attivo",
       "ultraSecureActive": "Modalità Ultra-sicura: Distruzione metadati via XX Network cMixx attivo",
       "notProtected": "Il tuo traffico non è protetto"
     },

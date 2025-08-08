@@ -68,7 +68,7 @@
     },
     "connectionStatus": {
       "ultraFastActive": "Ultra-hızlı Mod: Oyun ve yayın için doğrudan bağlantı",
-      "secureActive": "Güvenli Mod: Şifrelenmiş VPN tüneli (OpenVPN/WireGuard) aktif",
+      "secureActive": "Güvenli Mod: Şifrelenmiş VPN tüneli aktif",
       "ultraSecureActive": "Ultra-güvenli Mod: XX Network cMixx üzerinden metadata imhası aktif",
       "notProtected": "Trafiğiniz korunmuyor"
     },
