@@ -15,7 +15,7 @@
       "gamingStreaming": "Jogos e Transmissão",
       "standardProtection": "Proteção VPN Padrão",
       "noVPN": "Sem VPN",
-      "ultraFastDesc": "Conexão ultra-rápida para gaming e streaming com latência mínima.",
+      "ultraFastDesc": "Conexão ultra-rápida para jogos e transmissão com latência mínima.",
       "maximumSpeed": "Velocidade máxima",
       "secureDesc": "Túnel VPN criptografado fornecendo proteção de privacidade padrão.",
       "encryptedTunnel": "Túnel criptografado",
@@ -40,7 +40,7 @@
       "main": "Principal",
       "servers": "Servidores", 
       "network": "Rede",
-      "apps": "Apps",
+      "apps": "Aplicações",
       "devices": "Dispositivos",
       "payments": "Pagamentos",
       "settings": "Configurações",
@@ -67,7 +67,7 @@
       "logout": "Sair"
     },
     "connectionStatus": {
-      "ultraFastActive": "Modo Ultra-rápido: Conexão direta para gaming e streaming",
+      "ultraFastActive": "Modo Ultra-rápido: Conexão direta para jogos e transmissão",
       "secureActive": "Modo Seguro: Túnel VPN criptografado ativo",
       "ultraSecureActive": "Modo Ultra-seguro: Destruição de metadados via XX Network cMixx ativo",
       "notProtected": "Seu tráfego não está protegido"
