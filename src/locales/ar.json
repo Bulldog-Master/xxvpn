@@ -11,7 +11,17 @@
       "ultraFast": "فائق السرعة",
       "secure": "آمن", 
       "ultraSecure": "فائق الأمان",
-      "off": "مطفئ"
+      "off": "مطفئ",
+      "gamingStreaming": "الألعاب والبث",
+      "standardProtection": "حماية VPN قياسية",
+      "noVPN": "بدون VPN",
+      "ultraFastDesc": "اتصال فائق السرعة للألعاب والبث مع أدنى تأخير.",
+      "maximumSpeed": "أقصى سرعة",
+      "secureDesc": "نفق VPN مشفر يوفر حماية خصوصية قياسية.",
+      "encryptedTunnel": "نفق مشفر",
+      "metadataShredding": "تدمير البيانات الوصفية",
+      "metadataShredDesc": "تدمير البيانات الوصفية باستخدام cMixx عبر شبكة XX.",
+      "metadataProtection": "حماية البيانات الوصفية"
     },
     "connect": "اتصال",
     "disconnect": "قطع الاتصال",
@@ -21,14 +31,60 @@
       "title": "الإحصائيات",
       "dataTransferred": "البيانات المنقولة",
       "sessionTime": "وقت الجلسة",
-      "xxCoinsEarned": "عملات XX المكتسبة"
+      "networkLatency": "تأخير الشبكة",
+      "xxCoinsEarned": "عملات XX المكتسبة",
+      "currentSession": "الجلسة الحالية",
+      "averagePing": "متوسط الاستجابة"
     },
     "tabs": {
       "main": "الرئيسية",
       "servers": "الخوادم", 
+      "network": "الشبكة",
       "apps": "التطبيقات",
       "devices": "الأجهزة",
-      "settings": "الإعدادات"
+      "payments": "المدفوعات",
+      "settings": "الإعدادات",
+      "usage": "الاستخدام",
+      "history": "التاريخ"
+    },
+    "usage": {
+      "todaysUsage": "استخدام اليوم",
+      "ultraFastMode": "وضع فائق السرعة",
+      "secureMode": "الوضع الآمن",
+      "ultraSecureMode": "وضع فائق الأمان"
+    },
+    "history": {
+      "recentSessions": "الجلسات الأخيرة",
+      "fastMode": "الوضع السريع",
+      "privacyMode": "وضع الخصوصية",
+      "mode": "الوضع"
+    },
+    "menu": {
+      "editName": "تحرير الاسم",
+      "customerSupport": "دعم العملاء",
+      "devices": "الأجهزة",
+      "payments": "المدفوعات",
+      "logout": "تسجيل الخروج"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "وضع فائق السرعة: اتصال مباشر للألعاب والبث",
+      "secureActive": "الوضع الآمن: نفق VPN مشفر نشط",
+      "ultraSecureActive": "وضع فائق الأمان: تدمير البيانات الوصفية عبر XX Network cMixx نشط",
+      "notProtected": "حركة المرور الخاصة بك غير محمية"
+    },
+    "referrals": {
+      "program": "برنامج الإحالة",
+      "yourReferrals": "إحالاتك",
+      "totalUsers": "إجمالي المستخدمين", 
+      "yourLink": "رابط الإحالة الخاص بك",
+      "shareMessage": "شارك رابط الإحالة الخاص بك لكسب عملات XX لكل مستخدم جديد ينضم!",
+      "referrals": "إحالات",
+      "users": "مستخدمين"
+    },
+    "subscriptionTier": {
+      "free": "مجاني",
+      "premium": "متميز", 
+      "enterprise": "المؤسسات"
     }
   },
   "auth": {
@@ -46,21 +102,34 @@
     "signUpWithGoogle": "إنشاء حساب بـ Google"
   },
   "settings": {
+    "title": "الإعدادات",
     "appearance": {
       "title": "المظهر",
+      "description": "تخصيص مظهر التطبيق والثيم",
       "theme": "المظهر",
+      "themeDesc": "اختر بين الوضع الفاتح والداكن",
       "light": "فاتح",
       "dark": "داكن", 
       "system": "النظام"
     },
     "protocol": {
       "title": "إعدادات البروتوكول",
-      "description": "اختر بروتوكول الاتصال"
+      "description": "تكوين تفضيلات بروتوكول VPN الخاص بك",
+      "autoSelection": "الاختيار التلقائي للبروتوكول",
+      "autoSelectionDesc": "اختر تلقائياً أفضل بروتوكول بناءً على ظروف الشبكة",
+      "killSwitch": "مفتاح الإيقاف",
+      "killSwitchDesc": "حظر الإنترنت إذا انقطع اتصال VPN",
+      "autoConnect": "الاتصال التلقائي",
+      "autoConnectDesc": "الاتصال تلقائياً عند بدء تشغيل التطبيق"
     },
     "xxNetwork": {
       "title": "تكامل شبكة XX",
-      "enabled": "مفعل",
-      "description": "رسائل مقاومة للحوسبة الكمية وحماية البيانات الوصفية"
+      "description": "ميزات البلوك تشين المقاومة للحوسبة الكمية",
+      "coinRewards": "مكافآت عملة XX",
+      "coinRewardsDesc": "اكسب رموز XX من خلال المساهمة في أمان الشبكة",
+      "nodeContribution": "مساهمة العقدة",
+      "nodeContributionDesc": "السماح لجهازك بالمساهمة في الشبكة المختلطة",
+      "currentBalance": "الرصيد الحالي"
     },
     "language": {
       "title": "اللغة",
@@ -130,19 +199,105 @@
       }
     }
   },
-  "referrals": {
-    "program": "برنامج الإحالة",
-    "yourReferrals": "إحالاتك",
-    "totalUsers": "إجمالي المستخدمين", 
-    "yourLink": "رابط الإحالة الخاص بك",
-    "shareMessage": "شارك رابط الإحالة الخاص بك لكسب عملات XX لكل مستخدم جديد ينضم!",
-    "referrals": "إحالات",
-    "users": "مستخدمين"
+  "servers": {
+    "title": "اختيار الخادم",
+    "description": "اختر موقع خادم VPN الخاص بك",
+    "quickConnect": "اتصال سريع",
+    "searchPlaceholder": "البحث عن البلدان أو المدن...",
+    "stats": {
+      "availableServers": "الخوادم المتاحة",
+      "acrossCountries": "في 12 دولة",
+      "averageLoad": "متوسط التحميل",
+      "optimalPerformance": "الأداء الأمثل",
+      "yourLatency": "التأخير الخاص بك",
+      "toSelectedServer": "إلى الخادم المحدد"
+    },
+    "list": {
+      "title": "الخوادم المتاحة",
+      "description": "اختر موقع خادم لاتصال VPN الخاص بك",
+      "favorites": "المفضلة",
+      "allLocations": "جميع المواقع",
+      "premium": "متميز",
+      "serverId": "معرف الخادم",
+      "latency": "التأخير",
+      "load": "التحميل"
+    }
   },
-  "subscriptionTier": {
-    "free": "مجاني",
-    "premium": "متميز", 
-    "enterprise": "المؤسسات"
+  "devices": {
+    "title": "إدارة الأجهزة",
+    "description": "إدارة أجهزتك المتصلة ({{used}}/{{total}} جهاز مستخدم)",
+    "addDevice": "إضافة جهاز",
+    "addNew": "إضافة جهاز جديد",
+    "addDescription": "سجل جهازاً جديداً للاستخدام مع xxVPN. يمكنك الحصول على {{limit}} جهاز.",
+    "types": {
+      "desktop": "سطح المكتب",
+      "mobile": "الهاتف المحمول",
+      "tablet": "الجهاز اللوحي",
+      "router": "الموجه",
+      "tv": "التلفزيون",
+      "other": "أخرى"
+    },
+    "form": {
+      "deviceName": "اسم الجهاز",
+      "deviceNamePlaceholder": "MacBook Pro الخاص بي",
+      "deviceType": "نوع الجهاز",
+      "operatingSystem": "نظام التشغيل (اختياري)",
+      "osPlaceholder": "macOS 14.0، Windows 11، iOS 17.0، إلخ."
+    },
+    "toast": {
+      "nameRequired": "اسم الجهاز مطلوب",
+      "nameRequiredDesc": "أدخل اسماً لجهازك.",
+      "limitReached": "تم الوصول إلى حد الأجهزة",
+      "limitReachedDesc": "يمكنك الحصول على 10 أجهزة فقط. احذف جهازاً قديماً أولاً.",
+      "added": "تمت إضافة الجهاز بنجاح",
+      "addedDesc": "تم تسجيل جهازك الجديد.",
+      "removed": "تم حذف الجهاز",
+      "removedDesc": "تم حذف {{deviceName}} من حسابك."
+    },
+    "limitReached": "تم الوصول إلى حد الأجهزة",
+    "approachingLimit": "الاقتراب من حد الأجهزة",
+    "removeToAdd": "احذف جهازاً لإضافة جهاز جديد.",
+    "slotsRemaining": "لديك {{count}} فتحة جهاز متبقية.",
+    "noDevices": "لا توجد أجهزة مسجلة",
+    "noDevicesDesc": "أضف جهازك الأول لبدء استخدام xxVPN",
+    "lastSeen": "آخر ظهور",
+    "latency": "التأخير",
+    "load": "التحميل"
+  },
+  "network": {
+    "health": "صحة الشبكة",
+    "nodesOperational": "5 عقد تعمل",
+    "throughput": "معدل النقل",
+    "protectionLevel": "مستوى الحماية",
+    "quantum": "كمي",
+    "encryptionActive": "تشفير cMixx نشط",
+    "topology": "طوبولوجيا الشبكة",
+    "topologyDesc": "اتصال شبكة مختلطة من 5 قفزات عبر شبكة XX",
+    "hop": "قفزة",
+    "latency": "التأخير",
+    "load": "التحميل",
+    "securityFeatures": "ميزات الأمان النشطة",
+    "securityFeaturesDesc": "آليات الحماية المقاومة للحوسبة الكمية",
+    "nodes": {
+      "gateway": "البوابة",
+      "mixNode1": "عقدة الخلط 1",
+      "mixNode2": "عقدة الخلط 2", 
+      "mixNode3": "عقدة الخلط 3",
+      "exitNode": "عقدة الخروج"
+    },
+    "status": {
+      "active": "نشط",
+      "standby": "انتظار",
+      "offline": "غير متصل"
+    },
+    "features": {
+      "metadataShredding": "تدمير البيانات الوصفية",
+      "quantumEncryption": "التشفير المقاوم للكم",
+      "trafficMixing": "خلط حركة المرور",
+      "dpiBypass": "تجاوز DPI",
+      "precomputation": "مرحلة ما قبل الحوسبة",
+      "realtimeMixing": "الخلط في الوقت الفعلي"
+    }
   },
   "profile": {
     "signedOut": "تم تسجيل الخروج",
@@ -192,7 +347,7 @@
       "directSubtitle": "بدون حماية VPN",
       "directDescription": "مثالي للألعاب والتطبيقات الحساسة للتأخير. بدون عبء الحماية.",
       "vpn": "نفق VPN", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnSubtitle": "بروتوكول VPN",
       "vpnDescription": "أمان وسرعة متوازنة. تجاوز DPI للبث والتصفح.",
       "mixnet": "شبكة مختلطة",
       "mixnetSubtitle": "XX Network cMixx", 
