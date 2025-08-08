@@ -107,6 +107,7 @@
     "appearance": {
       "title": "Aspetto",
       "theme": "Tema",
+      "description": "Scegli tra modalità chiara e scura",
       "light": "Chiaro",
       "dark": "Scuro", 
       "system": "Sistema"
