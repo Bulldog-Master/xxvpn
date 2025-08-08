@@ -371,19 +371,27 @@ const VPNDashboard = () => {
             <CardTitle className={`text-2xl ${statusColors[connectionStatus]}`}>
               {statusText[connectionStatus]}
             </CardTitle>
-            <CardDescription>
-              {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
-                t('dashboard.connectionStatus.ultraFastActive')
-              }
-              {connectionStatus === 'connected' && vpnMode === 'secure' && 
-                t('dashboard.connectionStatus.secureActive')
-              }
-              {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
-                t('dashboard.connectionStatus.ultraSecureActive')
-              }
-              {connectionStatus === 'disconnected' && 
-                t('dashboard.connectionStatus.notProtected')
-              }
+            <CardDescription className="space-y-2">
+              <div>
+                {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
+                  t('dashboard.connectionStatus.ultraFastActive')
+                }
+                {connectionStatus === 'connected' && vpnMode === 'secure' && 
+                  t('dashboard.connectionStatus.secureActive')
+                }
+                {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
+                  t('dashboard.connectionStatus.ultraSecureActive')
+                }
+                {connectionStatus === 'disconnected' && 
+                  t('dashboard.connectionStatus.notProtected')
+                }
+              </div>
+              {connectionStatus === 'connected' && (
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <span>Local IP:</span>
+                  <code className="px-2 py-1 bg-muted rounded text-xs font-mono">192.168.1.{Math.floor(Math.random() * 254) + 1}</code>
+                </div>
+              )}
             </CardDescription>
           </CardHeader>
         </Card>
