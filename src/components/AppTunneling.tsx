@@ -148,7 +148,9 @@ const AppTunneling = () => {
                   <app.icon className="w-8 h-8 text-primary" />
                   <div>
                     <div className="font-medium flex items-center gap-2">
-                      {app.name}
+                      {app.name === 'Chrome' ? t('apps.appNames.chrome') : 
+                       app.name === 'Twitch' ? t('apps.appNames.twitch') : 
+                       app.name}
                       {app.autoDetected && (
                         <Badge variant="outline" className="text-xs">
                           Auto
