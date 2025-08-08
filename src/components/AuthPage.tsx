@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Textarea } from '@/components/ui/textarea';
-import { Shield, Key, Shuffle, User, Loader2, Copy, Eye, EyeOff } from 'lucide-react';
+import { Shield, Key, Shuffle, User, Loader2, Copy, Eye, EyeOff, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,8 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [passphrase, setPassphrase] = useState('');
   const [fullName, setFullName] = useState('');
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
   const [error, setError] = useState('');
   const [showPassphrase, setShowPassphrase] = useState(false);
   const { toast } = useToast();
@@ -53,6 +55,11 @@ const AuthPage = () => {
     setError('');
 
     try {
+      if (!signUpEmail.trim()) {
+        setError('Please enter your email');
+        return;
+      }
+
       if (!passphrase.trim()) {
         setError('Please generate or enter a 24-word passphrase');
         return;
@@ -64,10 +71,10 @@ const AuthPage = () => {
         return;
       }
 
-      await signUp('', '', fullName, passphrase);
+      await signUp(signUpEmail, passphrase, fullName, passphrase);
       toast({
-        title: "Account created!",
-        description: "Your xxVPN account has been created successfully.",
+        title: 'Account created!',
+        description: 'Please check your email to confirm your account.',
       });
     } catch (err: any) {
       setError(err.message || 'An error occurred during signup');
@@ -82,6 +89,11 @@ const AuthPage = () => {
     setError('');
 
     try {
+      if (!signInEmail.trim()) {
+        setError('Please enter your email');
+        return;
+      }
+
       if (!passphrase.trim()) {
         setError('Please enter your 24-word passphrase');
         return;
@@ -93,10 +105,10 @@ const AuthPage = () => {
         return;
       }
 
-      await signIn('', '', passphrase);
+      await signIn(signInEmail, passphrase, passphrase);
       toast({
-        title: "Welcome back!",
-        description: "Successfully signed in to xxVPN.",
+        title: 'Welcome back!',
+        description: 'Successfully signed in to xxVPN.',
       });
     } catch (err: any) {
       setError(err.message || 'An error occurred during signin');
@@ -143,6 +155,22 @@ const AuthPage = () => {
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
+                  <Label htmlFor="signin-email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="signin-email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={signInEmail}
+                      onChange={(e) => setSignInEmail(e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="signin-passphrase">24-Word Passphrase</Label>
                   <div className="relative">
                     <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -150,7 +178,7 @@ const AuthPage = () => {
                       id="signin-passphrase"
                       placeholder="Enter your 24-word passphrase..."
                       value={showPassphrase ? passphrase : passphrase.replace(/\S/g, '•')}
-                      onChange={(e) => setPassphrase(showPassphrase ? e.target.value : e.target.value)}
+                      onChange={(e) => setPassphrase(e.target.value)}
                       className="pl-10 min-h-[100px] resize-none"
                       required
                     />
@@ -198,6 +226,22 @@ const AuthPage = () => {
                       placeholder="Your full name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="signup-email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={signUpEmail}
+                      onChange={(e) => setSignUpEmail(e.target.value)}
                       className="pl-10"
                       required
                     />
