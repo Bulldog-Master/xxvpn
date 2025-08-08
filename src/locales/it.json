@@ -300,8 +300,8 @@
       "browser": "navigatore"
      },
      "appNames": {
-       "chrome": "Chrome Navigatore",
-       "twitch": "Twitch Trasmissione"
+        "chrome": "Navigatore Chrome",
+        "twitch": "Trasmissione Twitch"
      },
      "status": {
       "available": "Disponibile",

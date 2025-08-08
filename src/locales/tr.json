@@ -279,8 +279,8 @@
       "browser": "tarayıcı"
      },
      "appNames": {
-        "chrome": "Chrome Tarayıcı",
-        "twitch": "Twitch Yayını"
+         "chrome": "Tarayıcı Chrome",
+         "twitch": "Yayın Twitch"
      },
      "status": {
       "available": "Mevcut",
