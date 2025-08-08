@@ -157,7 +157,7 @@
       "account": "Konto",
       "devices": "Enheder", 
       "payments": "Betalinger",
-      "download": "Download",
+      "download": "Hent",
       "support": "Support"
     },
     "methods": {
@@ -260,7 +260,7 @@
       "account": "Konto",
       "subscription": "Abonnement",
       "rewards": "XX Belønninger",
-      "downloads": "Downloads"
+      "downloads": "Hentninger"
     }
   },
   "apps": {
