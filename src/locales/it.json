@@ -206,7 +206,9 @@
         "date": "Data",
         "subscription": "Abbonamento",
         "status": "Stato",
-        "amount": "Importo"
+        "amount": "Importo",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Base"
       },
       "status": {
         "active": "Attivo",

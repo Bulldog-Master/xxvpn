@@ -20,14 +20,14 @@ const PaymentsPage = () => {
     {
       id: "ORD-2024-001",
       date: "2024-01-15",
-      subscription: "xxVPN Premium",
+      subscription: t('payments.orders.table.xxVPNPremium'),
       status: "Active",
       amount: "$9.99"
     },
     {
       id: "ORD-2023-045",
       date: "2023-12-15",
-      subscription: "xxVPN Basic",
+      subscription: t('payments.orders.table.xxVPNBasic'),
       status: "Expired",
       amount: "$4.99"
     }
