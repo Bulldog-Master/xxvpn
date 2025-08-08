@@ -127,5 +127,57 @@
         "link": "सहायता टीम"
       }
     }
+  },
+  "referrals": {
+    "program": "रेफरल प्रोग्राम",
+    "yourReferrals": "आपके रेफरल",
+    "totalUsers": "कुल उपयोगकर्ता", 
+    "yourLink": "आपका रेफरल लिंक",
+    "shareMessage": "अपना रेफरल लिंक साझा करें और हर नए उपयोगकर्ता के लिए XX सिक्के कमाएं!",
+    "referrals": "रेफरल",
+    "users": "उपयोगकर्ता"
+  },
+  "subscriptionTier": {
+    "free": "मुफ्त",
+    "premium": "प्रीमियम", 
+    "enterprise": "एंटरप्राइज"
+  },
+  "apps": {
+    "aiPoweredTitle": "AI संचालित स्प्लिट टनल",
+    "aiPoweredDesc": "AI को अपनी सुरक्षा आवश्यकताओं के अनुसार एप्लिकेशन को स्वचालित रूप से रूट करने की अनुमति देता है",
+    "smartRouting": "स्मार्ट रूटिंग",
+    "smartRoutingDesc": "एप्लिकेशन को स्वचालित रूप से पहचानता है और इष्टतम टनल के माध्यम से रूट करता है",
+    "applicationRouting": "एप्लिकेशन रूटिंग",
+    "applicationRoutingDesc": "प्रत्येक एप्लिकेशन इंटरनेट से कैसे जुड़ता है, इसे कॉन्फ़िगर करें",
+    "scanForApps": "नए एप्लिकेशन स्कैन करें",
+    "crossPlatformSupport": "क्रॉस-प्लेटफॉर्म समर्थन",
+    "crossPlatformDesc": "xxVPN आपके सभी डिवाइस पर उपलब्ध है",
+    "categories": {
+      "gaming": "गेमिंग",
+      "streaming": "स्ट्रीमिंग",
+      "crypto": "क्रिप्टो",
+      "messaging": "मैसेजिंग",
+      "browser": "ब्राउज़र"
+    },
+    "status": {
+      "available": "उपलब्ध",
+      "beta": "बीटा",
+      "comingSoon": "जल्द आ रहा है",
+      "extension": "एक्सटेंशन"
+    },
+    "tunnels": {
+      "direct": "प्रत्यक्ष",
+      "directSubtitle": "कोई VPN सुरक्षा नहीं",
+      "directDescription": "गेमिंग और विलंबता-संवेदनशील एप्लिकेशन के लिए आदर्श। कोई सुरक्षा ओवरहेड नहीं।",
+      "vpn": "VPN टनल", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "संतुलित सुरक्षा और गति। स्ट्रीमिंग और ब्राउज़िंग के लिए DPI बाईपास।",
+      "mixnet": "मिक्सनेट",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "मेटाडेटा सुरक्षा के साथ अधिकतम गुमनामी। क्रिप्टोकरेंसी और मैसेजिंग के लिए बिल्कुल सही।",
+      "directDesc": "कोई VPN नहीं - तेज़",
+      "vpnDesc": "VPN - संतुलित",
+      "mixnetDesc": "मिक्सनेट - अधिक सुरक्षित"
+    }
   }
 }

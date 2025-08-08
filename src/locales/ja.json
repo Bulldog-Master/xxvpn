@@ -141,5 +141,43 @@
         "link": "サポートチーム"
       }
     }
+  },
+  "apps": {
+    "aiPoweredTitle": "AI搭載スプリットトンネル",
+    "aiPoweredDesc": "AIがセキュリティニーズに基づいてアプリケーションを自動的にルーティング",
+    "smartRouting": "スマートルーティング",
+    "smartRoutingDesc": "アプリケーションを自動検出し、最適なトンネルを通してルーティング",
+    "applicationRouting": "アプリケーションルーティング",
+    "applicationRoutingDesc": "各アプリケーションがインターネットに接続する方法を設定",
+    "scanForApps": "新しいアプリケーションをスキャン",
+    "crossPlatformSupport": "クロスプラットフォームサポート",
+    "crossPlatformDesc": "xxVPNはすべてのデバイスで利用可能",
+    "categories": {
+      "gaming": "ゲーム",
+      "streaming": "ストリーミング",
+      "crypto": "暗号通貨",
+      "messaging": "メッセージング",
+      "browser": "ブラウザ"
+    },
+    "status": {
+      "available": "利用可能",
+      "beta": "ベータ版",
+      "comingSoon": "近日公開",
+      "extension": "拡張機能"
+    },
+    "tunnels": {
+      "direct": "ダイレクト",
+      "directSubtitle": "VPN保護なし",
+      "directDescription": "ゲームやレイテンシに敏感なアプリケーションに最適。保護のオーバーヘッドなし。",
+      "vpn": "VPNトンネル", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "バランスの取れたセキュリティと速度。ストリーミングとブラウジングのためのDPIバイパス。",
+      "mixnet": "ミックスネット",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "メタデータ保護による最大限の匿名性。暗号通貨とメッセージングに最適。",
+      "directDesc": "VPNなし - より高速",
+      "vpnDesc": "VPN - バランス",
+      "mixnetDesc": "ミックスネット - より安全"
+    }
   }
 }

@@ -127,5 +127,57 @@
         "link": "فريق الدعم"
       }
     }
+  },
+  "referrals": {
+    "program": "برنامج الإحالة",
+    "yourReferrals": "إحالاتك",
+    "totalUsers": "إجمالي المستخدمين", 
+    "yourLink": "رابط الإحالة الخاص بك",
+    "shareMessage": "شارك رابط الإحالة الخاص بك لكسب عملات XX لكل مستخدم جديد ينضم!",
+    "referrals": "إحالات",
+    "users": "مستخدمين"
+  },
+  "subscriptionTier": {
+    "free": "مجاني",
+    "premium": "بريميوم", 
+    "enterprise": "المؤسسات"
+  },
+  "apps": {
+    "aiPoweredTitle": "نفق مقسم بالذكاء الاصطناعي",
+    "aiPoweredDesc": "يسمح للذكاء الاصطناعي بتوجيه التطبيقات تلقائياً وفقاً لاحتياجاتها الأمنية",
+    "smartRouting": "التوجيه الذكي",
+    "smartRoutingDesc": "يكتشف ويوجه التطبيقات تلقائياً عبر الأنفاق المثلى",
+    "applicationRouting": "توجيه التطبيقات",
+    "applicationRoutingDesc": "تكوين كيفية اتصال كل تطبيق بالإنترنت",
+    "scanForApps": "البحث عن تطبيقات جديدة",
+    "crossPlatformSupport": "الدعم متعدد المنصات",
+    "crossPlatformDesc": "xxVPN متاح على جميع أجهزتك",
+    "categories": {
+      "gaming": "الألعاب",
+      "streaming": "البث",
+      "crypto": "العملة المشفرة",
+      "messaging": "المراسلة",
+      "browser": "المتصفح"
+    },
+    "status": {
+      "available": "متاح",
+      "beta": "تجريبي",
+      "comingSoon": "قريباً",
+      "extension": "الامتداد"
+    },
+    "tunnels": {
+      "direct": "مباشر",
+      "directSubtitle": "بدون حماية VPN",
+      "directDescription": "مثالي للألعاب والتطبيقات الحساسة للتأخير. بدون عبء الحماية.",
+      "vpn": "نفق VPN", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "أمان وسرعة متوازنة. تجاوز DPI للبث والتصفح.",
+      "mixnet": "شبكة مختلطة",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "أقصى درجات إخفاء الهوية مع حماية البيانات الوصفية. مثالي للعملات المشفرة والمراسلة.",
+      "directDesc": "بدون VPN - أسرع",
+      "vpnDesc": "VPN - متوازن",
+      "mixnetDesc": "شبكة مختلطة - أكثر أماناً"
+    }
   }
 }

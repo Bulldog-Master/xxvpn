@@ -141,5 +141,43 @@
         "link": "支持团队"
       }
     }
+  },
+  "apps": {
+    "aiPoweredTitle": "AI分流隧道",
+    "aiPoweredDesc": "允许AI根据应用程序的安全需求自动路由",
+    "smartRouting": "智能路由",
+    "smartRoutingDesc": "自动检测并通过最佳隧道路由应用程序",
+    "applicationRouting": "应用程序路由",
+    "applicationRoutingDesc": "配置每个应用程序如何连接到互联网",
+    "scanForApps": "扫描新应用程序",
+    "crossPlatformSupport": "跨平台支持",
+    "crossPlatformDesc": "xxVPN在您的所有设备上都可用",
+    "categories": {
+      "gaming": "游戏",
+      "streaming": "流媒体",
+      "crypto": "加密货币",
+      "messaging": "消息",
+      "browser": "浏览器"
+    },
+    "status": {
+      "available": "可用",
+      "beta": "测试版",
+      "comingSoon": "即将推出",
+      "extension": "扩展"
+    },
+    "tunnels": {
+      "direct": "直连",
+      "directSubtitle": "无VPN保护",
+      "directDescription": "适用于游戏和对延迟敏感的应用程序。无保护开销。",
+      "vpn": "VPN隧道", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "平衡的安全性和速度。DPI绕过，适用于流媒体和浏览。",
+      "mixnet": "混合网络",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "具有元数据保护的最大匿名性。完美适用于加密货币和消息传递。",
+      "directDesc": "无VPN - 更快",
+      "vpnDesc": "VPN - 平衡",
+      "mixnetDesc": "混合网络 - 更安全"
+    }
   }
 }

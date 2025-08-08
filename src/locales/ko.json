@@ -127,5 +127,57 @@
         "link": "지원팀"
       }
     }
+  },
+  "referrals": {
+    "program": "추천 프로그램",
+    "yourReferrals": "당신의 추천",
+    "totalUsers": "총 사용자 수", 
+    "yourLink": "당신의 추천 링크",
+    "shareMessage": "추천 링크를 공유하여 새로운 사용자마다 XX 코인을 얻으세요!",
+    "referrals": "추천",
+    "users": "사용자"
+  },
+  "subscriptionTier": {
+    "free": "무료",
+    "premium": "프리미엄", 
+    "enterprise": "기업"
+  },
+  "apps": {
+    "aiPoweredTitle": "AI 기반 분할 터널",
+    "aiPoweredDesc": "AI가 보안 요구 사항에 따라 애플리케이션을 자동으로 라우팅합니다",
+    "smartRouting": "스마트 라우팅",
+    "smartRoutingDesc": "애플리케이션을 자동으로 감지하고 최적의 터널을 통해 라우팅",
+    "applicationRouting": "애플리케이션 라우팅",
+    "applicationRoutingDesc": "각 애플리케이션이 인터넷에 연결하는 방법을 구성",
+    "scanForApps": "새 애플리케이션 검색",
+    "crossPlatformSupport": "크로스 플랫폼 지원",
+    "crossPlatformDesc": "xxVPN은 모든 기기에서 사용 가능합니다",
+    "categories": {
+      "gaming": "게임",
+      "streaming": "스트리밍",
+      "crypto": "암호화폐",
+      "messaging": "메시징",
+      "browser": "브라우저"
+    },
+    "status": {
+      "available": "사용 가능",
+      "beta": "베타",
+      "comingSoon": "출시 예정",
+      "extension": "확장 프로그램"
+    },
+    "tunnels": {
+      "direct": "직접",
+      "directSubtitle": "VPN 보호 없음",
+      "directDescription": "게임 및 지연 시간에 민감한 애플리케이션에 이상적. 보호 오버헤드 없음.",
+      "vpn": "VPN 터널", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "균형 잡힌 보안과 속도. 스트리밍 및 브라우징을 위한 DPI 우회.",
+      "mixnet": "믹스넷",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "메타데이터 보호를 통한 최대 익명성. 암호화폐 및 메시징에 완벽.",
+      "directDesc": "VPN 없음 - 더 빠름",
+      "vpnDesc": "VPN - 균형",
+      "mixnetDesc": "믹스넷 - 더 안전"
+    }
   }
 }

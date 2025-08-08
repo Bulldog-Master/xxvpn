@@ -260,13 +260,6 @@
       "downloads": "Downloads"
     }
   },
-  "apps": {
-    "tunnels": {
-      "directDesc": "Kein VPN - Schnellster",
-      "vpnDesc": "VPN - Ausgewogen",
-      "mixnetDesc": "Mixnet - Sicherster"
-    }
-  },
   "network": {
     "health": "Netzwerk-Gesundheit",
     "nodesOperational": "5 Knoten in Betrieb",
@@ -287,6 +280,44 @@
       "dpiBypass": "DPI-Umgehung",
       "precomputation": "Vorberechnungsphase",
       "realtimeMixing": "Echtzeit-Mischung"
+    }
+  },
+  "apps": {
+    "aiPoweredTitle": "KI-gestützter Split-Tunnel",
+    "aiPoweredDesc": "Ermöglicht der KI, Anwendungen automatisch basierend auf ihren Sicherheitsanforderungen zu routen",
+    "smartRouting": "Intelligentes Routing",
+    "smartRoutingDesc": "Erkennt und routet Anwendungen automatisch durch optimale Tunnel",
+    "applicationRouting": "Anwendungs-Routing",
+    "applicationRoutingDesc": "Konfiguriere, wie sich jede Anwendung mit dem Internet verbindet",
+    "scanForApps": "Nach neuen Anwendungen suchen",
+    "crossPlatformSupport": "Cross-Platform-Unterstützung",
+    "crossPlatformDesc": "xxVPN ist auf all Ihren Geräten verfügbar",
+    "categories": {
+      "gaming": "spiele",
+      "streaming": "streaming",
+      "crypto": "krypto",
+      "messaging": "nachrichten",
+      "browser": "browser"
+    },
+    "status": {
+      "available": "Verfügbar",
+      "beta": "Beta",
+      "comingSoon": "Demnächst",
+      "extension": "Erweiterung"
+    },
+    "tunnels": {
+      "direct": "Direkt",
+      "directSubtitle": "Kein VPN-Schutz",
+      "directDescription": "Ideal für Spiele und latenzempfindliche Anwendungen. Kein Schutz-Overhead.",
+      "vpn": "VPN-Tunnel", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Ausgewogene Sicherheit und Geschwindigkeit. DPI-Umgehung für Streaming und Browsing.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Maximale Anonymität mit Metadaten-Schutz. Perfekt für Kryptowährungen und Messaging.",
+      "directDesc": "Kein VPN - Schneller",
+      "vpnDesc": "VPN - Ausgewogen",
+      "mixnetDesc": "Mixnet - Sicherer"
     }
   }
 }

@@ -198,5 +198,43 @@
         "link": "Équipe de support"
       }
     }
+  },
+  "apps": {
+    "aiPoweredTitle": "Tunnel Divisé par IA",
+    "aiPoweredDesc": "Permet à l'IA de router automatiquement les applications selon leurs besoins de sécurité",
+    "smartRouting": "Routage Intelligent",
+    "smartRoutingDesc": "Détecte et route automatiquement les applications via des tunnels optimaux",
+    "applicationRouting": "Routage d'Applications",
+    "applicationRoutingDesc": "Configure comment chaque application se connecte à internet",
+    "scanForApps": "Rechercher de Nouvelles Applications",
+    "crossPlatformSupport": "Support Multi-plateforme",
+    "crossPlatformDesc": "xxVPN est disponible sur tous vos appareils",
+    "categories": {
+      "gaming": "jeux",
+      "streaming": "diffusion",
+      "crypto": "crypto",
+      "messaging": "messagerie",
+      "browser": "navigateur"
+    },
+    "status": {
+      "available": "Disponible",
+      "beta": "Bêta",
+      "comingSoon": "Bientôt",
+      "extension": "Extension"
+    },
+    "tunnels": {
+      "direct": "Direct",
+      "directSubtitle": "Aucune protection VPN",
+      "directDescription": "Idéal pour les jeux et applications sensibles à la latence. Aucune surcharge de protection.",
+      "vpn": "Tunnel VPN", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Sécurité et vitesse équilibrées. Contournement DPI pour le streaming et la navigation.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Anonymat maximal avec protection des métadonnées. Parfait pour les cryptomonnaies et la messagerie.",
+      "directDesc": "Pas de VPN - Plus rapide",
+      "vpnDesc": "VPN - Équilibré",
+      "mixnetDesc": "Mixnet - Plus sécurisé"
+    }
   }
 }

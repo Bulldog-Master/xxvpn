@@ -141,5 +141,43 @@
         "link": "Equipe de suporte"
       }
     }
+  },
+  "apps": {
+    "aiPoweredTitle": "Túnel Dividido com IA",
+    "aiPoweredDesc": "Permite que a IA roteie automaticamente aplicações de acordo com suas necessidades de segurança",
+    "smartRouting": "Roteamento Inteligente",
+    "smartRoutingDesc": "Detecta e roteia automaticamente aplicações através de túneis ótimos",
+    "applicationRouting": "Roteamento de Aplicações",
+    "applicationRoutingDesc": "Configure como cada aplicação se conecta à internet",
+    "scanForApps": "Procurar Novas Aplicações",
+    "crossPlatformSupport": "Suporte Multi-plataforma",
+    "crossPlatformDesc": "xxVPN está disponível em todos os seus dispositivos",
+    "categories": {
+      "gaming": "jogos",
+      "streaming": "streaming",
+      "crypto": "crypto",
+      "messaging": "mensagens",
+      "browser": "navegador"
+    },
+    "status": {
+      "available": "Disponível",
+      "beta": "Beta",
+      "comingSoon": "Em Breve",
+      "extension": "Extensão"
+    },
+    "tunnels": {
+      "direct": "Direto",
+      "directSubtitle": "Sem proteção VPN",
+      "directDescription": "Ideal para jogos e aplicações sensíveis à latência. Sem sobrecarga de proteção.",
+      "vpn": "Túnel VPN", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Segurança e velocidade equilibradas. Bypass DPI para streaming e navegação.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Máximo anonimato com proteção de metadados. Perfeito para criptomoedas e mensagens.",
+      "directDesc": "Sem VPN - Mais rápido",
+      "vpnDesc": "VPN - Equilibrado",
+      "mixnetDesc": "Mixnet - Mais seguro"
+    }
   }
 }

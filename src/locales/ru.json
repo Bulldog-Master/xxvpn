@@ -141,5 +141,43 @@
         "link": "Команде поддержки"
       }
     }
+  },
+  "apps": {
+    "aiPoweredTitle": "Разделенный туннель с ИИ",
+    "aiPoweredDesc": "Позволяет ИИ автоматически маршрутизировать приложения в соответствии с их потребностями в безопасности",
+    "smartRouting": "Умная маршрутизация",
+    "smartRoutingDesc": "Автоматически обнаруживает и направляет приложения через оптимальные туннели",
+    "applicationRouting": "Маршрутизация приложений",
+    "applicationRoutingDesc": "Настройте, как каждое приложение подключается к интернету",
+    "scanForApps": "Поиск новых приложений",
+    "crossPlatformSupport": "Кроссплатформенная поддержка",
+    "crossPlatformDesc": "xxVPN доступен на всех ваших устройствах",
+    "categories": {
+      "gaming": "игры",
+      "streaming": "потоковое",
+      "crypto": "крипто",
+      "messaging": "сообщения",
+      "browser": "браузер"
+    },
+    "status": {
+      "available": "Доступно",
+      "beta": "Бета",
+      "comingSoon": "Скоро",
+      "extension": "Расширение"
+    },
+    "tunnels": {
+      "direct": "Прямой",
+      "directSubtitle": "Без защиты VPN",
+      "directDescription": "Идеально для игр и приложений, чувствительных к задержкам. Без накладных расходов на защиту.",
+      "vpn": "VPN туннель", 
+      "vpnSubtitle": "WireGuard/AmneziaWG",
+      "vpnDescription": "Сбалансированная безопасность и скорость. Обход DPI для потокового вещания и просмотра.",
+      "mixnet": "Mixnet",
+      "mixnetSubtitle": "XX Network cMixx", 
+      "mixnetDescription": "Максимальная анонимность с защитой метаданных. Идеально для криптовалют и сообщений.",
+      "directDesc": "Без VPN - Быстрее",
+      "vpnDesc": "VPN - Сбалансированный",
+      "mixnetDesc": "Mixnet - Безопаснее"
+    }
   }
 }
