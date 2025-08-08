@@ -273,14 +273,14 @@
     "crossPlatformDesc": "xxVPN er tilgængelig på alle dine enheder",
     "categories": {
        "gaming": "spil",
-       "streaming": "streaming",
+       "streaming": "transmittering",
        "crypto": "krypto", 
        "messaging": "beskedudveksling",
-       "browser": "browser"
+       "browser": "internetbrowser"
      },
      "appNames": {
-        "chrome": "Chrome Browser",
-        "twitch": "Twitch Streaming"
+        "chrome": "Chrome Internetbrowser",
+        "twitch": "Twitch Transmittering"
      },
      "status": {
       "available": "Tilgængelig",
