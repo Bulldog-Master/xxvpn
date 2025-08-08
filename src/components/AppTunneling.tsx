@@ -155,9 +155,9 @@ const AppTunneling = () => {
                         </Badge>
                       )}
                     </div>
-                    <div className="text-sm text-muted-foreground capitalize">
-                      {app.category}
-                    </div>
+                     <div className="text-sm text-muted-foreground capitalize">
+                       {t(`apps.categories.${app.category}`)}
+                     </div>
                   </div>
                 </div>
 
@@ -182,9 +182,9 @@ const AppTunneling = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="direct">Direct</SelectItem>
-                        <SelectItem value="vpn">VPN</SelectItem>
-                        <SelectItem value="mixnet">Mixnet</SelectItem>
+                        <SelectItem value="direct">{t('apps.tunnels.direct')}</SelectItem>
+                        <SelectItem value="vpn">{t('apps.tunnels.vpn')}</SelectItem>
+                        <SelectItem value="mixnet">{t('apps.tunnels.mixnet')}</SelectItem>
                       </SelectContent>
                     </Select>
                   )}
@@ -196,7 +196,7 @@ const AppTunneling = () => {
           <div className="mt-6 pt-4 border-t">
             <Button variant="outline" className="w-full">
               <Monitor className="w-4 h-4 mr-2" />
-              Scan for New Applications
+              {t('apps.scanForApps')}
             </Button>
           </div>
         </CardContent>
@@ -205,30 +205,30 @@ const AppTunneling = () => {
       {/* Platform Support */}
       <Card className="bg-card/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Cross-Platform Support</CardTitle>
+          <CardTitle>{t('apps.crossPlatformSupport')}</CardTitle>
           <CardDescription>
-            xxVPN is available across all your devices
+            {t('apps.crossPlatformDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { platform: 'Windows', status: 'Available' },
-              { platform: 'macOS', status: 'Available' },
-              { platform: 'Linux', status: 'Available' },
-              { platform: 'Android', status: 'Available' },
-              { platform: 'iOS', status: 'Available' },
-              { platform: 'Chrome OS', status: 'Beta' },
-              { platform: 'Router', status: 'Coming Soon' },
-              { platform: 'Browser', status: 'Extension' }
+              { platform: 'Windows', status: 'available' },
+              { platform: 'macOS', status: 'available' },
+              { platform: 'Linux', status: 'available' },
+              { platform: 'Android', status: 'available' },
+              { platform: 'iOS', status: 'available' },
+              { platform: 'Chrome OS', status: 'beta' },
+              { platform: 'Router', status: 'comingSoon' },
+              { platform: 'Browser', status: 'extension' }
             ].map((item) => (
               <div key={item.platform} className="text-center p-3 rounded-lg border bg-muted/10">
                 <div className="font-medium">{item.platform}</div>
                 <Badge 
-                  variant={item.status === 'Available' ? 'default' : 'secondary'}
+                  variant={item.status === 'available' ? 'default' : 'secondary'}
                   className="mt-1 text-xs"
                 >
-                  {item.status}
+                  {t(`apps.status.${item.status}`)}
                 </Badge>
               </div>
             ))}
