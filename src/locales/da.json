@@ -279,8 +279,8 @@
        "browser": "internetbrowser"
      },
      "appNames": {
-        "chrome": "Chrome Internetbrowser",
-        "twitch": "Twitch Transmittering"
+        "chrome": "Internetbrowser Chrome",
+        "twitch": "Transmittering Twitch"
      },
      "status": {
       "available": "Tilgængelig",
