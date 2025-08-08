@@ -291,7 +291,7 @@ const VPNDashboard = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto group">
                       <div className="text-left hidden sm:block">
-                        <div className="text-sm font-medium">{user?.fullName || 'User'}</div>
+                        <div className="text-sm font-medium">{user?.fullName || t('dashboard.defaultUserName')}</div>
                         <div className="text-xs text-muted-foreground">{t(`dashboard.subscriptionTier.${user?.subscriptionTier || 'free'}`)}</div>
                       </div>
                       <ChevronDown className="w-3 h-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />

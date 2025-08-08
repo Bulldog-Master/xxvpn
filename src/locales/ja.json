@@ -24,6 +24,7 @@
       "metadataProtection": "メタデータ保護"
     },
     "localIP": "ローカルIP",
+    "defaultUserName": "ユーザー",
     "connect": "接続",
     "disconnect": "切断",
     "location": "場所",

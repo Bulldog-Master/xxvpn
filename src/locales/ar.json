@@ -24,6 +24,7 @@
       "metadataProtection": "حماية البيانات الوصفية"
     },
     "localIP": "عنوان IP المحلي",
+    "defaultUserName": "المستخدم",
     "connect": "اتصال",
     "disconnect": "قطع الاتصال",
     "location": "الموقع",

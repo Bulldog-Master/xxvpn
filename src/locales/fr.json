@@ -24,6 +24,7 @@
       "metadataProtection": "Protection des métadonnées"
     },
     "localIP": "IP Locale",
+    "defaultUserName": "Utilisateur",
     "connect": "Connecter",
     "disconnect": "Déconnecter",
     "location": "Emplacement",

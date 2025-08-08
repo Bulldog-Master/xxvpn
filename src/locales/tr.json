@@ -24,6 +24,7 @@
       "metadataProtection": "Metadata koruması"
     },
     "localIP": "Yerel IP",
+    "defaultUserName": "Kullanıcı",
     "connect": "Bağlan",
     "disconnect": "Bağlantıyı Kes",
     "location": "Konum",

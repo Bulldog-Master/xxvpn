@@ -24,6 +24,7 @@
       "metadataProtection": "Metadata beskyttelse"
     },
     "localIP": "Lokal IP",
+    "defaultUserName": "Bruger",
     "connect": "Forbind",
     "disconnect": "Afbryd",
     "location": "Placering",
