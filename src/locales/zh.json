@@ -11,7 +11,17 @@
       "ultraFast": "超高速",
       "secure": "安全", 
       "ultraSecure": "超安全",
-      "off": "关闭"
+      "off": "关闭",
+      "gamingStreaming": "游戏和流媒体",
+      "standardProtection": "标准VPN保护",
+      "noVPN": "无VPN",
+      "ultraFastDesc": "最小延迟的超高速连接，适用于游戏和流媒体。",
+      "maximumSpeed": "最大速度",
+      "secureDesc": "提供标准隐私保护的加密VPN隧道。",
+      "encryptedTunnel": "加密隧道",
+      "metadataShredding": "元数据销毁",
+      "metadataShredDesc": "通过XX网络使用cMixx进行元数据销毁。",
+      "metadataProtection": "元数据保护"
     },
     "connect": "连接",
     "disconnect": "断开",
@@ -21,14 +31,46 @@
       "title": "统计",
       "dataTransferred": "传输数据",
       "sessionTime": "会话时间",
-      "xxCoinsEarned": "获得的XX币"
+      "networkLatency": "网络延迟",
+      "xxCoinsEarned": "获得的XX币",
+      "currentSession": "当前会话",
+      "averagePing": "平均ping"
     },
     "tabs": {
       "main": "主页",
       "servers": "服务器", 
+      "network": "网络",
       "apps": "应用",
       "devices": "设备",
-      "settings": "设置"
+      "payments": "支付",
+      "settings": "设置",
+      "usage": "使用量",
+      "history": "历史"
+    },
+    "usage": {
+      "todaysUsage": "今日使用量",
+      "ultraFastMode": "超高速模式",
+      "secureMode": "安全模式",
+      "ultraSecureMode": "超安全模式"
+    },
+    "history": {
+      "recentSessions": "最近会话",
+      "fastMode": "快速模式",
+      "privacyMode": "隐私模式",
+      "mode": "模式"
+    },
+    "menu": {
+      "editName": "编辑名称",
+      "customerSupport": "客户支持",
+      "devices": "设备",
+      "payments": "支付",
+      "logout": "注销"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "超高速模式：游戏和流媒体直接连接",
+      "secureActive": "安全模式：加密VPN隧道激活",
+      "ultraSecureActive": "超安全模式：通过XX网络cMixx进行元数据销毁激活",
+      "notProtected": "您的流量未受保护"
     },
     "referrals": {
       "program": "推荐计划",
@@ -60,29 +102,63 @@
     "signUpWithGoogle": "使用Google注册"
   },
   "settings": {
+    "title": "设置",
     "appearance": {
       "title": "外观",
+      "description": "自定义应用的外观和主题",
       "theme": "主题",
-      "light": "浅色",
-      "dark": "深色", 
-      "system": "系统"
+      "themeDesc": "在明暗模式之间选择"
     },
     "protocol": {
       "title": "协议设置",
-      "description": "选择您的连接协议"
+      "description": "配置您的VPN协议偏好",
+      "autoSelection": "自动协议选择",
+      "autoSelectionDesc": "根据网络条件自动选择最佳协议",
+      "killSwitch": "终止开关",
+      "killSwitchDesc": "如果VPN连接断开则阻止网络访问",
+      "autoConnect": "自动连接",
+      "autoConnectDesc": "应用启动时自动连接"
     },
     "xxNetwork": {
       "title": "XX网络集成",
-      "enabled": "已启用",
-      "description": "抗量子消息传递和元数据保护"
+      "description": "抗量子区块链功能",
+      "coinRewards": "XX币奖励",
+      "coinRewardsDesc": "通过为网络安全做贡献赚取XX代币",
+      "nodeContribution": "节点贡献",
+      "nodeContributionDesc": "允许您的设备为混合网络做出贡献",
+      "currentBalance": "当前余额"
     },
     "language": {
       "title": "语言",
-      "description": "选择您的首选语言"
+      "description": "选择您偏好的语言"
+    }
+  },
+  "servers": {
+    "title": "服务器选择",
+    "description": "选择您的VPN服务器位置",
+    "quickConnect": "快速连接",
+    "searchPlaceholder": "搜索国家或城市...",
+    "stats": {
+      "availableServers": "可用服务器",
+      "acrossCountries": "遍布12个国家",
+      "averageLoad": "平均负载",
+      "optimalPerformance": "最佳性能",
+      "yourLatency": "您的延迟",
+      "toSelectedServer": "到选定服务器"
+    },
+    "list": {
+      "title": "可用服务器",
+      "description": "为您的VPN连接选择服务器位置",
+      "favorites": "收藏",
+      "allLocations": "所有位置",
+      "premium": "高级",
+      "serverId": "服务器ID",
+      "latency": "延迟",
+      "load": "负载"
     }
   },
   "common": {
-    "loading": "加载xxVPN中...",
+    "loading": "正在加载xxVPN...",
     "save": "保存",
     "cancel": "取消",
     "close": "关闭",
@@ -106,7 +182,7 @@
       "title": "支付方式",
       "card": {
         "title": "信用卡/借记卡",
-        "description": "Visa、Mastercard、American Express",
+        "description": "Visa, Mastercard, American Express",
         "action": "添加卡片"
       },
       "paypal": {
@@ -116,13 +192,13 @@
       },
       "crypto": {
         "title": "加密货币", 
-        "description": "Bitcoin、Ethereum、XX Coin",
+        "description": "Bitcoin, Ethereum, XX Coin",
         "action": "设置"
       }
     },
     "orders": {
       "title": "您的订单",
-      "privacy": "通过设计，xxVPN将您的支付信息和身份与您的在线活动分离。这确保了对您的流量和私人数据的未授权监控的强有力保护。",
+      "privacy": "通过设计，xxVPN将您的支付信息和身份与在线活动分离。这确保对您的流量和私人数据的未授权监控提供强有力的保护。",
       "table": {
         "id": "ID",
         "date": "日期",
@@ -131,25 +207,121 @@
         "amount": "金额"
       },
       "status": {
-        "active": "活跃",
+        "active": "有效",
         "expired": "已过期", 
         "pending": "待处理"
       },
       "noOrders": "未找到订单",
       "invoice": {
-        "text": "如果您需要包含公司名称和地址的专业发票，请联系我们的",
+        "text": "如果您需要带有公司名称和地址的专业发票，请联系我们的",
         "link": "支持团队"
       }
     }
   },
+  "devices": {
+    "title": "设备管理",
+    "description": "管理您的连接设备（已使用{{used}}/{{total}}台设备）",
+    "addDevice": "添加设备",
+    "addNew": "添加新设备",
+    "addDescription": "注册一个新设备以与xxVPN一起使用。您最多可以拥有{{limit}}台设备。",
+    "types": {
+      "desktop": "桌面",
+      "mobile": "移动",
+      "tablet": "平板",
+      "router": "路由器",
+      "tv": "电视",
+      "other": "其他"
+    },
+    "form": {
+      "deviceName": "设备名称",
+      "deviceNamePlaceholder": "我的MacBook Pro",
+      "deviceType": "设备类型",
+      "operatingSystem": "操作系统（可选）",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, 等"
+    },
+    "toast": {
+      "nameRequired": "需要设备名称",
+      "nameRequiredDesc": "请输入您设备的名称。",
+      "limitReached": "已达设备限制",
+      "limitReachedDesc": "您最多只能拥有10台设备。请先移除一台旧设备。",
+      "added": "设备添加成功",
+      "addedDesc": "您的新设备已注册。",
+      "removed": "设备已移除",
+      "removedDesc": "{{deviceName}}已从您的账户中移除。"
+    },
+    "limitReached": "已达设备限制",
+    "approachingLimit": "接近设备限制",
+    "removeToAdd": "移除一台设备以添加新设备。",
+    "slotsRemaining": "您还有{{count}}个设备位置。",
+    "noDevices": "未注册设备",
+    "noDevicesDesc": "添加您的第一台设备以开始使用xxVPN",
+    "lastSeen": "上次出现",
+    "latency": "延迟",
+    "load": "负载"
+  },
+  "profile": {
+    "signedOut": "已注销",
+    "signedOutDesc": "已成功从xxVPN注销。",
+    "signOutError": "注销失败。请重试。",
+    "updated": "个人资料已更新",
+    "updatedDesc": "您的个人资料已成功更新。",
+    "anonymousUser": "匿名用户",
+    "signOut": "注销",
+    "subscription": {
+      "enterprise": "企业版",
+      "premium": "高级版",
+      "free": "免费"
+    },
+    "tabs": {
+      "account": "账户",
+      "subscription": "订阅",
+      "rewards": "XX奖励",
+      "downloads": "下载"
+    }
+  },
+  "network": {
+    "health": "网络健康",
+    "nodesOperational": "5个节点运行中",
+    "throughput": "吞吐量",
+    "protectionLevel": "保护级别",
+    "quantum": "量子",
+    "encryptionActive": "cMixx加密激活",
+    "topology": "网络拓扑",
+    "topologyDesc": "通过XX网络的5跳混合网络连接",
+    "hop": "跳跃",
+    "latency": "延迟",
+    "load": "负载",
+    "securityFeatures": "活动安全功能",
+    "securityFeaturesDesc": "抗量子保护机制",
+    "nodes": {
+      "gateway": "网关",
+      "mixNode1": "混合节点1",
+      "mixNode2": "混合节点2", 
+      "mixNode3": "混合节点3",
+      "exitNode": "出口节点"
+    },
+    "status": {
+      "active": "活动",
+      "standby": "待机",
+      "offline": "离线"
+    },
+    "features": {
+      "metadataShredding": "元数据销毁",
+      "quantumEncryption": "抗量子加密",
+      "trafficMixing": "流量混合",
+      "dpiBypass": "DPI绕过",
+      "precomputation": "预计算阶段",
+      "realtimeMixing": "实时混合"
+    }
+  },
   "apps": {
-    "aiPoweredTitle": "AI分流隧道",
-    "aiPoweredDesc": "允许AI根据应用程序的安全需求自动路由",
+    "aiPoweredTitle": "AI驱动的分流隧道",
+    "aiPoweredDesc": "让AI根据应用的安全需求自动路由",
     "smartRouting": "智能路由",
-    "smartRoutingDesc": "自动检测并通过最佳隧道路由应用程序",
+    "smartRoutingDesc": "自动检测并通过最优隧道路由应用",
     "applicationRouting": "应用程序路由",
-    "applicationRoutingDesc": "配置每个应用程序如何连接到互联网",
-    "scanForApps": "扫描新应用程序",
+    "applicationRoutingDesc": "配置每个应用如何连接到互联网",
+    "scanForApps": "扫描新应用",
     "crossPlatformSupport": "跨平台支持",
     "crossPlatformDesc": "xxVPN在您的所有设备上都可用",
     "categories": {
@@ -159,6 +331,10 @@
       "messaging": "消息",
       "browser": "浏览器"
     },
+    "appNames": {
+      "chrome": "Chrome浏览器",
+      "twitch": "Twitch流媒体"
+    },
     "status": {
       "available": "可用",
       "beta": "测试版",
@@ -166,22 +342,18 @@
       "extension": "扩展"
     },
     "tunnels": {
-      "direct": "直连",
+      "direct": "直接",
       "directSubtitle": "无VPN保护",
-      "directDescription": "适用于游戏和对延迟敏感的应用程序。无保护开销。",
+      "directDescription": "最适合游戏和对延迟敏感的应用。无保护开销。",
       "vpn": "VPN隧道", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
-      "vpnDescription": "平衡的安全性和速度。DPI绕过，适用于流媒体和浏览。",
+      "vpnSubtitle": "VPN协议",
+      "vpnDescription": "平衡的安全性和速度。用于流媒体和浏览的DPI绕过。",
       "mixnet": "混合网络",
-      "mixnetSubtitle": "XX Network cMixx", 
-      "mixnetDescription": "具有元数据保护的最大匿名性。完美适用于加密货币和消息传递。",
-      "directDesc": "无VPN - 更快",
+      "mixnetSubtitle": "XX网络cMixx", 
+      "mixnetDescription": "具有元数据保护的最大匿名性。适用于加密货币和消息传递。",
+      "directDesc": "无VPN - 最快",
       "vpnDesc": "VPN - 平衡",
-       "mixnetDesc": "混合网络 - 更安全"
-     },
-     "appNames": {
-       "chrome": "Chrome浏览器",
-       "twitch": "Twitch直播"
-     }
+      "mixnetDesc": "混合网络 - 最安全"
+    }
   }
 }

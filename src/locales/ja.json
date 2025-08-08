@@ -11,7 +11,17 @@
       "ultraFast": "超高速",
       "secure": "セキュア", 
       "ultraSecure": "超セキュア",
-      "off": "オフ"
+      "off": "オフ",
+      "gamingStreaming": "ゲーミング＆ストリーミング",
+      "standardProtection": "標準VPN保護",
+      "noVPN": "VPNなし",
+      "ultraFastDesc": "ゲームとストリーミング用の最小レイテンシー超高速接続。",
+      "maximumSpeed": "最高速度",
+      "secureDesc": "標準プライバシー保護を提供する暗号化VPNトンネル。",
+      "encryptedTunnel": "暗号化トンネル",
+      "metadataShredding": "メタデータ破砕",
+      "metadataShredDesc": "XX NetworkのcMixxを使用したメタデータ破砕。",
+      "metadataProtection": "メタデータ保護"
     },
     "connect": "接続",
     "disconnect": "切断",
@@ -21,14 +31,46 @@
       "title": "統計",
       "dataTransferred": "転送データ",
       "sessionTime": "セッション時間",
-      "xxCoinsEarned": "獲得XX コイン"
+      "networkLatency": "ネットワーク遅延",
+      "xxCoinsEarned": "獲得XXコイン",
+      "currentSession": "現在のセッション",
+      "averagePing": "平均ping"
     },
     "tabs": {
       "main": "メイン",
       "servers": "サーバー", 
+      "network": "ネットワーク",
       "apps": "アプリ",
       "devices": "デバイス",
-      "settings": "設定"
+      "payments": "支払い",
+      "settings": "設定",
+      "usage": "使用量",
+      "history": "履歴"
+    },
+    "usage": {
+      "todaysUsage": "今日の使用量",
+      "ultraFastMode": "超高速モード",
+      "secureMode": "セキュアモード",
+      "ultraSecureMode": "超セキュアモード"
+    },
+    "history": {
+      "recentSessions": "最近のセッション",
+      "fastMode": "高速モード",
+      "privacyMode": "プライバシーモード",
+      "mode": "モード"
+    },
+    "menu": {
+      "editName": "名前を編集",
+      "customerSupport": "カスタマーサポート",
+      "devices": "デバイス",
+      "payments": "支払い",
+      "logout": "ログアウト"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "超高速モード：ゲームとストリーミング用の直接接続",
+      "secureActive": "セキュアモード：暗号化VPNトンネルアクティブ",
+      "ultraSecureActive": "超セキュアモード：XX Network cMixx経由のメタデータ破砕アクティブ",
+      "notProtected": "あなたのトラフィックは保護されていません"
     },
     "referrals": {
       "program": "紹介プログラム",
@@ -54,35 +96,69 @@
     "password": "パスワード",
     "confirmPassword": "パスワード確認",
     "forgotPassword": "パスワードを忘れましたか？",
-    "noAccount": "アカウントをお持ちでない方",
-    "hasAccount": "すでにアカウントをお持ちの方",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "すでにアカウントをお持ちですか？",
     "signInWithGoogle": "Googleでサインイン",
     "signUpWithGoogle": "Googleでサインアップ"
   },
   "settings": {
+    "title": "設定",
     "appearance": {
       "title": "外観",
+      "description": "アプリの外観とテーマをカスタマイズ",
       "theme": "テーマ",
-      "light": "ライト",
-      "dark": "ダーク", 
-      "system": "システム"
+      "themeDesc": "ライトモードとダークモードから選択"
     },
     "protocol": {
       "title": "プロトコル設定",
-      "description": "接続プロトコルを選択"
+      "description": "VPNプロトコルの設定を構成",
+      "autoSelection": "自動プロトコル選択",
+      "autoSelectionDesc": "ネットワーク条件に基づいて最適なプロトコルを自動選択",
+      "killSwitch": "キルスイッチ",
+      "killSwitchDesc": "VPN接続が切断された場合にインターネットをブロック",
+      "autoConnect": "自動接続",
+      "autoConnectDesc": "アプリ起動時に自動的に接続"
     },
     "xxNetwork": {
-      "title": "XXネットワーク統合",
-      "enabled": "有効",
-      "description": "量子耐性メッセージングとメタデータ保護"
+      "title": "XX Network統合",
+      "description": "量子耐性ブロックチェーン機能",
+      "coinRewards": "XXコイン報酬",
+      "coinRewardsDesc": "ネットワークセキュリティに貢献してXXトークンを獲得",
+      "nodeContribution": "ノード貢献",
+      "nodeContributionDesc": "あなたのデバイスがmixnetに貢献することを許可",
+      "currentBalance": "現在の残高"
     },
     "language": {
       "title": "言語",
       "description": "お好みの言語を選択"
     }
   },
+  "servers": {
+    "title": "サーバー選択",
+    "description": "VPNサーバーの場所を選択",
+    "quickConnect": "クイック接続",
+    "searchPlaceholder": "国や都市を検索...",
+    "stats": {
+      "availableServers": "利用可能サーバー",
+      "acrossCountries": "12カ国で",
+      "averageLoad": "平均負荷",
+      "optimalPerformance": "最適なパフォーマンス",
+      "yourLatency": "あなたの遅延",
+      "toSelectedServer": "選択されたサーバーへ"
+    },
+    "list": {
+      "title": "利用可能サーバー",
+      "description": "VPN接続のサーバー場所を選択",
+      "favorites": "お気に入り",
+      "allLocations": "すべての場所",
+      "premium": "プレミアム",
+      "serverId": "サーバーID",
+      "latency": "遅延",
+      "load": "負荷"
+    }
+  },
   "common": {
-    "loading": "xxVPN読み込み中...",
+    "loading": "xxVPNを読み込み中...",
     "save": "保存",
     "cancel": "キャンセル",
     "close": "閉じる",
@@ -94,11 +170,11 @@
     "success": "成功"
   },
   "payments": {
-    "title": "お支払い",
+    "title": "支払い",
     "sidebar": {
       "account": "アカウント",
       "devices": "デバイス", 
-      "payments": "お支払い",
+      "payments": "支払い",
       "download": "ダウンロード",
       "support": "サポート"
     },
@@ -111,18 +187,18 @@
       },
       "paypal": {
         "title": "PayPal",
-        "description": "迅速で安全な支払い",
+        "description": "高速で安全な支払い",
         "action": "接続"
       },
       "crypto": {
         "title": "暗号通貨", 
-        "description": "Bitcoin、Ethereum、XX Coin",
+        "description": "Bitcoin、Ethereum、XXコイン",
         "action": "設定"
       }
     },
     "orders": {
-      "title": "ご注文履歴",
-      "privacy": "設計上、xxVPNはお客様の支払い情報と身元をオンライン活動から切り離します。これにより、トラフィックや個人データの不正監視に対する堅牢な保護が確保されます。",
+      "title": "あなたの注文",
+      "privacy": "設計により、xxVPNはあなたの支払い情報と身元をオンライン活動から切り離します。これにより、あなたのトラフィックとプライベートデータの不正監視に対する堅牢な保護が確保されます。",
       "table": {
         "id": "ID",
         "date": "日付",
@@ -137,51 +213,147 @@
       },
       "noOrders": "注文が見つかりません",
       "invoice": {
-        "text": "会社名と住所を記載した正式な請求書が必要な場合は、",
+        "text": "会社名と住所が記載された業務用請求書が必要な場合は、お気軽に",
         "link": "サポートチーム"
       }
     }
   },
+  "devices": {
+    "title": "デバイス管理",
+    "description": "接続されたデバイスを管理（{{used}}/{{total}}台のデバイスを使用中）",
+    "addDevice": "デバイスを追加",
+    "addNew": "新しいデバイスを追加",
+    "addDescription": "xxVPNで使用する新しいデバイスを登録。最大{{limit}}台のデバイスを持てます。",
+    "types": {
+      "desktop": "デスクトップ",
+      "mobile": "モバイル",
+      "tablet": "タブレット",
+      "router": "ルーター",
+      "tv": "TV",
+      "other": "その他"
+    },
+    "form": {
+      "deviceName": "デバイス名",
+      "deviceNamePlaceholder": "私のMacBook Pro",
+      "deviceType": "デバイスタイプ",
+      "operatingSystem": "オペレーティングシステム（オプション）",
+      "osPlaceholder": "macOS 14.0、Windows 11、iOS 17.0など"
+    },
+    "toast": {
+      "nameRequired": "デバイス名が必要です",
+      "nameRequiredDesc": "デバイスの名前を入力してください。",
+      "limitReached": "デバイス制限に達しました",
+      "limitReachedDesc": "デバイスは10台までです。まず古いデバイスを削除してください。",
+      "added": "デバイスが正常に追加されました",
+      "addedDesc": "新しいデバイスが登録されました。",
+      "removed": "デバイスが削除されました",
+      "removedDesc": "{{deviceName}}があなたのアカウントから削除されました。"
+    },
+    "limitReached": "デバイス制限に達しました",
+    "approachingLimit": "デバイス制限に近づいています",
+    "removeToAdd": "新しいデバイスを追加するためにデバイスを削除してください。",
+    "slotsRemaining": "あと{{count}}台のデバイススロットが残っています。",
+    "noDevices": "登録されたデバイスがありません",
+    "noDevicesDesc": "xxVPNの使用を開始するために最初のデバイスを追加してください",
+    "lastSeen": "最後に確認",
+    "latency": "遅延",
+    "load": "負荷"
+  },
+  "profile": {
+    "signedOut": "サインアウトしました",
+    "signedOutDesc": "xxVPNから正常にサインアウトしました。",
+    "signOutError": "サインアウトに失敗しました。もう一度お試しください。",
+    "updated": "プロフィールが更新されました",
+    "updatedDesc": "プロフィールが正常に更新されました。",
+    "anonymousUser": "匿名ユーザー",
+    "signOut": "サインアウト",
+    "subscription": {
+      "enterprise": "エンタープライズ",
+      "premium": "プレミアム",
+      "free": "無料"
+    },
+    "tabs": {
+      "account": "アカウント",
+      "subscription": "サブスクリプション",
+      "rewards": "XX報酬",
+      "downloads": "ダウンロード"
+    }
+  },
+  "network": {
+    "health": "ネットワーク健全性",
+    "nodesOperational": "5つのノードが稼働中",
+    "throughput": "スループット",
+    "protectionLevel": "保護レベル",
+    "quantum": "量子",
+    "encryptionActive": "cMixx暗号化アクティブ",
+    "topology": "ネットワークトポロジー",
+    "topologyDesc": "XX Networkを通じた5ホップmixnet接続",
+    "hop": "ホップ",
+    "latency": "遅延",
+    "load": "負荷",
+    "securityFeatures": "アクティブセキュリティ機能",
+    "securityFeaturesDesc": "量子耐性保護メカニズム",
+    "nodes": {
+      "gateway": "ゲートウェイ",
+      "mixNode1": "ミックスノード1",
+      "mixNode2": "ミックスノード2", 
+      "mixNode3": "ミックスノード3",
+      "exitNode": "出口ノード"
+    },
+    "status": {
+      "active": "アクティブ",
+      "standby": "スタンバイ",
+      "offline": "オフライン"
+    },
+    "features": {
+      "metadataShredding": "メタデータ破砕",
+      "quantumEncryption": "量子耐性暗号化",
+      "trafficMixing": "トラフィックミキシング",
+      "dpiBypass": "DPIバイパス",
+      "precomputation": "事前計算フェーズ",
+      "realtimeMixing": "リアルタイムミキシング"
+    }
+  },
   "apps": {
-    "aiPoweredTitle": "AI搭載スプリットトンネル",
-    "aiPoweredDesc": "AIがセキュリティニーズに基づいてアプリケーションを自動的にルーティング",
+    "aiPoweredTitle": "AI駆動スプリットトンネリング",
+    "aiPoweredDesc": "AIがセキュリティニーズに基づいてアプリを自動的にルーティング",
     "smartRouting": "スマートルーティング",
-    "smartRoutingDesc": "アプリケーションを自動検出し、最適なトンネルを通してルーティング",
+    "smartRoutingDesc": "アプリを自動的に検出し、最適なトンネル経由でルーティング",
     "applicationRouting": "アプリケーションルーティング",
-    "applicationRoutingDesc": "各アプリケーションがインターネットに接続する方法を設定",
-    "scanForApps": "新しいアプリケーションをスキャン",
+    "applicationRoutingDesc": "各アプリがインターネットに接続する方法を設定",
+    "scanForApps": "新しいアプリをスキャン",
     "crossPlatformSupport": "クロスプラットフォームサポート",
     "crossPlatformDesc": "xxVPNはすべてのデバイスで利用可能",
     "categories": {
-      "gaming": "ゲーム",
+      "gaming": "ゲーミング",
       "streaming": "ストリーミング",
       "crypto": "暗号通貨",
       "messaging": "メッセージング",
       "browser": "ブラウザ"
     },
+    "appNames": {
+      "chrome": "Chromeブラウザ",
+      "twitch": "Twitchストリーミング"
+    },
     "status": {
       "available": "利用可能",
-      "beta": "ベータ版",
+      "beta": "ベータ",
       "comingSoon": "近日公開",
       "extension": "拡張機能"
     },
     "tunnels": {
       "direct": "ダイレクト",
       "directSubtitle": "VPN保護なし",
-      "directDescription": "ゲームやレイテンシに敏感なアプリケーションに最適。保護のオーバーヘッドなし。",
+      "directDescription": "ゲームやレイテンシーに敏感なアプリに最適。保護オーバーヘッドなし。",
       "vpn": "VPNトンネル", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
-      "vpnDescription": "バランスの取れたセキュリティと速度。ストリーミングとブラウジングのためのDPIバイパス。",
+      "vpnSubtitle": "VPNプロトコル",
+      "vpnDescription": "バランス良いセキュリティと速度。ストリーミングとブラウジング用DPIバイパス。",
       "mixnet": "ミックスネット",
       "mixnetSubtitle": "XX Network cMixx", 
-      "mixnetDescription": "メタデータ保護による最大限の匿名性。暗号通貨とメッセージングに最適。",
-      "directDesc": "VPNなし - より高速",
+      "mixnetDescription": "メタデータ保護による最大匿名性。暗号通貨とメッセージングに最適。",
+      "directDesc": "VPNなし - 最速",
       "vpnDesc": "VPN - バランス",
-       "mixnetDesc": "ミックスネット - より安全"
-     },
-     "appNames": {
-       "chrome": "Chromeブラウザ",
-       "twitch": "Twitchストリーミング"
-     }
+      "mixnetDesc": "ミックスネット - 最も安全"
+    }
   }
 }

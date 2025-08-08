@@ -11,7 +11,17 @@
       "ultraFast": "초고속",
       "secure": "보안", 
       "ultraSecure": "초보안",
-      "off": "끄기"
+      "off": "끄기",
+      "gamingStreaming": "게임 및 스트리밍",
+      "standardProtection": "표준 VPN 보호",
+      "noVPN": "VPN 없음",
+      "ultraFastDesc": "최소 지연 시간으로 게임과 스트리밍을 위한 초고속 연결.",
+      "maximumSpeed": "최대 속도",
+      "secureDesc": "표준 개인정보 보호를 제공하는 암호화된 VPN 터널.",
+      "encryptedTunnel": "암호화된 터널",
+      "metadataShredding": "메타데이터 파쇄",
+      "metadataShredDesc": "XX Network를 통한 cMixx를 사용한 메타데이터 파쇄.",
+      "metadataProtection": "메타데이터 보호"
     },
     "connect": "연결",
     "disconnect": "연결 끊기",
@@ -21,14 +31,60 @@
       "title": "통계",
       "dataTransferred": "전송된 데이터",
       "sessionTime": "세션 시간",
-      "xxCoinsEarned": "획득한 XX 코인"
+      "networkLatency": "네트워크 지연 시간",
+      "xxCoinsEarned": "획득한 XX 코인",
+      "currentSession": "현재 세션",
+      "averagePing": "평균 핑"
     },
     "tabs": {
       "main": "메인",
       "servers": "서버", 
+      "network": "네트워크",
       "apps": "앱",
       "devices": "기기",
-      "settings": "설정"
+      "payments": "결제",
+      "settings": "설정",
+      "usage": "사용량",
+      "history": "기록"
+    },
+    "usage": {
+      "todaysUsage": "오늘의 사용량",
+      "ultraFastMode": "초고속 모드",
+      "secureMode": "보안 모드",
+      "ultraSecureMode": "초보안 모드"
+    },
+    "history": {
+      "recentSessions": "최근 세션",
+      "fastMode": "빠른 모드",
+      "privacyMode": "개인정보 보호 모드",
+      "mode": "모드"
+    },
+    "menu": {
+      "editName": "이름 편집",
+      "customerSupport": "고객 지원",
+      "devices": "기기",
+      "payments": "결제",
+      "logout": "로그아웃"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "초고속 모드: 게임과 스트리밍을 위한 직접 연결",
+      "secureActive": "보안 모드: 암호화된 VPN 터널 활성",
+      "ultraSecureActive": "초보안 모드: XX Network cMixx를 통한 메타데이터 파쇄 활성",
+      "notProtected": "트래픽이 보호되지 않습니다"
+    },
+    "referrals": {
+      "program": "추천 프로그램",
+      "yourReferrals": "내 추천",
+      "totalUsers": "총 사용자", 
+      "yourLink": "내 추천 링크",
+      "shareMessage": "추천 링크를 공유하여 새로 가입하는 사용자마다 XX 코인을 획득하세요!",
+      "referrals": "추천",
+      "users": "사용자"
+    },
+    "subscriptionTier": {
+      "free": "무료",
+      "premium": "프리미엄", 
+      "enterprise": "기업"
     }
   },
   "auth": {
@@ -46,25 +102,59 @@
     "signUpWithGoogle": "Google로 회원가입"
   },
   "settings": {
+    "title": "설정",
     "appearance": {
       "title": "외관",
+      "description": "앱의 외관과 테마를 사용자 정의",
       "theme": "테마",
-      "light": "밝음",
-      "dark": "어두움", 
-      "system": "시스템"
+      "themeDesc": "라이트 모드와 다크 모드 중 선택"
     },
     "protocol": {
       "title": "프로토콜 설정",
-      "description": "연결 프로토콜 선택"
+      "description": "VPN 프로토콜 기본 설정 구성",
+      "autoSelection": "자동 프로토콜 선택",
+      "autoSelectionDesc": "네트워크 조건에 따라 최적의 프로토콜을 자동으로 선택",
+      "killSwitch": "킬 스위치",
+      "killSwitchDesc": "VPN 연결이 끊어지면 인터넷 차단",
+      "autoConnect": "자동 연결",
+      "autoConnectDesc": "앱 시작 시 자동으로 연결"
     },
     "xxNetwork": {
       "title": "XX 네트워크 통합",
-      "enabled": "활성화됨",
-      "description": "양자 저항성 메시징 및 메타데이터 보호"
+      "description": "양자 저항성 블록체인 기능",
+      "coinRewards": "XX 코인 보상",
+      "coinRewardsDesc": "네트워크 보안에 기여하여 XX 토큰 획득",
+      "nodeContribution": "노드 기여",
+      "nodeContributionDesc": "기기가 믹스넷에 기여하도록 허용",
+      "currentBalance": "현재 잔액"
     },
     "language": {
       "title": "언어",
       "description": "선호하는 언어 선택"
+    }
+  },
+  "servers": {
+    "title": "서버 선택",
+    "description": "VPN 서버 위치 선택",
+    "quickConnect": "빠른 연결",
+    "searchPlaceholder": "국가나 도시 검색...",
+    "stats": {
+      "availableServers": "사용 가능한 서버",
+      "acrossCountries": "12개국",
+      "averageLoad": "평균 부하",
+      "optimalPerformance": "최적 성능",
+      "yourLatency": "내 지연 시간",
+      "toSelectedServer": "선택된 서버로"
+    },
+    "list": {
+      "title": "사용 가능한 서버",
+      "description": "VPN 연결을 위한 서버 위치 선택",
+      "favorites": "즐겨찾기",
+      "allLocations": "모든 위치",
+      "premium": "프리미엄",
+      "serverId": "서버 ID",
+      "latency": "지연 시간",
+      "load": "부하"
     }
   },
   "common": {
@@ -89,9 +179,9 @@
       "support": "지원"
     },
     "methods": {
-      "title": "결제 수단",
+      "title": "결제 방법",
       "card": {
-        "title": "신용/체크카드",
+        "title": "신용/직불카드",
         "description": "Visa, Mastercard, American Express",
         "action": "카드 추가"
       },
@@ -108,7 +198,7 @@
     },
     "orders": {
       "title": "주문 내역",
-      "privacy": "설계상 xxVPN은 결제 정보와 신원을 온라인 활동과 분리합니다. 이를 통해 트래픽과 개인 데이터의 무단 모니터링에 대한 강력한 보호막을 제공합니다.",
+      "privacy": "설계상 xxVPN은 결제 정보와 신원을 온라인 활동으로부터 분리합니다. 이는 트래픽과 개인 데이터의 무단 모니터링에 대한 강력한 보호 장치를 보장합니다.",
       "table": {
         "id": "ID",
         "date": "날짜",
@@ -118,46 +208,132 @@
       },
       "status": {
         "active": "활성",
-        "expired": "만료", 
+        "expired": "만료됨", 
         "pending": "대기 중"
       },
-      "noOrders": "주문을 찾을 수 없습니다",
+      "noOrders": "주문을 찾을 수 없음",
       "invoice": {
-        "text": "회사명과 주소가 포함된 정식 청구서가 필요하시면",
+        "text": "회사명과 주소가 포함된 전문 송장이 필요한 경우",
         "link": "지원팀"
       }
     }
   },
-  "referrals": {
-    "program": "추천 프로그램",
-    "yourReferrals": "당신의 추천",
-    "totalUsers": "총 사용자 수", 
-    "yourLink": "당신의 추천 링크",
-    "shareMessage": "추천 링크를 공유하여 새로운 사용자마다 XX 코인을 얻으세요!",
-    "referrals": "추천",
-    "users": "사용자"
+  "devices": {
+    "title": "기기 관리",
+    "description": "연결된 기기 관리 ({{used}}/{{total}} 기기 사용 중)",
+    "addDevice": "기기 추가",
+    "addNew": "새 기기 추가",
+    "addDescription": "xxVPN과 함께 사용할 새 기기를 등록하세요. 최대 {{limit}}개의 기기를 가질 수 있습니다.",
+    "types": {
+      "desktop": "데스크톱",
+      "mobile": "모바일",
+      "tablet": "태블릿",
+      "router": "라우터",
+      "tv": "TV",
+      "other": "기타"
+    },
+    "form": {
+      "deviceName": "기기 이름",
+      "deviceNamePlaceholder": "내 MacBook Pro",
+      "deviceType": "기기 유형",
+      "operatingSystem": "운영 체제 (선택사항)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0 등"
+    },
+    "toast": {
+      "nameRequired": "기기 이름 필요",
+      "nameRequiredDesc": "기기 이름을 입력해 주세요.",
+      "limitReached": "기기 한도에 도달",
+      "limitReachedDesc": "최대 10개의 기기만 가질 수 있습니다. 먼저 기존 기기를 제거하세요.",
+      "added": "기기가 성공적으로 추가됨",
+      "addedDesc": "새 기기가 등록되었습니다.",
+      "removed": "기기 제거됨",
+      "removedDesc": "{{deviceName}}이(가) 계정에서 제거되었습니다."
+    },
+    "limitReached": "기기 한도에 도달",
+    "approachingLimit": "기기 한도에 접근",
+    "removeToAdd": "새로운 기기를 추가하려면 기기를 제거하세요.",
+    "slotsRemaining": "{{count}}개의 기기 슬롯이 남아 있습니다.",
+    "noDevices": "등록된 기기 없음",
+    "noDevicesDesc": "xxVPN 사용을 시작하려면 첫 번째 기기를 추가하세요",
+    "lastSeen": "마지막 확인",
+    "latency": "지연 시간",
+    "load": "부하"
   },
-  "subscriptionTier": {
-    "free": "무료",
-    "premium": "프리미엄", 
-    "enterprise": "기업"
+  "profile": {
+    "signedOut": "로그아웃됨",
+    "signedOutDesc": "xxVPN에서 성공적으로 로그아웃되었습니다.",
+    "signOutError": "로그아웃에 실패했습니다. 다시 시도해 주세요.",
+    "updated": "프로필 업데이트됨",
+    "updatedDesc": "프로필이 성공적으로 업데이트되었습니다.",
+    "anonymousUser": "익명 사용자",
+    "signOut": "로그아웃",
+    "subscription": {
+      "enterprise": "기업",
+      "premium": "프리미엄",
+      "free": "무료"
+    },
+    "tabs": {
+      "account": "계정",
+      "subscription": "구독",
+      "rewards": "XX 보상",
+      "downloads": "다운로드"
+    }
+  },
+  "network": {
+    "health": "네트워크 상태",
+    "nodesOperational": "5개 노드 작동",
+    "throughput": "처리량",
+    "protectionLevel": "보호 수준",
+    "quantum": "양자",
+    "encryptionActive": "cMixx 암호화 활성",
+    "topology": "네트워크 토폴로지",
+    "topologyDesc": "XX Network를 통한 5홉 믹스넷 연결",
+    "hop": "홉",
+    "latency": "지연 시간",
+    "load": "부하",
+    "securityFeatures": "활성 보안 기능",
+    "securityFeaturesDesc": "양자 저항성 보호 메커니즘",
+    "nodes": {
+      "gateway": "게이트웨이",
+      "mixNode1": "믹스 노드 1",
+      "mixNode2": "믹스 노드 2", 
+      "mixNode3": "믹스 노드 3",
+      "exitNode": "출구 노드"
+    },
+    "status": {
+      "active": "활성",
+      "standby": "대기",
+      "offline": "오프라인"
+    },
+    "features": {
+      "metadataShredding": "메타데이터 파쇄",
+      "quantumEncryption": "양자 저항성 암호화",
+      "trafficMixing": "트래픽 믹싱",
+      "dpiBypass": "DPI 우회",
+      "precomputation": "사전 계산 단계",
+      "realtimeMixing": "실시간 믹싱"
+    }
   },
   "apps": {
-    "aiPoweredTitle": "AI 기반 분할 터널",
-    "aiPoweredDesc": "AI가 보안 요구 사항에 따라 애플리케이션을 자동으로 라우팅합니다",
+    "aiPoweredTitle": "AI 기반 스플릿 터널링",
+    "aiPoweredDesc": "AI가 보안 요구사항에 따라 앱을 자동으로 라우팅",
     "smartRouting": "스마트 라우팅",
-    "smartRoutingDesc": "애플리케이션을 자동으로 감지하고 최적의 터널을 통해 라우팅",
+    "smartRoutingDesc": "앱을 자동으로 감지하고 최적의 터널을 통해 라우팅",
     "applicationRouting": "애플리케이션 라우팅",
-    "applicationRoutingDesc": "각 애플리케이션이 인터넷에 연결하는 방법을 구성",
-    "scanForApps": "새 애플리케이션 검색",
+    "applicationRoutingDesc": "각 앱이 인터넷에 연결하는 방식을 설정",
+    "scanForApps": "새 앱 검색",
     "crossPlatformSupport": "크로스 플랫폼 지원",
-    "crossPlatformDesc": "xxVPN은 모든 기기에서 사용 가능합니다",
+    "crossPlatformDesc": "xxVPN은 모든 기기에서 사용 가능",
     "categories": {
       "gaming": "게임",
       "streaming": "스트리밍",
       "crypto": "암호화폐",
       "messaging": "메시징",
       "browser": "브라우저"
+    },
+    "appNames": {
+      "chrome": "Chrome 브라우저",
+      "twitch": "Twitch 스트리밍"
     },
     "status": {
       "available": "사용 가능",
@@ -168,20 +344,16 @@
     "tunnels": {
       "direct": "직접",
       "directSubtitle": "VPN 보호 없음",
-      "directDescription": "게임 및 지연 시간에 민감한 애플리케이션에 이상적. 보호 오버헤드 없음.",
+      "directDescription": "게임과 지연 시간에 민감한 앱에 최적. 보호 오버헤드 없음.",
       "vpn": "VPN 터널", 
-      "vpnSubtitle": "WireGuard/AmneziaWG",
-      "vpnDescription": "균형 잡힌 보안과 속도. 스트리밍 및 브라우징을 위한 DPI 우회.",
+      "vpnSubtitle": "VPN 프로토콜",
+      "vpnDescription": "균형 잡힌 보안과 속도. 스트리밍과 브라우징을 위한 DPI 우회.",
       "mixnet": "믹스넷",
       "mixnetSubtitle": "XX Network cMixx", 
-      "mixnetDescription": "메타데이터 보호를 통한 최대 익명성. 암호화폐 및 메시징에 완벽.",
-      "directDesc": "VPN 없음 - 더 빠름",
+      "mixnetDescription": "메타데이터 보호로 최대 익명성. 암호화폐와 메시징에 완벽.",
+      "directDesc": "VPN 없음 - 가장 빠름",
       "vpnDesc": "VPN - 균형",
-       "mixnetDesc": "믹스넷 - 더 안전"
-     },
-     "appNames": {
-       "chrome": "Chrome 브라우저",
-       "twitch": "Twitch 스트리밍"
-     }
+      "mixnetDesc": "믹스넷 - 가장 안전"
+    }
   }
 }
