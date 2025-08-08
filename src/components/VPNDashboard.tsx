@@ -437,7 +437,7 @@ const VPNDashboard = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">VPN</Badge>
-                  <span className="text-xs text-muted-foreground">OpenVPN/WireGuard</span>
+                  <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.encryptedTunnel')}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
                   {t('dashboard.connectionModes.secureDesc')}
