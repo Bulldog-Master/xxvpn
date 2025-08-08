@@ -113,11 +113,11 @@ const NetworkStatus = () => {
                 <div className="flex items-center gap-4">
                   <div className="text-right">
                     <div className="text-sm font-medium">{node.latency}ms</div>
-                    <div className="text-xs text-muted-foreground">latency</div>
+                    <div className="text-xs text-muted-foreground">{t('network.latency')}</div>
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-medium">{node.load}%</div>
-                    <div className="text-xs text-muted-foreground">load</div>
+                    <div className="text-xs text-muted-foreground">{t('network.load')}</div>
                   </div>
                   <Badge variant={node.status === 'active' ? 'default' : 'secondary'}>
                     {t(`network.status.${node.status}`)}
