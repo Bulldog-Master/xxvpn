@@ -289,8 +289,8 @@
     "topology": "Netzwerk-Topologie",
     "topologyDesc": "5-Hop-Mixnet-Verbindung über XX Network",
     "hop": "Hop",
-    "latency": "latenz",
-    "load": "auslastung",
+    "latency": "Latenz",
+    "load": "Auslastung",
     "securityFeatures": "Aktive Sicherheitsfeatures",
     "securityFeaturesDesc": "Quantenresistente Schutzmechanismen",
     "nodes": {
