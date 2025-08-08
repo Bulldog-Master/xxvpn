@@ -272,15 +272,15 @@
     "crossPlatformSupport": "Krydsplatform Support",
     "crossPlatformDesc": "xxVPN er tilgængelig på alle dine enheder",
     "categories": {
-      "gaming": "gaming",
-      "streaming": "streaming",
-      "crypto": "crypto",
-      "messaging": "beskedudveksling",
-      "browser": "browser"
+       "gaming": "spil",
+       "streaming": "streaming",
+       "crypto": "krypto", 
+       "messaging": "beskedudveksling",
+       "browser": "browser"
      },
      "appNames": {
-       "chrome": "Chrome Browser",
-       "twitch": "Twitch Streaming"
+        "chrome": "Chrome Browser",
+        "twitch": "Twitch Streaming"
      },
      "status": {
       "available": "Tilgængelig",
