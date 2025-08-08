@@ -299,8 +299,8 @@
        "mixnetDesc": "Mixnet - Mere sikkert"
      },
      "appNames": {
-       "chrome": "Chrome Browser",
-       "twitch": "Twitch Streaming"
+        "chrome": "Chrome Browser",
+        "twitch": "Twitch Streaming"
      }
   },
   "network": {
