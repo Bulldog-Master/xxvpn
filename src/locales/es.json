@@ -12,10 +12,10 @@
       "secure": "Seguro", 
       "ultraSecure": "Ultra-seguro",
       "off": "Desactivado",
-      "gamingStreaming": "Juegos y Streaming",
+      "gamingStreaming": "Juegos y Transmisión",
       "standardProtection": "Protección VPN Estándar",
       "noVPN": "Sin VPN",
-      "ultraFastDesc": "Conexión ultra-rápida para juegos y streaming con latencia mínima.",
+      "ultraFastDesc": "Conexión ultra-rápida para juegos y transmisión con latencia mínima.",
       "maximumSpeed": "Velocidad máxima",
       "secureDesc": "Túnel VPN encriptado que proporciona protección de privacidad estándar.",
       "encryptedTunnel": "Túnel encriptado",
@@ -67,7 +67,7 @@
       "logout": "Cerrar Sesión"
     },
     "connectionStatus": {
-      "ultraFastActive": "Modo Ultra-rápido: Conexión directa para juegos y streaming",
+      "ultraFastActive": "Modo Ultra-rápido: Conexión directa para juegos y transmisión",
       "secureActive": "Modo Seguro: Túnel VPN encriptado activo",
       "ultraSecureActive": "Modo Ultra-seguro: Destrucción de metadatos vía XX Network cMixx activo",
       "notProtected": "Tu tráfico no está protegido"
@@ -337,8 +337,8 @@
        "directSubtitle": "Sin protección VPN",
        "directDescription": "Ideal para juegos y aplicaciones sensibles a la latencia. Sin sobrecarga de protección.",
        "vpn": "Túnel VPN", 
-       "vpnSubtitle": "WireGuard/AmneziaWG",
-       "vpnDescription": "Seguridad y velocidad equilibradas. Bypass DPI para streaming y navegación.",
+        "vpnSubtitle": "Protocolo VPN",
+        "vpnDescription": "Seguridad y velocidad equilibradas. Bypass DPI para transmisión y navegación.",
        "mixnet": "Mixnet",
        "mixnetSubtitle": "XX Network cMixx", 
        "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",

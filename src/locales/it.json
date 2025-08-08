@@ -12,10 +12,10 @@
       "secure": "Sicuro", 
       "ultraSecure": "Estremamente Sicuro",
       "off": "Spento",
-      "gamingStreaming": "Gaming e Streaming",
+      "gamingStreaming": "Gaming e Trasmissione",
       "standardProtection": "Protezione VPN Standard",
       "noVPN": "Nessuna VPN",
-      "ultraFastDesc": "Connessione estremamente veloce per gaming e streaming con latenza minima.",
+      "ultraFastDesc": "Connessione estremamente veloce per gaming e trasmissione con latenza minima.",
       "maximumSpeed": "Velocità massima",
       "secureDesc": "Connessione VPN crittografata che fornisce protezione privacy standard.",
       "encryptedTunnel": "Connessione crittografata",
@@ -67,7 +67,7 @@
       "logout": "Disconnetti"
     },
     "connectionStatus": {
-      "ultraFastActive": "Modalità Estremamente Veloce: Connessione diretta per gaming e streaming",
+      "ultraFastActive": "Modalità Estremamente Veloce: Connessione diretta per gaming e trasmissione",
       "secureActive": "Modalità Sicura: Connessione VPN crittografata attiva",
       "ultraSecureActive": "Modalità Estremamente Sicura: Distruzione metadati via XX Network cMixx attivo",
       "notProtected": "Il tuo traffico non è protetto"
@@ -352,7 +352,7 @@
       "directDescription": "Ideale per giochi e applicazioni sensibili alla latenza. Nessun overhead di protezione.",
       "vpn": "Connessione VPN", 
       "vpnSubtitle": "Protocollo VPN",
-      "vpnDescription": "Sicurezza e velocità bilanciate. Bypass DPI per streaming e navigazione.",
+      "vpnDescription": "Sicurezza e velocità bilanciate. Elusione DPI per trasmissione e navigazione.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
       "mixnetDescription": "Massimo anonimato con protezione dei metadati. Perfetto per criptovalute e messaggistica.",

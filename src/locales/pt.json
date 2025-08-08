@@ -249,7 +249,7 @@
       "directDescription": "Ideal para jogos e aplicações sensíveis à latência. Sem sobrecarga de proteção.",
       "vpn": "Túnel VPN", 
       "vpnSubtitle": "Protocolo VPN",
-      "vpnDescription": "Segurança e velocidade equilibradas. Bypass DPI para streaming e navegação.",
+      "vpnDescription": "Segurança e velocidade equilibradas. Bypass DPI para transmissão e navegação.",
       "mixnet": "Mixnet",
       "mixnetSubtitle": "XX Network cMixx", 
       "mixnetDescription": "Máximo anonimato com proteção de metadados. Perfeito para criptomoedas e mensagens.",
