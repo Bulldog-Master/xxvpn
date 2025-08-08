@@ -11,7 +11,17 @@
       "ultraFast": "Ultra-rápido",
       "secure": "Seguro", 
       "ultraSecure": "Ultra-seguro",
-      "off": "Desligado"
+      "off": "Desligado",
+      "gamingStreaming": "Gaming e Streaming",
+      "standardProtection": "Proteção VPN Padrão",
+      "noVPN": "Sem VPN",
+      "ultraFastDesc": "Conexão ultra-rápida para gaming e streaming com latência mínima.",
+      "maximumSpeed": "Velocidade máxima",
+      "secureDesc": "Túnel VPN criptografado fornecendo proteção de privacidade padrão.",
+      "encryptedTunnel": "Túnel criptografado",
+      "metadataShredding": "Destruição de Metadados",
+      "metadataShredDesc": "Destruição de metadados usando cMixx via Rede XX.",
+      "metadataProtection": "Proteção de metadados"
     },
     "connect": "Conectar",
     "disconnect": "Desconectar",
@@ -21,14 +31,46 @@
       "title": "Estatísticas",
       "dataTransferred": "Dados Transferidos",
       "sessionTime": "Tempo de Sessão",
-      "xxCoinsEarned": "XX Coins Ganhas"
+      "networkLatency": "Latência da Rede",
+      "xxCoinsEarned": "XX Coins Ganhas",
+      "currentSession": "Sessão atual",
+      "averagePing": "Ping médio"
     },
     "tabs": {
       "main": "Principal",
       "servers": "Servidores", 
+      "network": "Rede",
       "apps": "Apps",
       "devices": "Dispositivos",
-      "settings": "Configurações"
+      "payments": "Pagamentos",
+      "settings": "Configurações",
+      "usage": "Uso",
+      "history": "Histórico"
+    },
+    "usage": {
+      "todaysUsage": "Uso de Hoje",
+      "ultraFastMode": "Modo Ultra-rápido",
+      "secureMode": "Modo Seguro",
+      "ultraSecureMode": "Modo Ultra-seguro"
+    },
+    "history": {
+      "recentSessions": "Sessões Recentes",
+      "fastMode": "Modo Rápido",
+      "privacyMode": "Modo Privacidade",
+      "mode": "Modo"
+    },
+    "menu": {
+      "editName": "Editar Nome",
+      "customerSupport": "Suporte ao Cliente",
+      "devices": "Dispositivos",
+      "payments": "Pagamentos",
+      "logout": "Sair"
+    },
+    "connectionStatus": {
+      "ultraFastActive": "Modo Ultra-rápido: Conexão direta para gaming e streaming",
+      "secureActive": "Modo Seguro: Túnel VPN criptografado (OpenVPN/WireGuard) ativo",
+      "ultraSecureActive": "Modo Ultra-seguro: Destruição de metadados via XX Network cMixx ativo",
+      "notProtected": "Seu tráfego não está protegido"
     },
     "referrals": {
       "program": "Programa de Indicações",
@@ -60,25 +102,55 @@
     "signUpWithGoogle": "Registrar com Google"
   },
   "settings": {
+    "title": "Configurações",
     "appearance": {
       "title": "Aparência",
+      "description": "Personalize a aparência e tema do aplicativo",
       "theme": "Tema",
-      "light": "Claro",
-      "dark": "Escuro", 
-      "system": "Sistema"
+      "themeDesc": "Escolha entre modo claro e escuro"
     },
     "protocol": {
       "title": "Configurações de Protocolo",
-      "description": "Escolha seu protocolo de conexão"
+      "description": "Configure suas preferências de protocolo VPN",
+      "autoSelection": "Seleção Automática de Protocolo",
+      "autoSelectionDesc": "Selecione automaticamente o melhor protocolo baseado nas condições da rede",
+      "killSwitch": "Kill Switch",
+      "killSwitchDesc": "Bloquear internet se a conexão VPN for desconectada",
+      "autoConnect": "Conexão Automática",
+      "autoConnectDesc": "Conectar automaticamente quando o aplicativo iniciar"
     },
     "xxNetwork": {
       "title": "Integração da Rede XX",
-      "enabled": "Ativado",
-      "description": "Mensagens resistentes a computadores quânticos e proteção de metadados"
+      "description": "Recursos de blockchain resistentes a quantum",
+      "coinRewards": "Recompensas XX Coin",
+      "coinRewardsDesc": "Ganhe tokens XX contribuindo para a segurança da rede",
+      "nodeContribution": "Contribuição de Nó",
+      "nodeContributionDesc": "Permitir que seu dispositivo contribua para a mixnet",
+      "currentBalance": "Saldo Atual"
+    }
+  },
+  "servers": {
+    "title": "Seleção de Servidor",
+    "description": "Escolha a localização do seu servidor VPN",
+    "quickConnect": "Conexão Rápida",
+    "searchPlaceholder": "Buscar países ou cidades...",
+    "stats": {
+      "availableServers": "Servidores Disponíveis",
+      "acrossCountries": "Em 12 países",
+      "averageLoad": "Carga Média",
+      "optimalPerformance": "Desempenho ótimo",
+      "yourLatency": "Sua Latência",
+      "toSelectedServer": "Para servidor selecionado"
     },
-    "language": {
-      "title": "Idioma",
-      "description": "Escolha seu idioma preferido"
+    "list": {
+      "title": "Servidores Disponíveis",
+      "description": "Escolha uma localização de servidor para sua conexão VPN",
+      "favorites": "Favoritos",
+      "allLocations": "Todas as Localizações",
+      "premium": "Premium",
+      "serverId": "ID do Servidor",
+      "latency": "latência",
+      "load": "carga"
     }
   },
   "common": {
@@ -179,9 +251,105 @@
       "vpnDesc": "VPN - Equilibrado",
        "mixnetDesc": "Mixnet - Mais seguro"
      },
-     "appNames": {
-       "chrome": "Navegador Chrome",
-       "twitch": "Transmissão Twitch"
-     }
+      "appNames": {
+        "chrome": "Navegador Chrome",
+        "twitch": "Transmissão Twitch"
+      }
+  },
+  "devices": {
+    "title": "Gerenciamento de Dispositivos",
+    "description": "Gerencie seus dispositivos conectados ({{used}}/{{total}} dispositivos usados)",
+    "addDevice": "Adicionar Dispositivo",
+    "addNew": "Adicionar Novo Dispositivo",
+    "addDescription": "Registre um novo dispositivo para usar com xxVPN. Você pode ter até {{limit}} dispositivos.",
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Móvel",
+      "tablet": "Tablet",
+      "router": "Roteador",
+      "tv": "TV",
+      "other": "Outro"
+    },
+    "form": {
+      "deviceName": "Nome do Dispositivo",
+      "deviceNamePlaceholder": "Meu MacBook Pro",
+      "deviceType": "Tipo de Dispositivo",
+      "operatingSystem": "Sistema Operacional (Opcional)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, etc."
+    },
+    "toast": {
+      "nameRequired": "Nome do dispositivo obrigatório",
+      "nameRequiredDesc": "Por favor, insira um nome para seu dispositivo.",
+      "limitReached": "Limite de dispositivos atingido",
+      "limitReachedDesc": "Você só pode ter 10 dispositivos. Remova um dispositivo antigo primeiro.",
+      "added": "Dispositivo adicionado com sucesso",
+      "addedDesc": "Seu novo dispositivo foi registrado.",
+      "removed": "Dispositivo removido",
+      "removedDesc": "{{deviceName}} foi removido da sua conta."
+    },
+    "limitReached": "Limite de dispositivos atingido",
+    "approachingLimit": "Aproximando do limite de dispositivos",
+    "removeToAdd": "Remova um dispositivo para adicionar um novo.",
+    "slotsRemaining": "Você tem {{count}} slots de dispositivos restantes.",
+    "noDevices": "Nenhum dispositivo registrado",
+    "noDevicesDesc": "Adicione seu primeiro dispositivo para começar a usar xxVPN",
+    "lastSeen": "Visto pela última vez",
+    "latency": "latência",
+    "load": "carga"
+  },
+  "profile": {
+    "signedOut": "Desconectado",
+    "signedOutDesc": "Desconectado com sucesso do xxVPN.",
+    "signOutError": "Falha ao desconectar. Tente novamente.",
+    "updated": "Perfil atualizado",
+    "updatedDesc": "Seu perfil foi atualizado com sucesso.",
+    "anonymousUser": "Usuário Anônimo",
+    "signOut": "Sair",
+    "subscription": {
+      "enterprise": "Empresarial",
+      "premium": "Premium",
+      "free": "Gratuito"
+    },
+    "tabs": {
+      "account": "Conta",
+      "subscription": "Assinatura",
+      "rewards": "Recompensas XX",
+      "downloads": "Downloads"
+    }
+  },
+  "network": {
+    "health": "Saúde da Rede",
+    "nodesOperational": "5 nós operacionais",
+    "throughput": "Taxa de Transferência",
+    "protectionLevel": "Nível de Proteção",
+    "quantum": "Quantum",
+    "encryptionActive": "Criptografia cMixx ativa",
+    "topology": "Topologia da Rede",
+    "topologyDesc": "Conexão mixnet de 5 saltos através da Rede XX",
+    "hop": "Salto",
+    "latency": "latência",
+    "load": "carga",
+    "securityFeatures": "Recursos de Segurança Ativos",
+    "securityFeaturesDesc": "Mecanismos de proteção resistentes a quantum",
+    "nodes": {
+      "gateway": "Gateway",
+      "mixNode1": "Nó Mix 1",
+      "mixNode2": "Nó Mix 2", 
+      "mixNode3": "Nó Mix 3",
+      "exitNode": "Nó de Saída"
+    },
+    "status": {
+      "active": "ativo",
+      "standby": "standby",
+      "offline": "offline"
+    },
+    "features": {
+      "metadataShredding": "Destruição de Metadados",
+      "quantumEncryption": "Criptografia Resistente a Quantum",
+      "trafficMixing": "Mistura de Tráfego",
+      "dpiBypass": "Bypass DPI",
+      "precomputation": "Fase de Pré-computação",
+      "realtimeMixing": "Mistura em Tempo Real"
+    }
   }
 }
