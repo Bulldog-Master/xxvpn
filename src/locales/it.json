@@ -298,8 +298,12 @@
       "crypto": "crypto",
       "messaging": "messaggi",
       "browser": "browser"
-    },
-    "status": {
+     },
+     "appNames": {
+       "chrome": "Browser Chrome",
+       "twitch": "Trasmissione Twitch"
+     },
+     "status": {
       "available": "Disponibile",
       "beta": "Beta",
       "comingSoon": "Prossimamente",
@@ -319,9 +323,5 @@
       "vpnDesc": "VPN - Bilanciato",
        "mixnetDesc": "Mixnet - Più sicuro"
      },
-     "appNames": {
-         "chrome": "Browser Chrome",
-         "twitch": "Trasmissione Twitch"
-     }
   }
 }

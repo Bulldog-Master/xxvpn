@@ -277,8 +277,12 @@
       "crypto": "kripto",
       "messaging": "mesajlaşma",
       "browser": "tarayıcı"
-    },
-    "status": {
+     },
+     "appNames": {
+       "chrome": "Chrome Tarayıcı",
+       "twitch": "Twitch Yayını"
+     },
+     "status": {
       "available": "Mevcut",
       "beta": "Beta",
       "comingSoon": "Yakında",
@@ -298,10 +302,6 @@
       "vpnDesc": "VPN - Dengeli",
        "mixnetDesc": "Mixnet - Daha güvenli"
      },
-     "appNames": {
-       "chrome": "Chrome Tarayıcı",
-       "twitch": "Twitch Yayını"
-     }
   },
   "network": {
     "health": "Ağ Sağlığı",

@@ -277,8 +277,12 @@
       "crypto": "crypto",
       "messaging": "beskedudveksling",
       "browser": "browser"
-    },
-    "status": {
+     },
+     "appNames": {
+       "chrome": "Chrome Browser",
+       "twitch": "Twitch Streaming"
+     },
+     "status": {
       "available": "Tilgængelig",
       "beta": "Beta",
       "comingSoon": "Kommer Snart",
@@ -298,10 +302,6 @@
       "vpnDesc": "VPN - Balanceret",
        "mixnetDesc": "Mixnet - Mere sikkert"
      },
-     "appNames": {
-        "chrome": "Chrome Browser",
-        "twitch": "Twitch Streaming"
-     }
   },
   "network": {
     "health": "Netværks Helbred",
