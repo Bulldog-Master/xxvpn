@@ -313,13 +313,17 @@
      "scanForApps": "Buscar Nuevas Aplicaciones",
      "crossPlatformSupport": "Soporte Multiplataforma",
      "crossPlatformDesc": "xxVPN está disponible en todos tus dispositivos",
-     "categories": {
-       "gaming": "juegos",
-       "streaming": "transmisión",
-       "crypto": "cripto",
-       "messaging": "mensajería",
-       "browser": "navegador"
-     },
+    "categories": {
+      "gaming": "juegos",
+      "streaming": "transmisión",
+      "crypto": "cripto",
+      "messaging": "mensajería",
+      "browser": "navegador"
+    },
+    "appNames": {
+      "chrome": "Navegador Chrome",
+      "twitch": "Transmisión Twitch"
+    },
      "status": {
        "available": "Disponible",
        "beta": "Beta",

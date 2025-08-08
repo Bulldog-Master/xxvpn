@@ -31,7 +31,10 @@
       "title": "Statistics",
       "dataTransferred": "Data Transferred",
       "sessionTime": "Session Time",
-      "xxCoinsEarned": "XX Coins Earned"
+      "networkLatency": "Network Latency",
+      "xxCoinsEarned": "XX Coins Earned",
+      "currentSession": "Current session",
+      "averagePing": "Average ping"
     },
     "tabs": {
       "main": "Main",
@@ -43,6 +46,18 @@
       "settings": "Settings",
       "usage": "Usage",
       "history": "History"
+    },
+    "usage": {
+      "todaysUsage": "Today's Usage",
+      "ultraFastMode": "Ultra-fast Mode",
+      "secureMode": "Secure Mode",
+      "ultraSecureMode": "Ultra-secure Mode"
+    },
+    "history": {
+      "recentSessions": "Recent Sessions",
+      "fastMode": "Fast Mode",
+      "privacyMode": "Privacy Mode",
+      "mode": "Mode"
     },
     "menu": {
       "editName": "Edit Name",
@@ -92,10 +107,7 @@
       "title": "Appearance",
       "description": "Customize the app's appearance and theme",
       "theme": "Theme",
-      "themeDesc": "Choose between light and dark mode",
-      "light": "Light",
-      "dark": "Dark", 
-      "system": "System"
+      "themeDesc": "Choose between light and dark mode"
     },
     "protocol": {
       "title": "Protocol Settings",
@@ -206,6 +218,67 @@
       }
     }
   },
+  "devices": {
+    "title": "Device Management",
+    "description": "Manage your connected devices ({{used}}/{{total}} devices used)",
+    "addDevice": "Add Device",
+    "addNew": "Add New Device",
+    "addDescription": "Register a new device to use with xxVPN. You can have up to {{limit}} devices.",
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Other"
+    },
+    "form": {
+      "deviceName": "Device Name",
+      "deviceNamePlaceholder": "My MacBook Pro",
+      "deviceType": "Device Type",
+      "operatingSystem": "Operating System (Optional)",
+      "osPlaceholder": "macOS 14.0, Windows 11, iOS 17.0, etc."
+    },
+    "toast": {
+      "nameRequired": "Device name required",
+      "nameRequiredDesc": "Please enter a name for your device.",
+      "limitReached": "Device limit reached",
+      "limitReachedDesc": "You can only have 10 devices. Remove an old device first.",
+      "added": "Device added successfully",
+      "addedDesc": "Your new device has been registered.",
+      "removed": "Device removed",
+      "removedDesc": "{{deviceName}} has been removed from your account."
+    },
+    "limitReached": "Device limit reached",
+    "approachingLimit": "Approaching device limit",
+    "removeToAdd": "Remove a device to add a new one.",
+    "slotsRemaining": "You have {{count}} device slots remaining.",
+    "noDevices": "No devices registered",
+    "noDevicesDesc": "Add your first device to start using xxVPN",
+    "lastSeen": "Last seen",
+    "latency": "latency",
+    "load": "load"
+  },
+  "profile": {
+    "signedOut": "Signed out",
+    "signedOutDesc": "Successfully signed out from xxVPN.",
+    "signOutError": "Sign out failed. Please try again.",
+    "updated": "Profile updated",
+    "updatedDesc": "Your profile has been updated successfully.",
+    "anonymousUser": "Anonymous User",
+    "signOut": "Sign Out",
+    "subscription": {
+      "enterprise": "Enterprise",
+      "premium": "Premium",
+      "free": "Free"
+    },
+    "tabs": {
+      "account": "Account",
+      "subscription": "Subscription",
+      "rewards": "XX Rewards",
+      "downloads": "Downloads"
+    }
+  },
   "network": {
     "health": "Network Health",
     "nodesOperational": "5 nodes operational",
@@ -216,8 +289,8 @@
     "topology": "Network Topology",
     "topologyDesc": "5-hop mixnet connection through XX Network",
     "hop": "Hop",
-    "latency": "latency",
-    "load": "load",
+    "latency": "Latency",
+    "load": "Load",
     "securityFeatures": "Active Security Features",
     "securityFeaturesDesc": "Quantum-resistant protection mechanisms",
     "nodes": {
@@ -248,6 +321,26 @@
     "smartRoutingDesc": "Automatically detect and route apps through optimal tunnels",
     "applicationRouting": "Application Routing",
     "applicationRoutingDesc": "Configure how each app connects to the internet",
+    "scanForApps": "Scan for New Apps",
+    "crossPlatformSupport": "Cross-Platform Support",
+    "crossPlatformDesc": "xxVPN is available on all your devices",
+    "categories": {
+      "gaming": "gaming",
+      "streaming": "streaming",
+      "crypto": "crypto",
+      "messaging": "messaging",
+      "browser": "browser"
+    },
+    "appNames": {
+      "chrome": "Chrome Browser",
+      "twitch": "Twitch Streaming"
+    },
+    "status": {
+      "available": "Available",
+      "beta": "Beta",
+      "comingSoon": "Coming Soon",
+      "extension": "Extension"
+    },
     "tunnels": {
       "direct": "Direct",
       "directSubtitle": "No VPN protection",

@@ -331,6 +331,10 @@
       "messaging": "messagerie",
       "browser": "navigateur"
     },
+    "appNames": {
+      "chrome": "Navigateur Chrome",
+      "twitch": "Diffusion Twitch"
+    },
     "status": {
       "available": "Disponible",
       "beta": "Bêta",
