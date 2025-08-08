@@ -8,7 +8,7 @@ const Index = () => {
   const { user, loading } = useAuth();
   const { t } = useTranslation();
   
-  console.log('Index render - loading:', loading, 'user:', user ? 'exists' : 'null');
+  
 
   if (loading) {
     return (
