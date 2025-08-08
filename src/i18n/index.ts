@@ -15,6 +15,8 @@ import koTranslations from '../locales/ko.json';
 import zhTranslations from '../locales/zh.json';
 import arTranslations from '../locales/ar.json';
 import hiTranslations from '../locales/hi.json';
+import trTranslations from '../locales/tr.json';
+import daTranslations from '../locales/da.json';
 
 const resources = {
   en: { translation: enTranslations },
@@ -29,6 +31,8 @@ const resources = {
   zh: { translation: zhTranslations },
   ar: { translation: arTranslations },
   hi: { translation: hiTranslations },
+  tr: { translation: trTranslations },
+  da: { translation: daTranslations },
 };
 
 i18n
