@@ -8,14 +8,14 @@
       "disconnected": "Disconnesso"
     },
     "connectionModes": {
-      "ultraFast": "Ultra-veloce",
+      "ultraFast": "Estremamente Veloce",
       "secure": "Sicuro", 
-      "ultraSecure": "Ultra-sicuro",
+      "ultraSecure": "Estremamente Sicuro",
       "off": "Spento",
       "gamingStreaming": "Gaming e Streaming",
       "standardProtection": "Protezione VPN Standard",
       "noVPN": "Nessuna VPN",
-      "ultraFastDesc": "Connessione ultra-veloce per gaming e streaming con latenza minima.",
+      "ultraFastDesc": "Connessione estremamente veloce per gaming e streaming con latenza minima.",
       "maximumSpeed": "Velocità massima",
       "secureDesc": "Connessione VPN crittografata che fornisce protezione privacy standard.",
       "encryptedTunnel": "Connessione crittografata",
@@ -49,9 +49,9 @@
     },
     "usage": {
       "todaysUsage": "Utilizzo di Oggi",
-      "ultraFastMode": "Modalità Ultra-veloce",
+      "ultraFastMode": "Modalità Estremamente Veloce",
       "secureMode": "Modalità Sicura",
-      "ultraSecureMode": "Modalità Ultra-sicura"
+      "ultraSecureMode": "Modalità Estremamente Sicura"
     },
     "history": {
       "recentSessions": "Sessioni Recenti",
@@ -67,9 +67,9 @@
       "logout": "Disconnetti"
     },
     "connectionStatus": {
-      "ultraFastActive": "Modalità Ultra-veloce: Connessione diretta per gaming e streaming",
+      "ultraFastActive": "Modalità Estremamente Veloce: Connessione diretta per gaming e streaming",
       "secureActive": "Modalità Sicura: Connessione VPN crittografata attiva",
-      "ultraSecureActive": "Modalità Ultra-sicura: Distruzione metadati via XX Network cMixx attivo",
+      "ultraSecureActive": "Modalità Estremamente Sicura: Distruzione metadati via XX Network cMixx attivo",
       "notProtected": "Il tuo traffico non è protetto"
     },
     "referrals": {
