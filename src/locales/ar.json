@@ -23,6 +23,7 @@
       "metadataShredDesc": "تدمير البيانات الوصفية باستخدام cMixx عبر شبكة XX.",
       "metadataProtection": "حماية البيانات الوصفية"
     },
+    "localIP": "عنوان IP المحلي",
     "connect": "اتصال",
     "disconnect": "قطع الاتصال",
     "location": "الموقع",

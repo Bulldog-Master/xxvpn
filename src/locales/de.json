@@ -23,6 +23,7 @@
       "metadataShredDesc": "Metadaten-Vernichtung mit cMixx über XX Network.",
       "metadataProtection": "Metadaten-Schutz"
     },
+    "localIP": "Lokale IP",
     "connect": "Verbinden",
     "disconnect": "Trennen",
     "location": "Standort",

@@ -23,6 +23,7 @@
       "metadataShredDesc": "XX Network를 통한 cMixx를 사용한 메타데이터 파쇄.",
       "metadataProtection": "메타데이터 보호"
     },
+    "localIP": "로컬 IP",
     "connect": "연결",
     "disconnect": "연결 끊기",
     "location": "위치",

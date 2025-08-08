@@ -23,6 +23,7 @@
       "metadataShredDesc": "XX NetworkのcMixxを使用したメタデータ破砕。",
       "metadataProtection": "メタデータ保護"
     },
+    "localIP": "ローカルIP",
     "connect": "接続",
     "disconnect": "切断",
     "location": "場所",

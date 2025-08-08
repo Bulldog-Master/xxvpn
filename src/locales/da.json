@@ -23,6 +23,7 @@
       "metadataShredDesc": "Metadata makulering ved hjælp af cMixx via XX Network.",
       "metadataProtection": "Metadata beskyttelse"
     },
+    "localIP": "Lokal IP",
     "connect": "Forbind",
     "disconnect": "Afbryd",
     "location": "Placering",

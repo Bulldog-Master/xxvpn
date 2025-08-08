@@ -23,6 +23,7 @@
       "metadataShredDesc": "Уничтожение метаданных с использованием cMixx через XX Network.",
       "metadataProtection": "Защита метаданных"
     },
+    "localIP": "Локальный IP",
     "connect": "Подключить",
     "disconnect": "Отключить",
     "location": "Местоположение",

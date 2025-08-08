@@ -23,6 +23,7 @@
       "metadataShredDesc": "XX नेटवर्क के माध्यम से cMixx का उपयोग करके मेटाडेटा श्रेडिंग।",
       "metadataProtection": "मेटाडेटा सुरक्षा"
     },
+    "localIP": "स्थानीय IP",
     "connect": "कनेक्ट",
     "disconnect": "डिस्कनेक्ट",
     "location": "स्थान",

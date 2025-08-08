@@ -23,6 +23,7 @@
       "metadataShredDesc": "XX Network üzerinden cMixx kullanarak metadata imhası.",
       "metadataProtection": "Metadata koruması"
     },
+    "localIP": "Yerel IP",
     "connect": "Bağlan",
     "disconnect": "Bağlantıyı Kes",
     "location": "Konum",

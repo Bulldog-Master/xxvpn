@@ -388,7 +388,7 @@ const VPNDashboard = () => {
               </div>
               {connectionStatus === 'connected' && (
                 <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span>Local IP:</span>
+                  <span>{t('dashboard.localIP')}:</span>
                   <code className="px-2 py-1 bg-muted rounded text-xs font-mono">192.168.1.{Math.floor(Math.random() * 254) + 1}</code>
                 </div>
               )}
