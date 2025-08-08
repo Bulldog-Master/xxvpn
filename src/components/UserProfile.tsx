@@ -194,7 +194,7 @@ const UserProfile = () => {
                 Subscription Plan
               </CardTitle>
               <CardDescription>
-                Upgrade for unlimited access and premium features
+                {t('profile.subscription.upgradeDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -211,14 +211,14 @@ const UserProfile = () => {
                       </ul>
                     </div>
                     <Button className="w-full gradient-primary">
-                      Upgrade to Premium
+                      {t('profile.subscription.upgradeToPremium')}
                     </Button>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="p-4 border rounded-lg bg-primary/10">
-                      <h4 className="font-medium text-primary">Premium Plan</h4>
-                      <p className="text-sm text-muted-foreground">Full access</p>
+                      <h4 className="font-medium text-primary">{t('profile.subscription.premiumPlan')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('profile.subscription.fullAccess')}</p>
                       <ul className="text-sm mt-2 space-y-1">
                         <li>• Unlimited data</li>
                         <li>• All server locations</li>

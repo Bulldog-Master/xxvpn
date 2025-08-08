@@ -272,7 +272,11 @@
     "subscription": {
       "enterprise": "Virksomhed",
       "premium": "Premium",
-      "free": "Gratis"
+      "free": "Gratis",
+      "upgradeDescription": "Opgrader for ubegrænset adgang og premium funktioner",
+      "upgradeToPremium": "Opgrader til Premium",
+      "premiumPlan": "Premium Plan",
+      "fullAccess": "Fuld adgang"
     },
     "tabs": {
       "account": "Konto",

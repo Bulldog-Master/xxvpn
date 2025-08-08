@@ -80,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const mockUser: User = {
         id: crypto.randomUUID(),
         email: 'user@xxvpn.app',
-        fullName: 'John Doe',
+        fullName: '', // Empty so it will use translation fallback
         subscriptionTier: 'premium',
         xxCoinBalance: 125.50,
         referrals: 8

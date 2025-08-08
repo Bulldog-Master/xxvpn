@@ -272,7 +272,11 @@
     "subscription": {
       "enterprise": "Kurumsal",
       "premium": "Premium",
-      "free": "Ücretsiz"
+      "free": "Ücretsiz",
+      "upgradeDescription": "Sınırsız erişim ve premium özellikler için yükseltin",
+      "upgradeToPremium": "Premium'a Yükselt",
+      "premiumPlan": "Premium Plan",
+      "fullAccess": "Tam erişim"
     },
     "tabs": {
       "account": "Hesap",

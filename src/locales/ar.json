@@ -310,7 +310,11 @@
     "subscription": {
       "enterprise": "المؤسسات",
       "premium": "متميز",
-      "free": "مجاني"
+      "free": "مجاني",
+      "upgradeDescription": "ترقية للحصول على وصول غير محدود وميزات متميزة",
+      "upgradeToPremium": "الترقية إلى المتميز",
+      "premiumPlan": "الخطة المتميزة",
+      "fullAccess": "وصول كامل"
     },
     "tabs": {
       "account": "الحساب",
