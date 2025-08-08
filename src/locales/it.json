@@ -283,7 +283,7 @@
   "network": {
     "health": "Salute della Rete",
     "nodesOperational": "5 nodi operativi",
-    "throughput": "Throughput",
+    "throughput": "Velocità Effettiva",
     "protectionLevel": "Livello di Protezione",
     "quantum": "Quantistico",
     "encryptionActive": "Crittografia cMixx attiva",
@@ -310,7 +310,7 @@
       "metadataShredding": "Distruzione Metadati",
       "quantumEncryption": "Crittografia Resistente ai Quantici",
       "trafficMixing": "Mescolamento Traffico",
-      "dpiBypass": "Bypass DPI",
+      "dpiBypass": "Elusione DPI",
       "precomputation": "Fase di Precalcolo",
       "realtimeMixing": "Mescolamento in Tempo Reale"
     }
