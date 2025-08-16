@@ -132,11 +132,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
   // Set up auth state listener FIRST
   const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    (event, session) => {
+    async (event, session) => {
       console.log('Auth state change:', event, session?.user?.email);
       setSession(session);
       
-      if (session?.user) {
+      if (event === 'SIGNED_IN' && session?.user) {
+        console.log('User signed in, fetching profile...');
         // Defer profile fetching to prevent deadlocks
         setTimeout(async () => {
           try {
@@ -145,6 +146,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log('Profile fetched:', userProfile);
             setUser(userProfile);
             setLoading(false);
+            
+            // Force page reload to ensure clean state
+            if (window.location.pathname === '/') {
+              window.location.reload();
+            }
           } catch (error) {
             console.error('Error in auth state change:', error);
             // Fallback: create basic user object from auth data
@@ -160,8 +166,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setLoading(false);
           }
         }, 0);
-      } else {
+      } else if (event === 'SIGNED_OUT' || !session) {
+        console.log('User signed out or no session');
         setUser(null);
+        setLoading(false);
+      } else {
+        console.log('Other auth event:', event);
         setLoading(false);
       }
     }
