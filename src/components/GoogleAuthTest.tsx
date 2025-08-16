@@ -8,6 +8,7 @@ const GoogleAuthTest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
+  const [debugInfo, setDebugInfo] = useState('');
 
   const handleDirectGoogleAuth = async () => {
     console.log('🔵 DIRECT TEST: Starting Google OAuth...');
@@ -32,6 +33,10 @@ const GoogleAuthTest = () => {
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'select_account'
+          }
         }
       });
 
@@ -55,10 +60,46 @@ const GoogleAuthTest = () => {
     }
   };
 
+  const checkSessionDebug = async () => {
+    console.log('🔍 Manual session check...');
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      console.log('📊 Session check result:', {
+        hasSession: !!session,
+        hasUser: !!session?.user,
+        userEmail: session?.user?.email,
+        error: error?.message
+      });
+      
+      const storageKeys = Object.keys(localStorage).filter(key => 
+        key.includes('supabase') || key.includes('sb-')
+      );
+      console.log('🗄️ Auth storage keys:', storageKeys);
+      
+      setDebugInfo(`Session: ${!!session}, User: ${!!session?.user}, Email: ${session?.user?.email || 'none'}`);
+    } catch (error) {
+      console.error('❌ Session check error:', error);
+      setDebugInfo(`Session check error: ${error}`);
+    }
+  };
+
+  const clearAuthStorage = () => {
+    console.log('🧹 Clearing all auth storage...');
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+        localStorage.removeItem(key);
+        console.log('🗑️ Removed:', key);
+      }
+    });
+    setDebugInfo('Auth storage cleared');
+    setStatus('Storage cleared');
+    setError('');
+  };
+
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>Direct Google OAuth Test</CardTitle>
+        <CardTitle>Google Auth Debug Tools</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <Button
@@ -66,13 +107,39 @@ const GoogleAuthTest = () => {
           disabled={isLoading}
           className="w-full"
         >
-          {isLoading ? 'Testing...' : 'Direct Google Test'}
+          {isLoading ? 'Testing...' : 'Try Google OAuth'}
         </Button>
+        
+        <Button
+          onClick={checkSessionDebug}
+          variant="outline"
+          className="w-full"
+        >
+          Check Current Session
+        </Button>
+        
+        <Button
+          onClick={clearAuthStorage}
+          variant="destructive"
+          className="w-full"
+        >
+          Clear Auth Storage & Retry
+        </Button>
+        
         {status && (
-          <p className="text-blue-500 text-sm">{status}</p>
+          <div className="p-2 bg-blue-50 border border-blue-200 rounded text-sm text-blue-700">
+            {status}
+          </div>
         )}
         {error && (
-          <p className="text-red-500 text-sm">{error}</p>
+          <div className="p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+            {error}
+          </div>
+        )}
+        {debugInfo && (
+          <div className="p-2 bg-gray-50 border border-gray-200 rounded text-sm">
+            {debugInfo}
+          </div>
         )}
       </CardContent>
     </Card>
