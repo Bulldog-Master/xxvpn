@@ -153,76 +153,45 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         setSession(session);
         
-        if (event === 'SIGNED_OUT' || !session) {
+        if (event === 'SIGNED_OUT' || !session?.user) {
           console.log('🚪 User signed out or no session');
           setUser(null);
           setLoading(false);
           return;
         }
 
-        if (event === 'SIGNED_IN' && session?.user) {
-          console.log('✅ User signed in, fetching profile...');
-          setLoading(false); // Set loading false immediately for signed in users
+        // For ANY sign-in event (including OAuth), set user immediately
+        if (session?.user) {
+          console.log('✅ User session found, setting user immediately');
+          setLoading(false);
+          
+          // Create immediate user object to prevent loading state
+          const immediateUser = {
+            id: session.user.id,
+            email: session.user.email || '',
+            fullName: session.user.user_metadata?.full_name || 
+                     session.user.user_metadata?.name || 
+                     session.user.email?.split('@')[0] || 'User',
+            avatarUrl: session.user.user_metadata?.avatar_url || 
+                      session.user.user_metadata?.picture || '',
+            subscriptionTier: 'free' as const,
+            xxCoinBalance: 10,
+            referrals: 0,
+          };
+          
+          console.log('👤 Setting immediate user:', immediateUser);
+          setUser(immediateUser);
+          
+          // Fetch profile in background to update if needed
           setTimeout(async () => {
             try {
               const userData = await fetchUserProfile(session.user);
-              console.log('👤 Profile fetch successful:', userData);
+              console.log('👤 Profile updated in background:', userData);
               setUser(userData);
             } catch (error) {
-              console.error('❌ Failed to fetch user profile:', error);
-              // Create fallback user data
-              const fallbackUser = {
-                id: session.user.id,
-                email: session.user.email || '',
-                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
-                avatarUrl: session.user.user_metadata?.avatar_url || '',
-                subscriptionTier: 'free' as const,
-                xxCoinBalance: 10,
-                referrals: 0
-              };
-              console.log('👤 Using fallback user:', fallbackUser);
-              setUser(fallbackUser);
+              console.log('⚠️ Profile fetch failed, keeping immediate user:', error);
             }
-          }, 0);
-        } else if (event === 'TOKEN_REFRESHED') {
-          console.log('🔄 Token refreshed');
-          setLoading(false);
-        } else if (event === 'INITIAL_SESSION') {
-          console.log('🔄 Initial session event:', {
-            hasSession: !!session,
-            userEmail: session?.user?.email
-          });
-          
-          if (session?.user) {
-            console.log('✅ Found existing session on mount via INITIAL_SESSION');
-            setLoading(false);
-            setTimeout(async () => {
-              try {
-                const userData = await fetchUserProfile(session.user);
-                console.log('👤 Profile loaded from initial session:', userData);
-                setUser(userData);
-              } catch (error) {
-                console.error('❌ Error loading profile from initial session:', error);
-                const fallbackUser = {
-                  id: session.user.id,
-                  email: session.user.email || '',
-                  fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
-                  avatarUrl: session.user.user_metadata?.avatar_url || '',
-                  subscriptionTier: 'free' as const,
-                  xxCoinBalance: 10,
-                  referrals: 0
-                };
-                console.log('👤 Using fallback user from initial session:', fallbackUser);
-                setUser(fallbackUser);
-              }
-            }, 0);
-          } else {
-            console.log('❌ No session in INITIAL_SESSION event');
-            setLoading(false);
-          }
-        } else {
-          console.log('🔄 Other auth event:', event);
-          setLoading(false);
+          }, 100);
         }
       }
     );
@@ -240,22 +209,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (session?.user) {
         console.log('✅ Found existing session on direct check');
         setSession(session);
+        
+        // Set user immediately for existing sessions too
+        const immediateUser = {
+          id: session.user.id,
+          email: session.user.email || '',
+          fullName: session.user.user_metadata?.full_name || 
+                   session.user.user_metadata?.name || 
+                   session.user.email?.split('@')[0] || 'User',
+          avatarUrl: session.user.user_metadata?.avatar_url || 
+                    session.user.user_metadata?.picture || '',
+          subscriptionTier: 'free' as const,
+          xxCoinBalance: 10,
+          referrals: 0,
+        };
+        
+        setUser(immediateUser);
+        setLoading(false);
+        
+        // Background profile fetch
         fetchUserProfile(session.user).then(userProfile => {
           console.log('👤 Profile loaded from direct session check:', userProfile);
           setUser(userProfile);
-          setLoading(false);
         }).catch(error => {
-          console.error('Error loading profile from direct check:', error);
-          setUser({
-            id: session.user.id,
-            email: session.user.email || '',
-            fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-            avatarUrl: session.user.user_metadata?.avatar_url || '',
-            subscriptionTier: 'free',
-            xxCoinBalance: 10,
-            referrals: 0,
-          });
-          setLoading(false);
+          console.log('⚠️ Profile fetch failed for existing session:', error);
         });
       } else {
         console.log('❌ No existing session found on direct check');
