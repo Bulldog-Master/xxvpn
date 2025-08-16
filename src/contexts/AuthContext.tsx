@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
 
 interface User {
   id: string;
@@ -13,11 +15,14 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string, passphrase?: string) => Promise<void>;
-  signUp: (email: string, password: string, fullName: string, passphrase?: string) => Promise<void>;
+  session: Session | null;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName?: string) => Promise<any>;
+  signInWithMagicLink: (email: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   logout: () => Promise<void>;
-  updateUser: (updates: Partial<User>) => void;
+  updateUser: (updates: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,6 +41,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Auth state cleanup to prevent limbo states
@@ -54,100 +60,206 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       // Remove legacy app-specific user storage
       localStorage.removeItem('xxvpn_user');
+      sessionStorage.removeItem('xxvpn_session');
     } catch {}
   };
 
-  useEffect(() => {
+  // Fetch user profile from profiles table
+  const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
     try {
-      const saved = sessionStorage.getItem('xxvpn_session');
-      if (saved) {
-        setUser(JSON.parse(saved));
-      } else {
-        setUser(null);
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', supabaseUser.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
       }
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
+
+      if (profile) {
+        return {
+          id: profile.user_id,
+          email: supabaseUser.email || '',
+          fullName: profile.display_name || '',
+          avatarUrl: profile.avatar_url || '',
+          subscriptionTier: profile.subscription_tier as 'free' | 'premium' | 'enterprise',
+          xxCoinBalance: parseFloat(profile.xx_coin_balance.toString()) || 0,
+          referrals: profile.referrals || 0,
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error in fetchUserProfile:', error);
+      return null;
     }
-  }, []);
-
-  const signIn = async (email: string, password: string, passphrase?: string) => {
-    if (!passphrase) throw new Error('Passphrase is required');
-    const words = passphrase.trim().split(/\s+/);
-    if (words.length !== 24) {
-      throw new Error('Invalid passphrase: must be exactly 24 words');
-    }
-
-    // Derive a deterministic user id from the passphrase (no storage of the phrase)
-    const enc = new TextEncoder().encode(passphrase.trim());
-    const hashBuf = await crypto.subtle.digest('SHA-256', enc);
-    const id = Array.from(new Uint8Array(hashBuf))
-      .map((b) => b.toString(16).padStart(2, '0'))
-      .join('');
-
-    const mockUser: User = {
-      id,
-      email: '',
-      fullName: '',
-      subscriptionTier: 'premium',
-      xxCoinBalance: 125.5,
-      referrals: 8,
-    };
-
-    setUser(mockUser);
-    sessionStorage.setItem('xxvpn_session', JSON.stringify(mockUser));
   };
 
-  const signUp = async (email: string, password: string, fullName: string, passphrase?: string) => {
-    if (!passphrase) throw new Error('Passphrase is required');
-    const words = passphrase.trim().split(/\s+/);
-    if (words.length !== 24) {
-      throw new Error('Invalid passphrase: must be exactly 24 words');
+  useEffect(() => {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+        
+        if (session?.user) {
+          // Defer profile fetching to prevent deadlocks
+          setTimeout(async () => {
+            const userProfile = await fetchUserProfile(session.user);
+            setUser(userProfile);
+            setLoading(false);
+          }, 0);
+        } else {
+          setUser(null);
+          setLoading(false);
+        }
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user) {
+        setTimeout(async () => {
+          const userProfile = await fetchUserProfile(session.user);
+          setUser(userProfile);
+          setLoading(false);
+        }, 0);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      cleanupAuthState();
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+      
+      if (data.user) {
+        // Force page reload for clean state
+        window.location.href = '/';
+      }
+    } catch (error) {
+      throw error;
     }
+  };
 
-    // Derive deterministic id from passphrase
-    const enc = new TextEncoder().encode(passphrase.trim());
-    const hashBuf = await crypto.subtle.digest('SHA-256', enc);
-    const id = Array.from(new Uint8Array(hashBuf))
-      .map((b) => b.toString(16).padStart(2, '0'))
-      .join('');
+  const signUp = async (email: string, password: string, fullName?: string) => {
+    try {
+      cleanupAuthState();
+      
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            display_name: fullName || '',
+            full_name: fullName || '',
+          }
+        }
+      });
 
-    const mockUser: User = {
-      id,
-      email: '',
-      fullName,
-      subscriptionTier: 'free',
-      xxCoinBalance: 10,
-      referrals: 0,
-    };
+      if (error) throw error;
+      
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
-    setUser(mockUser);
-    sessionStorage.setItem('xxvpn_session', JSON.stringify(mockUser));
+  const signInWithMagicLink = async (email: string) => {
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: redirectUrl,
+        }
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl,
+        }
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const signOut = async () => {
     try {
       cleanupAuthState();
-      sessionStorage.removeItem('xxvpn_session');
-      setUser(null);
+      
+      await supabase.auth.signOut({ scope: 'global' });
+      
+      // Force page reload for clean state
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
+      // Force reload even if sign out fails
+      window.location.href = '/';
     }
   };
 
-  const updateUser = (updates: Partial<User>) => {
-    if (user) {
-      const updatedUser = { ...user, ...updates };
-      setUser(updatedUser);
+  const updateUser = async (updates: Partial<User>) => {
+    if (user && session?.user) {
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            display_name: updates.fullName,
+            avatar_url: updates.avatarUrl,
+            subscription_tier: updates.subscriptionTier,
+            xx_coin_balance: updates.xxCoinBalance,
+            referrals: updates.referrals,
+          })
+          .eq('user_id', session.user.id);
+
+        if (error) throw error;
+        
+        const updatedUser = { ...user, ...updates };
+        setUser(updatedUser);
+      } catch (error) {
+        console.error('Error updating user profile:', error);
+      }
     }
   };
 
   const value = {
     user,
     loading,
+    session,
     signIn,
     signUp,
+    signInWithMagicLink,
+    signInWithGoogle,
     signOut,
     logout: signOut,
     updateUser,

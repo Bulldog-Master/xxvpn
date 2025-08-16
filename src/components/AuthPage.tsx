@@ -1,76 +1,100 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Textarea } from '@/components/ui/textarea';
-import { Shield, Key, Shuffle, User, Loader2, Copy, Eye, EyeOff } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 
-// Word list for passphrase generation (simplified subset)
-const WORDS = [
-  'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract', 'absurd', 'abuse',
-  'access', 'accident', 'account', 'accuse', 'achieve', 'acid', 'acoustic', 'acquire', 'across', 'act',
-  'action', 'actor', 'actress', 'actual', 'adapt', 'add', 'addict', 'address', 'adjust', 'admit',
-  'adult', 'advance', 'advice', 'aerobic', 'affair', 'afford', 'afraid', 'again', 'agent', 'agree',
-  'ahead', 'aim', 'air', 'airport', 'aisle', 'alarm', 'album', 'alcohol', 'alert', 'alien',
-  'quantum', 'network', 'privacy', 'secure', 'tunnel', 'shield', 'protect', 'anonymous', 'freedom', 'liberty'
-];
+type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
+  const { signIn, signUp, signInWithMagicLink, signInWithGoogle, loading } = useAuth();
+  const { toast } = useToast();
+  const { t } = useTranslation();
+  
   const [isLoading, setIsLoading] = useState(false);
-  const [passphrase, setPassphrase] = useState('');
+  const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('email');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
-  const [showPassphrase, setShowPassphrase] = useState(false);
-  const { toast } = useToast();
-  const { signIn, signUp } = useAuth();
-  const { t } = useTranslation();
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
 
-  const generatePassphrase = () => {
-    const randomWords = [];
-    for (let i = 0; i < 24; i++) {
-      randomWords.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
-    }
-    setPassphrase(randomWords.join(' '));
-  };
+  const authMethods = [
+    {
+      id: 'email' as const,
+      name: 'Email & Password',
+      description: 'Traditional email and password authentication',
+      icon: Mail,
+      available: true,
+      recommended: false,
+    },
+    {
+      id: 'magic-link' as const,
+      name: 'Magic Link',
+      description: 'Passwordless authentication via email',
+      icon: Mail,
+      available: true,
+      recommended: true,
+    },
+    {
+      id: 'google' as const,
+      name: 'Google OAuth',
+      description: 'Sign in with your Google account',
+      icon: Globe,
+      available: true,
+      recommended: false,
+    },
+    {
+      id: 'passphrase' as const,
+      name: '24-Word Passphrase',
+      description: 'Advanced security with mnemonic phrase',
+      icon: Shield,
+      available: false,
+      recommended: false,
+    },
+    {
+      id: 'passkey' as const,
+      name: 'Passkeys/WebAuthn',
+      description: 'Biometric and hardware key authentication',
+      icon: Key,
+      available: false,
+      recommended: false,
+    },
+  ];
 
-  const copyPassphrase = () => {
-    navigator.clipboard.writeText(passphrase);
-    toast({
-      title: "Copied!",
-      description: "Passphrase copied to clipboard.",
-    });
-  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || (!password && selectedMethod === 'email')) return;
+
     setIsLoading(true);
     setError('');
 
     try {
-      if (!passphrase.trim()) {
-        setError('Please generate or enter a 24-word passphrase');
-        return;
+      if (selectedMethod === 'email') {
+        await signUp(email, password, fullName);
+        toast({
+          title: 'Account created successfully!',
+          description: 'Please check your email to verify your account.',
+        });
+      } else if (selectedMethod === 'magic-link') {
+        await signInWithMagicLink(email);
+        setMagicLinkSent(true);
+        toast({
+          title: 'Magic link sent!',
+          description: 'Check your email for the sign-in link.',
+        });
       }
-
-      const words = passphrase.trim().split(/\s+/);
-      if (words.length !== 24) {
-        setError('Passphrase must be exactly 24 words');
-        return;
-      }
-
-      await signUp('', '', fullName, passphrase);
-      toast({
-        title: 'Account created!',
-        description: 'Your xxVPN account has been created successfully.',
-      });
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during signup');
+    } catch (error: any) {
+      console.error('Sign up error:', error);
+      setError(error.message || 'Failed to create account');
     } finally {
       setIsLoading(false);
     }
@@ -78,224 +102,259 @@ const AuthPage = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || (!password && selectedMethod === 'email')) return;
+
     setIsLoading(true);
     setError('');
 
     try {
-      if (!passphrase.trim()) {
-        setError('Please enter your 24-word passphrase');
-        return;
+      if (selectedMethod === 'email') {
+        await signIn(email, password);
+      } else if (selectedMethod === 'magic-link') {
+        await signInWithMagicLink(email);
+        setMagicLinkSent(true);
+        toast({
+          title: 'Magic link sent!',
+          description: 'Check your email for the sign-in link.',
+        });
+      } else if (selectedMethod === 'google') {
+        await signInWithGoogle();
       }
-
-      const words = passphrase.trim().split(/\s+/);
-      if (words.length !== 24) {
-        setError('Passphrase must be exactly 24 words');
-        return;
-      }
-
-      await signIn('', '', passphrase);
-      toast({
-        title: 'Welcome back!',
-        description: 'Successfully signed in to xxVPN.',
-      });
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during signin');
+    } catch (error: any) {
+      console.error('Sign in error:', error);
+      setError(error.message || 'Failed to sign in');
     } finally {
       setIsLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-quantum opacity-30" />
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" />
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">{t('common.loading')}</p>
+        </div>
       </div>
+    );
+  }
 
-      <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm quantum-glow relative z-10">
-        <CardHeader className="text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
-            <Shield className="w-8 h-8 text-white" />
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md backdrop-blur-sm bg-card/95 border-border/50 shadow-xl">
+        <CardHeader className="text-center space-y-2">
+          <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl gradient-primary bg-clip-text text-transparent">
-            {t('auth.title')}
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('auth.welcome')}</CardTitle>
           <CardDescription>
-            {t('auth.subtitle')}
+            Choose your preferred authentication method
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <Tabs defaultValue="signin" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">{t('auth.signIn')}</TabsTrigger>
-              <TabsTrigger value="signup">{t('auth.signUp')}</TabsTrigger>
-            </TabsList>
-
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signin-passphrase">24-Word Passphrase</Label>
-                  <div className="relative">
-                    <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Textarea
-                      id="signin-passphrase"
-                      placeholder="Enter your 24-word passphrase..."
-                      value={showPassphrase ? passphrase : passphrase.replace(/\S/g, '•')}
-                      onChange={(e) => setPassphrase(showPassphrase ? e.target.value : e.target.value)}
-                      className="pl-10 min-h-[100px] resize-none"
-                      required
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-2 top-2"
-                      onClick={() => setShowPassphrase(!showPassphrase)}
-                    >
-                      {showPassphrase ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </Button>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Enter the 24-word passphrase from your XX Network sleeve wallet
-                  </p>
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full gradient-primary"
-                  disabled={isLoading}
+        <CardContent className="space-y-6">
+          {/* Auth Method Selector */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Authentication Method</Label>
+            <div className="grid gap-2">
+              {authMethods.map((method) => (
+                <button
+                  key={method.id}
+                  type="button"
+                  onClick={() => method.available && setSelectedMethod(method.id)}
+                  disabled={!method.available}
+                  className={`p-3 rounded-lg border-2 transition-all text-left ${
+                    selectedMethod === method.id
+                      ? 'border-primary bg-primary/5'
+                      : method.available
+                      ? 'border-border hover:border-primary/50 hover:bg-muted/50'
+                      : 'border-border/50 opacity-50 cursor-not-allowed'
+                  }`}
                 >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Connecting...
-                    </>
-                  ) : (
-                    'Sign In'
-                  )}
-                </Button>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-name">Full Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="signup-name"
-                      type="text"
-                      placeholder="Your full name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="signup-passphrase">24-Word Passphrase</Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={generatePassphrase}
-                      className="text-xs"
-                    >
-                      <Shuffle className="mr-1 h-3 w-3" />
-                      Generate
-                    </Button>
-                  </div>
-                  <div className="relative">
-                    <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Textarea
-                      id="signup-passphrase"
-                      placeholder="Generate or enter your 24-word passphrase..."
-                      value={showPassphrase ? passphrase : passphrase.replace(/\S/g, '•')}
-                      onChange={(e) => setPassphrase(showPassphrase ? e.target.value : e.target.value)}
-                      className="pl-10 min-h-[120px] resize-none"
-                      required
-                    />
-                    <div className="absolute right-2 top-2 flex gap-1">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setShowPassphrase(!showPassphrase)}
-                      >
-                        {showPassphrase ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                      </Button>
-                      {passphrase && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={copyPassphrase}
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      )}
+                  <div className="flex items-center gap-3">
+                    <method.icon className="w-5 h-5 text-muted-foreground" />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-sm">{method.name}</span>
+                        {method.recommended && (
+                          <Badge variant="secondary" className="text-xs">
+                            Recommended
+                          </Badge>
+                        )}
+                        {!method.available && (
+                          <Badge variant="outline" className="text-xs">
+                            Coming Soon
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {method.description}
+                      </p>
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    This 24-word passphrase uses XX Network sleeve wallet technology. Keep it safe and secure.
-                  </p>
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full gradient-neural"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating Account...
-                    </>
-                  ) : (
-                    'Create Account'
-                  )}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              By signing up, you agree to our quantum-resistant privacy policies
-            </p>
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Feature highlights */}
-          <div className="mt-6 space-y-3">
-            <h4 className="text-sm font-medium text-center">XX Network Security</h4>
-            <div className="grid grid-cols-1 gap-2 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                <span>24-word sleeve wallet technology</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-secondary rounded-full" />
-                <span>Quantum-resistant encryption</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span>5-hop mixnet protection</span>
-              </div>
-            </div>
+          {magicLinkSent ? (
+            <Alert>
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription>
+                Check your email for the magic link to complete sign-in.
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <Tabs defaultValue="signin" className="space-y-4">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="signin" className="space-y-4">
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  {selectedMethod === 'google' ? (
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      ) : null}
+                      Continue with Google
+                    </Button>
+                  ) : (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="signin-email">Email</Label>
+                        <Input
+                          id="signin-email"
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Enter your email"
+                          required
+                        />
+                      </div>
+
+                      {selectedMethod === 'email' && (
+                        <div className="space-y-2">
+                          <Label htmlFor="signin-password">Password</Label>
+                          <Input
+                            id="signin-password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter your password"
+                            required
+                          />
+                        </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                      >
+                        {isLoading ? (
+                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        ) : null}
+                        {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                      </Button>
+                    </>
+                  )}
+                </form>
+              </TabsContent>
+
+              <TabsContent value="signup" className="space-y-4">
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  {selectedMethod === 'google' ? (
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      ) : null}
+                      Continue with Google
+                    </Button>
+                  ) : (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-name">Full Name (Optional)</Label>
+                        <Input
+                          id="signup-name"
+                          type="text"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="Enter your full name"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-email">Email</Label>
+                        <Input
+                          id="signup-email"
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Enter your email"
+                          required
+                        />
+                      </div>
+
+                      {selectedMethod === 'email' && (
+                        <div className="space-y-2">
+                          <Label htmlFor="signup-password">Password</Label>
+                          <Input
+                            id="signup-password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Create a password"
+                            required
+                          />
+                        </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                      >
+                        {isLoading ? (
+                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        ) : null}
+                        {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Create Account'}
+                      </Button>
+                    </>
+                  )}
+                </form>
+              </TabsContent>
+            </Tabs>
+          )}
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Security Features */}
+          <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+            <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-primary" />
+              Security Features
+            </h4>
+            <ul className="text-xs text-muted-foreground space-y-1">
+              <li>• End-to-end encryption</li>
+              <li>• Zero-knowledge architecture</li>
+              <li>• Advanced threat protection</li>
+              <li>• Multi-layer security protocols</li>
+            </ul>
           </div>
         </CardContent>
       </Card>
