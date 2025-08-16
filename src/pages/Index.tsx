@@ -1,6 +1,7 @@
 import { useAuth } from '@/contexts/AuthContext';
 import VPNDashboard from '@/components/VPNDashboard';
 import AuthPage from '@/components/AuthPage';
+import GoogleAuthTest from '@/components/GoogleAuthTest';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +29,14 @@ const Index = () => {
   }
 
   if (!user) {
-    return <AuthPage />;
+    return (
+      <div className="min-h-screen bg-background p-8">
+        <GoogleAuthTest />
+        <div className="mt-8">
+          <AuthPage />
+        </div>
+      </div>
+    );
   }
 
   return <VPNDashboard />;
