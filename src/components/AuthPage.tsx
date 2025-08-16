@@ -72,7 +72,10 @@ const AuthPage = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || (!password && selectedMethod === 'email')) return;
+    if (selectedMethod === 'google' || !email || (!password && selectedMethod === 'email')) {
+      if (selectedMethod !== 'google' && !email) return;
+      if (selectedMethod === 'email' && !password) return;
+    }
 
     setIsLoading(true);
     setError('');
@@ -91,6 +94,8 @@ const AuthPage = () => {
           title: 'Magic link sent!',
           description: 'Check your email for the sign-in link.',
         });
+      } else if (selectedMethod === 'google') {
+        await signInWithGoogle();
       }
     } catch (error: any) {
       console.error('Sign up error:', error);
