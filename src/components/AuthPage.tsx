@@ -16,7 +16,7 @@ import WebAuthnAuth from './WebAuthnAuth';
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
-  console.log('🔵 AuthPage component rendering...');
+  
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
@@ -74,14 +74,11 @@ const AuthPage = () => {
 
 
   const handlePassphraseAuth = async (passphrase: string) => {
-    console.log('🔑 AuthPage handlePassphraseAuth called with passphrase length:', passphrase.length);
     setIsLoading(true);
     setError('');
     
     try {
-      console.log('🔄 Calling signInWithPassphrase...');
       await signInWithPassphrase(passphrase);
-      console.log('✅ signInWithPassphrase completed successfully');
       toast({
         title: 'Authenticated with passphrase',
         description: 'Successfully authenticated using 24-word passphrase.',
@@ -176,7 +173,6 @@ const AuthPage = () => {
   };
 
   const handleGoogleAuth = async () => {
-    console.log('Google button clicked!');
     setIsLoading(true);
     setError('');
     

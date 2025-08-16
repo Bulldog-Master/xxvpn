@@ -59,9 +59,7 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
   };
 
   const registerPasskey = async () => {
-    console.log('🔐 Starting passkey registration...');
     if (!isSupported) {
-      console.log('❌ WebAuthn not supported');
       return;
     }
 
@@ -84,8 +82,6 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
           rpId = parts.slice(-2).join('.');
         }
       }
-
-      console.log('🔐 WebAuthn config:', { hostname, rpId });
 
       const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
         challenge,
@@ -147,9 +143,7 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
   };
 
   const authenticateWithPasskey = async () => {
-    console.log('🔐 Starting passkey authentication...');
     if (!isSupported || !hasCredentials) {
-      console.log('❌ WebAuthn not supported or no credentials');
       return;
     }
 
