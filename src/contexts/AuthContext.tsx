@@ -194,39 +194,76 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     );
 
-    // Handle OAuth callback by checking URL parameters
-    console.log('🔍 Checking URL for OAuth callback parameters...');
+    // Enhanced OAuth callback handling
+    console.log('🔍 Enhanced OAuth callback detection...');
+    console.log('🌐 Full URL:', window.location.href);
+    console.log('🔗 Search params:', window.location.search);
+    console.log('🔗 Hash params:', window.location.hash);
+    
     const urlParams = new URLSearchParams(window.location.search);
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
     
-    const hasOAuthParams = urlParams.has('code') || hashParams.has('access_token') || hashParams.has('id_token');
-    console.log('🔗 OAuth params found:', hasOAuthParams, {
-      urlSearch: window.location.search,
-      urlHash: window.location.hash,
-      hasCode: urlParams.has('code'),
-      hasAccessToken: hashParams.has('access_token')
+    // Check for various OAuth callback indicators
+    const hasAuthCode = urlParams.has('code');
+    const hasAccessToken = hashParams.has('access_token') || urlParams.has('access_token');
+    const hasIdToken = hashParams.has('id_token') || urlParams.has('id_token');
+    const hasError = urlParams.has('error') || hashParams.has('error');
+    const hasState = urlParams.has('state') || hashParams.has('state');
+    
+    const isOAuthCallback = hasAuthCode || hasAccessToken || hasIdToken || hasError || hasState;
+    
+    console.log('🔍 OAuth detection:', {
+      hasAuthCode,
+      hasAccessToken, 
+      hasIdToken,
+      hasError,
+      hasState,
+      isOAuthCallback,
+      authCode: urlParams.get('code') || 'none',
+      error: urlParams.get('error') || hashParams.get('error') || 'none'
     });
 
     const handleOAuthCallback = async () => {
-      if (hasOAuthParams) {
-        console.log('🔄 Processing OAuth callback...');
+      if (isOAuthCallback) {
+        console.log('🔄 OAuth callback detected! Processing...');
+        setLoading(true);
+        
         try {
-          // Let Supabase handle the OAuth callback
-          const { data, error } = await supabase.auth.getSession();
-          console.log('📞 OAuth session result:', { 
+          // Force a session refresh to process the callback
+          console.log('🔄 Forcing session refresh...');
+          const { data, error } = await supabase.auth.refreshSession();
+          console.log('📞 Session refresh result:', { 
             hasSession: !!data.session, 
             hasUser: !!data.session?.user,
             error: error?.message 
           });
           
-          if (error) {
-            console.error('❌ OAuth callback error:', error);
+          if (data.session?.user) {
+            console.log('✅ OAuth callback successful! Setting up user...');
+            const userProfile = await fetchUserProfile(data.session.user);
+            setUser(userProfile);
+            setSession(data.session);
+            
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } else {
+            console.log('⚠️ No session after refresh, trying getSession...');
+            const { data: sessionData } = await supabase.auth.getSession();
+            if (sessionData.session?.user) {
+              const userProfile = await fetchUserProfile(sessionData.session.user);
+              setUser(userProfile);
+              setSession(sessionData.session);
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
           }
         } catch (err) {
-          console.error('❌ OAuth processing error:', err);
+          console.error('❌ OAuth callback processing error:', err);
         }
+        
+        setLoading(false);
       } else {
         // Normal session check
+        console.log('📄 No OAuth callback, checking existing session...');
         const { data } = await supabase.auth.getSession();
         if (data.session?.user) {
           console.log('✅ Found existing session');
@@ -234,11 +271,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           setUser(userProfile);
           setSession(data.session);
         }
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    // Check for OAuth callback immediately
+    // Process callback
     handleOAuthCallback();
 
     return () => subscription.unsubscribe();
