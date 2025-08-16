@@ -26,6 +26,7 @@ const AuthPage = () => {
   const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('email');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
@@ -115,6 +116,12 @@ const AuthPage = () => {
     if (selectedMethod === 'google' || !email || (!password && selectedMethod === 'email')) {
       if (selectedMethod !== 'google' && !email) return;
       if (selectedMethod === 'email' && !password) return;
+    }
+
+    // Check password confirmation for email signup
+    if (selectedMethod === 'email' && password !== confirmPassword) {
+      setError('Passwords do not match. Please check and try again.');
+      return;
     }
 
     setIsLoading(true);
@@ -405,17 +412,31 @@ const AuthPage = () => {
                       </div>
 
                       {selectedMethod === 'email' && (
-                        <div className="space-y-2">
-                          <Label htmlFor="signup-password">Password</Label>
-                          <Input
-                            id="signup-password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Create a password"
-                            required
-                          />
-                        </div>
+                        <>
+                          <div className="space-y-2">
+                            <Label htmlFor="signup-password">Password</Label>
+                            <Input
+                              id="signup-password"
+                              type="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="Create a password"
+                              required
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="confirm-password">Confirm Password</Label>
+                            <Input
+                              id="confirm-password"
+                              type="password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              placeholder="Confirm your password"
+                              required
+                            />
+                          </div>
+                        </>
                       )}
 
                       <Button
