@@ -72,7 +72,10 @@ export const PassphraseAuth: React.FC<PassphraseAuthProps> = ({ onAuthenticate, 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('🔑 PassphraseAuth handleSubmit called with passphrase:', passphrase.length > 0 ? 'present' : 'empty');
+    
     if (!passphrase.trim()) {
+      console.log('❌ Empty passphrase');
       toast({
         title: t('common.error'),
         description: t('auth.passphrase.required'),
@@ -82,7 +85,10 @@ export const PassphraseAuth: React.FC<PassphraseAuthProps> = ({ onAuthenticate, 
     }
 
     const words = passphrase.trim().split(/\s+/);
+    console.log('🔍 Passphrase word count:', words.length);
+    
     if (words.length !== 24) {
+      console.log('❌ Invalid word count:', words.length);
       toast({
         title: t('common.error'),
         description: t('auth.passphrase.invalidLength'),
@@ -91,6 +97,7 @@ export const PassphraseAuth: React.FC<PassphraseAuthProps> = ({ onAuthenticate, 
       return;
     }
 
+    console.log('✅ Passphrase valid, calling onAuthenticate');
     onAuthenticate(passphrase);
   };
 

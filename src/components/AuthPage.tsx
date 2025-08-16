@@ -74,17 +74,20 @@ const AuthPage = () => {
 
 
   const handlePassphraseAuth = async (passphrase: string) => {
+    console.log('🔑 AuthPage handlePassphraseAuth called with passphrase length:', passphrase.length);
     setIsLoading(true);
     setError('');
     
     try {
+      console.log('🔄 Calling signInWithPassphrase...');
       await signInWithPassphrase(passphrase);
+      console.log('✅ signInWithPassphrase completed successfully');
       toast({
         title: 'Authenticated with passphrase',
         description: 'Successfully authenticated using 24-word passphrase.',
       });
     } catch (error: any) {
-      console.error('Passphrase auth error:', error);
+      console.error('❌ Passphrase auth error:', error);
       setError(error.message || 'Failed to authenticate with passphrase');
     } finally {
       setIsLoading(false);
