@@ -14,9 +14,25 @@ const GoogleAuthTest = () => {
     console.log('🔵 DIRECT TEST: Starting Google OAuth...');
     setIsLoading(true);
     setError('');
-    setStatus('Initiating OAuth...');
+    setStatus('Analyzing URLs...');
     
     try {
+      // Log current URL configuration
+      const currentOrigin = window.location.origin;
+      const currentUrl = window.location.href;
+      const redirectUrl = `${currentOrigin}/`;
+      
+      console.log('🌐 URL Analysis:', {
+        currentOrigin,
+        currentUrl,
+        redirectUrl,
+        protocol: window.location.protocol,
+        hostname: window.location.hostname,
+        port: window.location.port
+      });
+      
+      setStatus(`Current: ${currentOrigin} → Redirect: ${redirectUrl}`);
+      
       // Test Supabase connection first
       console.log('🔍 DIRECT TEST: Testing Supabase connection...');
       const { data: session, error: sessionError } = await supabase.auth.getSession();
@@ -27,12 +43,16 @@ const GoogleAuthTest = () => {
       
       setStatus('Supabase connected. Starting OAuth...');
       
-      // Direct OAuth call
-      console.log('🚀 DIRECT TEST: Calling signInWithOAuth...');
+      // Direct OAuth call with detailed logging
+      console.log('🚀 DIRECT TEST: Calling signInWithOAuth with:', {
+        provider: 'google',
+        redirectTo: redirectUrl
+      });
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
             prompt: 'select_account'
@@ -43,6 +63,7 @@ const GoogleAuthTest = () => {
       console.log('📤 DIRECT TEST: OAuth result:', { 
         hasData: !!data, 
         hasUrl: !!data?.url,
+        actualUrl: data?.url,
         error: error?.message 
       });
       
@@ -50,10 +71,17 @@ const GoogleAuthTest = () => {
         throw error;
       }
       
-      setStatus('OAuth initiated successfully!');
+      if (data?.url) {
+        setStatus('Redirecting to Google...');
+        console.log('🌐 About to redirect to:', data.url);
+      } else {
+        setStatus('No redirect URL received!');
+        console.warn('⚠️ No URL in OAuth response');
+      }
+      
     } catch (error: any) {
       console.error('❌ DIRECT TEST: Error:', error);
-      setError(error.message || 'Failed to initiate Google OAuth');
+      setError(`${error.message || 'Failed to initiate Google OAuth'} | Check console for URL details`);
       setStatus('Error occurred');
     } finally {
       setIsLoading(false);
@@ -71,12 +99,25 @@ const GoogleAuthTest = () => {
         error: error?.message
       });
       
+      // Check URL for auth fragments or params
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlHash = window.location.hash;
+      
+      console.log('🔗 URL Analysis:', {
+        search: window.location.search,
+        hash: urlHash,
+        hasAuthCode: urlParams.has('code'),
+        hasError: urlParams.has('error'),
+        hasAccessToken: urlHash.includes('access_token')
+      });
+      
       const storageKeys = Object.keys(localStorage).filter(key => 
         key.includes('supabase') || key.includes('sb-')
       );
       console.log('🗄️ Auth storage keys:', storageKeys);
       
-      setDebugInfo(`Session: ${!!session}, User: ${!!session?.user}, Email: ${session?.user?.email || 'none'}`);
+      const urlInfo = urlParams.has('code') ? ' | URL has auth code' : urlHash.includes('access_token') ? ' | URL has token' : '';
+      setDebugInfo(`Session: ${!!session}, User: ${!!session?.user}, Email: ${session?.user?.email || 'none'}${urlInfo}`);
     } catch (error) {
       console.error('❌ Session check error:', error);
       setDebugInfo(`Session check error: ${error}`);
