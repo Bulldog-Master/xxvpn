@@ -132,98 +132,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     console.log('🔄 AuthProvider useEffect starting...');
     
-    // Check for OAuth return flag first, regardless of URL
-    const checkForOAuthReturn = () => {
-      const oauthInitiated = sessionStorage.getItem('oauth_initiated');
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlHash = new URLSearchParams(window.location.hash.substring(1));
-      const hasAuthParams = urlParams.has('code') || urlParams.has('access_token') || urlParams.has('token_type') ||
-                           urlHash.has('access_token') || urlHash.has('token_type');
-      
-      console.log('🔍 Checking OAuth flag:', { 
-        oauthInitiated, 
-        hasAuthParams,
-        currentUrl: window.location.href,
-        searchParams: window.location.search,
-        hashParams: window.location.hash
-      });
-      
-      if (oauthInitiated === 'true' || hasAuthParams) {
-        console.log('🔄 Detected OAuth return, cleaning up flag...');
-        sessionStorage.removeItem('oauth_initiated');
-        
-        // If we have auth params, let Supabase process them first
-        if (hasAuthParams) {
-          console.log('🔗 Found auth params in URL, letting Supabase process them...');
-          // Give Supabase more time to process the OAuth callback
-          setTimeout(async () => {
-            console.log('🔄 Checking session after OAuth processing...');
-            try {
-              const { data, error } = await supabase.auth.getSession();
-              if (data?.session?.user) {
-                console.log('✅ Session established after OAuth processing!');
-                // Let the auth state change handler take over
-              } else {
-                console.log('❌ No session found after OAuth processing:', error);
-                // Clean up and show auth page
-                cleanupAuthState();
-                setLoading(false);
-              }
-            } catch (err) {
-              console.error('Error checking session after OAuth:', err);
-              cleanupAuthState();
-              setLoading(false);
-            }
-          }, 3000); // Increased timeout
-          return true;
-        }
-        
-        // Poll for session to appear (for cases without URL params)
-        let attempts = 0;
-        const maxAttempts = 15; // Reduced attempts since we're not expecting this path
-        
-        const pollForSession = async () => {
-          attempts++;
-          console.log(`🔍 Polling for session attempt ${attempts}/${maxAttempts}...`);
-          
-          try {
-            const { data, error } = await supabase.auth.getSession();
-            console.log('📊 Session poll result:', {
-              hasSession: !!data.session,
-              hasUser: !!data.session?.user,
-              error: error?.message
-            });
-            
-            if (data.session?.user) {
-              console.log('✅ Session found via polling!');
-              // Let the auth state change handler take over
-              return;
-            }
-            
-            if (attempts < maxAttempts) {
-              setTimeout(pollForSession, 500);
-            } else {
-              console.log('⚠️ Session polling timed out, cleaning up...');
-              cleanupAuthState();
-              setLoading(false);
-            }
-          } catch (error) {
-            console.error('Polling error:', error);
-            cleanupAuthState();
-            setLoading(false);
-          }
-        };
-        
-        pollForSession();
-        return true; // Indicate OAuth flow started
-      }
-      return false; // No OAuth flow
-    };
-    
-    // First check for OAuth return
-    const isOAuthFlow = checkForOAuthReturn();
-    
-    // Set up auth state listener
+    // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('🔔 Auth state change:', event);
@@ -265,21 +174,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     );
 
-    // Also check for existing session if no OAuth return
-    if (!sessionStorage.getItem('oauth_initiated')) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session?.user) {
-          console.log('✅ Found existing session on mount');
-          setSession(session);
-          fetchUserProfile(session.user).then(userProfile => {
-            setUser(userProfile);
-            setLoading(false);
-          });
-        } else {
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        console.log('✅ Found existing session on mount');
+        setSession(session);
+        fetchUserProfile(session.user).then(userProfile => {
+          setUser(userProfile);
           setLoading(false);
-        }
-      });
-    }
+        });
+      } else {
+        console.log('❌ No existing session found');
+        setLoading(false);
+      }
+    });
 
     return () => subscription.unsubscribe();
   }, []);
@@ -354,7 +262,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Clean up any existing auth state first
       cleanupAuthState();
       
-      const redirectUrl = `${window.location.origin}/`;
+      // Use a simpler redirect URL
+      const redirectUrl = window.location.origin;
       console.log('🔗 Redirect URL:', redirectUrl);
       
       console.log('🚀 Initiating OAuth with Google...');
@@ -364,7 +273,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
-            prompt: 'consent'
+            prompt: 'select_account'
           }
         }
       });
@@ -380,11 +289,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw error;
       }
       
-      // After OAuth initiation, set up session polling
-      console.log('⏰ Setting up session polling for OAuth return...');
-      
-      // Store a flag that we initiated OAuth
-      sessionStorage.setItem('oauth_initiated', 'true');
+      if (data?.url) {
+        console.log('🌐 Redirecting to OAuth URL...');
+        // Don't set the flag - let's see if we can detect the return differently
+        // Just redirect directly
+        window.location.href = data.url;
+      }
       
     } catch (error) {
       console.error('💥 Google OAuth error:', error);
