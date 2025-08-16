@@ -157,6 +157,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               console.log('✅ Profile fetched successfully:', userProfile);
               setUser(userProfile);
               setLoading(false);
+              
+              // Clear URL parameters after successful login
+              window.history.replaceState({}, document.title, window.location.pathname);
             } catch (error) {
               console.error('❌ Error fetching profile:', error);
               // Fallback: create basic user object from auth data
@@ -172,6 +175,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               console.log('🔄 Using fallback user:', fallbackUser);
               setUser(fallbackUser);
               setLoading(false);
+              
+              // Clear URL parameters even with fallback
+              window.history.replaceState({}, document.title, window.location.pathname);
             }
           }, 100);
         } else if (event === 'SIGNED_OUT' || !session) {
