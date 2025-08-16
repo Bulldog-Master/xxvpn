@@ -5,6 +5,7 @@ import AuthPage from '@/components/AuthPage';
 import GoogleAuthTest from '@/components/GoogleAuthTest';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   console.log('🚀 Index component starting...');
@@ -28,6 +29,25 @@ const Index = () => {
       
       if (hasAuthParams) {
         console.log('🔑 OAuth callback detected - URL contains auth parameters');
+        console.log('🔄 Forcing session refresh...');
+        // Force session refresh when OAuth params detected
+        setTimeout(async () => {
+          try {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            console.log('🔄 Post-callback session check:', {
+              hasSession: !!session,
+              hasUser: !!session?.user,
+              userEmail: session?.user?.email,
+              error: error?.message
+            });
+            if (session?.user) {
+              console.log('✅ User found after callback - should redirect to dashboard');
+              window.location.href = '/';
+            }
+          } catch (err) {
+            console.error('❌ Session refresh error:', err);
+          }
+        }, 1000);
       }
     }, []);
     
