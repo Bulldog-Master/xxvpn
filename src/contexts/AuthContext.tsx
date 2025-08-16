@@ -303,7 +303,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithGoogle = async () => {
     try {
-      console.log('Starting Google OAuth...');
+      console.log('🔵 Starting Google OAuth...');
       
       // Clean up any existing auth state first
       cleanupAuthState();
@@ -311,14 +311,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Try to sign out globally first
       try {
         await supabase.auth.signOut({ scope: 'global' });
+        console.log('✅ Global signout completed');
       } catch (err) {
-        console.log('Global signout failed, continuing...');
+        console.log('⚠️ Global signout failed, continuing...', err);
       }
       
       const redirectUrl = `${window.location.origin}/`;
-      console.log('Redirect URL:', redirectUrl);
+      console.log('🔗 Redirect URL:', redirectUrl);
       
-      const { error } = await supabase.auth.signInWithOAuth({
+      // Test Supabase connection first
+      const { data: testSession, error: sessionError } = await supabase.auth.getSession();
+      console.log('🔍 Supabase connection test:', { 
+        connected: !sessionError, 
+        error: sessionError?.message 
+      });
+      
+      console.log('🚀 Initiating OAuth with Google...');
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
@@ -329,10 +338,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       });
 
-      console.log('OAuth response:', { error });
-      if (error) throw error;
+      console.log('📤 OAuth response:', { 
+        data: data ? 'present' : 'null', 
+        error: error?.message,
+        url: data?.url ? 'present' : 'missing'
+      });
+      
+      if (error) {
+        console.error('❌ OAuth initiation error:', error);
+        throw error;
+      }
+      
+      if (!data?.url) {
+        console.error('❌ No OAuth URL returned from Supabase');
+        throw new Error('No OAuth URL returned');
+      }
+      
+      console.log('✅ OAuth URL generated, redirecting...');
     } catch (error) {
-      console.error('Google OAuth error:', error);
+      console.error('💥 Google OAuth error:', error);
       throw error;
     }
   };
