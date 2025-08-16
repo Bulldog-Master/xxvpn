@@ -82,9 +82,9 @@ const ResetPassword = () => {
         description: 'You can now sign in with your new password.',
       });
 
-      // Redirect to login page after success
+      // Redirect to home page after success (Index will show auth page)
       setTimeout(() => {
-        navigate('/auth');
+        navigate('/');
       }, 2000);
 
     } catch (error: any) {
@@ -175,7 +175,7 @@ const ResetPassword = () => {
               <Button
                 type="button"
                 variant="link"
-                onClick={() => navigate('/auth')}
+                onClick={() => navigate('/')}
                 className="text-sm"
               >
                 Back to Sign In
