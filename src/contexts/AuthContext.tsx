@@ -206,6 +206,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent'
+          }
         }
       });
 
