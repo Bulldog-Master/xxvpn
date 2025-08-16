@@ -137,14 +137,19 @@ const AuthPage = () => {
         await signInWithGoogle();
       }
     } catch (error: any) {
-      console.error('Sign up error:', error);
+      console.error('Sign up error details:', {
+        message: error.message,
+        status: error.status,
+        statusCode: error.statusCode,
+        fullError: error
+      });
       
       // Handle specific Supabase error messages
       let errorMessage = 'Failed to create account';
-      if (error.message?.includes('already registered')) {
+      if (error.message?.includes('already registered') || 
+          error.message?.includes('User already registered') ||
+          error.message?.includes('already been registered')) {
         errorMessage = 'An account with this email already exists. Please sign in instead.';
-      } else if (error.message?.includes('User already registered')) {
-        errorMessage = 'This email is already registered. Please sign in instead.';
       } else if (error.message?.includes('email')) {
         errorMessage = 'Invalid email address. Please check and try again.';
       } else if (error.message?.includes('password')) {
