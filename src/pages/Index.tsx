@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import VPNDashboard from '@/components/VPNDashboard';
 import AuthPage from '@/components/AuthPage';
@@ -17,8 +18,17 @@ const Index = () => {
       userEmail: user?.email,
       loading,
       hasSession: !!session,
+      sessionUserId: session?.user?.id,
       timestamp: new Date().toISOString()
     });
+
+    // Force session refresh on mount if no user but we have a session
+    React.useEffect(() => {
+      if (!user && !loading && session?.user) {
+        console.log('🔄 Found session but no user, forcing refresh...');
+        window.location.reload();
+      }
+    }, [user, loading, session]);
 
     if (loading) {
       console.log('📝 Showing loading state');
@@ -33,7 +43,7 @@ const Index = () => {
     }
 
     if (!user) {
-      console.log('📝 Showing auth page');
+      console.log('📝 Showing auth page - No user detected');
       return (
         <div className="min-h-screen bg-background p-8">
           <GoogleAuthTest />
@@ -44,7 +54,7 @@ const Index = () => {
       );
     }
 
-    console.log('📝 Showing VPN dashboard');
+    console.log('📝 Showing VPN dashboard for user:', user.email);
     return <VPNDashboard />;
   } catch (error) {
     console.error('❌ Error in Index component:', error);
