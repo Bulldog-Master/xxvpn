@@ -12,20 +12,23 @@ const Index = () => {
     const { user, loading, session } = useAuth();
     const { t } = useTranslation();
     
-    // Simplified OAuth callback detection
+    // Handle auth redirects but exclude password reset
     React.useEffect(() => {
       const currentUrl = window.location.href;
+      const isPasswordReset = window.location.pathname === '/reset-password' || currentUrl.includes('type=recovery');
       const hasAuthParams = currentUrl.includes('access_token') || currentUrl.includes('code=') || currentUrl.includes('error=');
       
       console.log('🔗 URL Analysis on Index mount:', {
         currentUrl,
         hasAuthParams,
+        isPasswordReset,
         search: window.location.search,
         hash: window.location.hash,
         pathname: window.location.pathname
       });
       
-      if (hasAuthParams) {
+      // Don't process auth params if this is a password reset
+      if (hasAuthParams && !isPasswordReset) {
         console.log('🔑 OAuth callback detected - letting Supabase handle it naturally');
         // Don't force anything - let the auth context handle the session
         // Remove the auth params from URL to prevent loops
@@ -35,6 +38,12 @@ const Index = () => {
             console.log('🧹 Cleaned OAuth params from URL');
           }
         }, 2000);
+      } else if (isPasswordReset) {
+        console.log('🔐 Password reset detected - redirecting to reset page');
+        // Redirect to reset password page if we're on index with reset tokens
+        if (window.location.pathname === '/') {
+          window.location.href = `/reset-password${window.location.search}${window.location.hash}`;
+        }
       }
     }, []);
     
