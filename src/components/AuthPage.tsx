@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import PassphraseAuth from './PassphraseAuth';
 import WebAuthnAuth from './WebAuthnAuth';
+import { signUpWithEmail } from '@/services/authService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -121,7 +122,15 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'email') {
-        await signUp(email, password, fullName);
+        const data = await signUpWithEmail(email, password, fullName);
+        
+        // Check if this was a repeated signup (user already exists)
+        // Supabase returns success but no session for existing users
+        if (data && !data.session && !data.user?.email_confirmed_at) {
+          setError('An account with this email already exists. Please sign in instead.');
+          return;
+        }
+
         toast({
           title: 'Account created successfully!',
           description: 'Please check your email to verify your account.',
