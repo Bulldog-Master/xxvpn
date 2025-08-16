@@ -59,7 +59,11 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
   };
 
   const registerPasskey = async () => {
-    if (!isSupported) return;
+    console.log('🔐 Starting passkey registration...');
+    if (!isSupported) {
+      console.log('❌ WebAuthn not supported');
+      return;
+    }
 
     setIsRegistering(true);
     try {
@@ -126,7 +130,11 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
   };
 
   const authenticateWithPasskey = async () => {
-    if (!isSupported || !hasCredentials) return;
+    console.log('🔐 Starting passkey authentication...');
+    if (!isSupported || !hasCredentials) {
+      console.log('❌ WebAuthn not supported or no credentials');
+      return;
+    }
 
     setIsAuthenticating(true);
     try {
@@ -263,8 +271,8 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
         )}
 
         <Alert>
-          <AlertDescription className="text-sm">
-            {t('auth.webauthn.securityNote')}
+          <AlertDescription className="text-sm text-blue-600 dark:text-blue-400">
+            🔐 <strong>Secure:</strong> Your passkey is stored securely on your device and cannot be extracted or copied. This provides the highest level of security.
           </AlertDescription>
         </Alert>
       </CardContent>
