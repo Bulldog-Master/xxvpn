@@ -336,7 +336,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
-            prompt: 'select_account'
+            prompt: 'select_account',
+            hl: 'en' // Force English language
           }
         }
       });
