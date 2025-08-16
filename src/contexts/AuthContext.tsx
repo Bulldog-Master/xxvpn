@@ -217,6 +217,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signInWithGoogle = async () => {
     try {
       console.log('Starting Google OAuth...');
+      
+      // Clean up any existing auth state first
+      cleanupAuthState();
+      
+      // Try to sign out globally first
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (err) {
+        console.log('Global signout failed, continuing...');
+      }
+      
       const redirectUrl = `${window.location.origin}/`;
       console.log('Redirect URL:', redirectUrl);
       
