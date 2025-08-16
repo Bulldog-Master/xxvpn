@@ -20,11 +20,23 @@ const ResetPassword = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if we have the required tokens in the URL
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
+    // Check if we have the required tokens in the URL (could be in search params or hash)
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
     
-    if (!accessToken || !refreshToken) {
+    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
+    const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
+    const type = urlParams.get('type') || hashParams.get('type');
+    
+    console.log('Reset password URL analysis:', {
+      search: window.location.search,
+      hash: window.location.hash,
+      accessToken: !!accessToken,
+      refreshToken: !!refreshToken,
+      type
+    });
+    
+    if (!accessToken) {
       setError('Invalid reset link. Please request a new password reset.');
       return;
     }
@@ -32,7 +44,7 @@ const ResetPassword = () => {
     // Set the session using the tokens from the URL
     supabase.auth.setSession({
       access_token: accessToken,
-      refresh_token: refreshToken,
+      refresh_token: refreshToken || '',
     });
   }, [searchParams]);
 
