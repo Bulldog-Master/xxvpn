@@ -97,24 +97,42 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        
-        if (session?.user) {
-          // Defer profile fetching to prevent deadlocks
-          setTimeout(async () => {
+  // Set up auth state listener FIRST
+  const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    (event, session) => {
+      console.log('Auth state change:', event, session?.user?.email);
+      setSession(session);
+      
+      if (session?.user) {
+        // Defer profile fetching to prevent deadlocks
+        setTimeout(async () => {
+          try {
+            console.log('Fetching profile for user:', session.user.id);
             const userProfile = await fetchUserProfile(session.user);
+            console.log('Profile fetched:', userProfile);
             setUser(userProfile);
             setLoading(false);
-          }, 0);
-        } else {
-          setUser(null);
-          setLoading(false);
-        }
+          } catch (error) {
+            console.error('Error in auth state change:', error);
+            // Fallback: create basic user object from auth data
+            setUser({
+              id: session.user.id,
+              email: session.user.email || '',
+              fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+              avatarUrl: session.user.user_metadata?.avatar_url || '',
+              subscriptionTier: 'free',
+              xxCoinBalance: 10,
+              referrals: 0,
+            });
+            setLoading(false);
+          }
+        }, 0);
+      } else {
+        setUser(null);
+        setLoading(false);
       }
-    );
+    }
+  );
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
