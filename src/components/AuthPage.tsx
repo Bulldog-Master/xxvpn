@@ -131,13 +131,6 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         const data = await signUpWithEmail(email, password, fullName);
         
-        console.log('Signup response:', { 
-          hasUser: !!data.user, 
-          hasSession: !!data.session,
-          userConfirmed: data.user?.email_confirmed_at,
-          userId: data.user?.id 
-        });
-        
         // For legitimate new signups, we get a user object even without session
         // Only flag as duplicate if we get no user at all
         if (!data.user) {
