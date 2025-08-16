@@ -133,6 +133,21 @@ const AuthPage = () => {
     }
   };
 
+  const handleGoogleAuth = async () => {
+    console.log('Google button clicked!');
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      await signInWithGoogle();
+    } catch (error: any) {
+      console.error('Google auth error:', error);
+      setError(error.message || 'Failed to sign in with Google');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -220,7 +235,8 @@ const AuthPage = () => {
                 <form onSubmit={handleSignIn} className="space-y-4">
                   {selectedMethod === 'google' ? (
                     <Button
-                      type="submit"
+                      type="button"
+                      onClick={handleGoogleAuth}
                       className="w-full"
                       disabled={isLoading}
                     >
@@ -276,7 +292,8 @@ const AuthPage = () => {
                 <form onSubmit={handleSignUp} className="space-y-4">
                   {selectedMethod === 'google' ? (
                     <Button
-                      type="submit"
+                      type="button"
+                      onClick={handleGoogleAuth}
                       className="w-full"
                       disabled={isLoading}
                     >
