@@ -140,7 +140,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           hasSession: !!session,
           hasUser: !!session?.user,
           userEmail: session?.user?.email,
-          accessToken: session?.access_token ? 'present' : 'missing'
+          accessToken: session?.access_token ? 'present' : 'missing',
+          userId: session?.user?.id
         });
         
         setSession(session);
@@ -151,6 +152,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           
           try {
             const userProfile = await fetchUserProfile(session.user);
+            console.log('👤 Final user profile set:', userProfile);
             setUser(userProfile);
             setLoading(false);
           } catch (error) {
@@ -170,26 +172,85 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           console.log('🚪 User signed out or no session');
           setUser(null);
           setLoading(false);
+        } else if (event === 'INITIAL_SESSION') {
+          console.log('🔄 Initial session event:', {
+            hasSession: !!session,
+            userEmail: session?.user?.email
+          });
+          
+          if (session?.user) {
+            console.log('✅ Found existing session on mount via INITIAL_SESSION');
+            setLoading(true);
+            
+            try {
+              const userProfile = await fetchUserProfile(session.user);
+              console.log('👤 Profile loaded from initial session:', userProfile);
+              setUser(userProfile);
+              setLoading(false);
+            } catch (error) {
+              console.error('Error loading profile from initial session:', error);
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                avatarUrl: session.user.user_metadata?.avatar_url || '',
+                subscriptionTier: 'free',
+                xxCoinBalance: 10,
+                referrals: 0,
+              });
+              setLoading(false);
+            }
+          } else {
+            console.log('❌ No session in INITIAL_SESSION event');
+            setLoading(false);
+          }
+        } else {
+          console.log('🔄 Other auth event:', event);
+          setLoading(false);
         }
       }
     );
 
     // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    console.log('🔍 Checking for existing session...');
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      console.log('🔍 getSession result:', {
+        hasSession: !!session,
+        hasUser: !!session?.user,
+        userEmail: session?.user?.email,
+        error: error?.message
+      });
+      
       if (session?.user) {
-        console.log('✅ Found existing session on mount');
+        console.log('✅ Found existing session on direct check');
         setSession(session);
         fetchUserProfile(session.user).then(userProfile => {
+          console.log('👤 Profile loaded from direct session check:', userProfile);
           setUser(userProfile);
+          setLoading(false);
+        }).catch(error => {
+          console.error('Error loading profile from direct check:', error);
+          setUser({
+            id: session.user.id,
+            email: session.user.email || '',
+            fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+            avatarUrl: session.user.user_metadata?.avatar_url || '',
+            subscriptionTier: 'free',
+            xxCoinBalance: 10,
+            referrals: 0,
+          });
           setLoading(false);
         });
       } else {
-        console.log('❌ No existing session found');
+        console.log('❌ No existing session found on direct check');
         setLoading(false);
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      console.log('🧹 Cleaning up auth subscription');
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
