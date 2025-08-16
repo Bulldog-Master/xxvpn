@@ -136,22 +136,51 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const checkForOAuthReturn = () => {
       const oauthInitiated = sessionStorage.getItem('oauth_initiated');
       const urlParams = new URLSearchParams(window.location.search);
-      const hasAuthParams = urlParams.has('code') || urlParams.has('access_token') || urlParams.has('token_type');
+      const urlHash = new URLSearchParams(window.location.hash.substring(1));
+      const hasAuthParams = urlParams.has('code') || urlParams.has('access_token') || urlParams.has('token_type') ||
+                           urlHash.has('access_token') || urlHash.has('token_type');
       
       console.log('🔍 Checking OAuth flag:', { 
         oauthInitiated, 
         hasAuthParams,
         currentUrl: window.location.href,
-        searchParams: window.location.search 
+        searchParams: window.location.search,
+        hashParams: window.location.hash
       });
       
       if (oauthInitiated === 'true' || hasAuthParams) {
-        console.log('🔄 Detected OAuth return, starting session polling...');
+        console.log('🔄 Detected OAuth return, cleaning up flag...');
         sessionStorage.removeItem('oauth_initiated');
         
-        // Poll for session
+        // If we have auth params, let Supabase process them first
+        if (hasAuthParams) {
+          console.log('🔗 Found auth params in URL, letting Supabase process them...');
+          // Give Supabase more time to process the OAuth callback
+          setTimeout(async () => {
+            console.log('🔄 Checking session after OAuth processing...');
+            try {
+              const { data, error } = await supabase.auth.getSession();
+              if (data?.session?.user) {
+                console.log('✅ Session established after OAuth processing!');
+                // Let the auth state change handler take over
+              } else {
+                console.log('❌ No session found after OAuth processing:', error);
+                // Clean up and show auth page
+                cleanupAuthState();
+                setLoading(false);
+              }
+            } catch (err) {
+              console.error('Error checking session after OAuth:', err);
+              cleanupAuthState();
+              setLoading(false);
+            }
+          }, 3000); // Increased timeout
+          return true;
+        }
+        
+        // Poll for session to appear (for cases without URL params)
         let attempts = 0;
-        const maxAttempts = 20; // 10 seconds
+        const maxAttempts = 15; // Reduced attempts since we're not expecting this path
         
         const pollForSession = async () => {
           attempts++;
@@ -167,36 +196,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             
             if (data.session?.user) {
               console.log('✅ Session found via polling!');
-              setSession(data.session);
-              
-              try {
-                const userProfile = await fetchUserProfile(data.session.user);
-                setUser(userProfile);
-              } catch (profileError) {
-                console.error('Profile fetch error, using fallback:', profileError);
-                setUser({
-                  id: data.session.user.id,
-                  email: data.session.user.email || '',
-                  fullName: data.session.user.user_metadata?.full_name || data.session.user.email?.split('@')[0] || '',
-                  avatarUrl: data.session.user.user_metadata?.avatar_url || '',
-                  subscriptionTier: 'free',
-                  xxCoinBalance: 10,
-                  referrals: 0,
-                });
-              }
-              
-              setLoading(false);
+              // Let the auth state change handler take over
               return;
             }
             
             if (attempts < maxAttempts) {
               setTimeout(pollForSession, 500);
             } else {
-              console.log('⚠️ Session polling timed out');
+              console.log('⚠️ Session polling timed out, cleaning up...');
+              cleanupAuthState();
               setLoading(false);
             }
           } catch (error) {
             console.error('Polling error:', error);
+            cleanupAuthState();
             setLoading(false);
           }
         };
