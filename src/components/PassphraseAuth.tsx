@@ -171,6 +171,14 @@ export const PassphraseAuth: React.FC<PassphraseAuthProps> = ({ onAuthenticate, 
             </Alert>
           )}
 
+          {passphrase && (
+            <Alert>
+              <AlertDescription className="text-sm text-amber-600 dark:text-amber-400">
+                ⚠️ <strong>Important:</strong> Copy and store this passphrase in a safe place. This is your only way to access your account - if you lose it, you cannot recover your access.
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="flex space-x-2">
             <Button
               type="button"
