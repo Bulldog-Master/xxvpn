@@ -8,7 +8,13 @@ const Index = () => {
   const { user, loading, session } = useAuth();
   const { t } = useTranslation();
   
-  console.log('Index render - user:', user, 'loading:', loading, 'session:', !!session);
+  console.log('🏠 Index render:', {
+    hasUser: !!user,
+    userEmail: user?.email,
+    loading,
+    hasSession: !!session,
+    timestamp: new Date().toISOString()
+  });
 
   if (loading) {
     return (

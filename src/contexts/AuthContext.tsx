@@ -130,47 +130,63 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-  // Set up auth state listener FIRST
-  const { data: { subscription } } = supabase.auth.onAuthStateChange(
-    async (event, session) => {
-      console.log('Auth state change:', event, session?.user?.email);
-      setSession(session);
-      
-      if (event === 'SIGNED_IN' && session?.user) {
-        console.log('User signed in, fetching profile...');
-        // Defer profile fetching to prevent deadlocks
-        setTimeout(async () => {
-          try {
-            console.log('Fetching profile for user:', session.user.id);
-            const userProfile = await fetchUserProfile(session.user);
-            console.log('Profile fetched:', userProfile);
-            setUser(userProfile);
-            setLoading(false);
-          } catch (error) {
-            console.error('Error in auth state change:', error);
-            // Fallback: create basic user object from auth data
-            setUser({
-              id: session.user.id,
-              email: session.user.email || '',
-              fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-              avatarUrl: session.user.user_metadata?.avatar_url || '',
-              subscriptionTier: 'free',
-              xxCoinBalance: 10,
-              referrals: 0,
-            });
-            setLoading(false);
-          }
-        }, 0);
-      } else if (event === 'SIGNED_OUT' || !session) {
-        console.log('User signed out or no session');
-        setUser(null);
-        setLoading(false);
-      } else {
-        console.log('Other auth event:', event);
-        setLoading(false);
+    console.log('🔄 AuthProvider useEffect starting...');
+    
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('🔔 Auth state change:', event);
+        console.log('📄 Session details:', {
+          hasSession: !!session,
+          hasUser: !!session?.user,
+          userEmail: session?.user?.email,
+          accessToken: session?.access_token ? 'present' : 'missing'
+        });
+        
+        setSession(session);
+        
+        if (event === 'SIGNED_IN' && session?.user) {
+          console.log('✅ User signed in successfully!');
+          setLoading(true);
+          
+          // Defer profile fetching to prevent deadlocks
+          setTimeout(async () => {
+            try {
+              console.log('👤 Fetching profile for user:', session.user.id);
+              const userProfile = await fetchUserProfile(session.user);
+              console.log('✅ Profile fetched successfully:', userProfile);
+              setUser(userProfile);
+              setLoading(false);
+            } catch (error) {
+              console.error('❌ Error fetching profile:', error);
+              // Fallback: create basic user object from auth data
+              const fallbackUser = {
+                id: session.user.id,
+                email: session.user.email || '',
+                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+                avatarUrl: session.user.user_metadata?.avatar_url || '',
+                subscriptionTier: 'free' as const,
+                xxCoinBalance: 10,
+                referrals: 0,
+              };
+              console.log('🔄 Using fallback user:', fallbackUser);
+              setUser(fallbackUser);
+              setLoading(false);
+            }
+          }, 100);
+        } else if (event === 'SIGNED_OUT' || !session) {
+          console.log('🚪 User signed out or no session');
+          setUser(null);
+          setLoading(false);
+        } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+          console.log('🔄 Token refreshed, updating session');
+          setLoading(false);
+        } else {
+          console.log('🔄 Other auth event:', event);
+          setLoading(false);
+        }
       }
-    }
-  );
+    );
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
