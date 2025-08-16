@@ -2,10 +2,8 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import VPNDashboard from '@/components/VPNDashboard';
 import AuthPage from '@/components/AuthPage';
-import GoogleAuthTest from '@/components/GoogleAuthTest';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   console.log('🚀 Index component starting...');
@@ -72,11 +70,8 @@ const Index = () => {
     if (!user) {
       console.log('📝 Showing auth page - No user detected');
       return (
-        <div className="min-h-screen bg-background p-8">
-          <GoogleAuthTest />
-          <div className="mt-8">
-            <AuthPage />
-          </div>
+        <div className="min-h-screen bg-background">
+          <AuthPage />
         </div>
       );
     }

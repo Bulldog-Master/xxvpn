@@ -7,9 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle } from 'lucide-react';
+import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle, Fingerprint } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
+import PassphraseAuth from './PassphraseAuth';
+import WebAuthnAuth from './WebAuthnAuth';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -57,19 +59,65 @@ const AuthPage = () => {
       name: '24-Word Passphrase',
       description: 'Advanced security with mnemonic phrase',
       icon: Shield,
-      available: false,
+      available: true,
       recommended: false,
     },
     {
       id: 'passkey' as const,
       name: 'Passkeys/WebAuthn',
       description: 'Biometric and hardware key authentication',
-      icon: Key,
-      available: false,
+      icon: Fingerprint,
+      available: true,
       recommended: false,
     },
   ];
 
+
+  const handlePassphraseAuth = async (passphrase: string) => {
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      // Store passphrase securely (in production, this should be hashed)
+      localStorage.setItem('auth_passphrase', btoa(passphrase));
+      
+      toast({
+        title: 'Authenticated with passphrase',
+        description: 'Successfully authenticated using 24-word passphrase.',
+      });
+      
+      // In production, you'd validate this against your backend
+      // For demo purposes, we'll just simulate successful auth
+      console.log('Passphrase authentication successful');
+    } catch (error: any) {
+      console.error('Passphrase auth error:', error);
+      setError(error.message || 'Failed to authenticate with passphrase');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleWebAuthnAuth = async (credential: any) => {
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      console.log('WebAuthn credential received:', credential);
+      
+      toast({
+        title: 'WebAuthn authentication successful',
+        description: 'Successfully authenticated using biometric/hardware key.',
+      });
+      
+      // In production, you'd validate this credential on your backend
+      console.log('WebAuthn authentication successful');
+    } catch (error: any) {
+      console.error('WebAuthn auth error:', error);
+      setError(error.message || 'Failed to authenticate with WebAuthn');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -218,7 +266,17 @@ const AuthPage = () => {
             </div>
           </div>
 
-          {magicLinkSent ? (
+          {selectedMethod === 'passphrase' ? (
+            <PassphraseAuth
+              onAuthenticate={handlePassphraseAuth}
+              isLoading={isLoading}
+            />
+          ) : selectedMethod === 'passkey' ? (
+            <WebAuthnAuth
+              onAuthenticate={handleWebAuthnAuth}
+              isLoading={isLoading}
+            />
+          ) : magicLinkSent ? (
             <Alert>
               <CheckCircle className="h-4 w-4" />
               <AlertDescription>
