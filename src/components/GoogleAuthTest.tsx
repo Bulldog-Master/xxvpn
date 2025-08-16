@@ -74,6 +74,9 @@ const GoogleAuthTest = () => {
       if (data?.url) {
         setStatus('Redirecting to Google...');
         console.log('🌐 About to redirect to:', data.url);
+        console.log('🔄 FORCING REDIRECT NOW...');
+        // Force the redirect
+        window.location.href = data.url;
       } else {
         setStatus('No redirect URL received!');
         console.warn('⚠️ No URL in OAuth response');
