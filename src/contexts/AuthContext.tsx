@@ -188,21 +188,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     );
 
-    // Handle OAuth callback on page load
-    console.log('🔍 Checking for OAuth callback...');
+    // Handle OAuth callback by checking URL parameters
+    console.log('🔍 Checking URL for OAuth callback parameters...');
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    
+    const hasOAuthParams = urlParams.has('code') || hashParams.has('access_token') || hashParams.has('id_token');
+    console.log('🔗 OAuth params found:', hasOAuthParams, {
+      urlSearch: window.location.search,
+      urlHash: window.location.hash,
+      hasCode: urlParams.has('code'),
+      hasAccessToken: hashParams.has('access_token')
+    });
+
     const handleOAuthCallback = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      console.log('📞 OAuth callback check:', { 
-        hasSession: !!data.session, 
-        hasUser: !!data.session?.user,
-        error: error?.message 
-      });
-      
-      if (data.session?.user) {
-        console.log('✅ Found OAuth session, setting up user');
-        const userProfile = await fetchUserProfile(data.session.user);
-        setUser(userProfile);
-        setSession(data.session);
+      if (hasOAuthParams) {
+        console.log('🔄 Processing OAuth callback...');
+        try {
+          // Let Supabase handle the OAuth callback
+          const { data, error } = await supabase.auth.getSession();
+          console.log('📞 OAuth session result:', { 
+            hasSession: !!data.session, 
+            hasUser: !!data.session?.user,
+            error: error?.message 
+          });
+          
+          if (error) {
+            console.error('❌ OAuth callback error:', error);
+          }
+        } catch (err) {
+          console.error('❌ OAuth processing error:', err);
+        }
+      } else {
+        // Normal session check
+        const { data } = await supabase.auth.getSession();
+        if (data.session?.user) {
+          console.log('✅ Found existing session');
+          const userProfile = await fetchUserProfile(data.session.user);
+          setUser(userProfile);
+          setSession(data.session);
+        }
       }
       setLoading(false);
     };
