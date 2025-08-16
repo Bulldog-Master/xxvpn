@@ -67,18 +67,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Fetch user profile from profiles table
   const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
     try {
+      console.log('Fetching profile for user ID:', supabaseUser.id);
       const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', supabaseUser.id)
         .maybeSingle();
 
+      console.log('Profile query result:', { profile, error });
+
       if (error) {
         console.error('Error fetching profile:', error);
-        return null;
+        // Create fallback user object
+        return {
+          id: supabaseUser.id,
+          email: supabaseUser.email || '',
+          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+          avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
+          subscriptionTier: 'free' as const,
+          xxCoinBalance: 10,
+          referrals: 0,
+        };
       }
 
       if (profile) {
+        console.log('Profile found, creating user object');
         return {
           id: profile.user_id,
           email: supabaseUser.email || '',
@@ -88,11 +101,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           xxCoinBalance: parseFloat(profile.xx_coin_balance.toString()) || 0,
           referrals: profile.referrals || 0,
         };
+      } else {
+        console.log('No profile found, creating fallback user');
+        // No profile found, create fallback user object
+        return {
+          id: supabaseUser.id,
+          email: supabaseUser.email || '',
+          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+          avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
+          subscriptionTier: 'free' as const,
+          xxCoinBalance: 10,
+          referrals: 0,
+        };
       }
-      return null;
     } catch (error) {
       console.error('Error in fetchUserProfile:', error);
-      return null;
+      // Create fallback user object
+      return {
+        id: supabaseUser.id,
+        email: supabaseUser.email || '',
+        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+        avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
+        subscriptionTier: 'free' as const,
+        xxCoinBalance: 10,
+        referrals: 0,
+      };
     }
   };
 

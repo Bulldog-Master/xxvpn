@@ -5,10 +5,10 @@ import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Index = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, session } = useAuth();
   const { t } = useTranslation();
   
-  
+  console.log('Index render - user:', user, 'loading:', loading, 'session:', !!session);
 
   if (loading) {
     return (
