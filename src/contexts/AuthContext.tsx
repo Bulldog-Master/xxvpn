@@ -135,9 +135,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Check for OAuth return flag first, regardless of URL
     const checkForOAuthReturn = () => {
       const oauthInitiated = sessionStorage.getItem('oauth_initiated');
-      console.log('🔍 Checking OAuth flag:', { oauthInitiated });
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasAuthParams = urlParams.has('code') || urlParams.has('access_token') || urlParams.has('token_type');
       
-      if (oauthInitiated) {
+      console.log('🔍 Checking OAuth flag:', { 
+        oauthInitiated, 
+        hasAuthParams,
+        currentUrl: window.location.href,
+        searchParams: window.location.search 
+      });
+      
+      if (oauthInitiated === 'true' || hasAuthParams) {
         console.log('🔄 Detected OAuth return, starting session polling...');
         sessionStorage.removeItem('oauth_initiated');
         
