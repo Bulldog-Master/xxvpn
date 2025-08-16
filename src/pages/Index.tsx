@@ -6,40 +6,57 @@ import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Index = () => {
-  const { user, loading, session } = useAuth();
-  const { t } = useTranslation();
+  console.log('🚀 Index component starting...');
   
-  console.log('🏠 Index render:', {
-    hasUser: !!user,
-    userEmail: user?.email,
-    loading,
-    hasSession: !!session,
-    timestamp: new Date().toISOString()
-  });
+  try {
+    const { user, loading, session } = useAuth();
+    const { t } = useTranslation();
+    
+    console.log('🏠 Index render:', {
+      hasUser: !!user,
+      userEmail: user?.email,
+      loading,
+      hasSession: !!session,
+      timestamp: new Date().toISOString()
+    });
 
-  if (loading) {
+    if (loading) {
+      console.log('📝 Showing loading state');
+      return (
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
+            <p className="text-muted-foreground">{t('common.loading')}</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (!user) {
+      console.log('📝 Showing auth page');
+      return (
+        <div className="min-h-screen bg-background p-8">
+          <GoogleAuthTest />
+          <div className="mt-8">
+            <AuthPage />
+          </div>
+        </div>
+      );
+    }
+
+    console.log('📝 Showing VPN dashboard');
+    return <VPNDashboard />;
+  } catch (error) {
+    console.error('❌ Error in Index component:', error);
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">{t('common.loading')}</p>
+          <h1 className="text-2xl font-bold mb-4">Error Loading App</h1>
+          <p className="text-muted-foreground">Please check console for details</p>
         </div>
       </div>
     );
   }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background p-8">
-        <GoogleAuthTest />
-        <div className="mt-8">
-          <AuthPage />
-        </div>
-      </div>
-    );
-  }
-
-  return <VPNDashboard />;
 };
 
 export default Index;
