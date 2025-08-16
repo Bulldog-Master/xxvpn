@@ -132,7 +132,74 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     console.log('🔄 AuthProvider useEffect starting...');
     
-    // Set up auth state listener FIRST
+    // Check if we just returned from OAuth
+    const checkOAuthReturn = () => {
+      const oauthInitiated = sessionStorage.getItem('oauth_initiated');
+      if (oauthInitiated) {
+        console.log('🔄 Detected OAuth return, starting session polling...');
+        sessionStorage.removeItem('oauth_initiated');
+        
+        // Poll for session
+        let attempts = 0;
+        const maxAttempts = 20; // 10 seconds
+        
+        const pollForSession = async () => {
+          attempts++;
+          console.log(`🔍 Polling for session attempt ${attempts}/${maxAttempts}...`);
+          
+          try {
+            const { data, error } = await supabase.auth.getSession();
+            console.log('📊 Session poll result:', {
+              hasSession: !!data.session,
+              hasUser: !!data.session?.user,
+              error: error?.message
+            });
+            
+            if (data.session?.user) {
+              console.log('✅ Session found via polling!');
+              setSession(data.session);
+              
+              try {
+                const userProfile = await fetchUserProfile(data.session.user);
+                setUser(userProfile);
+              } catch (profileError) {
+                console.error('Profile fetch error, using fallback:', profileError);
+                setUser({
+                  id: data.session.user.id,
+                  email: data.session.user.email || '',
+                  fullName: data.session.user.user_metadata?.full_name || data.session.user.email?.split('@')[0] || '',
+                  avatarUrl: data.session.user.user_metadata?.avatar_url || '',
+                  subscriptionTier: 'free',
+                  xxCoinBalance: 10,
+                  referrals: 0,
+                });
+              }
+              
+              setLoading(false);
+              return;
+            }
+            
+            if (attempts < maxAttempts) {
+              setTimeout(pollForSession, 500);
+            } else {
+              console.log('⚠️ Session polling timed out');
+              setLoading(false);
+            }
+          } catch (error) {
+            console.error('Polling error:', error);
+            setLoading(false);
+          }
+        };
+        
+        pollForSession();
+        return;
+      }
+    };
+    
+    // First check for OAuth return
+    checkOAuthReturn();
+    
+    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('🔔 Auth state change:', event);
@@ -146,173 +213,49 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setSession(session);
         
         if (event === 'SIGNED_IN' && session?.user) {
-          console.log('✅ User signed in successfully!');
+          console.log('✅ User signed in via auth state change!');
           setLoading(true);
           
-          // Defer profile fetching to prevent deadlocks
-          setTimeout(async () => {
-            try {
-              console.log('👤 Fetching profile for user:', session.user.id);
-              const userProfile = await fetchUserProfile(session.user);
-              console.log('✅ Profile fetched successfully:', userProfile);
-              setUser(userProfile);
-              setLoading(false);
-              
-              // Clear URL parameters after successful login
-              window.history.replaceState({}, document.title, window.location.pathname);
-            } catch (error) {
-              console.error('❌ Error fetching profile:', error);
-              // Fallback: create basic user object from auth data
-              const fallbackUser = {
-                id: session.user.id,
-                email: session.user.email || '',
-                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-                avatarUrl: session.user.user_metadata?.avatar_url || '',
-                subscriptionTier: 'free' as const,
-                xxCoinBalance: 10,
-                referrals: 0,
-              };
-              console.log('🔄 Using fallback user:', fallbackUser);
-              setUser(fallbackUser);
-              setLoading(false);
-              
-              // Clear URL parameters even with fallback
-              window.history.replaceState({}, document.title, window.location.pathname);
-            }
-          }, 100);
+          try {
+            const userProfile = await fetchUserProfile(session.user);
+            setUser(userProfile);
+            setLoading(false);
+          } catch (error) {
+            console.error('Profile fetch error:', error);
+            setUser({
+              id: session.user.id,
+              email: session.user.email || '',
+              fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+              avatarUrl: session.user.user_metadata?.avatar_url || '',
+              subscriptionTier: 'free',
+              xxCoinBalance: 10,
+              referrals: 0,
+            });
+            setLoading(false);
+          }
         } else if (event === 'SIGNED_OUT' || !session) {
           console.log('🚪 User signed out or no session');
           setUser(null);
-          setLoading(false);
-        } else if (event === 'TOKEN_REFRESHED' && session?.user) {
-          console.log('🔄 Token refreshed, updating session');
-          setLoading(false);
-        } else {
-          console.log('🔄 Other auth event:', event);
           setLoading(false);
         }
       }
     );
 
-    // Enhanced OAuth callback handling
-    console.log('🔍 Enhanced OAuth callback detection...');
-    console.log('🌐 Full URL:', window.location.href);
-    console.log('🔗 Search params:', window.location.search);
-    console.log('🔗 Hash params:', window.location.hash);
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    
-    // Check for various OAuth callback indicators
-    const hasAuthCode = urlParams.has('code');
-    const hasAccessToken = hashParams.has('access_token') || urlParams.has('access_token');
-    const hasIdToken = hashParams.has('id_token') || urlParams.has('id_token');
-    const hasError = urlParams.has('error') || hashParams.has('error');
-    const hasState = urlParams.has('state') || hashParams.has('state');
-    
-    const isOAuthCallback = hasAuthCode || hasAccessToken || hasIdToken || hasError || hasState;
-    
-    console.log('🔍 OAuth detection:', {
-      hasAuthCode,
-      hasAccessToken, 
-      hasIdToken,
-      hasError,
-      hasState,
-      isOAuthCallback,
-      authCode: urlParams.get('code') || 'none',
-      error: urlParams.get('error') || hashParams.get('error') || 'none'
-    });
-
-    const handleOAuthCallback = async () => {
-      if (isOAuthCallback) {
-        console.log('🔄 OAuth callback detected! Processing...');
-        setLoading(true);
-        
-        try {
-          // Force a session refresh to process the callback
-          console.log('🔄 Forcing session refresh...');
-          const { data, error } = await supabase.auth.refreshSession();
-          console.log('📞 Session refresh result:', { 
-            hasSession: !!data.session, 
-            hasUser: !!data.session?.user,
-            error: error?.message 
+    // Also check for existing session if no OAuth return
+    if (!sessionStorage.getItem('oauth_initiated')) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          console.log('✅ Found existing session on mount');
+          setSession(session);
+          fetchUserProfile(session.user).then(userProfile => {
+            setUser(userProfile);
+            setLoading(false);
           });
-          
-          if (data.session?.user) {
-            console.log('✅ OAuth callback successful! Setting up user...');
-            const userProfile = await fetchUserProfile(data.session.user);
-            setUser(userProfile);
-            setSession(data.session);
-            
-            // Clean up URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-          } else {
-            console.log('⚠️ No session after refresh, trying getSession...');
-            const { data: sessionData } = await supabase.auth.getSession();
-            if (sessionData.session?.user) {
-              const userProfile = await fetchUserProfile(sessionData.session.user);
-              setUser(userProfile);
-              setSession(sessionData.session);
-              window.history.replaceState({}, document.title, window.location.pathname);
-            }
-          }
-        } catch (err) {
-          console.error('❌ OAuth callback processing error:', err);
-        }
-        
-        setLoading(false);
-      } else {
-        // Check if we just returned from OAuth
-        const oauthInitiated = sessionStorage.getItem('oauth_initiated');
-        if (oauthInitiated) {
-          console.log('🔄 OAuth was initiated, polling for session...');
-          sessionStorage.removeItem('oauth_initiated');
-          
-          // Poll for session every 500ms for up to 10 seconds
-          let attempts = 0;
-          const maxAttempts = 20;
-          
-          const pollForSession = async () => {
-            attempts++;
-            console.log(`🔍 Polling attempt ${attempts}/${maxAttempts}...`);
-            
-            const { data } = await supabase.auth.getSession();
-            
-            if (data.session?.user) {
-              console.log('✅ Session found via polling!');
-              const userProfile = await fetchUserProfile(data.session.user);
-              setUser(userProfile);
-              setSession(data.session);
-              setLoading(false);
-              return;
-            }
-            
-            if (attempts < maxAttempts) {
-              setTimeout(pollForSession, 500);
-            } else {
-              console.log('⚠️ Session polling timed out');
-              setLoading(false);
-            }
-          };
-          
-          pollForSession();
         } else {
-          // Normal session check
-          console.log('📄 No OAuth callback, checking existing session...');
-          const { data } = await supabase.auth.getSession();
-          if (data.session?.user) {
-            console.log('✅ Found existing session');
-            const userProfile = await fetchUserProfile(data.session.user);
-            setUser(userProfile);
-            setSession(data.session);
-          }
           setLoading(false);
         }
-      }
-    };
-
-    // Process callback
-    handleOAuthCallback();
+      });
+    }
 
     return () => subscription.unsubscribe();
   }, []);
