@@ -336,11 +336,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       console.log('🔵 Starting Google OAuth...');
       
-      // Clean up any existing auth state first
+      // ROBUST cleanup to prevent limbo states
       cleanupAuthState();
       
-      // Use a simpler redirect URL
-      const redirectUrl = window.location.origin;
+      // Attempt global sign out first
+      try {
+        console.log('🚪 Performing global sign out first...');
+        await supabase.auth.signOut({ scope: 'global' });
+        console.log('✅ Global sign out completed');
+      } catch (err) {
+        console.log('⚠️ Global sign out failed, continuing anyway:', err);
+      }
+      
+      // Use the exact redirect URL from your preview link
+      const redirectUrl = `${window.location.origin}/`;
       console.log('🔗 Redirect URL:', redirectUrl);
       
       console.log('🚀 Initiating OAuth with Google...');
@@ -368,8 +377,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       if (data?.url) {
         console.log('🌐 Redirecting to OAuth URL...');
-        // Don't set the flag - let's see if we can detect the return differently
-        // Just redirect directly
         window.location.href = data.url;
       }
       
