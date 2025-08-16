@@ -72,16 +72,21 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       const hostname = window.location.hostname;
       let rpId = hostname;
       
-      // Handle Lovable preview domains and subdomains
-      if (hostname.includes('.lovableproject.com')) {
-        rpId = 'lovableproject.com';
+      // Handle different domain types more carefully
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        rpId = hostname; // Keep localhost as-is
+      } else if (hostname.includes('.lovableproject.com') || hostname.includes('.lovable.app')) {
+        // For Lovable domains, use the full hostname instead of parent domain
+        rpId = hostname;
       } else if (hostname.includes('.')) {
-        // For other subdomains, use the parent domain
+        // For other subdomains, try parent domain
         const parts = hostname.split('.');
         if (parts.length > 2) {
           rpId = parts.slice(-2).join('.');
         }
       }
+      
+      console.log('WebAuthn registration - domain info:', { hostname, rpId });
 
       const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
         challenge,
@@ -130,11 +135,23 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
           description: t('auth.webauthn.registeredDescription'),
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('WebAuthn registration error:', error);
+      
+      let errorMessage = t('auth.webauthn.registrationError');
+      if (error.name === 'NotSupportedError') {
+        errorMessage = 'WebAuthn not supported on this device/browser';
+      } else if (error.name === 'SecurityError') {
+        errorMessage = 'Security error - check if site is served over HTTPS';
+      } else if (error.name === 'InvalidStateError') {
+        errorMessage = 'Authenticator already registered';
+      } else if (error.name === 'NotAllowedError') {
+        errorMessage = 'User cancelled or operation timed out';
+      }
+      
       toast({
         title: t('common.error'),
-        description: t('auth.webauthn.registrationError'),
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
@@ -161,8 +178,10 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       const hostname = window.location.hostname;
       let rpId = hostname;
       
-      if (hostname.includes('.lovableproject.com')) {
-        rpId = 'lovableproject.com';
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        rpId = hostname;
+      } else if (hostname.includes('.lovableproject.com') || hostname.includes('.lovable.app')) {
+        rpId = hostname;
       } else if (hostname.includes('.')) {
         const parts = hostname.split('.');
         if (parts.length > 2) {
