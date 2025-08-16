@@ -50,20 +50,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const cleanupAuthState = () => {
     try {
       localStorage.removeItem('supabase.auth.token');
+      // Remove all Supabase auth keys from localStorage
       Object.keys(localStorage).forEach((key) => {
         if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
           localStorage.removeItem(key);
         }
       });
-      Object.keys(sessionStorage).forEach((key) => {
+      // Also clear our custom auth flags
+      localStorage.removeItem('authenticated_passphrase');
+      localStorage.removeItem('authenticated_webauthn');
+      localStorage.removeItem('auth_passphrase');
+      localStorage.removeItem('webauthn_credentials');
+      
+      // Remove from sessionStorage if in use
+      Object.keys(sessionStorage || {}).forEach((key) => {
         if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
           sessionStorage.removeItem(key);
         }
       });
-      // Remove legacy app-specific user storage
-      localStorage.removeItem('xxvpn_user');
-      sessionStorage.removeItem('xxvpn_session');
-    } catch {}
+    } catch (error) {
+      console.error('Error cleaning auth state:', error);
+    }
   };
 
   const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
@@ -251,10 +258,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Check for alternative authentication methods
   const checkAlternativeAuth = () => {
-    // Check for passphrase authentication
-    const storedPassphrase = localStorage.getItem('auth_passphrase');
-    if (storedPassphrase) {
-      console.log('🔑 Found stored passphrase, restoring session...');
+    // Only check for AUTHENTICATED sessions, not just stored credentials
+    const authenticatedPassphrase = localStorage.getItem('authenticated_passphrase');
+    if (authenticatedPassphrase) {
+      console.log('🔑 Found authenticated passphrase session, restoring...');
       const passphraseUser = {
         id: 'passphrase_user',
         email: 'passphrase@xxvpn.local',
@@ -268,10 +275,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return;
     }
 
-    // Check for WebAuthn credentials
-    const webauthnCredentials = localStorage.getItem('webauthn_credentials');
-    if (webauthnCredentials) {
-      console.log('🔐 Found WebAuthn credentials, restoring session...');
+    // Only check for AUTHENTICATED WebAuthn sessions
+    const authenticatedWebAuthn = localStorage.getItem('authenticated_webauthn');
+    if (authenticatedWebAuthn) {
+      console.log('🔐 Found authenticated WebAuthn session, restoring...');
       const webauthnUser = {
         id: 'webauthn_user',
         email: 'webauthn@xxvpn.local',
@@ -414,8 +421,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error('Passphrase must contain exactly 24 words');
       }
       
-      // Store passphrase securely (in production, hash this)
+      // Store passphrase for reference (not for auto-login)
       localStorage.setItem('auth_passphrase', btoa(passphrase));
+      // ONLY set authenticated flag after successful authentication
+      localStorage.setItem('authenticated_passphrase', 'true');
       
       // Create a mock user for passphrase auth (in production, validate against backend)
       const passphraseUser = {
@@ -460,6 +469,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       // In production, validate the credential on your backend
       console.log('WebAuthn credential:', credential);
+      
+      // ONLY set authenticated flag after successful authentication
+      localStorage.setItem('authenticated_webauthn', 'true');
       
       // Create a mock user for WebAuthn auth
       const webauthnUser = {
