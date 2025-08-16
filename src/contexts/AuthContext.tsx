@@ -262,16 +262,52 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
         setLoading(false);
       } else {
-        // Normal session check
-        console.log('📄 No OAuth callback, checking existing session...');
-        const { data } = await supabase.auth.getSession();
-        if (data.session?.user) {
-          console.log('✅ Found existing session');
-          const userProfile = await fetchUserProfile(data.session.user);
-          setUser(userProfile);
-          setSession(data.session);
+        // Check if we just returned from OAuth
+        const oauthInitiated = sessionStorage.getItem('oauth_initiated');
+        if (oauthInitiated) {
+          console.log('🔄 OAuth was initiated, polling for session...');
+          sessionStorage.removeItem('oauth_initiated');
+          
+          // Poll for session every 500ms for up to 10 seconds
+          let attempts = 0;
+          const maxAttempts = 20;
+          
+          const pollForSession = async () => {
+            attempts++;
+            console.log(`🔍 Polling attempt ${attempts}/${maxAttempts}...`);
+            
+            const { data } = await supabase.auth.getSession();
+            
+            if (data.session?.user) {
+              console.log('✅ Session found via polling!');
+              const userProfile = await fetchUserProfile(data.session.user);
+              setUser(userProfile);
+              setSession(data.session);
+              setLoading(false);
+              return;
+            }
+            
+            if (attempts < maxAttempts) {
+              setTimeout(pollForSession, 500);
+            } else {
+              console.log('⚠️ Session polling timed out');
+              setLoading(false);
+            }
+          };
+          
+          pollForSession();
+        } else {
+          // Normal session check
+          console.log('📄 No OAuth callback, checking existing session...');
+          const { data } = await supabase.auth.getSession();
+          if (data.session?.user) {
+            console.log('✅ Found existing session');
+            const userProfile = await fetchUserProfile(data.session.user);
+            setUser(userProfile);
+            setSession(data.session);
+          }
+          setLoading(false);
         }
-        setLoading(false);
       }
     };
 
@@ -351,23 +387,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Clean up any existing auth state first
       cleanupAuthState();
       
-      // Try to sign out globally first
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-        console.log('✅ Global signout completed');
-      } catch (err) {
-        console.log('⚠️ Global signout failed, continuing...', err);
-      }
-      
       const redirectUrl = `${window.location.origin}/`;
       console.log('🔗 Redirect URL:', redirectUrl);
-      
-      // Test Supabase connection first
-      const { data: testSession, error: sessionError } = await supabase.auth.getSession();
-      console.log('🔍 Supabase connection test:', { 
-        connected: !sessionError, 
-        error: sessionError?.message 
-      });
       
       console.log('🚀 Initiating OAuth with Google...');
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -392,12 +413,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw error;
       }
       
-      if (!data?.url) {
-        console.error('❌ No OAuth URL returned from Supabase');
-        throw new Error('No OAuth URL returned');
-      }
+      // After OAuth initiation, set up session polling
+      console.log('⏰ Setting up session polling for OAuth return...');
       
-      console.log('✅ OAuth URL generated, redirecting...');
+      // Store a flag that we initiated OAuth
+      sessionStorage.setItem('oauth_initiated', 'true');
+      
     } catch (error) {
       console.error('💥 Google OAuth error:', error);
       throw error;
