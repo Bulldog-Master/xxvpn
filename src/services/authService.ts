@@ -89,6 +89,18 @@ export const signInWithGoogleService = async () => {
   }
 };
 
+export const resetPassword = async (email: string) => {
+  const redirectUrl = `${window.location.origin}/reset-password`;
+  
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectUrl,
+  });
+
+  if (error) throw error;
+  
+  return { success: true };
+};
+
 export const signInWithPassphraseService = async (passphrase: string): Promise<{ user: User; session: MockSession }> => {
   // Validate passphrase (24 words)
   const words = passphrase.trim().split(/\s+/);

@@ -22,6 +22,7 @@ export interface AuthContextType {
   signInWithWebAuthn: (credential: any) => Promise<void>;
   signOut: () => Promise<void>;
   logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ success: boolean }>;
   updateUser: (updates: Partial<User>) => Promise<void>;
 }
 

@@ -8,7 +8,8 @@ import {
   signInWithPassphraseService,
   signInWithWebAuthnService,
   signOutService,
-  updateUserProfile
+  updateUserProfile,
+  resetPassword
 } from '@/services/authService';
 
 export const useAuthMethods = (
@@ -84,6 +85,10 @@ export const useAuthMethods = (
     }
   };
 
+  const resetPasswordMethod = async (email: string) => {
+    return await resetPassword(email);
+  };
+
   const updateUser = async (updates: Partial<User>) => {
     if (user && session?.user) {
       try {
@@ -106,6 +111,7 @@ export const useAuthMethods = (
     signInWithWebAuthn,
     signOut,
     logout: signOut,
+    resetPassword: resetPasswordMethod,
     updateUser,
   };
 };
