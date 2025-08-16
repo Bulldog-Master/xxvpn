@@ -188,19 +188,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     );
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session?.user) {
-        setTimeout(async () => {
-          const userProfile = await fetchUserProfile(session.user);
-          setUser(userProfile);
-          setLoading(false);
-        }, 0);
-      } else {
-        setLoading(false);
+    // Handle OAuth callback on page load
+    console.log('🔍 Checking for OAuth callback...');
+    const handleOAuthCallback = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      console.log('📞 OAuth callback check:', { 
+        hasSession: !!data.session, 
+        hasUser: !!data.session?.user,
+        error: error?.message 
+      });
+      
+      if (data.session?.user) {
+        console.log('✅ Found OAuth session, setting up user');
+        const userProfile = await fetchUserProfile(data.session.user);
+        setUser(userProfile);
+        setSession(data.session);
       }
-    });
+      setLoading(false);
+    };
+
+    // Check for OAuth callback immediately
+    handleOAuthCallback();
 
     return () => subscription.unsubscribe();
   }, []);
