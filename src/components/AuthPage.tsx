@@ -17,7 +17,7 @@ type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
   console.log('🔵 AuthPage component rendering...');
-  const { signIn, signUp, signInWithMagicLink, signInWithGoogle, loading } = useAuth();
+  const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   
@@ -78,17 +78,11 @@ const AuthPage = () => {
     setError('');
     
     try {
-      // Store passphrase securely (in production, this should be hashed)
-      localStorage.setItem('auth_passphrase', btoa(passphrase));
-      
+      await signInWithPassphrase(passphrase);
       toast({
         title: 'Authenticated with passphrase',
         description: 'Successfully authenticated using 24-word passphrase.',
       });
-      
-      // In production, you'd validate this against your backend
-      // For demo purposes, we'll just simulate successful auth
-      console.log('Passphrase authentication successful');
     } catch (error: any) {
       console.error('Passphrase auth error:', error);
       setError(error.message || 'Failed to authenticate with passphrase');
@@ -102,15 +96,11 @@ const AuthPage = () => {
     setError('');
     
     try {
-      console.log('WebAuthn credential received:', credential);
-      
+      await signInWithWebAuthn(credential);
       toast({
         title: 'WebAuthn authentication successful',
         description: 'Successfully authenticated using biometric/hardware key.',
       });
-      
-      // In production, you'd validate this credential on your backend
-      console.log('WebAuthn authentication successful');
     } catch (error: any) {
       console.error('WebAuthn auth error:', error);
       setError(error.message || 'Failed to authenticate with WebAuthn');

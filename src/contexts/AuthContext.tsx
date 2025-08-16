@@ -20,6 +20,8 @@ interface AuthContextType {
   signUp: (email: string, password: string, fullName?: string) => Promise<any>;
   signInWithMagicLink: (email: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  signInWithPassphrase: (passphrase: string) => Promise<void>;
+  signInWithWebAuthn: (credential: any) => Promise<void>;
   signOut: () => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (updates: Partial<User>) => Promise<void>;
@@ -235,7 +237,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           console.log('⚠️ Profile fetch failed for existing session:', error);
         });
       } else {
-        console.log('❌ No existing session found on direct check');
+        console.log('❌ No existing session found, checking alternative auth methods...');
+        checkAlternativeAuth();
         setLoading(false);
       }
     });
@@ -245,6 +248,43 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       subscription.unsubscribe();
     };
   }, []);
+
+  // Check for alternative authentication methods
+  const checkAlternativeAuth = () => {
+    // Check for passphrase authentication
+    const storedPassphrase = localStorage.getItem('auth_passphrase');
+    if (storedPassphrase) {
+      console.log('🔑 Found stored passphrase, restoring session...');
+      const passphraseUser = {
+        id: 'passphrase_user',
+        email: 'passphrase@xxvpn.local',
+        fullName: 'Passphrase User',
+        avatarUrl: '',
+        subscriptionTier: 'premium' as const,
+        xxCoinBalance: 50,
+        referrals: 0,
+      };
+      setUser(passphraseUser);
+      return;
+    }
+
+    // Check for WebAuthn credentials
+    const webauthnCredentials = localStorage.getItem('webauthn_credentials');
+    if (webauthnCredentials) {
+      console.log('🔐 Found WebAuthn credentials, restoring session...');
+      const webauthnUser = {
+        id: 'webauthn_user',
+        email: 'webauthn@xxvpn.local',
+        fullName: 'WebAuthn User',
+        avatarUrl: '',
+        subscriptionTier: 'enterprise' as const,
+        xxCoinBalance: 100,
+        referrals: 0,
+      };
+      setUser(webauthnUser);
+      return;
+    }
+  };
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -364,6 +404,100 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const signInWithPassphrase = async (passphrase: string) => {
+    try {
+      console.log('🔑 Starting passphrase authentication...');
+      
+      // Validate passphrase (24 words)
+      const words = passphrase.trim().split(/\s+/);
+      if (words.length !== 24) {
+        throw new Error('Passphrase must contain exactly 24 words');
+      }
+      
+      // Store passphrase securely (in production, hash this)
+      localStorage.setItem('auth_passphrase', btoa(passphrase));
+      
+      // Create a mock user for passphrase auth (in production, validate against backend)
+      const passphraseUser = {
+        id: 'passphrase_' + Date.now(),
+        email: 'passphrase@xxvpn.local',
+        fullName: 'Passphrase User',
+        avatarUrl: '',
+        subscriptionTier: 'premium' as const,
+        xxCoinBalance: 50,
+        referrals: 0,
+      };
+      
+      // Create a mock session
+      const mockSession = {
+        access_token: 'mock_passphrase_token',
+        refresh_token: 'mock_refresh_token',
+        expires_in: 3600,
+        expires_at: Date.now() + 3600000,
+        user: {
+          id: passphraseUser.id,
+          email: passphraseUser.email,
+          user_metadata: {
+            full_name: passphraseUser.fullName,
+          }
+        }
+      } as any;
+      
+      setSession(mockSession);
+      setUser(passphraseUser);
+      setLoading(false);
+      
+      console.log('✅ Passphrase authentication successful');
+    } catch (error) {
+      console.error('❌ Passphrase authentication error:', error);
+      throw error;
+    }
+  };
+
+  const signInWithWebAuthn = async (credential: any) => {
+    try {
+      console.log('🔐 Starting WebAuthn authentication...');
+      
+      // In production, validate the credential on your backend
+      console.log('WebAuthn credential:', credential);
+      
+      // Create a mock user for WebAuthn auth
+      const webauthnUser = {
+        id: 'webauthn_' + Date.now(),
+        email: 'webauthn@xxvpn.local',
+        fullName: 'WebAuthn User',
+        avatarUrl: '',
+        subscriptionTier: 'enterprise' as const,
+        xxCoinBalance: 100,
+        referrals: 0,
+      };
+      
+      // Create a mock session
+      const mockSession = {
+        access_token: 'mock_webauthn_token',
+        refresh_token: 'mock_refresh_token',
+        expires_in: 3600,
+        expires_at: Date.now() + 3600000,
+        user: {
+          id: webauthnUser.id,
+          email: webauthnUser.email,
+          user_metadata: {
+            full_name: webauthnUser.fullName,
+          }
+        }
+      } as any;
+      
+      setSession(mockSession);
+      setUser(webauthnUser);
+      setLoading(false);
+      
+      console.log('✅ WebAuthn authentication successful');
+    } catch (error) {
+      console.error('❌ WebAuthn authentication error:', error);
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     try {
       cleanupAuthState();
@@ -411,6 +545,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signUp,
     signInWithMagicLink,
     signInWithGoogle,
+    signInWithPassphrase,
+    signInWithWebAuthn,
     signOut,
     logout: signOut,
     updateUser,
