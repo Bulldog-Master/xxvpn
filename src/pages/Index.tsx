@@ -13,6 +13,24 @@ const Index = () => {
     const { user, loading, session } = useAuth();
     const { t } = useTranslation();
     
+    // Log URL details for OAuth debugging
+    React.useEffect(() => {
+      const currentUrl = window.location.href;
+      const hasAuthParams = currentUrl.includes('access_token') || currentUrl.includes('code=') || currentUrl.includes('error=');
+      
+      console.log('🔗 URL Analysis on Index mount:', {
+        currentUrl,
+        hasAuthParams,
+        search: window.location.search,
+        hash: window.location.hash,
+        pathname: window.location.pathname
+      });
+      
+      if (hasAuthParams) {
+        console.log('🔑 OAuth callback detected - URL contains auth parameters');
+      }
+    }, []);
+    
     console.log('🏠 Index render:', {
       hasUser: !!user,
       userEmail: user?.email,
