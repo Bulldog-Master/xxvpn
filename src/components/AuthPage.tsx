@@ -131,9 +131,16 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         const data = await signUpWithEmail(email, password, fullName);
         
-        // Check if this was a repeated signup (user already exists)
-        // Supabase returns success but no session for existing users
-        if (data && !data.session && !data.user?.email_confirmed_at) {
+        console.log('Signup response:', { 
+          hasUser: !!data.user, 
+          hasSession: !!data.session,
+          userConfirmed: data.user?.email_confirmed_at,
+          userId: data.user?.id 
+        });
+        
+        // For legitimate new signups, we get a user object even without session
+        // Only flag as duplicate if we get no user at all
+        if (!data.user) {
           setError('An account with this email already exists. Please sign in instead.');
           return;
         }
