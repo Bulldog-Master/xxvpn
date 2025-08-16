@@ -70,11 +70,28 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       const challenge = generateChallenge();
       const userId = crypto.getRandomValues(new Uint8Array(32));
 
+      // Get the effective domain for RP ID
+      const hostname = window.location.hostname;
+      let rpId = hostname;
+      
+      // Handle Lovable preview domains and subdomains
+      if (hostname.includes('.lovableproject.com')) {
+        rpId = 'lovableproject.com';
+      } else if (hostname.includes('.')) {
+        // For other subdomains, use the parent domain
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+          rpId = parts.slice(-2).join('.');
+        }
+      }
+
+      console.log('🔐 WebAuthn config:', { hostname, rpId });
+
       const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
         challenge,
         rp: {
           name: 'xxVPN',
-          id: window.location.hostname,
+          id: rpId,
         },
         user: {
           id: userId,
@@ -86,12 +103,12 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
           { alg: -257, type: 'public-key' }, // RS256
         ],
         authenticatorSelection: {
-          authenticatorAttachment: 'platform',
-          userVerification: 'required',
+          // Remove platform requirement to allow more authenticators
+          userVerification: 'preferred', // Changed from 'required' to 'preferred'
           residentKey: 'preferred',
         },
         timeout: 60000,
-        attestation: 'direct',
+        attestation: 'none', // Changed from 'direct' to 'none' for better compatibility
       };
 
       const credential = await navigator.credentials.create({
@@ -146,14 +163,28 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       const credentialData = JSON.parse(storedCredentials);
       const challenge = generateChallenge();
 
+      // Get the effective domain for RP ID (same logic as registration)
+      const hostname = window.location.hostname;
+      let rpId = hostname;
+      
+      if (hostname.includes('.lovableproject.com')) {
+        rpId = 'lovableproject.com';
+      } else if (hostname.includes('.')) {
+        const parts = hostname.split('.');
+        if (parts.length > 2) {
+          rpId = parts.slice(-2).join('.');
+        }
+      }
+
       const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
         challenge,
         allowCredentials: [{
           id: base64ToArrayBuffer(credentialData.rawId),
           type: 'public-key',
         }],
-        userVerification: 'required',
+        userVerification: 'preferred', // Changed from 'required' to 'preferred'
         timeout: 60000,
+        rpId: rpId, // Add RP ID for consistency
       };
 
       const assertion = await navigator.credentials.get({
