@@ -132,9 +132,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     console.log('🔄 AuthProvider useEffect starting...');
     
-    // Check if we just returned from OAuth
-    const checkOAuthReturn = () => {
+    // ALWAYS check for OAuth return flag first, regardless of URL
+    const checkForOAuthReturn = async () => {
       const oauthInitiated = sessionStorage.getItem('oauth_initiated');
+      console.log('🔍 Checking OAuth flag:', { oauthInitiated });
+      
       if (oauthInitiated) {
         console.log('🔄 Detected OAuth return, starting session polling...');
         sessionStorage.removeItem('oauth_initiated');
@@ -197,7 +199,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
     
     // First check for OAuth return
-    checkOAuthReturn();
+    checkForOAuthReturn();
     
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
