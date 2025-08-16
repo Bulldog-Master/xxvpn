@@ -146,11 +146,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log('Profile fetched:', userProfile);
             setUser(userProfile);
             setLoading(false);
-            
-            // Force page reload to ensure clean state
-            if (window.location.pathname === '/') {
-              window.location.reload();
-            }
           } catch (error) {
             console.error('Error in auth state change:', error);
             // Fallback: create basic user object from auth data
