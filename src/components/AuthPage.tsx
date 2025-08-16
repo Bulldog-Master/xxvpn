@@ -138,7 +138,22 @@ const AuthPage = () => {
       }
     } catch (error: any) {
       console.error('Sign up error:', error);
-      setError(error.message || 'Failed to create account');
+      
+      // Handle specific Supabase error messages
+      let errorMessage = 'Failed to create account';
+      if (error.message?.includes('already registered')) {
+        errorMessage = 'An account with this email already exists. Please sign in instead.';
+      } else if (error.message?.includes('User already registered')) {
+        errorMessage = 'This email is already registered. Please sign in instead.';
+      } else if (error.message?.includes('email')) {
+        errorMessage = 'Invalid email address. Please check and try again.';
+      } else if (error.message?.includes('password')) {
+        errorMessage = 'Password must be at least 6 characters long.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
