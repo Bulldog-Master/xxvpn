@@ -64,68 +64,75 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch {}
   };
 
-  // Fetch user profile from profiles table
   const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
     try {
-      console.log('Fetching profile for user ID:', supabaseUser.id);
+      console.log('🔍 Fetching profile for user ID:', supabaseUser.id);
+      console.log('🔍 User metadata:', supabaseUser.user_metadata);
+      
       const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', supabaseUser.id)
         .maybeSingle();
 
-      console.log('Profile query result:', { profile, error });
+      console.log('📊 Profile query result:', { profile, error: error?.message });
 
       if (error) {
-        console.error('Error fetching profile:', error);
-        // Create fallback user object
-        return {
+        console.error('❌ Database error fetching profile:', error);
+        // Create fallback user object when profile fetch fails
+        const fallbackUser = {
           id: supabaseUser.id,
           email: supabaseUser.email || '',
-          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
           avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
           subscriptionTier: 'free' as const,
           xxCoinBalance: 10,
           referrals: 0,
         };
+        console.log('👤 Created fallback user due to error:', fallbackUser);
+        return fallbackUser;
       }
 
       if (profile) {
-        console.log('Profile found, creating user object');
+        console.log('✅ Profile found in database, creating user object');
         return {
           id: profile.user_id,
           email: supabaseUser.email || '',
           fullName: profile.display_name || '',
           avatarUrl: profile.avatar_url || '',
           subscriptionTier: profile.subscription_tier as 'free' | 'premium' | 'enterprise',
-          xxCoinBalance: parseFloat(profile.xx_coin_balance.toString()) || 0,
+          xxCoinBalance: parseFloat(profile.xx_coin_balance?.toString() || '0'),
           referrals: profile.referrals || 0,
         };
       } else {
-        console.log('No profile found, creating fallback user');
+        console.log('⚠️ No profile found in database, creating fallback user');
         // No profile found, create fallback user object
-        return {
+        const fallbackUser = {
           id: supabaseUser.id,
           email: supabaseUser.email || '',
-          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+          fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
           avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
           subscriptionTier: 'free' as const,
           xxCoinBalance: 10,
           referrals: 0,
         };
+        console.log('👤 Created fallback user (no profile):', fallbackUser);
+        return fallbackUser;
       }
     } catch (error) {
-      console.error('Error in fetchUserProfile:', error);
-      // Create fallback user object
-      return {
+      console.error('💥 Exception in fetchUserProfile:', error);
+      // Create fallback user object on any exception
+      const fallbackUser = {
         id: supabaseUser.id,
         email: supabaseUser.email || '',
-        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || '',
+        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'User',
         avatarUrl: supabaseUser.user_metadata?.avatar_url || supabaseUser.user_metadata?.picture || '',
         subscriptionTier: 'free' as const,
         xxCoinBalance: 10,
         referrals: 0,
       };
+      console.log('👤 Created fallback user due to exception:', fallbackUser);
+      return fallbackUser;
     }
   };
 
@@ -139,38 +146,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.log('📄 Session details:', {
           hasSession: !!session,
           hasUser: !!session?.user,
-          userEmail: session?.user?.email,
+          userEmail: session?.user?.email || 'undefined',
           accessToken: session?.access_token ? 'present' : 'missing',
-          userId: session?.user?.id
+          userId: session?.user?.id || 'undefined'
         });
-        
+
         setSession(session);
         
-        if (event === 'SIGNED_IN' && session?.user) {
-          console.log('✅ User signed in via auth state change!');
-          setLoading(true);
-          
-          try {
-            const userProfile = await fetchUserProfile(session.user);
-            console.log('👤 Final user profile set:', userProfile);
-            setUser(userProfile);
-            setLoading(false);
-          } catch (error) {
-            console.error('Profile fetch error:', error);
-            setUser({
-              id: session.user.id,
-              email: session.user.email || '',
-              fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-              avatarUrl: session.user.user_metadata?.avatar_url || '',
-              subscriptionTier: 'free',
-              xxCoinBalance: 10,
-              referrals: 0,
-            });
-            setLoading(false);
-          }
-        } else if (event === 'SIGNED_OUT' || !session) {
+        if (event === 'SIGNED_OUT' || !session) {
           console.log('🚪 User signed out or no session');
           setUser(null);
+          setLoading(false);
+          return;
+        }
+
+        if (event === 'SIGNED_IN' && session?.user) {
+          console.log('✅ User signed in, fetching profile...');
+          setLoading(false); // Set loading false immediately for signed in users
+          setTimeout(async () => {
+            try {
+              const userData = await fetchUserProfile(session.user);
+              console.log('👤 Profile fetch successful:', userData);
+              setUser(userData);
+            } catch (error) {
+              console.error('❌ Failed to fetch user profile:', error);
+              // Create fallback user data
+              const fallbackUser = {
+                id: session.user.id,
+                email: session.user.email || '',
+                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                avatarUrl: session.user.user_metadata?.avatar_url || '',
+                subscriptionTier: 'free' as const,
+                xxCoinBalance: 10,
+                referrals: 0
+              };
+              console.log('👤 Using fallback user:', fallbackUser);
+              setUser(fallbackUser);
+            }
+          }, 0);
+        } else if (event === 'TOKEN_REFRESHED') {
+          console.log('🔄 Token refreshed');
           setLoading(false);
         } else if (event === 'INITIAL_SESSION') {
           console.log('🔄 Initial session event:', {
@@ -180,26 +195,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           
           if (session?.user) {
             console.log('✅ Found existing session on mount via INITIAL_SESSION');
-            setLoading(true);
-            
-            try {
-              const userProfile = await fetchUserProfile(session.user);
-              console.log('👤 Profile loaded from initial session:', userProfile);
-              setUser(userProfile);
-              setLoading(false);
-            } catch (error) {
-              console.error('Error loading profile from initial session:', error);
-              setUser({
-                id: session.user.id,
-                email: session.user.email || '',
-                fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
-                avatarUrl: session.user.user_metadata?.avatar_url || '',
-                subscriptionTier: 'free',
-                xxCoinBalance: 10,
-                referrals: 0,
-              });
-              setLoading(false);
-            }
+            setLoading(false);
+            setTimeout(async () => {
+              try {
+                const userData = await fetchUserProfile(session.user);
+                console.log('👤 Profile loaded from initial session:', userData);
+                setUser(userData);
+              } catch (error) {
+                console.error('❌ Error loading profile from initial session:', error);
+                const fallbackUser = {
+                  id: session.user.id,
+                  email: session.user.email || '',
+                  fullName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                  avatarUrl: session.user.user_metadata?.avatar_url || '',
+                  subscriptionTier: 'free' as const,
+                  xxCoinBalance: 10,
+                  referrals: 0
+                };
+                console.log('👤 Using fallback user from initial session:', fallbackUser);
+                setUser(fallbackUser);
+              }
+            }, 0);
           } else {
             console.log('❌ No session in INITIAL_SESSION event');
             setLoading(false);
