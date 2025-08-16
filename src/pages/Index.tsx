@@ -14,7 +14,7 @@ const Index = () => {
     const { user, loading, session } = useAuth();
     const { t } = useTranslation();
     
-    // Log URL details for OAuth debugging
+    // Simplified OAuth callback detection
     React.useEffect(() => {
       const currentUrl = window.location.href;
       const hasAuthParams = currentUrl.includes('access_token') || currentUrl.includes('code=') || currentUrl.includes('error=');
@@ -28,26 +28,15 @@ const Index = () => {
       });
       
       if (hasAuthParams) {
-        console.log('🔑 OAuth callback detected - URL contains auth parameters');
-        console.log('🔄 Forcing session refresh...');
-        // Force session refresh when OAuth params detected
-        setTimeout(async () => {
-          try {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            console.log('🔄 Post-callback session check:', {
-              hasSession: !!session,
-              hasUser: !!session?.user,
-              userEmail: session?.user?.email,
-              error: error?.message
-            });
-            if (session?.user) {
-              console.log('✅ User found after callback - should redirect to dashboard');
-              window.location.href = '/';
-            }
-          } catch (err) {
-            console.error('❌ Session refresh error:', err);
+        console.log('🔑 OAuth callback detected - letting Supabase handle it naturally');
+        // Don't force anything - let the auth context handle the session
+        // Remove the auth params from URL to prevent loops
+        setTimeout(() => {
+          if (window.location.search || window.location.hash) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            console.log('🧹 Cleaned OAuth params from URL');
           }
-        }, 1000);
+        }, 2000);
       }
     }, []);
     
