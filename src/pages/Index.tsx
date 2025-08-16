@@ -35,11 +35,7 @@ const Index = () => {
     if (!user) {
       console.log('📝 Showing auth page');
       return (
-        <div className="min-h-screen bg-red-500 p-8">
-          <div className="bg-yellow-500 p-4 text-black">
-            <h1 className="text-2xl font-bold">TEST - AUTH PAGE CONTAINER</h1>
-            <p>If you can see this, the container is rendering</p>
-          </div>
+        <div className="min-h-screen bg-background p-8">
           <GoogleAuthTest />
           <div className="mt-8">
             <AuthPage />
