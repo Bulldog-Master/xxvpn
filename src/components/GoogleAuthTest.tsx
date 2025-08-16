@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const GoogleAuthTest = () => {
+  console.log('🟡 GoogleAuthTest component rendering...');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');

@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
+  console.log('🔵 AuthPage component rendering...');
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
