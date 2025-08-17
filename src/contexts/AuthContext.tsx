@@ -79,9 +79,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
           // Handle successful sign in - Check for 2FA
           if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
-            console.log('✅ User signed in:', session.user.email);
+            console.log('✅ User signed in/updated:', session.user.email);
+            console.log('🔍 Event type:', event);
+            console.log('🔍 Current user state:', user ? 'has user' : 'no user');
+            console.log('🔍 User metadata:', session.user.user_metadata);
             
             setSession(session);
+            
+            // Special case: If we currently have a user requiring 2FA but the session now shows it's verified
+            if (user && (user as any).requiresTwoFactor && session.user.user_metadata?.twofa_verified === true) {
+              console.log('🎉 2FA just completed! Converting to authenticated user');
+              const userData = createUserFromSession(session.user);
+              setUser(userData);
+              setLoading(false);
+              return;
+            }
             
             // Check if this is an email provider and if 2FA is needed
             const isEmailProvider = session.user.app_metadata?.provider === 'email';
