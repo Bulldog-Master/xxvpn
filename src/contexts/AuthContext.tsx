@@ -86,8 +86,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             
             setSession(session);
             
-            // TEMPORARILY DISABLE ALL 2FA LOGIC - JUST CREATE AUTHENTICATED USER
-            console.log('✅ Creating authenticated user (2FA completely disabled)');
+            // Simple 2FA check - only for email provider
+            const isEmailProvider = session.user.app_metadata?.provider === 'email';
+            
+            if (isEmailProvider) {
+              try {
+                const { data: profile } = await supabase
+                  .from('profiles')
+                  .select('totp_enabled')
+                  .eq('user_id', session.user.id)
+                  .maybeSingle();
+                
+                const has2FA = profile?.totp_enabled === true;
+                const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+                
+                console.log('🔍 Simple 2FA Check:', { has2FA, is2FAVerified });
+                
+                if (has2FA && !is2FAVerified) {
+                  console.log('🔐 2FA required');
+                  setUser({
+                    id: session.user.id,
+                    email: session.user.email || '',
+                    fullName: session.user.user_metadata?.full_name || '',
+                    subscriptionTier: 'free',
+                    xxCoinBalance: 0,
+                    requiresTwoFactor: true
+                  } as any);
+                  setLoading(false);
+                  return;
+                }
+              } catch (error) {
+                console.error('2FA check error:', error);
+                // If 2FA check fails, just proceed without it
+              }
+            }
+            
+            console.log('✅ Creating authenticated user');
             const userData = createUserFromSession(session.user);
             setUser(userData);
             setLoading(false);
