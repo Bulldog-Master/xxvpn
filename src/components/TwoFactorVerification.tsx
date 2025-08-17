@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
+import { verifyTwoFactorAndSignIn, clearPendingAuth } from '@/services/twoFactorAuthService';
 
 interface TwoFactorVerificationProps {
   email: string;
@@ -110,7 +110,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         <div className="flex gap-2">
           <Button
             variant="outline"
-            onClick={onCancel}
+            onClick={() => {
+              clearPendingAuth();
+              onCancel();
+            }}
             disabled={isVerifying}
             className="flex-1"
           >
