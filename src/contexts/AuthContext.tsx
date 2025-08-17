@@ -59,15 +59,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               console.error('Profile check error:', profileError);
             }
 
-            // If 2FA is enabled and this is a fresh login (not from verification), sign out
+            // If 2FA is enabled and this is a fresh login (not from verification), handle 2FA flow
             if (profile?.totp_enabled) {
               console.log('🛡️ 2FA enabled - checking if this is a verified session');
               
-              // Check if this session has been 2FA verified (we'll use a session flag)
+              // Check if this session has been 2FA verified
               const sessionData = session.user.user_metadata || {};
               if (!sessionData.twofa_verified) {
-                console.log('🚫 2FA not verified - signing out');
-                await supabase.auth.signOut();
+                console.log('🔐 2FA required - keeping session for verification');
+                // Keep the session but don't fully authenticate until 2FA is complete
+                setSession(session);
+                setUser({ ...session.user, requiresTwoFactor: true } as any);
+                setLoading(false);
                 return;
               }
             }
