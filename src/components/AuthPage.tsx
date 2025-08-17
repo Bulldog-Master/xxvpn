@@ -444,113 +444,17 @@ const AuthPage = () => {
                       )}
 
                       <div className="space-y-2">
-                      <div style={{marginBottom: '10px'}}>
-                        <button 
-                          onMouseDown={() => console.log('🔴 MOUSE DOWN!')}
-                          onMouseUp={() => console.log('🟡 MOUSE UP!')}
-                          onPointerDown={() => console.log('🟠 POINTER DOWN!')}
-                          onClick={(e) => {
-                            console.log('🚨 BUTTON CLICKED!!!', e);
-                            alert('BUTTON WORKS!');
-                            e.preventDefault();
-                            e.stopPropagation();
-                          }}
-                          style={{
-                            background: 'red', 
-                            color: 'white', 
-                            padding: '20px', 
-                            width: '100%', 
-                            border: 'none', 
-                            borderRadius: '6px',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            zIndex: 9999,
-                            position: 'relative'
-                          }}
-                        >
-                          CLICK TEST - SHOULD ALERT
-                        </button>
-                      </div>
 
-                      <button 
-                        onMouseDown={() => console.log('🔵 Auth button mouse down')}
-                        onMouseEnter={() => console.log('🔵 Auth button mouse enter')}
-                        onFocus={() => console.log('🔵 Auth button focused')}
-                        onClick={(e) => {
-                          console.log('🚨 BLUE BUTTON CLICKED!!!');
-                          console.log('📧 Email value:', email);
-                          console.log('📧 Email length:', email?.length);
-                          console.log('🔒 Password value:', password ? 'HAS_PASSWORD' : 'NO_PASSWORD');
-                          console.log('📱 Method value:', selectedMethod);
-                          console.log('⏳ IsLoading:', isLoading);
-                          
-                          alert('Blue button clicked! Email: ' + email + ', Method: ' + selectedMethod);
-                          
-                          e.preventDefault();
-                          e.stopPropagation();
-                          
-                          if (!email || email.trim() === '') {
-                            alert('Email is empty or invalid!');
-                            console.log('❌ Email validation failed');
-                            return;
-                          }
-                          
-                          if (selectedMethod === 'email' && (!password || password.trim() === '')) {
-                            alert('Password is required for email method!');
-                            console.log('❌ Password validation failed');
-                            return;
-                          }
-                          
-                          console.log('✅ All validations passed, proceeding...');
-                          
-                          setIsLoading(true);
-                          setError('');
-                          
-                          const startAuth = async () => {
-                            try {
-                              if (selectedMethod === 'magic-link') {
-                                console.log('📨 Starting magic link flow...');
-                                await signInWithMagicLink(email);
-                                console.log('✅ Magic link sent successfully');
-                                setMagicLinkSent(true);
-                                toast({
-                                  title: 'Magic link sent!',
-                                  description: 'Check your email for the sign-in link.',
-                                });
-                              } else {
-                                console.log('🔐 Starting password sign in...');
-                                await signIn(email, password);
-                                console.log('✅ Password sign in successful');
-                              }
-                            } catch (err: any) {
-                              console.error('❌ Auth error:', err);
-                              setError(err.message || 'Authentication failed');
-                              alert('Auth error: ' + (err.message || 'Unknown error'));
-                            } finally {
-                              setIsLoading(false);
-                              console.log('🔄 Auth process completed');
-                            }
-                          };
-                          
-                          startAuth();
-                        }}
-                        style={{
-                          background: isLoading ? '#666' : '#2563eb', 
-                          color: 'white', 
-                          padding: '12px 16px', 
-                          width: '100%', 
-                          border: 'none', 
-                          borderRadius: '6px',
-                          fontSize: '14px',
-                          fontWeight: '500',
-                          cursor: 'pointer',
-                          zIndex: 1000,
-                          position: 'relative'
-                        }}
-                      >
-                        {isLoading ? 'Signing in...' : (selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In')}
-                      </button>
+                        <Button
+                          onClick={handleSignIn}
+                          disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                          className="w-full"
+                        >
+                          {isLoading ? (
+                            <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                          ) : null}
+                          {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                        </Button>
                       </div>
                     </>
                   )}
