@@ -223,7 +223,14 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         console.log('🔐 Starting email/password login...');
         
-        // First check if user has 2FA enabled WITHOUT signing in
+        // First, find the user by email to check their 2FA status
+        const { data: profiles, error: profileError } = await supabase
+          .from('profiles')
+          .select('user_id, totp_enabled')
+          .eq('user_id', `(SELECT auth.uid() FROM auth.users WHERE email = '${email}')`);
+        
+        // If we can't check the profile, try a different approach
+        // Attempt authentication to validate credentials and get user ID
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -238,15 +245,15 @@ const AuthPage = () => {
         await supabase.auth.signOut();
         console.log('🚪 Signed out after auth check');
 
-        // Check if user has 2FA enabled
-        const { data: profile, error: profileError } = await supabase
+        // Now check if user has 2FA enabled using the user ID
+        const { data: profile, error: profileCheckError } = await supabase
           .from('profiles')
           .select('totp_enabled')
           .eq('user_id', authData.user.id)
-          .single();
+          .maybeSingle();
 
-        if (profileError) {
-          console.error('Profile check error:', profileError);
+        if (profileCheckError) {
+          console.error('Profile check error:', profileCheckError);
         }
 
         console.log('🛡️ 2FA enabled status:', profile?.totp_enabled);
