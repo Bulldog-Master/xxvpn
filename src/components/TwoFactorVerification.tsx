@@ -141,7 +141,14 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
             Cancel
           </Button>
           <Button
-            onClick={handleVerifyTOTP}
+            onClick={(e) => {
+              console.log('🚨 BUTTON CLICKED!');
+              console.log('🔢 Code length:', verificationCode.length);
+              console.log('🔢 Code value:', verificationCode);
+              console.log('⏳ Is verifying:', isVerifying);
+              alert(`Button clicked! Code: ${verificationCode}, Length: ${verificationCode.length}`);
+              handleVerifyTOTP();
+            }}
             disabled={isVerifying || verificationCode.length !== 6}
             className="flex-1"
           >
