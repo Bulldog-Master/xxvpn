@@ -100,14 +100,17 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       
       console.log('✅ User metadata updated successfully');
       
+      // Set a localStorage flag to indicate 2FA was completed for this session
+      localStorage.setItem(`2fa_completed_${session.user.id}`, 'true');
+      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
 
-      console.log('🎉 2FA verification complete - forcing page reload to restart session');
+      console.log('🎉 2FA verification complete - forcing clean restart');
       
-      // Force a complete page reload to restart the auth session cleanly
+      // Force complete page reload
       window.location.href = '/';
     } catch (error: any) {
       console.error('2FA verification error:', error);

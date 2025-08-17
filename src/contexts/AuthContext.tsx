@@ -86,8 +86,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             
             setSession(session);
             
-            // Special case: If we currently have a user requiring 2FA but the session now shows it's verified
-            if (user && (user as any).requiresTwoFactor && session.user.user_metadata?.twofa_verified === true) {
+            // Check if 2FA was already completed (localStorage flag)
+            const twoFACompleted = localStorage.getItem(`2fa_completed_${session.user.id}`) === 'true';
+            
+            // Special case: If we currently have a user requiring 2FA but the session now shows it's verified OR localStorage shows it's completed
+            if (user && (user as any).requiresTwoFactor && (session.user.user_metadata?.twofa_verified === true || twoFACompleted)) {
               console.log('🎉 2FA just completed! Converting to authenticated user');
               const userData = createUserFromSession(session.user);
               setUser(userData);
@@ -98,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // Check if this is an email provider and if 2FA is needed
             const isEmailProvider = session.user.app_metadata?.provider === 'email';
             
-            if (isEmailProvider) {
+            if (isEmailProvider && !twoFACompleted) {
               try {
                 const { data: profile } = await supabase
                   .from('profiles')
@@ -109,7 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 const has2FA = profile?.totp_enabled === true;
                 const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
                 
-                console.log('🔍 2FA Check:', { has2FA, is2FAVerified, provider: session.user.app_metadata?.provider });
+                console.log('🔍 2FA Check:', { has2FA, is2FAVerified, twoFACompleted, provider: session.user.app_metadata?.provider });
                 
                 if (has2FA && !is2FAVerified) {
                   console.log('🔐 2FA required');
