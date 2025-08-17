@@ -100,17 +100,17 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       
       console.log('✅ User metadata updated successfully');
       
-      // Get the updated session to verify the change
-      const { data: { session: updatedSession } } = await supabase.auth.getSession();
-      console.log('📝 Updated session metadata:', updatedSession?.user?.user_metadata);
-      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
 
       console.log('🎉 2FA verification complete, calling onSuccess');
-      onSuccess();
+      
+      // Small delay to ensure the metadata update is processed
+      setTimeout(() => {
+        onSuccess();
+      }, 500);
     } catch (error: any) {
       console.error('2FA verification error:', error);
       
