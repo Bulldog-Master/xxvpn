@@ -30,9 +30,35 @@ export const useAuthMethods = (
       });
       
       if (error) throw error;
-      
-      // FORCE immediate state update instead of waiting for listener
+
+      // Check if user has 2FA enabled
       if (data.user && data.session) {
+        // Check if user has 2FA enabled
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('totp_enabled')
+          .eq('user_id', data.user.id)
+          .maybeSingle();
+        
+        const has2FA = profile?.totp_enabled === true;
+        const is2FAVerified = data.session.user.user_metadata?.twofa_verified === true;
+        
+        if (has2FA && !is2FAVerified) {
+          // User needs 2FA verification - create a partial user object
+          setSession(data.session);
+          setUser({
+            id: data.user.id,
+            email: data.user.email,
+            fullName: data.user.user_metadata?.full_name || '',
+            subscriptionTier: 'free',
+            xxCoinBalance: 0,
+            requiresTwoFactor: true
+          } as any);
+          setLoading(false);
+          return; // Don't complete sign-in yet
+        }
+        
+        // No 2FA needed or already verified - complete sign-in
         setSession(data.session);
         setUser({
           id: data.user.id,

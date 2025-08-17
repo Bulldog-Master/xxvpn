@@ -80,13 +80,11 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       }
 
       // 2FA verification successful - mark session as verified
-      console.log('✅ 2FA verification successful - updating session');
-      console.log('📝 Current session before update:', session);
-      
       // Update user metadata to mark 2FA as verified
       const { error: updateError } = await supabase.auth.updateUser({
         data: {
-          twofa_verified: true
+          twofa_verified: true,
+          last_2fa_verification: new Date().toISOString()
         }
       });
       
@@ -95,14 +93,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         throw updateError;
       }
       
-      console.log('✅ User metadata updated successfully');
-      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
-
-      console.log('🎉 2FA verification complete - forcing state update');
       
       // Force immediate state update like we did for basic login
       const { data: { session: updatedSession } } = await supabase.auth.getSession();
@@ -135,8 +129,6 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     }
   };
 
-
-  // Clean 2FA component - no debug buttons
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">

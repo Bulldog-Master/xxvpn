@@ -43,28 +43,12 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   // Generate QR code and secret when setup is shown
   useEffect(() => {
     if (showSetup && !isEnabled) {
-      console.log('🔄 useEffect triggered for 2FA setup');
-      console.log('showSetup:', showSetup, 'isEnabled:', isEnabled);
-      console.log('Current user:', user);
       generateTOTPSecret();
     }
   }, [showSetup, isEnabled]);
 
   const generateTOTPSecret = async () => {
     try {
-      console.log('🔐 Starting 2FA setup generation...');
-      console.log('User data:', { 
-        id: user?.id, 
-        email: user?.email,
-        idType: typeof user?.id,
-        fullUser: user 
-      });
-      console.log('Session data:', {
-        session: session,
-        sessionUser: session?.user,
-        sessionUserId: session?.user?.id
-      });
-      
       // Check if we have a proper Supabase session
       if (!session?.user?.id) {
         toast({
@@ -83,11 +67,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       // Check if session user ID is a valid UUID format
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       if (!uuidRegex.test(realUserId)) {
-        console.log('❌ Invalid UUID format for session user ID:', realUserId);
         throw new Error(`Invalid session user ID format: ${realUserId}`);
       }
-      
-      console.log('✅ Using session user ID:', realUserId);
       
       // Generate a random secret (20 bytes for base32)
       const randomBytes = new Uint8Array(20);
@@ -122,9 +103,6 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       // Trim to exactly 32 characters
       newSecret = newSecret.substring(0, 32);
       
-      console.log('✅ Secret generated successfully, length:', newSecret.length);
-      console.log('✅ Secret preview:', newSecret.substring(0, 8) + '...');
-      
       // Create TOTP instance
       const totp = new TOTP({
         issuer: 'xxVPN',
@@ -135,24 +113,13 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         secret: newSecret,
       });
 
-      console.log('✅ TOTP instance created successfully');
-      console.log('TOTP URL:', totp.toString());
-
       // Generate QR code
       const qrCode = await QRCode.toDataURL(totp.toString());
-      console.log('✅ QR code generated successfully');
       
       setSecret(newSecret);
       setQrCodeUrl(qrCode);
-      console.log('✅ 2FA setup completed successfully');
     } catch (error) {
       console.error('❌ Error generating TOTP secret:', error);
-      console.error('Error details:', {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        fullError: error
-      });
       
       // More specific error messages
       let errorMessage = 'Failed to generate 2FA setup. Please try again.';
@@ -193,20 +160,14 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       });
 
       // Verify the token with a larger time window for clock drift
-      console.log('🔍 Attempting to verify code:', verificationCode);
-      console.log('🔍 Using secret for verification:', secret);
-      
       // Try validation with different time windows to account for clock drift
       let validationResult = null;
       for (let window = 1; window <= 3; window++) {
         validationResult = totp.validate({ token: verificationCode, window });
-        console.log(`🔍 Validation attempt with window ${window}:`, validationResult);
         if (validationResult !== null) break;
       }
       
       const isValid = validationResult !== null;
-      
-      console.log('🔍 Final validation result:', isValid);
       
       if (!isValid) {
         toast({
@@ -334,9 +295,6 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
             variant="outline" 
             size="sm" 
             onClick={() => {
-              console.log('🔘 Enable 2FA button clicked');
-              console.log('Current user before setup:', user);
-              console.log('Current session before setup:', session);
               setShowSetup(true);
             }}
           >
