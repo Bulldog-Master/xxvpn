@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle, Fingerprint } from 'lucide-react';
+import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle, Fingerprint, Eye, EyeOff } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import PassphraseAuth from './PassphraseAuth';
@@ -33,6 +33,8 @@ const AuthPage = () => {
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const authMethods = [
     {
@@ -449,26 +451,54 @@ const AuthPage = () => {
                         <>
                           <div className="space-y-2">
                             <Label htmlFor="signup-password">Password</Label>
-                            <Input
-                              id="signup-password"
-                              type="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              placeholder="Create a password"
-                              required
-                            />
+                            <div className="relative">
+                              <Input
+                                id="signup-password"
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Create a password"
+                                required
+                                className="pr-10"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="w-4 h-4" />
+                                ) : (
+                                  <Eye className="w-4 h-4" />
+                                )}
+                              </button>
+                            </div>
                           </div>
                           
                           <div className="space-y-2">
                             <Label htmlFor="confirm-password">Confirm Password</Label>
-                            <Input
-                              id="confirm-password"
-                              type="password"
-                              value={confirmPassword}
-                              onChange={(e) => setConfirmPassword(e.target.value)}
-                              placeholder="Confirm your password"
-                              required
-                            />
+                            <div className="relative">
+                              <Input
+                                id="confirm-password"
+                                type={showConfirmPassword ? "text" : "password"}
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="Confirm your password"
+                                required
+                                className="pr-10"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                {showConfirmPassword ? (
+                                  <EyeOff className="w-4 h-4" />
+                                ) : (
+                                  <Eye className="w-4 h-4" />
+                                )}
+                              </button>
+                            </div>
                           </div>
                         </>
                       )}
