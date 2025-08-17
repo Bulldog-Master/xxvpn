@@ -13,7 +13,9 @@ import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import PassphraseAuth from './PassphraseAuth';
 import WebAuthnAuth from './WebAuthnAuth';
+import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail } from '@/services/authService';
+import { supabase } from '@/integrations/supabase/client';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -36,6 +38,8 @@ const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showSigninPassword, setShowSigninPassword] = useState(false);
+  const [showTwoFactorVerification, setShowTwoFactorVerification] = useState(false);
+  const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
 
   const authMethods = [
     {
@@ -217,6 +221,33 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'email') {
+        // First, try to sign in to check credentials and get user ID
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (authError) throw authError;
+        if (!authData.user) throw new Error('Authentication failed');
+
+        // Immediately sign out to prevent session persistence
+        await supabase.auth.signOut();
+
+        // Check if user has 2FA enabled
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('totp_enabled')
+          .eq('user_id', authData.user.id)
+          .single();
+
+        // If 2FA is enabled, show the verification step
+        if (profile?.totp_enabled) {
+          setPendingCredentials({ email, password });
+          setShowTwoFactorVerification(true);
+          return;
+        }
+
+        // No 2FA enabled, proceed with normal sign in
         await signIn(email, password);
       } else if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
@@ -257,6 +288,28 @@ const AuthPage = () => {
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
           <p className="text-muted-foreground">{t('common.loading')}</p>
         </div>
+      </div>
+    );
+  }
+
+  // Show 2FA verification if required
+  if (showTwoFactorVerification && pendingCredentials) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
+        <TwoFactorVerification
+          email={pendingCredentials.email}
+          password={pendingCredentials.password}
+          onSuccess={() => {
+            setShowTwoFactorVerification(false);
+            setPendingCredentials(null);
+            // The TwoFactorVerification component handles the actual sign-in
+          }}
+          onCancel={() => {
+            setShowTwoFactorVerification(false);
+            setPendingCredentials(null);
+            setError('');
+          }}
+        />
       </div>
     );
   }
