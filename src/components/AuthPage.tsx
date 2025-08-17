@@ -434,42 +434,16 @@ const AuthPage = () => {
                         </div>
                       )}
 
-                       <div className="space-y-2">
-                         <Button
-                           type="button"
-                           className="w-full bg-red-500"
-                           onClick={() => alert('TEST BUTTON WORKS!')}
-                         >
-                           TEST BUTTON
-                         </Button>
-                         <Button
-                           type="button" 
-                           className="w-full"
-                           onClick={async () => {
-                             alert('Starting auth...');
-                             console.log('🟢 Email auth starting...');
-                             setIsLoading(true);
-                             setError('');
-                             
-                             try {
-                               await signInWithEmail(email, password);
-                               console.log('🟢 Email auth success');
-                               alert('Auth success!');
-                             } catch (error: any) {
-                               console.error('🟢 Email auth error:', error);
-                               setError(error.message || 'Failed to sign in');
-                               alert('Auth failed: ' + error.message);
-                             } finally {
-                               setIsLoading(false);
-                             }
-                           }}
-                         >
-                           {isLoading ? (
-                             <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                           ) : null}
-                           {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
-                         </Button>
-                       </div>
+                       <Button
+                         type="submit"
+                         className="w-full"
+                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                       >
+                         {isLoading ? (
+                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                         ) : null}
+                         {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                       </Button>
                      </>
                    )}
                  </form>
