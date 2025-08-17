@@ -444,7 +444,11 @@ const AuthPage = () => {
                       )}
 
                        <Button
-                         type="submit"
+                         type="button"
+                         onClick={async (e) => {
+                           console.log('🎯🎯🎯 BUTTON CLICKED DIRECTLY');
+                           await handleSignIn(e as any);
+                         }}
                          className="w-full"
                          disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
                        >
