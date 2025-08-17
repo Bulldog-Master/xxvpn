@@ -88,6 +88,7 @@ export const verifyTwoFactorAndSignIn = async (
     }
 
     // Verify the TOTP code BEFORE signing in
+    console.log('🔐 Verifying TOTP code:', totpCode);
     const totp = new TOTP({
       issuer: 'xxVPN',
       label: email,
@@ -100,8 +101,13 @@ export const verifyTwoFactorAndSignIn = async (
     // Try validation with different time windows to account for clock drift
     let validationResult = null;
     for (let window = 1; window <= 3; window++) {
+      console.log(`🕒 Trying validation with window ${window}...`);
       validationResult = totp.validate({ token: totpCode, window });
-      if (validationResult !== null) break;
+      console.log(`🔍 Window ${window} result:`, validationResult);
+      if (validationResult !== null) {
+        console.log('✅ TOTP validation successful!');
+        break;
+      }
     }
 
     if (validationResult === null) {
