@@ -450,10 +450,14 @@ const AuthPage = () => {
                          type="button"
                          className="w-full"
                          onClick={async () => {
-                           console.log('🔘 BUTTON CLICKED - START');
-                           console.log('Current values:', { email, password: password ? '***' : 'empty', selectedMethod, isLoading });
-                           alert('Button clicked!');
-                           console.log('🔘 BUTTON CLICKED - END');
+                           console.log('🔘 BUTTON CLICKED - STARTING AUTH');
+                           try {
+                             const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+                             await handleSignIn(fakeEvent);
+                             console.log('🔘 AUTH COMPLETED SUCCESSFULLY');
+                           } catch (error) {
+                             console.error('🔘 AUTH FAILED:', error);
+                           }
                          }}
                        >
                          {isLoading ? (
