@@ -33,24 +33,24 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
 
     setIsVerifying(true);
     setError('');
-    
+
     try {
       console.log('🔐 Starting 2FA verification...');
       
-      // Sign in to get user session and ID
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Get current session instead of re-authenticating
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session?.user) {
+        throw new Error('No active session found. Please sign in again.');
+      }
+      
+      console.log('✅ Current session found for user:', session.user.email);
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error('Authentication failed');
-
-      // Get the user's TOTP secret
+      // Get the user's TOTP secret from their profile
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('totp_secret, totp_enabled')
-        .eq('user_id', authData.user.id)
+        .eq('user_id', session.user.id)
         .single();
 
       if (profileError) throw profileError;

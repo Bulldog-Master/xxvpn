@@ -86,12 +86,24 @@ const Index = () => {
           <TwoFactorVerification 
             email={user.email || ''}
             password=""
-            onSuccess={() => {
-              console.log('✅ 2FA verification successful - triggering auth refresh');
-              // Don't reload immediately, let the auth state change handle it
+            onSuccess={async () => {
+              console.log('✅ 2FA verification successful - forcing auth refresh');
+              
+              // Force refresh of the current session to pick up new metadata
+              try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                  console.log('🔄 Session refreshed, triggering auth state change');
+                  // The auth state change will automatically handle the flow
+                }
+              } catch (error) {
+                console.error('Error refreshing session:', error);
+              }
+              
+              // Small delay then reload as fallback
               setTimeout(() => {
                 window.location.reload();
-              }, 1000);
+              }, 2000);
             }}
             onCancel={() => {
               console.log('❌ 2FA verification cancelled - signing out');
