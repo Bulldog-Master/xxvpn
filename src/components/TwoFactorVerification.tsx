@@ -27,6 +27,9 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
+    console.log('🚨 HANDLE VERIFY TOTP CALLED!');
+    alert('Verification function called!'); // Force debug
+    
     if (!verificationCode || verificationCode.length !== 6) {
       setError('Please enter a 6-digit verification code.');
       return;
