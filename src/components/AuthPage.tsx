@@ -437,15 +437,22 @@ const AuthPage = () => {
                        <Button
                          type="button"
                          className="w-full"
-                         onClick={async () => {
-                           console.log('🔘 BUTTON CLICKED - STARTING AUTH');
-                           try {
-                             const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-                             await handleSignIn(fakeEvent);
-                             console.log('🔘 AUTH COMPLETED SUCCESSFULLY');
-                           } catch (error) {
-                             console.error('🔘 AUTH FAILED:', error);
-                           }
+                         onClick={() => {
+                           console.log('🟢 DIRECT CLICK HANDLER START');
+                           console.log('Values:', { email, password: !!password });
+                           setIsLoading(true);
+                           
+                           setTimeout(() => {
+                             console.log('🟢 TIMEOUT REACHED');
+                             signIn(email, password).then(() => {
+                               console.log('🟢 SIGNIN SUCCESS');
+                               setIsLoading(false);
+                             }).catch((err) => {
+                               console.log('🟢 SIGNIN ERROR:', err);
+                               setError(err.message);
+                               setIsLoading(false);
+                             });
+                           }, 100);
                          }}
                        >
                          {isLoading ? (
