@@ -34,32 +34,64 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setSession(session);
+        console.log('🔄 Auth state change:', event, session?.user?.id);
         
         if (event === 'SIGNED_OUT' || !session?.user) {
           setUser(null);
+          setSession(null);
           setLoading(false);
           return;
         }
 
-        // For ANY sign-in event (including OAuth), set user immediately
-        if (session?.user) {
-          setLoading(false);
+        // For ANY sign-in event, check if user has 2FA enabled
+        if (session?.user && event === 'SIGNED_IN') {
+          console.log('🔐 Sign-in detected, checking 2FA status...');
           
-          // Create immediate user object to prevent loading state
-          const immediateUser = createImmediateUser(session.user);
-          setUser(immediateUser);
-          
-          // Fetch profile in background to update if needed
-          setTimeout(async () => {
-            try {
-              const userData = await fetchUserProfile(session.user);
-              setUser(userData);
-            } catch (error) {
-              // Keep immediate user if profile fetch fails
+          try {
+            // Check if user has 2FA enabled
+            const { data: profile, error: profileError } = await supabase
+              .from('profiles')
+              .select('totp_enabled')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+
+            if (profileError) {
+              console.error('Profile check error:', profileError);
             }
-          }, 100);
+
+            // If 2FA is enabled and this is a fresh login (not from verification), sign out
+            if (profile?.totp_enabled) {
+              console.log('🛡️ 2FA enabled - checking if this is a verified session');
+              
+              // Check if this session has been 2FA verified (we'll use a session flag)
+              const sessionData = session.user.user_metadata || {};
+              if (!sessionData.twofa_verified) {
+                console.log('🚫 2FA not verified - signing out');
+                await supabase.auth.signOut();
+                return;
+              }
+            }
+          } catch (error) {
+            console.error('2FA check error:', error);
+          }
         }
+
+        setSession(session);
+        
+        // Create immediate user object to prevent loading state
+        const immediateUser = createImmediateUser(session.user);
+        setUser(immediateUser);
+        setLoading(false);
+        
+        // Fetch profile in background to update if needed
+        setTimeout(async () => {
+          try {
+            const userData = await fetchUserProfile(session.user);
+            setUser(userData);
+          } catch (error) {
+            // Keep immediate user if profile fetch fails
+          }
+        }, 100);
       }
     );
 

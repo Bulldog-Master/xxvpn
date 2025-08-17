@@ -105,7 +105,14 @@ export const verifyTwoFactorAndSignIn = async (
       throw new Error('Invalid verification code. Please try again.');
     }
 
-    console.log('✅ 2FA verification successful - user remains signed in');
+    // Mark session as 2FA verified by updating user metadata
+    await supabase.auth.updateUser({
+      data: {
+        twofa_verified: true
+      }
+    });
+
+    console.log('✅ 2FA verification successful - session marked as verified');
     // User is already signed in and 2FA is verified, so we're done
   } catch (error) {
     console.error('2FA verification error:', error);

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { User } from '@/types/auth';
+import { supabase } from '@/integrations/supabase/client';
 import {
   signInWithEmail,
   signUpWithEmail,
@@ -77,6 +78,17 @@ export const useAuthMethods = (
 
   const signOut = async () => {
     try {
+      // Clear 2FA verification flag
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            twofa_verified: null
+          }
+        });
+      } catch (err) {
+        // Continue even if this fails
+      }
+      
       // Import cleanup function
       const { cleanupAuthState } = await import('@/utils/authHelpers');
       
