@@ -27,6 +27,9 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
+    // Show debug info immediately 
+    setError(`Debug: Function called. Email: ${email}, Password: ${password ? 'exists' : 'MISSING'}, Code: ${verificationCode}`);
+    
     window.console.error('🚨🚨🚨 HANDLE VERIFY TOTP CALLED! 🚨🚨🚨');
     
     if (!verificationCode || verificationCode.length !== 6) {
