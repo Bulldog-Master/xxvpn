@@ -22,15 +22,23 @@ export const useAuthMethods = (
 ) => {
   const signIn = async (email: string, password: string) => {
     try {
-      console.log('🔑 Signing in with email and password');
+      console.log('🔑 Starting sign in process for:', email);
+      setLoading(true);
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
       if (error) throw error;
-      console.log('✅ Sign in successful');
+      console.log('✅ Supabase sign in successful, data:', data);
+      console.log('👤 User from response:', data.user?.email);
+      console.log('📋 Session from response:', !!data.session);
+      
+      // Don't set loading to false here - let the auth state change handle it
     } catch (error) {
+      console.error('❌ Sign in error:', error);
+      setLoading(false);
       throw error;
     }
   };
