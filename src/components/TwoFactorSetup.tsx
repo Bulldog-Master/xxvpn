@@ -285,7 +285,11 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={() => setShowSetup(true)}
+            onClick={() => {
+              console.log('🔘 Enable 2FA button clicked');
+              console.log('Current user before setup:', user);
+              setShowSetup(true);
+            }}
           >
             Enable
           </Button>
