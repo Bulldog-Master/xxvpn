@@ -31,11 +31,21 @@ export const useAuthMethods = (
       });
       
       if (error) throw error;
-      console.log('✅ Supabase sign in successful, data:', data);
-      console.log('👤 User from response:', data.user?.email);
-      console.log('📋 Session from response:', !!data.session);
+      console.log('✅ Supabase sign in successful');
       
-      // Don't set loading to false here - let the auth state change handle it
+      // FORCE immediate state update instead of waiting for listener
+      if (data.user && data.session) {
+        console.log('🚀 FORCING immediate user state update');
+        setSession(data.session);
+        setUser({
+          id: data.user.id,
+          email: data.user.email,
+          fullName: data.user.user_metadata?.full_name || '',
+          subscriptionTier: 'free',
+          xxCoinBalance: 0
+        });
+      }
+      setLoading(false);
     } catch (error) {
       console.error('❌ Sign in error:', error);
       setLoading(false);
