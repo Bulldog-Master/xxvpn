@@ -43,14 +43,6 @@ const AuthPage = () => {
   const [showTwoFactorVerification, setShowTwoFactorVerification] = useState(false);
   const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
 
-  console.log('🎯 AuthPage state:', { 
-    selectedMethod, 
-    hasEmail: !!email, 
-    hasPassword: !!password, 
-    showTwoFactorVerification,
-    isLoading 
-  });
-
   const authMethods = [
     {
       id: 'email' as const,
