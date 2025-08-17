@@ -221,7 +221,7 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'email') {
-        // First, try to sign in to check credentials and get user ID
+        // First check if user has 2FA enabled WITHOUT signing in
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -240,10 +240,15 @@ const AuthPage = () => {
           .eq('user_id', authData.user.id)
           .single();
 
+        if (profileError) {
+          console.error('Profile check error:', profileError);
+        }
+
         // If 2FA is enabled, show the verification step
         if (profile?.totp_enabled) {
           setPendingCredentials({ email, password });
           setShowTwoFactorVerification(true);
+          setIsLoading(false); // Stop loading as we're showing 2FA UI
           return;
         }
 
