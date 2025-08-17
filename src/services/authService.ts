@@ -3,6 +3,7 @@ import type { User, MockSession } from '@/types/auth';
 import { cleanupAuthState } from '@/utils/authHelpers';
 
 export const signInWithEmail = async (email: string, password: string) => {
+  console.log('🔑 Starting email sign in for:', email);
   cleanupAuthState();
   
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -10,12 +11,15 @@ export const signInWithEmail = async (email: string, password: string) => {
     password,
   });
 
-  if (error) throw error;
-  
-  if (data.user) {
-    // Force page reload for clean state
-    window.location.href = '/';
+  if (error) {
+    console.error('❌ Sign in error:', error);
+    throw error;
   }
+  
+  console.log('✅ Sign in successful:', data);
+  
+  // Don't force reload - let the auth state change handle the redirect
+  return data;
 };
 
 export const signUpWithEmail = async (email: string, password: string, fullName?: string) => {
