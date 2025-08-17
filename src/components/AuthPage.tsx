@@ -213,7 +213,7 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
-    console.log('🎯🎯🎯 HANDLE SIGN IN CALLED');
+    console.log('🎯🎯🎯 HANDLE SIGN IN CALLED - FORM SUBMITTED');
     e.preventDefault();
     console.log('🎯 Sign in function called with:', { email, password: password ? '****' : 'empty', selectedMethod });
     
@@ -229,7 +229,16 @@ const AuthPage = () => {
 
     try {
       console.log('📧 About to call signIn...');
-      await signIn(email, password);
+      if (selectedMethod === 'magic-link') {
+        await signInWithMagicLink(email);
+        setMagicLinkSent(true);
+        toast({
+          title: 'Magic link sent!',
+          description: 'Check your email for the sign-in link.',
+        });
+      } else {
+        await signIn(email, password);
+      }
       console.log('✅ signIn returned successfully');
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
