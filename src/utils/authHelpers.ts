@@ -4,13 +4,16 @@ import type { User } from '@/types/auth';
 
 export const cleanupAuthState = () => {
   try {
+    // Remove standard auth tokens
     localStorage.removeItem('supabase.auth.token');
+    
     // Remove all Supabase auth keys from localStorage
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
         localStorage.removeItem(key);
       }
     });
+    
     // Also clear our custom auth flags
     localStorage.removeItem('authenticated_passphrase');
     localStorage.removeItem('authenticated_webauthn');
@@ -23,6 +26,8 @@ export const cleanupAuthState = () => {
         sessionStorage.removeItem(key);
       }
     });
+    
+    console.log('🧹 Auth state cleaned up completely');
   } catch (error) {
     console.error('Error cleaning auth state:', error);
   }

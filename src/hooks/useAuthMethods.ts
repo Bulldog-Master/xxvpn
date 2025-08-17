@@ -77,7 +77,22 @@ export const useAuthMethods = (
 
   const signOut = async () => {
     try {
-      await signOutService();
+      // Import cleanup function
+      const { cleanupAuthState } = await import('@/utils/authHelpers');
+      
+      // Clean up auth state first
+      cleanupAuthState();
+      
+      // Attempt global sign out
+      try {
+        await signOutService();
+      } catch (err) {
+        console.error('Sign out service error:', err);
+        // Continue even if this fails
+      }
+      
+      // Force page reload for completely clean state
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
       // Force reload even if sign out fails
