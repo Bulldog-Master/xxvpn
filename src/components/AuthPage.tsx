@@ -215,6 +215,8 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
+    console.log('🚨 SIGN IN FUNCTION CALLED!');
+    alert('Sign in function called!'); // This should show an alert
     e.preventDefault();
     console.log('🎯 handleSignIn called!', { selectedMethod, email: email?.slice(0, 3) + '***' });
     
