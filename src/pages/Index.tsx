@@ -24,11 +24,14 @@ const Index = () => {
 
   // Check if user requires 2FA verification
   if (user && (user as any).requiresTwoFactor) {
+    const pendingPassword = (user as any).pendingPassword;
+    console.log('🔒 2FA required - password available:', !!pendingPassword);
+    
     return (
       <div className="min-h-screen bg-background">
         <TwoFactorVerification 
           email={user.email || ''}
-          password={(user as any).pendingPassword || ''}
+          password={pendingPassword || ''}
           onSuccess={() => {
             // The TwoFactorVerification component will handle the state update
             window.location.reload();

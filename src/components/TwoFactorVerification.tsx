@@ -27,6 +27,9 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
+    console.log('🔐 Starting 2FA verification process...');
+    console.log('📧 Email:', email);
+    console.log('🔑 Password provided:', !!password, 'length:', password?.length || 0);
     
     if (!verificationCode || verificationCode.length !== 6) {
       window.console.error('❌ Invalid verification code length:', verificationCode.length);
