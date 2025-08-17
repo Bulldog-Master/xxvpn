@@ -22,7 +22,14 @@ export const useAuthMethods = (
 ) => {
   const signIn = async (email: string, password: string) => {
     try {
-      await signInWithEmail(email, password);
+      console.log('🔑 Direct sign in (bypassing 2FA service temporarily)');
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) throw error;
+      console.log('✅ Direct sign in successful');
     } catch (error) {
       throw error;
     }
