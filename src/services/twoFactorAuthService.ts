@@ -103,6 +103,8 @@ export const verifyTwoFactorAndSignIn = async (
 
     // Verify the TOTP code BEFORE signing in
     console.log('🔐 Verifying TOTP code:', totpCode);
+    console.log('🔑 Using secret (first 10 chars):', profile.totp_secret?.substring(0, 10) + '...');
+    
     const totp = new TOTP({
       issuer: 'xxVPN',
       label: email,
@@ -111,6 +113,11 @@ export const verifyTwoFactorAndSignIn = async (
       period: 30,
       secret: profile.totp_secret,
     });
+
+    // Debug: Generate current expected token for comparison
+    const currentToken = totp.generate();
+    console.log('🔍 Current expected token:', currentToken);
+    console.log('🔍 User provided token:', totpCode);
 
     // Try validation with different time windows to account for clock drift
     let validationResult = null;
