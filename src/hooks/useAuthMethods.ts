@@ -24,15 +24,10 @@ export const useAuthMethods = (
     try {
       setLoading(true);
       
-      // First, clear any existing 2FA verification status
-      try {
-        await supabase.auth.updateUser({
-          data: { twofa_verified: null }
-        });
-      } catch (clearError) {
-        // Continue even if this fails
-        console.log('Could not clear 2FA status:', clearError);
-      }
+      // Clear any existing 2FA verification status to ensure fresh verification
+      await supabase.auth.updateUser({
+        data: { twofa_verified: false }
+      });
       
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
