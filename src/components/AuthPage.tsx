@@ -447,16 +447,20 @@ const AuthPage = () => {
                       )}
 
                        <Button
-                         type="submit"
+                         type="button"
                          className="w-full"
                          disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
-                         onClick={() => console.log('🔘 Button clicked!', { isLoading, email: !!email, password: !!password, selectedMethod })}
+                         onClick={async () => {
+                           console.log('🔘 Direct button click!');
+                           const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+                           await handleSignIn(fakeEvent);
+                         }}
                        >
-                        {isLoading ? (
-                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                        ) : null}
-                        {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
-                      </Button>
+                         {isLoading ? (
+                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                         ) : null}
+                         {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                       </Button>
                     </>
                   )}
                 </form>
