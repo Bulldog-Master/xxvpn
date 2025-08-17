@@ -84,6 +84,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
 
       // 2FA verification successful - mark session as verified
       console.log('✅ 2FA verification successful - updating session');
+      console.log('📝 Current session before update:', session);
       
       // Update user metadata to mark 2FA as verified
       const { error: updateError } = await supabase.auth.updateUser({
@@ -93,9 +94,15 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       });
       
       if (updateError) {
-        console.error('Failed to update 2FA verification status:', updateError);
+        console.error('❌ Failed to update 2FA verification status:', updateError);
         throw updateError;
       }
+      
+      console.log('✅ User metadata updated successfully');
+      
+      // Get the updated session to verify the change
+      const { data: { session: updatedSession } } = await supabase.auth.getSession();
+      console.log('📝 Updated session metadata:', updatedSession?.user?.user_metadata);
       
       toast({
         title: 'Success',
@@ -127,6 +134,12 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     } finally {
       setIsVerifying(false);
     }
+  };
+
+  const testCurrentSession = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    console.log('🧪 Current session test:', session);
+    console.log('🧪 Current metadata:', session?.user?.user_metadata);
   };
 
   return (
@@ -170,6 +183,17 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
           <p className="text-xs text-muted-foreground">
             Open your authenticator app and enter the 6-digit code
           </p>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            variant="secondary"
+            onClick={testCurrentSession}
+            className="flex-1"
+            type="button"
+          >
+            🧪 Test Session
+          </Button>
         </div>
 
         <div className="flex gap-2">
