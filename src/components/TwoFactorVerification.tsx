@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { verifyTwoFactorAndSignIn, clearPendingAuth } from '@/services/twoFactorAuthService';
+import { supabase } from '@/integrations/supabase/client';
+import { TOTP } from 'otpauth';
 
 interface TwoFactorVerificationProps {
   email: string;
@@ -36,10 +37,52 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     try {
       console.log('🔐 Starting 2FA verification...');
       
-      // Use the new 2FA service to verify and sign in
-      await verifyTwoFactorAndSignIn(email, password, verificationCode);
-      
-      // 2FA verification successful
+      // Sign in to get user session and ID
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) throw authError;
+      if (!authData.user) throw new Error('Authentication failed');
+
+      // Get the user's TOTP secret
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('totp_secret, totp_enabled')
+        .eq('user_id', authData.user.id)
+        .single();
+
+      if (profileError) throw profileError;
+      if (!profile.totp_enabled || !profile.totp_secret) {
+        throw new Error('2FA is not properly configured for this account');
+      }
+
+      // Verify the TOTP code
+      const totp = new TOTP({
+        issuer: 'xxVPN',
+        label: email,
+        algorithm: 'SHA1',
+        digits: 6,
+        period: 30,
+        secret: profile.totp_secret,
+      });
+
+      // Try validation with different time windows to account for clock drift
+      let validationResult = null;
+      for (let window = 1; window <= 3; window++) {
+        validationResult = totp.validate({ token: verificationCode, window });
+        if (validationResult !== null) break;
+      }
+
+      if (validationResult === null) {
+        // Sign out the user since 2FA failed
+        await supabase.auth.signOut();
+        setError('Invalid verification code. Please try again.');
+        return;
+      }
+
+      // 2FA verification successful - user remains signed in
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
@@ -48,6 +91,13 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       onSuccess();
     } catch (error: any) {
       console.error('2FA verification error:', error);
+      
+      // Make sure to sign out if there was an error
+      try {
+        await supabase.auth.signOut();
+      } catch (signOutError) {
+        // Ignore sign out errors
+      }
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
       if (error.message?.includes('Invalid login credentials')) {
@@ -110,10 +160,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         <div className="flex gap-2">
           <Button
             variant="outline"
-            onClick={() => {
-              clearPendingAuth();
-              onCancel();
-            }}
+            onClick={onCancel}
             disabled={isVerifying}
             className="flex-1"
           >

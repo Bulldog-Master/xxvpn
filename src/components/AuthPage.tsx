@@ -212,13 +212,66 @@ const AuthPage = () => {
     }
   };
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('BASIC TEST - Function called!');
-    alert('BASIC TEST - Function called!');
     
-    // Don't do anything else - just test if this works
-    return;
+    if (!email || (!password && selectedMethod === 'email')) {
+      setError('Please enter both email and password');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      if (selectedMethod === 'email') {
+        // Check if this user has 2FA enabled first
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (authError) throw authError;
+        if (!authData.user) throw new Error('Authentication failed');
+
+        const userId = authData.user.id;
+        
+        // Immediately sign out
+        await supabase.auth.signOut();
+        
+        // Check if user has 2FA enabled
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('totp_enabled')
+          .eq('user_id', userId)
+          .maybeSingle();
+        
+        if (profile?.totp_enabled) {
+          // Show 2FA verification
+          setPendingCredentials({ email, password });
+          setShowTwoFactorVerification(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // No 2FA, proceed with normal sign in
+        await signIn(email, password);
+      } else if (selectedMethod === 'magic-link') {
+        await signInWithMagicLink(email);
+        setMagicLinkSent(true);
+        toast({
+          title: 'Magic link sent!',
+          description: 'Check your email for the sign-in link.',
+        });
+      } else if (selectedMethod === 'google') {
+        await signInWithGoogle();
+      }
+    } catch (error: any) {
+      console.error('Sign in error:', error);
+      setError(error.message || 'Failed to sign in');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleAuth = async () => {
