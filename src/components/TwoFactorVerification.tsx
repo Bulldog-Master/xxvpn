@@ -106,10 +106,14 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         description: 'Two-factor authentication verified successfully.',
       });
 
-      console.log('🎉 2FA verification complete - calling onSuccess');
+      console.log('🎉 2FA verification complete - forcing state update');
       
-      // Call onSuccess to let the parent handle the transition
-      onSuccess();
+      // Force immediate state update like we did for basic login
+      const { data: { session: updatedSession } } = await supabase.auth.getSession();
+      if (updatedSession?.user) {
+        // Force page reload to restart auth context with verified 2FA
+        window.location.href = '/';
+      }
     } catch (error: any) {
       console.error('2FA verification error:', error);
       

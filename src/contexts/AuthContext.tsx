@@ -49,9 +49,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log('🚀 AuthProvider - SIMPLE initialization starting...');
     setInitialized(true);
 
-    // Simple auth state listener - NO complex logic
+    // Simple auth state listener with 2FA check
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('🔄 Auth event:', event, session?.user?.email || 'no-user');
         
         if (event === 'SIGNED_OUT' || !session?.user) {
@@ -60,8 +60,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('✅ User found - creating user object');
+          console.log('✅ User found - checking for 2FA');
           setSession(session);
+          
+          // Simple 2FA check - only for email provider
+          const isEmailProvider = session.user.app_metadata?.provider === 'email';
+          
+          if (isEmailProvider) {
+            try {
+              const { data: profile } = await supabase
+                .from('profiles')
+                .select('totp_enabled')
+                .eq('user_id', session.user.id)
+                .maybeSingle();
+              
+              const has2FA = profile?.totp_enabled === true;
+              const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+              
+              console.log('🔍 2FA Check:', { has2FA, is2FAVerified });
+              
+              if (has2FA && !is2FAVerified) {
+                console.log('🔐 2FA required');
+                setUser({
+                  id: session.user.id,
+                  email: session.user.email || '',
+                  fullName: session.user.user_metadata?.full_name || '',
+                  subscriptionTier: 'free',
+                  xxCoinBalance: 0,
+                  requiresTwoFactor: true
+                } as any);
+                setLoading(false);
+                return;
+              }
+            } catch (error) {
+              console.error('2FA check error:', error);
+            }
+          }
+          
+          // No 2FA needed - create normal user
           const userData = createUserFromSession(session.user);
           setUser(userData);
           setLoading(false);
