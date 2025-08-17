@@ -180,7 +180,8 @@ export const verifyTwoFactorAndSignIn = async (
     // Mark session as 2FA verified
     await supabase.auth.updateUser({
       data: {
-        twofa_verified: true
+        twofa_verified: true,
+        last_2fa_verification: new Date().toISOString()
       }
     });
 

@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               
               const has2FA = profile?.totp_enabled === true;
               const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-              console.log('🛡️ 2FA status:', { has2FA, is2FAVerified });
+              console.log('🛡️ 2FA status:', { has2FA, is2FAVerified, userMetadata: session.user.user_metadata });
               
               if (has2FA && !is2FAVerified) {
                 console.log('🔒 Requiring 2FA verification');

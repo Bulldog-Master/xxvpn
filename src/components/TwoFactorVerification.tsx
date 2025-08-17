@@ -27,53 +27,46 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
-    console.log('🔐 TESTING DIRECT SIGN-IN');
-    
+    if (!verificationCode || verificationCode.length !== 6) {
+      setError('Please enter a 6-digit verification code.');
+      return;
+    }
+
     setIsVerifying(true);
     setError('');
     
     try {
+      console.log('🔐 Starting 2FA verification...');
       console.log('📧 Email:', email);
-      console.log('🔑 Password exists:', !!password);
-      console.log('🔑 Password length:', password?.length || 0);
+      console.log('🔑 Password provided:', !!password);
+      console.log('🔢 Code:', verificationCode);
       
       if (!email || !password) {
-        throw new Error(`Missing credentials - Email: ${!!email}, Password: ${!!password}`);
+        throw new Error('Missing credentials. Please sign in again.');
       }
       
-      console.log('🔐 Attempting direct sign-in...');
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      console.log('🔍 Auth result:', { data: authData, error: authError });
-
-      if (authError) {
-        console.error('❌ Auth error details:', authError);
-        throw authError;
-      }
+      // Use the proper 2FA service that handles the complete flow
+      await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      if (!authData.user) {
-        throw new Error('Authentication failed - no user returned');
-      }
-
-      console.log('✅ Direct sign-in successful!', authData.user.id);
+      console.log('✅ 2FA verification successful!');
       
       toast({
         title: 'Success',
-        description: 'Sign in successful (bypassed 2FA for testing).',
+        description: 'Two-factor authentication verified successfully.',
       });
       
       onSuccess();
     } catch (error: any) {
-      console.error('❌ Complete error object:', error);
-      console.error('❌ Error message:', error.message);
-      console.error('❌ Error code:', error.code);
-      console.error('❌ Error stack:', error.stack);
+      console.error('❌ 2FA verification error:', error);
       
-      // Show the actual error instead of generic message
-      setError(`Error: ${error.message || 'Unknown error'} (Code: ${error.code || 'N/A'})`);
+      let errorMessage = 'Failed to verify 2FA code. Please try again.';
+      if (error.message?.includes('Invalid verification code')) {
+        errorMessage = 'Invalid verification code. Please try again.';
+      } else if (error.message?.includes('not properly configured')) {
+        errorMessage = error.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsVerifying(false);
     }
@@ -133,7 +126,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
           </Button>
           <Button
             onClick={handleVerifyTOTP}
-            disabled={isVerifying}
+            disabled={isVerifying || verificationCode.length !== 6}
             className="flex-1"
           >
             {isVerifying ? (
