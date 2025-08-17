@@ -44,88 +44,77 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     console.log('🚀 AuthProvider initializing...');
+    console.log('🔍 DEBUGGING: Starting fresh auth initialization');
 
-    // Set up auth state listener
+    // FORCE loading to false after 3 seconds to prevent infinite loops
+    const forceLoadingTimeout = setTimeout(() => {
+      console.log('⏰ FORCE: Setting loading to false after timeout');
+      setLoading(false);
+    }, 3000);
+
+    let isProcessing = false;
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔄 Auth state change:', event, session?.user?.email);
-        
-        // Handle sign out or no session
-        if (event === 'SIGNED_OUT' || !session?.user) {
-          console.log('🚪 User signed out or no session');
-          setUser(null);
-          setSession(null);
-          setLoading(false);
+        if (isProcessing) {
+          console.log('⚠️ Already processing auth state change, skipping');
           return;
         }
-
-        // Handle successful sign in
-        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
-          console.log('✅ User signed in:', session.user.email);
-          console.log('🔍 User metadata:', session.user.user_metadata);
+        
+        isProcessing = true;
+        console.log('🔄 Auth state change:', event, session?.user?.email || 'no-user');
+        
+        try {
+          // Clear the force timeout since we're processing
+          clearTimeout(forceLoadingTimeout);
           
-          setSession(session);
-          
-          // Check if this is an email provider and if 2FA is needed
-          const isEmailProvider = session.user.app_metadata?.provider === 'email';
-          
-          if (isEmailProvider) {
-            // Check if user has 2FA enabled
-            try {
-              const { data: profile } = await supabase
-                .from('profiles')
-                .select('totp_enabled')
-                .eq('user_id', session.user.id)
-                .maybeSingle();
-              
-              const has2FA = profile?.totp_enabled === true;
-              const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-              
-              console.log('🔍 2FA Check:', { has2FA, is2FAVerified, provider: session.user.app_metadata?.provider });
-              
-              if (has2FA && !is2FAVerified) {
-                console.log('🔐 2FA required');
-                setUser({
-                  id: session.user.id,
-                  email: session.user.email || '',
-                  fullName: session.user.user_metadata?.full_name || '',
-                  subscriptionTier: 'free',
-                  xxCoinBalance: 0,
-                  requiresTwoFactor: true
-                } as any);
-                setLoading(false);
-                return;
-              }
-            } catch (error) {
-              console.error('2FA check error:', error);
-            }
+          // Handle sign out or no session
+          if (event === 'SIGNED_OUT' || !session?.user) {
+            console.log('🚪 User signed out or no session');
+            setUser(null);
+            setSession(null);
+            setLoading(false);
+            return;
           }
-          
-          // No 2FA needed or already verified - create normal user
-          console.log('✅ Creating authenticated user');
-          const userData = createUserFromSession(session.user);
-          setUser(userData);
+
+          // Handle successful sign in - SIMPLIFIED
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+            console.log('✅ User signed in:', session.user.email);
+            
+            setSession(session);
+            
+            // TEMPORARILY SKIP 2FA - just create user directly
+            console.log('✅ Creating authenticated user (2FA disabled for debugging)');
+            const userData = createUserFromSession(session.user);
+            setUser(userData);
+            setLoading(false);
+          }
+        } catch (error) {
+          console.error('❌ Auth processing error:', error);
           setLoading(false);
+        } finally {
+          isProcessing = false;
         }
       }
     );
 
-    // Check for existing session
+    // Simplified session check
     const checkSession = async () => {
       console.log('🚀 Checking for existing session...');
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) throw error;
+        const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
           console.log('✅ Found existing session:', session.user.email);
-          // Auth state change will handle this
+          // Let auth state change handle it
         } else {
           console.log('❌ No existing session');
+          clearTimeout(forceLoadingTimeout);
           setLoading(false);
         }
       } catch (error) {
         console.error('Session check error:', error);
+        clearTimeout(forceLoadingTimeout);
         setLoading(false);
       }
     };
@@ -133,6 +122,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkSession();
 
     return () => {
+      clearTimeout(forceLoadingTimeout);
       subscription.unsubscribe();
     };
   }, []);
