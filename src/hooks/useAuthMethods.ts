@@ -46,8 +46,21 @@ export const useAuthMethods = (
         return;
       }
       
-      // No 2FA needed - this should not happen since checkTwoFactorRequirement handles sign-in
-      console.log('✅ No 2FA required - direct sign in');
+      // No 2FA needed - user is already signed in from checkTwoFactorRequirement
+      console.log('✅ No 2FA required - completing sign in');
+      
+      // Get the current session that should exist
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setSession(session);
+        setUser({
+          id: session.user.id,
+          email: session.user.email || '',
+          fullName: session.user.user_metadata?.full_name || '',
+          subscriptionTier: 'free',
+          xxCoinBalance: 0
+        });
+      }
       setLoading(false);
     } catch (error) {
       console.error('❌ Sign in error:', error);

@@ -29,14 +29,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     const userId = authData.user.id;
     console.log('✅ Credentials valid, user ID:', userId);
 
-    // CRITICAL: Immediately sign out to prevent session from persisting
-    console.log('🚪 Signing out immediately...');
-    await supabase.auth.signOut();
-    
-    // Store credentials for later use during 2FA verification
-    pendingAuth = { email, password, userId };
-    
-    // Check if user has 2FA enabled
+    // Check if user has 2FA enabled BEFORE signing out
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_enabled')
@@ -45,16 +38,33 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
 
     if (profileError) {
       console.error('Profile check error:', profileError);
-      return { requiresTwoFactor: false };
+      // Don't sign out - let the user stay signed in if no 2FA
+      return { requiresTwoFactor: false, userId };
     }
 
     const requiresTwoFactor = profile?.totp_enabled || false;
     console.log('🛡️ 2FA required:', requiresTwoFactor);
 
-    return {
-      requiresTwoFactor,
-      userId
-    };
+    if (requiresTwoFactor) {
+      // ONLY sign out if 2FA is required
+      console.log('🚪 Signing out temporarily for 2FA flow...');
+      await supabase.auth.signOut();
+      
+      // Store credentials for later use during 2FA verification
+      pendingAuth = { email, password, userId };
+      
+      return {
+        requiresTwoFactor: true,
+        userId
+      };
+    } else {
+      // No 2FA required - user stays signed in
+      console.log('✅ No 2FA required - user is signed in');
+      return {
+        requiresTwoFactor: false,
+        userId
+      };
+    }
   } catch (error) {
     console.error('2FA check error:', error);
     pendingAuth = null;
