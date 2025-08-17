@@ -230,22 +230,29 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         console.log('🔐 Starting email/password login for:', email?.slice(0, 3) + '***');
         
-        // Use the new 2FA service to check requirements
-        console.log('🔍 Calling checkTwoFactorRequirement...');
-        const result = await checkTwoFactorRequirement(email, password);
-        console.log('🛡️ 2FA check result:', result);
-        
-        if (result.requiresTwoFactor) {
-          console.log('🔒 2FA required - showing verification UI');
-          setPendingCredentials({ email, password });
-          setShowTwoFactorVerification(true);
-          setIsLoading(false);
-          return;
-        }
+        try {
+          // Use the new 2FA service to check requirements
+          console.log('🔍 About to call checkTwoFactorRequirement...');
+          const result = await checkTwoFactorRequirement(email, password);
+          console.log('🛡️ 2FA check result:', result);
+          
+          if (result.requiresTwoFactor) {
+            console.log('🔒 2FA required - showing verification UI');
+            setPendingCredentials({ email, password });
+            setShowTwoFactorVerification(true);
+            setIsLoading(false);
+            return;
+          }
 
-        console.log('✅ No 2FA required - proceeding with normal login');
-        // No 2FA enabled, proceed with normal sign in
-        await signIn(email, password);
+          console.log('✅ No 2FA required - proceeding with normal login');
+          // No 2FA enabled, proceed with normal sign in
+          await signIn(email, password);
+        } catch (twoFactorError) {
+          console.error('❌ 2FA check failed:', twoFactorError);
+          // If 2FA check fails, try normal login
+          console.log('⚠️ Falling back to normal login due to 2FA check error');
+          await signIn(email, password);
+        }
       } else if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
