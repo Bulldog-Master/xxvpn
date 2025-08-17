@@ -444,13 +444,58 @@ const AuthPage = () => {
                       )}
 
                       <div className="space-y-2">
+                      <div style={{marginBottom: '10px'}}>
+                        <button 
+                          onMouseDown={() => console.log('🔴 MOUSE DOWN!')}
+                          onMouseUp={() => console.log('🟡 MOUSE UP!')}
+                          onPointerDown={() => console.log('🟠 POINTER DOWN!')}
+                          onClick={(e) => {
+                            console.log('🚨 BUTTON CLICKED!!!', e);
+                            alert('BUTTON WORKS!');
+                            e.preventDefault();
+                            e.stopPropagation();
+                          }}
+                          style={{
+                            background: 'red', 
+                            color: 'white', 
+                            padding: '20px', 
+                            width: '100%', 
+                            border: 'none', 
+                            borderRadius: '6px',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            zIndex: 9999,
+                            position: 'relative'
+                          }}
+                        >
+                          CLICK TEST - SHOULD ALERT
+                        </button>
+                      </div>
+
                       <button 
-                        onClick={() => {
-                          console.log('🟢 Auth starting...');
+                        onMouseDown={() => console.log('🔵 Auth button mouse down')}
+                        onClick={(e) => {
+                          console.log('🟢 Auth button clicked!', e);
+                          console.log('📧 Email:', email);
+                          console.log('🔒 Password:', password ? '***' : 'empty');
+                          console.log('📱 Method:', selectedMethod);
+                          
+                          if (!email) {
+                            alert('Email is required!');
+                            return;
+                          }
+                          
+                          if (selectedMethod === 'email' && !password) {
+                            alert('Password is required!');
+                            return;
+                          }
+                          
                           setIsLoading(true);
                           setError('');
                           
                           if (selectedMethod === 'magic-link') {
+                            console.log('📨 Sending magic link...');
                             signInWithMagicLink(email).then(() => {
                               console.log('✅ Magic link sent');
                               setMagicLinkSent(true);
@@ -465,6 +510,7 @@ const AuthPage = () => {
                               setIsLoading(false);
                             });
                           } else {
+                            console.log('🔐 Signing in with password...');
                             signIn(email, password).then(() => {
                               console.log('✅ Sign in success');
                             }).catch(err => {
@@ -484,10 +530,10 @@ const AuthPage = () => {
                           borderRadius: '6px',
                           fontSize: '14px',
                           fontWeight: '500',
-                          cursor: (!email || (selectedMethod === 'email' && !password) || isLoading) ? 'not-allowed' : 'pointer',
-                          opacity: (!email || (selectedMethod === 'email' && !password) || isLoading) ? '0.5' : '1'
+                          cursor: 'pointer',
+                          zIndex: 1000,
+                          position: 'relative'
                         }}
-                        disabled={!email || (selectedMethod === 'email' && !password) || isLoading}
                       >
                         {isLoading ? 'Signing in...' : (selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In')}
                       </button>
