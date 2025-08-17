@@ -66,7 +66,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               
               // Check if this session has been 2FA verified
               const sessionData = session.user.user_metadata || {};
-              console.log('🔍 Session metadata:', sessionData);
+              console.log('🔍 Session metadata:', JSON.stringify(sessionData, null, 2));
+              console.log('🔍 twofa_verified value:', sessionData.twofa_verified);
+              console.log('🔍 twofa_verified type:', typeof sessionData.twofa_verified);
               
               if (!sessionData.twofa_verified) {
                 console.log('🔐 2FA required - keeping session for verification');
@@ -76,8 +78,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setLoading(false);
                 return;
               } else {
-                console.log('✅ 2FA already verified - proceeding with login');
+                console.log('✅ 2FA already verified - proceeding with full login');
+                // Continue with normal flow below
               }
+            } else {
+              console.log('📝 No 2FA enabled - proceeding with normal login');
             }
           } catch (error) {
             console.error('2FA check error:', error);
