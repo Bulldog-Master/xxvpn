@@ -92,6 +92,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('🔑 Processing session...');
         
         try {
+          console.log('🔍 Starting 2FA check for user:', session.user.id);
+          console.log('🔍 Provider:', session.user.app_metadata?.provider);
+          console.log('🔍 User metadata:', session.user.user_metadata);
+          
           // Check if user has 2FA enabled
           const { data: profile, error: profileError } = await supabase
             .from('profiles')
@@ -99,29 +103,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .eq('user_id', session.user.id)
             .maybeSingle();
 
-          if (profileError) {
-            console.error('Profile check error:', profileError);
+          console.log('🔍 Profile query result:', { profile, profileError });
+
+          if (profileError && profileError.code !== 'PGRST116') {
+            console.error('❌ Profile check error:', profileError);
           }
 
           // Only require 2FA for email/password logins AND if user has it enabled
           const isEmailProvider = session.user.app_metadata?.provider === 'email';
           const metadata = session.user.user_metadata || {};
+          const has2FAEnabled = profile?.totp_enabled === true;
+          const is2FAVerified = metadata.twofa_verified === true;
           
-          if (profile?.totp_enabled && isEmailProvider) {
-            console.log('🛡️ 2FA enabled for email provider - checking verification');
-            console.log('🔍 twofa_verified:', metadata.twofa_verified);
-            
-            if (!metadata.twofa_verified) {
-              console.log('🔐 2FA required');
-              setSession(session);
-              setUser({ ...session.user, requiresTwoFactor: true } as any);
-              setLoading(false);
-              return;
-            } else {
-              console.log('✅ 2FA verified');
-            }
+          console.log('🔍 2FA Decision Matrix:', {
+            isEmailProvider,
+            has2FAEnabled,
+            is2FAVerified,
+            shouldRequire2FA: isEmailProvider && has2FAEnabled && !is2FAVerified
+          });
+          
+          if (isEmailProvider && has2FAEnabled && !is2FAVerified) {
+            console.log('🔐 2FA verification required');
+            setSession(session);
+            setUser({ ...session.user, requiresTwoFactor: true } as any);
+            setLoading(false);
+            return;
           } else {
-            console.log('📝 No 2FA required - provider:', session.user.app_metadata?.provider, 'totp_enabled:', profile?.totp_enabled);
+            console.log('✅ Proceeding without 2FA - reasons:', {
+              notEmailProvider: !isEmailProvider,
+              no2FAEnabled: !has2FAEnabled,
+              already2FAVerified: is2FAVerified
+            });
           }
         } catch (error) {
           console.error('2FA check error:', error);
