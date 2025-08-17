@@ -103,11 +103,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             console.error('Profile check error:', profileError);
           }
 
-          // If 2FA is enabled, check verification status
-          if (profile?.totp_enabled) {
-            console.log('🛡️ 2FA enabled - checking verification');
-            
-            const metadata = session.user.user_metadata || {};
+          // Only require 2FA for email/password logins AND if user has it enabled
+          const isEmailProvider = session.user.app_metadata?.provider === 'email';
+          const metadata = session.user.user_metadata || {};
+          
+          if (profile?.totp_enabled && isEmailProvider) {
+            console.log('🛡️ 2FA enabled for email provider - checking verification');
             console.log('🔍 twofa_verified:', metadata.twofa_verified);
             
             if (!metadata.twofa_verified) {
@@ -120,7 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               console.log('✅ 2FA verified');
             }
           } else {
-            console.log('📝 No 2FA required');
+            console.log('📝 No 2FA required - provider:', session.user.app_metadata?.provider, 'totp_enabled:', profile?.totp_enabled);
           }
         } catch (error) {
           console.error('2FA check error:', error);
