@@ -79,9 +79,13 @@ export const verifyTwoFactorAndSignIn = async (
 ): Promise<void> => {
   try {
     console.log('🔐 Starting 2FA verification...');
+    console.log('📧 Email:', email);
+    console.log('🔢 TOTP Code:', totpCode);
     
     // Verify we have pending auth
+    console.log('🔍 Checking pending auth...', { hasPendingAuth: !!pendingAuth, pendingEmail: pendingAuth?.email });
     if (!pendingAuth || pendingAuth.email !== email) {
+      console.error('❌ Invalid authentication state:', { pendingAuth, email });
       throw new Error('Invalid authentication state. Please sign in again.');
     }
     

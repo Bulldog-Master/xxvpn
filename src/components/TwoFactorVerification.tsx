@@ -37,6 +37,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     console.log('🔐 Starting 2FA verification with code:', verificationCode);
 
     try {
+      console.log('🔐 TwoFactorVerification: Starting verification...');
+      console.log('📧 Email:', email);
+      console.log('🔢 Code:', verificationCode);
+      
       // Use the proper 2FA service that handles the complete flow
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
