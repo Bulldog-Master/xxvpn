@@ -215,10 +215,10 @@ const AuthPage = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('🎯 handleSignIn called with method:', selectedMethod, 'email:', email);
+    console.log('🎯 handleSignIn called!', { selectedMethod, email: email?.slice(0, 3) + '***' });
     
     if (!email || (!password && selectedMethod === 'email')) {
-      console.log('❌ Missing email or password');
+      console.log('❌ Missing email or password', { email: !!email, password: !!password });
       return;
     }
 
