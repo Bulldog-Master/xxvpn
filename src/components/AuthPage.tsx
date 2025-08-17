@@ -16,13 +16,11 @@ import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
-import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
+// import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
-  console.log('🎪 AuthPage component loaded');
-  
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, resetPassword, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
