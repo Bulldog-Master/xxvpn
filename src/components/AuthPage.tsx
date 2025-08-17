@@ -215,8 +215,6 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
-    console.log('🚨 SIGN IN FUNCTION CALLED!');
-    alert('Sign in function called!'); // This should show an alert
     e.preventDefault();
     console.log('🎯 handleSignIn called!', { selectedMethod, email: email?.slice(0, 3) + '***' });
     
@@ -230,17 +228,9 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'email') {
-        console.log('🔐 Starting email/password login for:', email);
+        console.log('🔐 Starting email/password login for:', email?.slice(0, 3) + '***');
         
-        // Simple test - show 2FA screen immediately
-        console.log('🔒 Testing - showing 2FA UI immediately');
-        setPendingCredentials({ email, password });
-        setShowTwoFactorVerification(true);
-        setIsLoading(false);
-        return;
-        
-        // Commented out the 2FA service call for testing
-        /*
+        // Use the new 2FA service to check requirements
         console.log('🔍 Calling checkTwoFactorRequirement...');
         const result = await checkTwoFactorRequirement(email, password);
         console.log('🛡️ 2FA check result:', result);
@@ -250,14 +240,12 @@ const AuthPage = () => {
           setPendingCredentials({ email, password });
           setShowTwoFactorVerification(true);
           setIsLoading(false);
-          console.log('🎪 TwoFactorVerification state set to true');
           return;
         }
 
         console.log('✅ No 2FA required - proceeding with normal login');
         // No 2FA enabled, proceed with normal sign in
         await signIn(email, password);
-        */
       } else if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
