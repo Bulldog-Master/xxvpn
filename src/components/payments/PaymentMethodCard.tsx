@@ -109,7 +109,8 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
 
         <div className="text-xs text-muted-foreground text-center space-y-1">
           <p>Secure payments powered by industry-leading encryption</p>
-          <p>Cancel anytime • No hidden fees • 30-day money-back guarantee</p>
+          <p>Start your <span className="text-primary font-medium">7-day free trial</span> today</p>
+          <p>Cancel anytime during trial • No charge until trial ends</p>
         </div>
       </CardContent>
     </Card>
