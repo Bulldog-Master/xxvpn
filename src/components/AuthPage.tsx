@@ -221,6 +221,8 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'email') {
+        console.log('🔐 Starting email/password login...');
+        
         // First check if user has 2FA enabled WITHOUT signing in
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email,
@@ -230,8 +232,11 @@ const AuthPage = () => {
         if (authError) throw authError;
         if (!authData.user) throw new Error('Authentication failed');
 
+        console.log('✅ Initial auth successful, user ID:', authData.user.id);
+
         // Immediately sign out to prevent session persistence
         await supabase.auth.signOut();
+        console.log('🚪 Signed out after auth check');
 
         // Check if user has 2FA enabled
         const { data: profile, error: profileError } = await supabase
@@ -244,14 +249,18 @@ const AuthPage = () => {
           console.error('Profile check error:', profileError);
         }
 
+        console.log('🛡️ 2FA enabled status:', profile?.totp_enabled);
+
         // If 2FA is enabled, show the verification step
         if (profile?.totp_enabled) {
+          console.log('🔒 2FA required - showing verification UI');
           setPendingCredentials({ email, password });
           setShowTwoFactorVerification(true);
           setIsLoading(false); // Stop loading as we're showing 2FA UI
           return;
         }
 
+        console.log('✅ No 2FA required - proceeding with normal login');
         // No 2FA enabled, proceed with normal sign in
         await signIn(email, password);
       } else if (selectedMethod === 'magic-link') {

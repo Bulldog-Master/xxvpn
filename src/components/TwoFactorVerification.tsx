@@ -35,11 +35,15 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     setError('');
     
     try {
+      console.log('🔐 Starting 2FA verification...');
+      
       // First, sign in with email/password to get the session
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+
+      console.log('✅ 2FA auth data:', { user: authData.user?.id, session: !!authData.session });
 
       if (authError) throw authError;
       if (!authData.user) throw new Error('Authentication failed');
