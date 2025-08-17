@@ -443,24 +443,52 @@ const AuthPage = () => {
                         </div>
                       )}
 
-                       <Button
-                         type="button"
-                         onClick={async (e) => {
-                           console.log('🎯🎯🎯 BUTTON CLICKED DIRECTLY');
-                           await handleSignIn(e as any);
-                         }}
-                         className="w-full"
-                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
-                       >
-                         {isLoading ? (
-                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                         ) : null}
-                         {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
-                       </Button>
-                     </>
-                   )}
-                 </form>
-              </TabsContent>
+                       <div className="space-y-2">
+                         <Button
+                           type="button"
+                           onClick={() => alert('TEST: Button clicks work!')}
+                           className="w-full bg-red-500"
+                         >
+                           TEST CLICK
+                         </Button>
+                         <Button
+                           type="button"
+                           onClick={async () => {
+                             console.log('🎯🎯🎯 SIGN IN BUTTON CLICKED');
+                             alert('Sign in button clicked!');
+                             setIsLoading(true);
+                             setError('');
+                             
+                             try {
+                               if (selectedMethod === 'magic-link') {
+                                 await signInWithMagicLink(email);
+                                 setMagicLinkSent(true);
+                                 alert('Magic link sent!');
+                               } else {
+                                 await signIn(email, password);
+                                 alert('Sign in successful!');
+                               }
+                             } catch (error: any) {
+                               console.error('❌ Sign in error:', error);
+                               setError(error.message || 'Failed to sign in');
+                               alert('Sign in failed: ' + error.message);
+                             } finally {
+                               setIsLoading(false);
+                             }
+                           }}
+                           className="w-full"
+                           disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                          >
+                            {isLoading ? (
+                              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                            ) : null}
+                            {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </form>
+                </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
