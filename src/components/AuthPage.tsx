@@ -379,7 +379,7 @@ const AuthPage = () => {
               </TabsList>
 
               <TabsContent value="signin" className="space-y-4">
-                <form onSubmit={handleSignIn} className="space-y-4">
+                <div className="space-y-4">
                   {selectedMethod === 'google' ? (
                     <Button
                       type="button"
@@ -443,52 +443,46 @@ const AuthPage = () => {
                         </div>
                       )}
 
-                       <div className="space-y-2">
-                         <Button
-                           type="button"
-                           onClick={() => alert('TEST: Button clicks work!')}
-                           className="w-full bg-red-500"
-                         >
-                           TEST CLICK
-                         </Button>
-                         <Button
-                           type="button"
-                           onClick={async () => {
-                             console.log('🎯🎯🎯 SIGN IN BUTTON CLICKED');
-                             alert('Sign in button clicked!');
-                             setIsLoading(true);
-                             setError('');
-                             
-                             try {
-                               if (selectedMethod === 'magic-link') {
-                                 await signInWithMagicLink(email);
-                                 setMagicLinkSent(true);
-                                 alert('Magic link sent!');
-                               } else {
-                                 await signIn(email, password);
-                                 alert('Sign in successful!');
-                               }
-                             } catch (error: any) {
-                               console.error('❌ Sign in error:', error);
-                               setError(error.message || 'Failed to sign in');
-                               alert('Sign in failed: ' + error.message);
-                             } finally {
-                               setIsLoading(false);
-                             }
-                           }}
-                           className="w-full"
-                           disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
-                          >
-                            {isLoading ? (
-                              <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                            ) : null}
-                            {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
-                          </Button>
-                        </div>
-                      </>
-                    )}
-                  </form>
-                </TabsContent>
+                      <div className="space-y-2">
+                        <button 
+                          onClick={() => { 
+                            alert('BASIC TEST WORKS'); 
+                            console.log('🔴 BASIC TEST CLICKED'); 
+                          }}
+                          style={{background: 'red', color: 'white', padding: '10px', width: '100%', border: 'none', borderRadius: '4px'}}
+                        >
+                          BASIC TEST
+                        </button>
+                        <button 
+                          onClick={() => {
+                            alert('Starting auth...');
+                            console.log('🟢 Auth starting...');
+                            
+                            if (selectedMethod === 'magic-link') {
+                              signInWithMagicLink(email).then(() => {
+                                alert('Magic link sent!');
+                                setMagicLinkSent(true);
+                              }).catch(err => {
+                                alert('Error: ' + err.message);
+                              });
+                            } else {
+                              signIn(email, password).then(() => {
+                                alert('Sign in success!');
+                              }).catch(err => {
+                                alert('Sign in error: ' + err.message);
+                              });
+                            }
+                          }}
+                          style={{background: 'blue', color: 'white', padding: '10px', width: '100%', border: 'none', borderRadius: '4px'}}
+                          disabled={!email || (selectedMethod === 'email' && !password)}
+                        >
+                          SIMPLE SIGN IN
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
