@@ -475,51 +475,65 @@ const AuthPage = () => {
 
                       <button 
                         onMouseDown={() => console.log('🔵 Auth button mouse down')}
+                        onMouseEnter={() => console.log('🔵 Auth button mouse enter')}
+                        onFocus={() => console.log('🔵 Auth button focused')}
                         onClick={(e) => {
-                          console.log('🟢 Auth button clicked!', e);
-                          console.log('📧 Email:', email);
-                          console.log('🔒 Password:', password ? '***' : 'empty');
-                          console.log('📱 Method:', selectedMethod);
+                          console.log('🚨 BLUE BUTTON CLICKED!!!');
+                          console.log('📧 Email value:', email);
+                          console.log('📧 Email length:', email?.length);
+                          console.log('🔒 Password value:', password ? 'HAS_PASSWORD' : 'NO_PASSWORD');
+                          console.log('📱 Method value:', selectedMethod);
+                          console.log('⏳ IsLoading:', isLoading);
                           
-                          if (!email) {
-                            alert('Email is required!');
+                          alert('Blue button clicked! Email: ' + email + ', Method: ' + selectedMethod);
+                          
+                          e.preventDefault();
+                          e.stopPropagation();
+                          
+                          if (!email || email.trim() === '') {
+                            alert('Email is empty or invalid!');
+                            console.log('❌ Email validation failed');
                             return;
                           }
                           
-                          if (selectedMethod === 'email' && !password) {
-                            alert('Password is required!');
+                          if (selectedMethod === 'email' && (!password || password.trim() === '')) {
+                            alert('Password is required for email method!');
+                            console.log('❌ Password validation failed');
                             return;
                           }
+                          
+                          console.log('✅ All validations passed, proceeding...');
                           
                           setIsLoading(true);
                           setError('');
                           
-                          if (selectedMethod === 'magic-link') {
-                            console.log('📨 Sending magic link...');
-                            signInWithMagicLink(email).then(() => {
-                              console.log('✅ Magic link sent');
-                              setMagicLinkSent(true);
-                              toast({
-                                title: 'Magic link sent!',
-                                description: 'Check your email for the sign-in link.',
-                              });
-                            }).catch(err => {
-                              console.error('❌ Magic link error:', err);
-                              setError(err.message);
-                            }).finally(() => {
+                          const startAuth = async () => {
+                            try {
+                              if (selectedMethod === 'magic-link') {
+                                console.log('📨 Starting magic link flow...');
+                                await signInWithMagicLink(email);
+                                console.log('✅ Magic link sent successfully');
+                                setMagicLinkSent(true);
+                                toast({
+                                  title: 'Magic link sent!',
+                                  description: 'Check your email for the sign-in link.',
+                                });
+                              } else {
+                                console.log('🔐 Starting password sign in...');
+                                await signIn(email, password);
+                                console.log('✅ Password sign in successful');
+                              }
+                            } catch (err: any) {
+                              console.error('❌ Auth error:', err);
+                              setError(err.message || 'Authentication failed');
+                              alert('Auth error: ' + (err.message || 'Unknown error'));
+                            } finally {
                               setIsLoading(false);
-                            });
-                          } else {
-                            console.log('🔐 Signing in with password...');
-                            signIn(email, password).then(() => {
-                              console.log('✅ Sign in success');
-                            }).catch(err => {
-                              console.error('❌ Sign in error:', err);
-                              setError(err.message);
-                            }).finally(() => {
-                              setIsLoading(false);
-                            });
-                          }
+                              console.log('🔄 Auth process completed');
+                            }
+                          };
+                          
+                          startAuth();
                         }}
                         style={{
                           background: isLoading ? '#666' : '#2563eb', 
