@@ -27,10 +27,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
-    console.error('🚨🚨🚨 HANDLE VERIFY TOTP CALLED! 🚨🚨🚨');
+    window.console.error('🚨🚨🚨 HANDLE VERIFY TOTP CALLED! 🚨🚨🚨');
     
     if (!verificationCode || verificationCode.length !== 6) {
-      console.error('❌ Invalid verification code length:', verificationCode.length);
+      window.console.error('❌ Invalid verification code length:', verificationCode.length);
       setError('Please enter a 6-digit verification code.');
       return;
     }
@@ -69,9 +69,12 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       // The service handles the sign-in, so just call onSuccess
       onSuccess();
     } catch (error: any) {
-      console.error('❌❌❌ 2FA verification error caught:', error);
-      console.error('❌ Error message:', error.message);
-      console.error('❌ Error stack:', error.stack);
+      window.console.error('❌❌❌ 2FA verification error caught:', error);
+      window.console.error('❌ Error message:', error.message);
+      window.console.error('❌ Error stack:', error.stack);
+      
+      // Also show the error visibly on the page
+      setError(`Debug: ${error.message || 'Unknown error during 2FA verification'}`);
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
       if (error.message?.includes('Invalid verification code')) {
