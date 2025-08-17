@@ -61,6 +61,8 @@ export type Database = {
           id: string
           referrals: number
           subscription_tier: string
+          totp_enabled: boolean | null
+          totp_secret: string | null
           updated_at: string
           user_id: string
           xx_coin_balance: number
@@ -72,6 +74,8 @@ export type Database = {
           id?: string
           referrals?: number
           subscription_tier?: string
+          totp_enabled?: boolean | null
+          totp_secret?: string | null
           updated_at?: string
           user_id: string
           xx_coin_balance?: number
@@ -83,6 +87,8 @@ export type Database = {
           id?: string
           referrals?: number
           subscription_tier?: string
+          totp_enabled?: boolean | null
+          totp_secret?: string | null
           updated_at?: string
           user_id?: string
           xx_coin_balance?: number

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,6 +21,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import TwoFactorSetup from './TwoFactorSetup';
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
@@ -28,6 +30,35 @@ const UserProfile = () => {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(user?.fullName || '');
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+
+  // Fetch user profile data including 2FA status
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (!user?.id) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('totp_enabled, display_name')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (error) throw error;
+        
+        if (data) {
+          setTwoFactorEnabled(data.totp_enabled || false);
+          if (data.display_name) {
+            setFullName(data.display_name);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, [user?.id]);
 
   const handleSignOut = async () => {
     try {
@@ -180,6 +211,16 @@ const UserProfile = () => {
                     </div>
                     <Switch defaultChecked />
                   </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium">Security</h4>
+                <div className="space-y-4">
+                  <TwoFactorSetup 
+                    isEnabled={twoFactorEnabled}
+                    onStatusChange={setTwoFactorEnabled}
+                  />
                 </div>
               </div>
             </CardContent>
