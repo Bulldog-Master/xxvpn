@@ -89,9 +89,15 @@ export const verifyTwoFactorAndSignIn = async (
       
       // Try to recover by re-authenticating with the provided password
       console.log('🔄 Attempting to recover authentication state...');
-      const authResult = await checkTwoFactorRequirement(email, password);
-      if (!authResult.requiresTwoFactor) {
-        throw new Error('Authentication recovery failed. Please sign in again.');
+      try {
+        const authResult = await checkTwoFactorRequirement(email, password);
+        if (!authResult.requiresTwoFactor) {
+          throw new Error('Authentication recovery failed - 2FA not required.');
+        }
+        console.log('✅ Authentication state recovered successfully');
+      } catch (recoveryError) {
+        console.error('❌ Recovery failed:', recoveryError);
+        throw new Error('Session expired. Please sign in again.');
       }
     }
     
