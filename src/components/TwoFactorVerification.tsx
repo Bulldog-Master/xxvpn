@@ -56,9 +56,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       }
       
       // Use the proper 2FA service that handles the complete flow
+      console.error('📞 About to call verifyTwoFactorAndSignIn...');
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      console.log('✅ 2FA verification successful!');
+      console.error('✅ 2FA verification successful!');
       
       toast({
         title: 'Success',
@@ -68,7 +69,9 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       // The service handles the sign-in, so just call onSuccess
       onSuccess();
     } catch (error: any) {
-      console.error('❌ 2FA verification error:', error);
+      console.error('❌❌❌ 2FA verification error caught:', error);
+      console.error('❌ Error message:', error.message);
+      console.error('❌ Error stack:', error.stack);
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
       if (error.message?.includes('Invalid verification code')) {
