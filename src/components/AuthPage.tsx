@@ -230,7 +230,15 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         console.log('🔐 Starting email/password login for:', email);
         
-        // Use the new 2FA service to check requirements
+        // Simple test - show 2FA screen immediately
+        console.log('🔒 Testing - showing 2FA UI immediately');
+        setPendingCredentials({ email, password });
+        setShowTwoFactorVerification(true);
+        setIsLoading(false);
+        return;
+        
+        // Commented out the 2FA service call for testing
+        /*
         console.log('🔍 Calling checkTwoFactorRequirement...');
         const result = await checkTwoFactorRequirement(email, password);
         console.log('🛡️ 2FA check result:', result);
@@ -247,6 +255,7 @@ const AuthPage = () => {
         console.log('✅ No 2FA required - proceeding with normal login');
         // No 2FA enabled, proceed with normal sign in
         await signIn(email, password);
+        */
       } else if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
