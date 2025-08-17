@@ -17,6 +17,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<any>;
   updateUser: (updates: Partial<User>) => Promise<void>;
+  markTwoFACompleted: () => void; // Add method to mark 2FA as completed
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -33,6 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [twoFACompleted, setTwoFACompleted] = useState(false); // Simple flag to track 2FA completion
 
   const createUserFromSession = (authUser: any): User => ({
     id: authUser.id,
@@ -100,9 +102,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 const has2FA = profile?.totp_enabled === true;
                 const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
                 
-                console.log('🔍 Simple 2FA Check:', { has2FA, is2FAVerified });
+                console.log('🔍 Simple 2FA Check:', { has2FA, is2FAVerified, twoFACompleted });
                 
-                if (has2FA && !is2FAVerified) {
+                // If we already marked 2FA as completed in this session, skip it
+                if (twoFACompleted) {
+                  console.log('✅ 2FA already completed in this session');
+                } else if (has2FA && !is2FAVerified) {
                   console.log('🔐 2FA required');
                   setUser({
                     id: session.user.id,
@@ -166,10 +171,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
+  const markTwoFACompleted = () => {
+    console.log('✅ Marking 2FA as completed');
+    setTwoFACompleted(true);
+    
+    // Force re-evaluation by triggering the auth state change
+    setTimeout(async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        console.log('🔄 Re-processing session after 2FA completion');
+        const userData = createUserFromSession(session.user);
+        setUser(userData);
+        setLoading(false);
+      }
+    }, 100);
+  };
+
   const value = {
     user,
     loading,
     session,
+    markTwoFACompleted,
     ...authMethods,
   };
 

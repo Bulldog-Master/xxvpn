@@ -9,6 +9,7 @@ import { Shield, AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { TOTP } from 'otpauth';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface TwoFactorVerificationProps {
   email: string;
@@ -19,6 +20,7 @@ interface TwoFactorVerificationProps {
 
 const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFactorVerificationProps) => {
   const { toast } = useToast();
+  const { markTwoFACompleted } = useAuth();
   const { t } = useTranslation();
   
   const [verificationCode, setVerificationCode] = useState('');
@@ -100,18 +102,17 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       
       console.log('✅ User metadata updated successfully');
       
-      // Set a localStorage flag to indicate 2FA was completed for this session
-      localStorage.setItem(`2fa_completed_${session.user.id}`, 'true');
-      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
 
-      console.log('🎉 2FA verification complete - forcing clean restart');
+      console.log('🎉 2FA verification complete - using flag approach');
       
-      // Force complete page reload
-      window.location.href = '/';
+      // Mark 2FA as completed in the auth context
+      markTwoFACompleted();
+      
+      // Don't call onSuccess or reload - let the auth context handle the transition
     } catch (error: any) {
       console.error('2FA verification error:', error);
       
