@@ -46,6 +46,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (initialized) return; // Prevent multiple initializations
     
+    console.log('🚀 AuthContext initializing...');
+    
+    // FIRST: Clean up any stale auth state that might cause loops
+    const cleanupStaleState = () => {
+      try {
+        Object.keys(localStorage).forEach((key) => {
+          if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+            const value = localStorage.getItem(key);
+            console.log('🧹 Found auth key:', key, value?.substring(0, 50) + '...');
+            localStorage.removeItem(key);
+          }
+        });
+        console.log('✅ Stale auth state cleaned');
+      } catch (error) {
+        console.error('Cleanup error:', error);
+      }
+    };
+    
+    cleanupStaleState();
     setInitialized(true);
 
     // Simple auth state listener with 2FA check

@@ -16,6 +16,7 @@ import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail, signInWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
+import { cleanupAuthState } from '@/utils/authHelpers';
 // import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
@@ -40,6 +41,16 @@ const AuthPage = () => {
   const [showSigninPassword, setShowSigninPassword] = useState(false);
   const [showTwoFactorVerification, setShowTwoFactorVerification] = useState(false);
   const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
+
+  const handleClearBrowserData = () => {
+    console.log('🧹 Manually clearing all browser auth data...');
+    cleanupAuthState();
+    // Also clear any Supabase sessions
+    supabase.auth.signOut({ scope: 'global' }).then(() => {
+      console.log('✅ Manual cleanup complete - please try signing in again');
+      window.location.reload();
+    });
+  };
 
   const authMethods = [
     {
@@ -592,6 +603,18 @@ const AuthPage = () => {
               <li>• Advanced threat protection</li>
               <li>• Multi-layer security protocols</li>
             </ul>
+          </div>
+
+          {/* Debug button for clearing browser data */}
+          <div className="mt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleClearBrowserData}
+              className="w-full text-xs"
+            >
+              Clear Browser Data (Fix Login Issues)
+            </Button>
           </div>
         </CardContent>
       </Card>
