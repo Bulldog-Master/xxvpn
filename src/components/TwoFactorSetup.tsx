@@ -294,10 +294,55 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
             onClick={() => {
               console.log('🔘 Enable 2FA button clicked');
               console.log('Current user before setup:', user);
+              console.log('Current session before setup:', session);
               setShowSetup(true);
             }}
           >
             Enable
+          </Button>
+          
+          {/* Debug button for testing */}
+          <Button 
+            variant="secondary" 
+            size="sm" 
+            onClick={async () => {
+              console.log('🧪 Direct 2FA test');
+              
+              // Test direct TOTP generation without auth checks
+              try {
+                const { TOTP } = await import('otpauth');
+                const randomBytes = new Uint8Array(32);
+                crypto.getRandomValues(randomBytes);
+                const testSecret = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+                
+                const totp = new TOTP({
+                  issuer: 'xxVPN',
+                  label: 'test@example.com',
+                  algorithm: 'SHA1',
+                  digits: 6,
+                  period: 30,
+                  secret: testSecret,
+                });
+                
+                const QRCode = await import('qrcode');
+                const qrCode = await QRCode.toDataURL(totp.toString());
+                
+                console.log('✅ 2FA libraries working correctly');
+                toast({
+                  title: 'Success',
+                  description: '2FA libraries are working correctly. Issue is with authentication.',
+                });
+              } catch (error) {
+                console.error('❌ 2FA library error:', error);
+                toast({
+                  title: 'Error',
+                  description: `2FA library error: ${error.message}`,
+                  variant: 'destructive',
+                });
+              }
+            }}
+          >
+            Test Libraries
           </Button>
         </div>
       </div>
