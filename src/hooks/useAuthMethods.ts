@@ -110,11 +110,18 @@ export const useAuthMethods = (
         // Continue even if this fails
       }
       
-      // NO RELOAD - let the auth context handle sign out
+      // Clear user state to trigger immediate logout UI
+      setUser(null);
+      setSession(null);
+      setLoading(false);
+      
       console.log('✅ Sign out successful - state cleared');
     } catch (error) {
       console.error('Sign out error:', error);
-      // NO RELOAD - even if sign out fails
+      // Force clear state even if sign out fails
+      setUser(null);
+      setSession(null);
+      setLoading(false);
     }
   };
 
