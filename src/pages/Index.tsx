@@ -28,9 +28,10 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <TwoFactorVerification 
           email={user.email || ''}
-          password=""
+          password={(user as any).pendingPassword || ''}
           onSuccess={() => {
             // The TwoFactorVerification component will handle the state update
+            window.location.reload();
           }}
           onCancel={() => {
             supabase.auth.signOut();

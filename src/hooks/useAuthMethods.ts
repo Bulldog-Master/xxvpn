@@ -12,6 +12,7 @@ import {
   updateUserProfile,
   resetPassword
 } from '@/services/authService';
+import { checkTwoFactorRequirement } from '@/services/twoFactorAuthService';
 
 export const useAuthMethods = (
   user: User | null,
@@ -25,54 +26,28 @@ export const useAuthMethods = (
       setLoading(true);
       console.log('🔑 Starting sign in process...');
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Use the proper 2FA service that handles the complete flow
+      const result = await checkTwoFactorRequirement(email, password);
+      console.log('🔍 2FA check result:', result);
       
-      if (error) {
-        console.error('❌ Sign in failed:', error);
-        throw error;
-      }
-
-      console.log('✅ Password authentication successful');
-
-      // Check if user has 2FA enabled
-      if (data.user && data.session) {
-        // Check if user has 2FA enabled
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('totp_enabled')
-          .eq('user_id', data.user.id)
-          .maybeSingle();
-        
-        const has2FA = profile?.totp_enabled === true;
-        
-        if (has2FA) {
-          // User needs 2FA verification - create a partial user object
-          setSession(data.session);
-          setUser({
-            id: data.user.id,
-            email: data.user.email,
-            fullName: data.user.user_metadata?.full_name || '',
-            subscriptionTier: 'free',
-            xxCoinBalance: 0,
-            requiresTwoFactor: true
-          } as any);
-          setLoading(false);
-          return; // Don't complete sign-in yet
-        }
-        
-        // No 2FA needed or already verified - complete sign-in
-        setSession(data.session);
+      if (result.requiresTwoFactor) {
+        console.log('🔒 2FA required - setting up 2FA state');
+        // Set user in 2FA pending state
         setUser({
-          id: data.user.id,
-          email: data.user.email,
-          fullName: data.user.user_metadata?.full_name || '',
+          id: result.userId!,
+          email: email,
+          fullName: '',
           subscriptionTier: 'free',
-          xxCoinBalance: 0
-        });
+          xxCoinBalance: 0,
+          requiresTwoFactor: true,
+          pendingPassword: password
+        } as any);
+        setLoading(false);
+        return;
       }
+      
+      // No 2FA needed - this should not happen since checkTwoFactorRequirement handles sign-in
+      console.log('✅ No 2FA required - direct sign in');
       setLoading(false);
     } catch (error) {
       console.error('❌ Sign in error:', error);

@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { TOTP } from 'otpauth';
+import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface TwoFactorVerificationProps {
@@ -37,90 +37,30 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     console.log('🔐 Starting 2FA verification with code:', verificationCode);
 
     try {
-      // Get current session instead of re-authenticating
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      console.log('🔍 Current session check:', !!session, sessionError);
+      // Use the proper 2FA service that handles the complete flow
+      await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      if (sessionError || !session?.user) {
-        console.error('❌ No active session found');
-        throw new Error('No active session found. Please sign in again.');
-      }
-      
-      // Get the user's TOTP secret from their profile
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('totp_secret, totp_enabled')
-        .eq('user_id', session.user.id)
-        .single();
-
-      if (profileError) throw profileError;
-      if (!profile.totp_enabled || !profile.totp_secret) {
-        throw new Error('2FA is not properly configured for this account');
-      }
-
-      // Verify the TOTP code
-      const totp = new TOTP({
-        issuer: 'xxVPN',
-        label: email,
-        algorithm: 'SHA1',
-        digits: 6,
-        period: 30,
-        secret: profile.totp_secret,
-      });
-
-      // Try validation with different time windows to account for clock drift
-      let validationResult = null;
-      for (let window = 1; window <= 3; window++) {
-        console.log(`🕒 Trying validation with window ${window}...`);
-        validationResult = totp.validate({ token: verificationCode, window });
-        console.log(`🔍 Window ${window} result:`, validationResult);
-        if (validationResult !== null) {
-          console.log('✅ TOTP validation successful!');
-          break;
-        }
-      }
-
-      if (validationResult === null) {
-        console.error('❌ TOTP validation failed for all windows');
-        setError('Invalid verification code. Please try again.');
-        return; // Don't sign out, just show error
-      }
-
-      // 2FA verification successful - mark session as verified
-      console.log('🔐 Marking session as 2FA verified...');
-      
-      // Update user metadata to mark 2FA as verified
-      const { error: updateError } = await supabase.auth.updateUser({
-        data: {
-          twofa_verified: true,
-          last_2fa_verification: new Date().toISOString()
-        }
-      });
-      
-      if (updateError) {
-        console.error('❌ Failed to update 2FA verification status:', updateError);
-        throw updateError;
-      }
-      
-      console.log('✅ 2FA verification status updated successfully');
+      console.log('✅ 2FA verification successful!');
       
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
       
-      console.log('🔄 Forcing page reload to complete 2FA flow...');
-      // Force page reload to restart auth context with verified 2FA
-      window.location.href = '/';
+      // The service handles the sign-in, so just call onSuccess
+      onSuccess();
     } catch (error: any) {
       console.error('❌ 2FA verification error:', error);
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
-      if (error.message?.includes('Invalid login credentials')) {
-        errorMessage = 'Invalid email or password.';
+      if (error.message?.includes('Invalid verification code')) {
+        errorMessage = 'Invalid verification code. Please try again.';
+      } else if (error.message?.includes('Invalid authentication state')) {
+        errorMessage = 'Session expired. Please sign in again.';
+        // Sign out and redirect to login
+        onCancel();
+        return;
       } else if (error.message?.includes('not properly configured')) {
-        errorMessage = error.message;
-      } else if (error.message?.includes('Invalid verification')) {
         errorMessage = error.message;
       }
       
