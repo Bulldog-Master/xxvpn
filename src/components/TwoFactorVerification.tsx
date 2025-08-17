@@ -82,12 +82,27 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         return;
       }
 
-      // 2FA verification successful - user remains signed in
+      // 2FA verification successful - mark session as verified
+      console.log('✅ 2FA verification successful - updating session');
+      
+      // Update user metadata to mark 2FA as verified
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: {
+          twofa_verified: true
+        }
+      });
+      
+      if (updateError) {
+        console.error('Failed to update 2FA verification status:', updateError);
+        throw updateError;
+      }
+      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
 
+      console.log('🎉 2FA verification complete, calling onSuccess');
       onSuccess();
     } catch (error: any) {
       console.error('2FA verification error:', error);

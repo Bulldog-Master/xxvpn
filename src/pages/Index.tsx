@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import VPNDashboard from '@/components/VPNDashboard';
 import AuthPage from '@/components/AuthPage';
 import TwoFactorVerification from '@/components/TwoFactorVerification';
+import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -86,12 +87,18 @@ const Index = () => {
             email={user.email || ''}
             password=""
             onSuccess={() => {
-              console.log('✅ 2FA verification successful');
-              window.location.reload();
+              console.log('✅ 2FA verification successful - triggering auth refresh');
+              // Don't reload immediately, let the auth state change handle it
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
             }}
             onCancel={() => {
-              console.log('❌ 2FA verification cancelled');
-              window.location.reload();
+              console.log('❌ 2FA verification cancelled - signing out');
+              // Sign out and reload to login page
+              supabase.auth.signOut().then(() => {
+                window.location.href = '/';
+              });
             }}
           />
         </div>
