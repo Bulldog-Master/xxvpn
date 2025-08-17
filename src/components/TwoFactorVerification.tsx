@@ -140,6 +140,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   };
 
 
+  // Clean 2FA component - no debug buttons
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">
