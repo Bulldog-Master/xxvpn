@@ -444,40 +444,53 @@ const AuthPage = () => {
                       )}
 
                       <div className="space-y-2">
-                        <button 
-                          onClick={() => { 
-                            alert('BASIC TEST WORKS'); 
-                            console.log('🔴 BASIC TEST CLICKED'); 
-                          }}
-                          style={{background: 'red', color: 'white', padding: '10px', width: '100%', border: 'none', borderRadius: '4px'}}
-                        >
-                          BASIC TEST
-                        </button>
-                        <button 
-                          onClick={() => {
-                            alert('Starting auth...');
-                            console.log('🟢 Auth starting...');
-                            
-                            if (selectedMethod === 'magic-link') {
-                              signInWithMagicLink(email).then(() => {
-                                alert('Magic link sent!');
-                                setMagicLinkSent(true);
-                              }).catch(err => {
-                                alert('Error: ' + err.message);
+                      <button 
+                        onClick={() => {
+                          console.log('🟢 Auth starting...');
+                          setIsLoading(true);
+                          setError('');
+                          
+                          if (selectedMethod === 'magic-link') {
+                            signInWithMagicLink(email).then(() => {
+                              console.log('✅ Magic link sent');
+                              setMagicLinkSent(true);
+                              toast({
+                                title: 'Magic link sent!',
+                                description: 'Check your email for the sign-in link.',
                               });
-                            } else {
-                              signIn(email, password).then(() => {
-                                alert('Sign in success!');
-                              }).catch(err => {
-                                alert('Sign in error: ' + err.message);
-                              });
-                            }
-                          }}
-                          style={{background: 'blue', color: 'white', padding: '10px', width: '100%', border: 'none', borderRadius: '4px'}}
-                          disabled={!email || (selectedMethod === 'email' && !password)}
-                        >
-                          SIMPLE SIGN IN
-                        </button>
+                            }).catch(err => {
+                              console.error('❌ Magic link error:', err);
+                              setError(err.message);
+                            }).finally(() => {
+                              setIsLoading(false);
+                            });
+                          } else {
+                            signIn(email, password).then(() => {
+                              console.log('✅ Sign in success');
+                            }).catch(err => {
+                              console.error('❌ Sign in error:', err);
+                              setError(err.message);
+                            }).finally(() => {
+                              setIsLoading(false);
+                            });
+                          }
+                        }}
+                        style={{
+                          background: isLoading ? '#666' : '#2563eb', 
+                          color: 'white', 
+                          padding: '12px 16px', 
+                          width: '100%', 
+                          border: 'none', 
+                          borderRadius: '6px',
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          cursor: (!email || (selectedMethod === 'email' && !password) || isLoading) ? 'not-allowed' : 'pointer',
+                          opacity: (!email || (selectedMethod === 'email' && !password) || isLoading) ? '0.5' : '1'
+                        }}
+                        disabled={!email || (selectedMethod === 'email' && !password) || isLoading}
+                      >
+                        {isLoading ? 'Signing in...' : (selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In')}
+                      </button>
                       </div>
                     </>
                   )}
