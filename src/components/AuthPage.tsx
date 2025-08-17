@@ -35,6 +35,7 @@ const AuthPage = () => {
   const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showSigninPassword, setShowSigninPassword] = useState(false);
 
   const authMethods = [
     {
@@ -382,14 +383,28 @@ const AuthPage = () => {
                               Forgot Password?
                             </button>
                           </div>
-                          <Input
-                            id="signin-password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter your password"
-                            required
-                          />
+                          <div className="relative">
+                            <Input
+                              id="signin-password"
+                              type={showSigninPassword ? "text" : "password"}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="Enter your password"
+                              required
+                              className="pr-10"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowSigninPassword(!showSigninPassword)}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              {showSigninPassword ? (
+                                <EyeOff className="w-4 h-4" />
+                              ) : (
+                                <Eye className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
                         </div>
                       )}
 
