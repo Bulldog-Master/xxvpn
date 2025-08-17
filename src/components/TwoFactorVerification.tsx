@@ -139,11 +139,6 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     }
   };
 
-  const testCurrentSession = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    console.log('🧪 Current session test:', session);
-    console.log('🧪 Current metadata:', session?.user?.user_metadata);
-  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
