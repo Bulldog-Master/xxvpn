@@ -39,7 +39,18 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     try {
       console.log('🔐 TwoFactorVerification: Starting verification...');
       console.log('📧 Email:', email);
+      console.log('🔑 Password exists:', !!password);
+      console.log('🔑 Password length:', password?.length || 0);
       console.log('🔢 Code:', verificationCode);
+      
+      // Check if we have the required parameters
+      if (!email) {
+        throw new Error('Missing email for verification');
+      }
+      
+      if (!password) {
+        throw new Error('Missing password for verification. Please sign in again.');
+      }
       
       // Use the proper 2FA service that handles the complete flow
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
