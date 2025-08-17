@@ -50,7 +50,24 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   const generateTOTPSecret = async () => {
     try {
       console.log('🔐 Starting 2FA setup generation...');
-      console.log('User email:', user?.email);
+      console.log('User data:', { 
+        id: user?.id, 
+        email: user?.email,
+        idType: typeof user?.id,
+        fullUser: user 
+      });
+      
+      // Check if user ID is valid
+      if (!user?.id) {
+        throw new Error('No user ID found');
+      }
+      
+      // Check if user ID is a valid UUID format
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(user.id)) {
+        console.log('❌ Invalid UUID format for user ID:', user.id);
+        throw new Error(`Invalid user ID format: ${user.id}`);
+      }
       
       // Generate a random secret (32 bytes = 256 bits)
       const randomBytes = new Uint8Array(32);
