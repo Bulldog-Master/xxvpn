@@ -49,10 +49,15 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
 
   const generateTOTPSecret = async () => {
     try {
+      console.log('🔐 Starting 2FA setup generation...');
+      console.log('User email:', user?.email);
+      
       // Generate a random secret (32 bytes = 256 bits)
       const randomBytes = new Uint8Array(32);
       crypto.getRandomValues(randomBytes);
       const newSecret = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+      
+      console.log('✅ Secret generated successfully');
       
       // Create TOTP instance
       const totp = new TOTP({
@@ -64,13 +69,23 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         secret: newSecret,
       });
 
+      console.log('✅ TOTP instance created successfully');
+      console.log('TOTP URL:', totp.toString());
+
       // Generate QR code
       const qrCode = await QRCode.toDataURL(totp.toString());
+      console.log('✅ QR code generated successfully');
       
       setSecret(newSecret);
       setQrCodeUrl(qrCode);
+      console.log('✅ 2FA setup completed successfully');
     } catch (error) {
-      console.error('Error generating TOTP secret:', error);
+      console.error('❌ Error generating TOTP secret:', error);
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
       toast({
         title: 'Error',
         description: 'Failed to generate 2FA setup. Please try again.',
