@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { CreditCard, Download, HelpCircle, Shield, User, Smartphone } from 'lucide-react';
 import PaymentMethodCard from './payments/PaymentMethodCard';
+import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
 
 interface PaymentOrder {
   id: string;
@@ -15,6 +17,11 @@ interface PaymentOrder {
 
 const PaymentsPage = () => {
   const { t } = useTranslation();
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
+
+  const handlePlanSelect = (plan: SubscriptionPlan) => {
+    setSelectedPlan(plan);
+  };
 
   // Sample data - in a real app this would come from an API
   const orders: PaymentOrder[] = [
@@ -81,14 +88,20 @@ const PaymentsPage = () => {
           <CardHeader>
             <CardTitle className="text-2xl font-semibold">{t('payments.title')}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-8">
+            {/* Subscription Plans Section */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-medium">Select Your Plan</h2>
+              <SubscriptionPlans onPlanSelect={handlePlanSelect} selectedPlan={selectedPlan} />
+            </div>
+
             {/* Payment Methods Section */}
             <div className="space-y-6">
               <h2 className="text-xl font-medium">{t('payments.methods.title')}</h2>
               
               <div className="grid lg:grid-cols-2 gap-6">
                 {/* Quick Payment Options */}
-                <PaymentMethodCard />
+                <PaymentMethodCard selectedPlan={selectedPlan} />
                 
                 {/* Traditional Payment Methods */}
                 <div className="space-y-3">
