@@ -22,7 +22,6 @@ export const useAuthMethods = (
 ) => {
   const signIn = async (email: string, password: string) => {
     try {
-      console.log('🔑 Starting sign in process for:', email);
       setLoading(true);
       
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -31,11 +30,9 @@ export const useAuthMethods = (
       });
       
       if (error) throw error;
-      console.log('✅ Supabase sign in successful');
       
       // FORCE immediate state update instead of waiting for listener
       if (data.user && data.session) {
-        console.log('🚀 FORCING immediate user state update');
         setSession(data.session);
         setUser({
           id: data.user.id,

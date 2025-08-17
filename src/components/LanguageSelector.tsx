@@ -21,7 +21,7 @@ const LanguageSelector = () => {
   const handleLanguageChange = (language: Language) => {
     setSelectedLanguage(language);
     i18n.changeLanguage(language.code);
-    console.log('Language changed to:', language.code);
+    
   };
 
   return (

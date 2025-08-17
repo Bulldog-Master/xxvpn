@@ -36,8 +36,6 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     setError('');
 
     try {
-      console.log('🔐 Starting 2FA verification...');
-      
       // Get current session instead of re-authenticating
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
@@ -45,8 +43,6 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         throw new Error('No active session found. Please sign in again.');
       }
       
-      console.log('✅ Current session found for user:', session.user.email);
-
       // Get the user's TOTP secret from their profile
       const { data: profile, error: profileError } = await supabase
         .from('profiles')

@@ -46,21 +46,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (initialized) return; // Prevent multiple initializations
     
-    console.log('🚀 AuthProvider - SIMPLE initialization starting...');
     setInitialized(true);
 
     // Simple auth state listener with 2FA check
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔄 Auth event:', event, session?.user?.email || 'no-user');
-        
         if (event === 'SIGNED_OUT' || !session?.user) {
-          console.log('❌ No user - clearing state');
           setSession(null);
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('✅ User found - checking for 2FA');
           setSession(session);
           
           // Simple 2FA check - only for email provider
@@ -77,10 +72,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               const has2FA = profile?.totp_enabled === true;
               const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
               
-              console.log('🔍 2FA Check:', { has2FA, is2FAVerified });
-              
               if (has2FA && !is2FAVerified) {
-                console.log('🔐 2FA required');
                 setUser({
                   id: session.user.id,
                   email: session.user.email || '',
@@ -107,7 +99,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Simple initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('📋 Initial session check:', session?.user?.email || 'no-session');
       
       if (session?.user) {
         setSession(session);

@@ -77,7 +77,7 @@ const UserProfile = () => {
   };
 
   const handleSaveProfile = () => {
-    // TODO: Implement profile update
+    // Profile update functionality would be implemented here
     setIsEditing(false);
     toast({
       title: t('profile.updated'),

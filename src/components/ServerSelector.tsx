@@ -67,7 +67,7 @@ const ServerSelector = () => {
 
   const toggleFavorite = (serverId: string) => {
     // In a real app, this would update the server data
-    console.log(`Toggle favorite for server: ${serverId}`);
+    
   };
 
   return (
