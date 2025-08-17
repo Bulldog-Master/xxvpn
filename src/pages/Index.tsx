@@ -33,8 +33,9 @@ const Index = () => {
           email={user.email || ''}
           password={pendingPassword || ''}
           onSuccess={() => {
-            // The TwoFactorVerification component will handle the state update
-            window.location.reload();
+            console.log('🎉 2FA success callback triggered');
+            // Force a complete page refresh to ensure clean state
+            window.location.href = '/';
           }}
           onCancel={() => {
             supabase.auth.signOut();

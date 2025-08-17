@@ -46,16 +46,22 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       }
       
       // Use the proper 2FA service that handles the complete flow
+      console.log('📞 Calling verifyTwoFactorAndSignIn...');
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      console.log('✅ 2FA verification successful!');
+      console.log('✅ 2FA verification completed successfully!');
+      console.log('🔄 About to call onSuccess()...');
       
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
       
-      onSuccess();
+      // Give a small delay to ensure the auth state is updated
+      setTimeout(() => {
+        console.log('🔄 Calling onSuccess after delay...');
+        onSuccess();
+      }, 500);
     } catch (error: any) {
       console.error('❌ 2FA verification error:', error);
       
