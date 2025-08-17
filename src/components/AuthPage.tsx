@@ -21,6 +21,7 @@ import { checkTwoFactorRequirement, verifyTwoFactorAndSignIn } from '@/services/
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
+  console.log('🎪 AuthPage component loaded');
   
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, resetPassword, loading } = useAuth();
   const { toast } = useToast();
@@ -41,6 +42,14 @@ const AuthPage = () => {
   const [showSigninPassword, setShowSigninPassword] = useState(false);
   const [showTwoFactorVerification, setShowTwoFactorVerification] = useState(false);
   const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
+
+  console.log('🎯 AuthPage state:', { 
+    selectedMethod, 
+    hasEmail: !!email, 
+    hasPassword: !!password, 
+    showTwoFactorVerification,
+    isLoading 
+  });
 
   const authMethods = [
     {
