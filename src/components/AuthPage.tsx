@@ -437,7 +437,6 @@ const AuthPage = () => {
                        <Button
                          type="button"
                          className="w-full"
-                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
                          onClick={async () => {
                            console.log('🟢 Email auth starting...');
                            setIsLoading(true);
