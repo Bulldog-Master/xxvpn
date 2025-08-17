@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import PassphraseAuth from './PassphraseAuth';
 import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
-import { signUpWithEmail } from '@/services/authService';
+import { signUpWithEmail, signInWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
 // import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
@@ -437,22 +437,21 @@ const AuthPage = () => {
                        <Button
                          type="button"
                          className="w-full"
-                         onClick={() => {
-                           console.log('🟢 DIRECT CLICK HANDLER START');
-                           console.log('Values:', { email, password: !!password });
+                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                         onClick={async () => {
+                           console.log('🟢 Email auth starting...');
                            setIsLoading(true);
+                           setError('');
                            
-                           setTimeout(() => {
-                             console.log('🟢 TIMEOUT REACHED');
-                             signIn(email, password).then(() => {
-                               console.log('🟢 SIGNIN SUCCESS');
-                               setIsLoading(false);
-                             }).catch((err) => {
-                               console.log('🟢 SIGNIN ERROR:', err);
-                               setError(err.message);
-                               setIsLoading(false);
-                             });
-                           }, 100);
+                           try {
+                             await signInWithEmail(email, password);
+                             console.log('🟢 Email auth success');
+                           } catch (error: any) {
+                             console.error('🟢 Email auth error:', error);
+                             setError(error.message || 'Failed to sign in');
+                           } finally {
+                             setIsLoading(false);
+                           }
                          }}
                        >
                          {isLoading ? (
