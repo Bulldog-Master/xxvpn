@@ -34,12 +34,15 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
 
     setIsVerifying(true);
     setError('');
+    console.log('🔐 Starting 2FA verification with code:', verificationCode);
 
     try {
       // Get current session instead of re-authenticating
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log('🔍 Current session check:', !!session, sessionError);
       
       if (sessionError || !session?.user) {
+        console.error('❌ No active session found');
         throw new Error('No active session found. Please sign in again.');
       }
       
@@ -68,18 +71,24 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       // Try validation with different time windows to account for clock drift
       let validationResult = null;
       for (let window = 1; window <= 3; window++) {
+        console.log(`🕒 Trying validation with window ${window}...`);
         validationResult = totp.validate({ token: verificationCode, window });
-        if (validationResult !== null) break;
+        console.log(`🔍 Window ${window} result:`, validationResult);
+        if (validationResult !== null) {
+          console.log('✅ TOTP validation successful!');
+          break;
+        }
       }
 
       if (validationResult === null) {
-        // Sign out the user since 2FA failed
-        await supabase.auth.signOut();
+        console.error('❌ TOTP validation failed for all windows');
         setError('Invalid verification code. Please try again.');
-        return;
+        return; // Don't sign out, just show error
       }
 
       // 2FA verification successful - mark session as verified
+      console.log('🔐 Marking session as 2FA verified...');
+      
       // Update user metadata to mark 2FA as verified
       const { error: updateError } = await supabase.auth.updateUser({
         data: {
@@ -93,26 +102,18 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         throw updateError;
       }
       
+      console.log('✅ 2FA verification status updated successfully');
+      
       toast({
         title: 'Success',
         description: 'Two-factor authentication verified successfully.',
       });
       
-      // Force immediate state update like we did for basic login
-      const { data: { session: updatedSession } } = await supabase.auth.getSession();
-      if (updatedSession?.user) {
-        // Force page reload to restart auth context with verified 2FA
-        window.location.href = '/';
-      }
+      console.log('🔄 Forcing page reload to complete 2FA flow...');
+      // Force page reload to restart auth context with verified 2FA
+      window.location.href = '/';
     } catch (error: any) {
-      console.error('2FA verification error:', error);
-      
-      // Make sure to sign out if there was an error
-      try {
-        await supabase.auth.signOut();
-      } catch (signOutError) {
-        // Ignore sign out errors
-      }
+      console.error('❌ 2FA verification error:', error);
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
       if (error.message?.includes('Invalid login credentials')) {
