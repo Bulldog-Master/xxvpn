@@ -43,6 +43,9 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   // Generate QR code and secret when setup is shown
   useEffect(() => {
     if (showSetup && !isEnabled) {
+      console.log('🔄 useEffect triggered for 2FA setup');
+      console.log('showSetup:', showSetup, 'isEnabled:', isEnabled);
+      console.log('Current user:', user);
       generateTOTPSecret();
     }
   }, [showSetup, isEnabled]);
@@ -110,13 +113,23 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
     } catch (error) {
       console.error('❌ Error generating TOTP secret:', error);
       console.error('Error details:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
+        fullError: error
       });
+      
+      // More specific error messages
+      let errorMessage = 'Failed to generate 2FA setup. Please try again.';
+      if (error?.message?.includes('webauthn_user') || error?.message?.includes('passphrase_user')) {
+        errorMessage = '2FA is not available for this authentication method.';
+      } else if (error?.message?.includes('UUID')) {
+        errorMessage = 'Invalid user ID format. Please sign in with email/password.';
+      }
+      
       toast({
         title: 'Error',
-        description: 'Failed to generate 2FA setup. Please try again.',
+        description: errorMessage,
         variant: 'destructive',
       });
     }
