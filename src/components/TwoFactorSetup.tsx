@@ -176,8 +176,21 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         secret,
       });
 
-      // Verify the token
-      const isValid = totp.validate({ token: verificationCode, window: 1 });
+      // Verify the token with a larger time window for clock drift
+      console.log('🔍 Attempting to verify code:', verificationCode);
+      console.log('🔍 Using secret for verification:', secret);
+      
+      // Try validation with different time windows to account for clock drift
+      let validationResult = null;
+      for (let window = 1; window <= 3; window++) {
+        validationResult = totp.validate({ token: verificationCode, window });
+        console.log(`🔍 Validation attempt with window ${window}:`, validationResult);
+        if (validationResult !== null) break;
+      }
+      
+      const isValid = validationResult !== null;
+      
+      console.log('🔍 Final validation result:', isValid);
       
       if (!isValid) {
         toast({
