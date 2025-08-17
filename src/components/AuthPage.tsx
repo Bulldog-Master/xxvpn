@@ -449,11 +449,11 @@ const AuthPage = () => {
                        <Button
                          type="button"
                          className="w-full"
-                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
                          onClick={async () => {
-                           console.log('🔘 Direct button click!');
-                           const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-                           await handleSignIn(fakeEvent);
+                           console.log('🔘 BUTTON CLICKED - START');
+                           console.log('Current values:', { email, password: password ? '***' : 'empty', selectedMethod, isLoading });
+                           alert('Button clicked!');
+                           console.log('🔘 BUTTON CLICKED - END');
                          }}
                        >
                          {isLoading ? (
