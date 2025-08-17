@@ -54,18 +54,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       (event, session) => {
         console.log('🔄 Auth event:', event, session?.user?.email || 'no-user');
         
-        if (session?.user) {
+        if (event === 'SIGNED_OUT' || !session?.user) {
+          console.log('❌ No user - clearing state');
+          setSession(null);
+          setUser(null);
+          setLoading(false);
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
           console.log('✅ User found - creating user object');
           setSession(session);
           const userData = createUserFromSession(session.user);
           setUser(userData);
-        } else {
-          console.log('❌ No user - clearing state');
-          setSession(null);
-          setUser(null);
+          setLoading(false);
         }
-        
-        setLoading(false);
       }
     );
 
