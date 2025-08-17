@@ -20,7 +20,6 @@ interface TwoFactorVerificationProps {
 
 const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFactorVerificationProps) => {
   const { toast } = useToast();
-  const { markTwoFACompleted } = useAuth();
   const { t } = useTranslation();
   
   const [verificationCode, setVerificationCode] = useState('');
@@ -107,12 +106,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         description: 'Two-factor authentication verified successfully.',
       });
 
-      console.log('🎉 2FA verification complete - using flag approach');
+      console.log('🎉 2FA verification complete - calling onSuccess');
       
-      // Mark 2FA as completed in the auth context
-      markTwoFACompleted();
-      
-      // Don't call onSuccess or reload - let the auth context handle the transition
+      // Call onSuccess to let the parent handle the transition
+      onSuccess();
     } catch (error: any) {
       console.error('2FA verification error:', error);
       

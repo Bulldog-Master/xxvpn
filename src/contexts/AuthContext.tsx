@@ -17,7 +17,6 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<any>;
   updateUser: (updates: Partial<User>) => Promise<void>;
-  markTwoFACompleted: () => void; // Add method to mark 2FA as completed
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -34,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [twoFACompleted, setTwoFACompleted] = useState(false); // Simple flag to track 2FA completion
+  const [initialized, setInitialized] = useState(false);
 
   const createUserFromSession = (authUser: any): User => ({
     id: authUser.id,
@@ -45,153 +44,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    console.log('🚀 AuthProvider initializing...');
-    console.log('🔍 DEBUGGING: Starting fresh auth initialization');
+    if (initialized) return; // Prevent multiple initializations
+    
+    console.log('🚀 AuthProvider - SIMPLE initialization starting...');
+    setInitialized(true);
 
-    // FORCE loading to false after 3 seconds to prevent infinite loops
-    const forceLoadingTimeout = setTimeout(() => {
-      console.log('⏰ FORCE: Setting loading to false after timeout');
-      setLoading(false);
-    }, 3000);
-
-    let isProcessing = false;
-
+    // Simple auth state listener - NO complex logic
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (isProcessing) {
-          console.log('⚠️ Already processing auth state change, skipping');
-          return;
+      (event, session) => {
+        console.log('🔄 Auth event:', event, session?.user?.email || 'no-user');
+        
+        if (session?.user) {
+          console.log('✅ User found - creating user object');
+          setSession(session);
+          const userData = createUserFromSession(session.user);
+          setUser(userData);
+        } else {
+          console.log('❌ No user - clearing state');
+          setSession(null);
+          setUser(null);
         }
         
-        isProcessing = true;
-        console.log('🔄 Auth state change:', event, session?.user?.email || 'no-user');
-        
-        try {
-          // Clear the force timeout since we're processing
-          clearTimeout(forceLoadingTimeout);
-          
-          // Handle sign out or no session
-          if (event === 'SIGNED_OUT' || !session?.user) {
-            console.log('🚪 User signed out or no session');
-            setUser(null);
-            setSession(null);
-            setLoading(false);
-            return;
-          }
-
-          // Handle successful sign in - Check for 2FA
-          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
-            console.log('✅ User signed in/updated:', session.user.email);
-            console.log('🔍 Event type:', event);
-            console.log('🔍 Current user state:', user ? 'has user' : 'no user');
-            console.log('🔍 User metadata:', session.user.user_metadata);
-            
-            setSession(session);
-            
-            // Simple 2FA check - only for email provider
-            const isEmailProvider = session.user.app_metadata?.provider === 'email';
-            
-            if (isEmailProvider) {
-              try {
-                const { data: profile } = await supabase
-                  .from('profiles')
-                  .select('totp_enabled')
-                  .eq('user_id', session.user.id)
-                  .maybeSingle();
-                
-                const has2FA = profile?.totp_enabled === true;
-                const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-                
-                console.log('🔍 Simple 2FA Check:', { has2FA, is2FAVerified, twoFACompleted });
-                
-                // If we already marked 2FA as completed in this session, skip it
-                if (twoFACompleted) {
-                  console.log('✅ 2FA already completed in this session');
-                } else if (has2FA && !is2FAVerified) {
-                  console.log('🔐 2FA required');
-                  setUser({
-                    id: session.user.id,
-                    email: session.user.email || '',
-                    fullName: session.user.user_metadata?.full_name || '',
-                    subscriptionTier: 'free',
-                    xxCoinBalance: 0,
-                    requiresTwoFactor: true
-                  } as any);
-                  setLoading(false);
-                  return;
-                }
-              } catch (error) {
-                console.error('2FA check error:', error);
-                // If 2FA check fails, just proceed without it
-              }
-            }
-            
-            console.log('✅ Creating authenticated user');
-            const userData = createUserFromSession(session.user);
-            setUser(userData);
-            setLoading(false);
-          }
-        } catch (error) {
-          console.error('❌ Auth processing error:', error);
-          setLoading(false);
-        } finally {
-          isProcessing = false;
-        }
+        setLoading(false);
       }
     );
 
-    // Simplified session check
-    const checkSession = async () => {
-      console.log('🚀 Checking for existing session...');
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (session?.user) {
-          console.log('✅ Found existing session:', session.user.email);
-          // Let auth state change handle it
-        } else {
-          console.log('❌ No existing session');
-          clearTimeout(forceLoadingTimeout);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Session check error:', error);
-        clearTimeout(forceLoadingTimeout);
-        setLoading(false);
-      }
-    };
-    
-    checkSession();
-
-    return () => {
-      clearTimeout(forceLoadingTimeout);
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
-
-  const markTwoFACompleted = () => {
-    console.log('✅ Marking 2FA as completed');
-    setTwoFACompleted(true);
-    
-    // Force re-evaluation by triggering the auth state change
-    setTimeout(async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+    // Simple initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('📋 Initial session check:', session?.user?.email || 'no-session');
+      
       if (session?.user) {
-        console.log('🔄 Re-processing session after 2FA completion');
+        setSession(session);
         const userData = createUserFromSession(session.user);
         setUser(userData);
-        setLoading(false);
       }
-    }, 100);
-  };
+      
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [initialized]);
+
+  const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
   const value = {
     user,
     loading,
     session,
-    markTwoFACompleted,
     ...authMethods,
   };
 
