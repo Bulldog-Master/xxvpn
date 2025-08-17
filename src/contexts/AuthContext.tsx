@@ -65,12 +65,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
     
     cleanupStaleState();
-    setInitialized(true);
-
-    // Simple auth state listener with 2FA check
+    
+    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('🔄 Auth state change:', event, !!session);
+        
         if (event === 'SIGNED_OUT' || !session?.user) {
           console.log('👤 User signed out');
           setSession(null);
@@ -121,6 +121,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
     );
+
+    setInitialized(true);
 
     // Simple initial session check
     supabase.auth.getSession().then(async ({ data: { session } }) => {
