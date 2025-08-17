@@ -213,6 +213,7 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
+    console.log('🎯🎯🎯 HANDLE SIGN IN CALLED');
     e.preventDefault();
     console.log('🎯 Sign in function called with:', { email, password: password ? '****' : 'empty', selectedMethod });
     
@@ -227,22 +228,9 @@ const AuthPage = () => {
     setError('');
 
     try {
-      if (selectedMethod === 'email') {
-        console.log('📧 Attempting email sign in...');
-        await signIn(email, password);
-        console.log('✅ Sign in completed');
-      } else if (selectedMethod === 'magic-link') {
-        console.log('🔗 Attempting magic link...');
-        await signInWithMagicLink(email);
-        setMagicLinkSent(true);
-        toast({
-          title: 'Magic link sent!',
-          description: 'Check your email for the sign-in link.',
-        });
-      } else if (selectedMethod === 'google') {
-        console.log('🔍 Attempting Google sign in...');
-        await signInWithGoogle();
-      }
+      console.log('📧 About to call signIn...');
+      await signIn(email, password);
+      console.log('✅ signIn returned successfully');
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
       setError(error.message || 'Failed to sign in');
