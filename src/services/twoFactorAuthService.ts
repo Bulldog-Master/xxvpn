@@ -11,13 +11,13 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     console.log('🔍 Checking 2FA requirement for:', email);
     
     // Temporarily sign in to get user ID
+    console.log('🔐 Attempting temporary sign in...');
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (authError) throw authError;
-    if (!authData.user) throw new Error('Authentication failed');
+    console.log('🔑 Auth result:', { user: authData?.user?.id, error: authError?.message });
 
     const userId = authData.user.id;
     console.log('✅ Auth successful, user ID:', userId);

@@ -215,23 +215,31 @@ const AuthPage = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || (!password && selectedMethod === 'email')) return;
+    console.log('🎯 handleSignIn called with method:', selectedMethod, 'email:', email);
+    
+    if (!email || (!password && selectedMethod === 'email')) {
+      console.log('❌ Missing email or password');
+      return;
+    }
 
     setIsLoading(true);
     setError('');
 
     try {
       if (selectedMethod === 'email') {
-        console.log('🔐 Starting email/password login...');
+        console.log('🔐 Starting email/password login for:', email);
         
         // Use the new 2FA service to check requirements
+        console.log('🔍 Calling checkTwoFactorRequirement...');
         const result = await checkTwoFactorRequirement(email, password);
+        console.log('🛡️ 2FA check result:', result);
         
         if (result.requiresTwoFactor) {
           console.log('🔒 2FA required - showing verification UI');
           setPendingCredentials({ email, password });
           setShowTwoFactorVerification(true);
           setIsLoading(false);
+          console.log('🎪 TwoFactorVerification state set to true');
           return;
         }
 
@@ -249,7 +257,7 @@ const AuthPage = () => {
         await signInWithGoogle();
       }
     } catch (error: any) {
-      console.error('Sign in error:', error);
+      console.error('❌ Sign in error:', error);
       setError(error.message || 'Failed to sign in');
     } finally {
       setIsLoading(false);
