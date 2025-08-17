@@ -23,18 +23,19 @@ export const useAuthMethods = (
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      
-      // Clear any existing 2FA verification status to ensure fresh verification
-      await supabase.auth.updateUser({
-        data: { twofa_verified: false }
-      });
+      console.log('🔑 Starting sign in process...');
       
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('❌ Sign in failed:', error);
+        throw error;
+      }
+
+      console.log('✅ Password authentication successful');
 
       // Check if user has 2FA enabled
       if (data.user && data.session) {
@@ -130,16 +131,7 @@ export const useAuthMethods = (
 
   const signOut = async () => {
     try {
-      // Clear 2FA verification flag
-      try {
-        await supabase.auth.updateUser({
-          data: {
-            twofa_verified: null
-          }
-        });
-      } catch (err) {
-        // Continue even if this fails
-      }
+      console.log('🚪 Starting sign out process...');
       
       // Import cleanup function
       const { cleanupAuthState } = await import('@/utils/authHelpers');

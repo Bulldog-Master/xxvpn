@@ -51,15 +51,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Simple auth state listener with 2FA check
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('🔄 Auth state change:', event, !!session);
         if (event === 'SIGNED_OUT' || !session?.user) {
+          console.log('👤 User signed out');
           setSession(null);
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
+          console.log('👤 User signed in, checking 2FA...', session.user.id);
           setSession(session);
           
           // Simple 2FA check - only for email provider
           const isEmailProvider = session.user.app_metadata?.provider === 'email';
+          console.log('📧 Is email provider:', isEmailProvider);
           
           if (isEmailProvider) {
             try {
@@ -71,8 +75,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               
               const has2FA = profile?.totp_enabled === true;
               const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+              console.log('🛡️ 2FA status:', { has2FA, is2FAVerified });
               
               if (has2FA && !is2FAVerified) {
+                console.log('🔒 Requiring 2FA verification');
                 setUser({
                   id: session.user.id,
                   email: session.user.email || '',
