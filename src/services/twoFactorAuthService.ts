@@ -6,8 +6,21 @@ export interface TwoFactorAuthResult {
   userId?: string;
 }
 
-// Store credentials temporarily during 2FA flow
-let pendingAuth: { email: string; password: string; userId: string } | null = null;
+// Store credentials in localStorage during 2FA flow for better persistence
+const PENDING_AUTH_KEY = 'xxvpn_pending_2fa_auth';
+
+const setPendingAuth = (auth: { email: string; password: string; userId: string }) => {
+  localStorage.setItem(PENDING_AUTH_KEY, JSON.stringify(auth));
+};
+
+const getPendingAuth = (): { email: string; password: string; userId: string } | null => {
+  const stored = localStorage.getItem(PENDING_AUTH_KEY);
+  return stored ? JSON.parse(stored) : null;
+};
+
+const clearPendingAuth = () => {
+  localStorage.removeItem(PENDING_AUTH_KEY);
+};
 
 export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
   try {
@@ -51,7 +64,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
       await supabase.auth.signOut();
       
       // Store credentials for later use during 2FA verification
-      pendingAuth = { email, password, userId };
+      setPendingAuth({ email, password, userId });
       
       return {
         requiresTwoFactor: true,
@@ -67,7 +80,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     }
   } catch (error) {
     console.error('2FA check error:', error);
-    pendingAuth = null;
+    clearPendingAuth();
     throw error;
   }
 };
@@ -82,6 +95,9 @@ export const verifyTwoFactorAndSignIn = async (
     console.log('📧 Email:', email);
     console.log('🔢 TOTP Code:', totpCode);
     
+    // Get pending auth from localStorage
+    const pendingAuth = getPendingAuth();
+    
     // Verify we have pending auth or re-authenticate if needed
     if (!pendingAuth || pendingAuth.email !== email) {
       console.log('🔄 Re-establishing authentication state...');
@@ -92,17 +108,23 @@ export const verifyTwoFactorAndSignIn = async (
         throw new Error('2FA is not enabled for this account');
       }
       
-      // pendingAuth should now be set by checkTwoFactorRequirement
-      if (!pendingAuth) {
+      // Get the updated pending auth
+      const newPendingAuth = getPendingAuth();
+      if (!newPendingAuth) {
         throw new Error('Authentication setup failed. Please try signing in again.');
       }
+    }
+    // Get current pending auth
+    const currentPendingAuth = getPendingAuth();
+    if (!currentPendingAuth) {
+      throw new Error('No pending authentication found');
     }
     
     // Get the user's TOTP secret first (before signing in)
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_secret, totp_enabled')
-      .eq('user_id', pendingAuth.userId)
+      .eq('user_id', currentPendingAuth.userId)
       .single();
 
     if (profileError) throw profileError;
@@ -148,8 +170,8 @@ export const verifyTwoFactorAndSignIn = async (
     
     // Now sign in with the verified credentials
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: pendingAuth.email,
-      password: pendingAuth.password,
+      email: currentPendingAuth.email,
+      password: currentPendingAuth.password,
     });
 
     if (authError) throw authError;
@@ -163,14 +185,14 @@ export const verifyTwoFactorAndSignIn = async (
     });
 
     // Clear pending auth
-    pendingAuth = null;
+    clearPendingAuth();
     
     console.log('✅ 2FA verification successful - user signed in with verified session');
   } catch (error) {
     console.error('2FA verification error:', error);
     
     // Clear pending auth on error
-    pendingAuth = null;
+    clearPendingAuth();
     
     // Make sure to sign out if there was an error
     try {
@@ -184,6 +206,6 @@ export const verifyTwoFactorAndSignIn = async (
 };
 
 // Clear pending auth when needed
-export const clearPendingAuth = () => {
-  pendingAuth = null;
+export const clearPendingAuthState = () => {
+  clearPendingAuth();
 };
