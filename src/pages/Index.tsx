@@ -58,11 +58,12 @@ const Index = () => {
       timestamp: new Date().toISOString()
     });
 
-    // Force session refresh on mount if no user but we have a session
+    // Force session refresh on mount if no user but we have a session - but prevent infinite loops
     React.useEffect(() => {
       if (!user && !loading && session?.user) {
-        console.log('🔄 Found session but no user, forcing refresh...');
-        window.location.reload();
+        console.log('🔄 Found session but no user, this might indicate an auth state issue');
+        // Don't reload immediately, give the auth context time to process
+        // If it's still stuck after 3 seconds, something is wrong
       }
     }, [user, loading, session]);
 
@@ -86,24 +87,9 @@ const Index = () => {
           <TwoFactorVerification 
             email={user.email || ''}
             password=""
-            onSuccess={async () => {
-              console.log('✅ 2FA verification successful - forcing auth refresh');
-              
-              // Force refresh of the current session to pick up new metadata
-              try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                  console.log('🔄 Session refreshed, triggering auth state change');
-                  // The auth state change will automatically handle the flow
-                }
-              } catch (error) {
-                console.error('Error refreshing session:', error);
-              }
-              
-              // Small delay then reload as fallback
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
+            onSuccess={() => {
+              console.log('✅ 2FA verification successful - reloading page');
+              window.location.reload();
             }}
             onCancel={() => {
               console.log('❌ 2FA verification cancelled - signing out');

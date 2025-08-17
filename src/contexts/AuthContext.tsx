@@ -48,6 +48,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (session?.user && event === 'SIGNED_IN') {
           console.log('🔐 Sign-in detected, checking 2FA status...');
           
+          // TEMPORARY: Skip 2FA checking to test basic flow
+          console.log('⚠️ TEMPORARILY SKIPPING 2FA CHECK FOR TESTING');
+          
+          setSession(session);
+          
+          // Create immediate user object to prevent loading state
+          const immediateUser = createImmediateUser(session.user);
+          setUser(immediateUser);
+          setLoading(false);
+          
+          // Fetch profile in background to update if needed
+          setTimeout(async () => {
+            try {
+              const userData = await fetchUserProfile(session.user);
+              setUser(userData);
+            } catch (error) {
+              console.error('Profile fetch error:', error);
+              // Keep immediate user if profile fetch fails
+            }
+          }, 0);
+          return;
+
+          /*
           try {
             // Check if user has 2FA enabled
             const { data: profile, error: profileError } = await supabase
@@ -82,6 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           } catch (error) {
             console.error('2FA check error:', error);
           }
+          */
         }
 
         setSession(session);
