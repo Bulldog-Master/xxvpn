@@ -190,17 +190,6 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
 
         <div className="flex gap-2">
           <Button
-            variant="secondary"
-            onClick={testCurrentSession}
-            className="flex-1"
-            type="button"
-          >
-            🧪 Test Session
-          </Button>
-        </div>
-
-        <div className="flex gap-2">
-          <Button
             variant="outline"
             onClick={onCancel}
             disabled={isVerifying}
