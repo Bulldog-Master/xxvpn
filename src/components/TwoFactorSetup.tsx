@@ -28,7 +28,7 @@ interface TwoFactorSetupProps {
 }
 
 const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   
@@ -59,29 +59,35 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         idType: typeof user?.id,
         fullUser: user 
       });
+      console.log('Session data:', {
+        session: session,
+        sessionUser: session?.user,
+        sessionUserId: session?.user?.id
+      });
       
-      // Check if user ID is valid
-      if (!user?.id) {
-        throw new Error('No user ID found');
-      }
-      
-      // Check for alternative auth methods that don't support 2FA
-      if (user.id === 'webauthn_user' || user.id === 'passphrase_user') {
+      // Check if we have a proper Supabase session
+      if (!session?.user?.id) {
         toast({
-          title: 'Not Available',
-          description: '2FA is not available for this authentication method. Please use email/password authentication to enable 2FA.',
+          title: 'Authentication Required',
+          description: 'Please sign out and sign back in with email/password to enable 2FA.',
           variant: 'destructive',
         });
         setShowSetup(false);
         return;
       }
       
-      // Check if user ID is a valid UUID format for regular Supabase users
+      // Use session user ID for database operations (this is the real Supabase user ID)
+      const realUserId = session.user.id;
+      const userEmail = session.user.email || user?.email;
+      
+      // Check if session user ID is a valid UUID format
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      if (!uuidRegex.test(user.id)) {
-        console.log('❌ Invalid UUID format for user ID:', user.id);
-        throw new Error(`Invalid user ID format: ${user.id}`);
+      if (!uuidRegex.test(realUserId)) {
+        console.log('❌ Invalid UUID format for session user ID:', realUserId);
+        throw new Error(`Invalid session user ID format: ${realUserId}`);
       }
+      
+      console.log('✅ Using session user ID:', realUserId);
       
       // Generate a random secret (32 bytes = 256 bits)
       const randomBytes = new Uint8Array(32);
@@ -93,7 +99,7 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       // Create TOTP instance
       const totp = new TOTP({
         issuer: 'xxVPN',
-        label: user?.email || 'User',
+        label: userEmail || 'User',
         algorithm: 'SHA1',
         digits: 6,
         period: 30,
@@ -150,7 +156,7 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       // Create TOTP instance with the secret
       const totp = new TOTP({
         issuer: 'xxVPN',
-        label: user?.email || 'User',
+        label: session?.user?.email || user?.email || 'User',
         algorithm: 'SHA1',
         digits: 6,
         period: 30,
@@ -169,14 +175,14 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         return;
       }
 
-      // Save to database
+      // Save to database using session user ID
       const { error } = await supabase
         .from('profiles')
         .update({
           totp_secret: secret,
           totp_enabled: true,
         })
-        .eq('user_id', user?.id);
+        .eq('user_id', session?.user?.id);
 
       if (error) throw error;
 
@@ -209,7 +215,7 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
           totp_secret: null,
           totp_enabled: false,
         })
-        .eq('user_id', user?.id);
+        .eq('user_id', session?.user?.id);
 
       if (error) throw error;
 
