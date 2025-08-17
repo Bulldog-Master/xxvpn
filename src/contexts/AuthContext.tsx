@@ -81,6 +81,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('🔄 Auth state change:', event, session?.user?.email);
         console.log('🔍 Session metadata:', session?.user?.user_metadata);
         
+        if (event === 'USER_UPDATED') {
+          console.log('👤 User updated - checking if 2FA verification changed');
+          // When user is updated (like after 2FA verification), re-process the session
+        }
+        
         if (event === 'SIGNED_OUT' || !session?.user) {
           console.log('🚪 Signing out...');
           setUser(null);

@@ -88,8 +88,8 @@ const Index = () => {
             email={user.email || ''}
             password=""
             onSuccess={() => {
-              console.log('✅ 2FA verification successful - reloading page');
-              window.location.reload();
+              console.log('✅ 2FA verification successful - no reload needed');
+              // Don't reload - let the auth context handle the state change
             }}
             onCancel={() => {
               console.log('❌ 2FA verification cancelled - signing out');
