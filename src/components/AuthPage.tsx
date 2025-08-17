@@ -215,91 +215,19 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
     console.log('🚨 FUNCTION CALLED!');
     alert('Function called!'); // This should always show
-    e.preventDefault();
-    console.log('🎯 handleSignIn called!', { selectedMethod, email: email?.slice(0, 3) + '***' });
     
     if (!email || (!password && selectedMethod === 'email')) {
-      console.log('❌ Missing email or password', { email: !!email, password: !!password });
+      alert('Missing email or password');
       return;
     }
 
-    setIsLoading(true);
-    setError('');
-
-    try {
-      if (selectedMethod === 'email') {
-        console.log('🔐 Starting email/password login for:', email?.slice(0, 3) + '***');
-        
-        try {
-          console.log('🔍 Checking 2FA requirement...');
-          
-          // First, validate credentials
-          const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-          });
-
-          if (authError) {
-            console.error('❌ Auth error:', authError);
-            throw authError;
-          }
-          if (!authData.user) throw new Error('Authentication failed');
-
-          const userId = authData.user.id;
-          console.log('✅ Auth successful, user ID:', userId);
-
-          // Immediately sign out
-          await supabase.auth.signOut();
-          console.log('🚪 Signed out after validation');
-          
-          // Check if this user has 2FA enabled
-          const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('totp_enabled')
-            .eq('user_id', userId)
-            .maybeSingle();
-          
-          if (profileError) {
-            console.error('❌ Profile error:', profileError);
-          }
-          
-          console.log('🛡️ 2FA status:', profile?.totp_enabled);
-          
-          if (profile?.totp_enabled) {
-            console.log('🔒 2FA required - showing verification UI');
-            setPendingCredentials({ email, password });
-            setShowTwoFactorVerification(true);
-            setIsLoading(false);
-            return;
-          }
-
-          console.log('✅ No 2FA required - proceeding with normal login');
-          // No 2FA enabled, proceed with normal sign in
-          await signIn(email, password);
-        } catch (twoFactorError) {
-          console.error('❌ 2FA check failed:', twoFactorError);
-          // If 2FA check fails, try normal login
-          console.log('⚠️ Falling back to normal login due to 2FA check error');
-          await signIn(email, password);
-        }
-      } else if (selectedMethod === 'magic-link') {
-        await signInWithMagicLink(email);
-        setMagicLinkSent(true);
-        toast({
-          title: 'Magic link sent!',
-          description: 'Check your email for the sign-in link.',
-        });
-      } else if (selectedMethod === 'google') {
-        await signInWithGoogle();
-      }
-    } catch (error: any) {
-      console.error('❌ Sign in error:', error);
-      setError(error.message || 'Failed to sign in');
-    } finally {
-      setIsLoading(false);
-    }
+    alert('About to show 2FA screen');
+    setPendingCredentials({ email, password });
+    setShowTwoFactorVerification(true);
+    return;
   };
 
   const handleGoogleAuth = async () => {
