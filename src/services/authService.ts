@@ -4,7 +4,6 @@ import { cleanupAuthState } from '@/utils/authHelpers';
 
 export const signInWithEmail = async (email: string, password: string) => {
   console.log('🔑 Starting email sign in for:', email);
-  cleanupAuthState();
   
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
