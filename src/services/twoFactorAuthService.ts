@@ -86,7 +86,13 @@ export const verifyTwoFactorAndSignIn = async (
     console.log('🔍 Checking pending auth...', { hasPendingAuth: !!pendingAuth, pendingEmail: pendingAuth?.email });
     if (!pendingAuth || pendingAuth.email !== email) {
       console.error('❌ Invalid authentication state:', { pendingAuth, email });
-      throw new Error('Invalid authentication state. Please sign in again.');
+      
+      // Try to recover by re-authenticating with the provided password
+      console.log('🔄 Attempting to recover authentication state...');
+      const authResult = await checkTwoFactorRequirement(email, password);
+      if (!authResult.requiresTwoFactor) {
+        throw new Error('Authentication recovery failed. Please sign in again.');
+      }
     }
     
     // Get the user's TOTP secret first (before signing in)

@@ -28,7 +28,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
 
   const handleVerifyTOTP = async () => {
     // Show debug info immediately 
-    setError(`Debug: Function called. Email: ${email}, Password: ${password ? 'exists' : 'MISSING'}, Code: ${verificationCode}`);
+    setError(`Debug: Email: ${email}, Password: ${password ? `${password.length} chars` : 'MISSING'}, Code: ${verificationCode}`);
     
     window.console.error('🚨🚨🚨 HANDLE VERIFY TOTP CALLED! 🚨🚨🚨');
     
