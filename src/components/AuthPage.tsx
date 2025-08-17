@@ -231,18 +231,39 @@ const AuthPage = () => {
         console.log('🔐 Starting email/password login for:', email?.slice(0, 3) + '***');
         
         try {
-          // Simple test - always show 2FA for now
           console.log('🔍 Checking 2FA requirement...');
           
-          // Check if this user has 2FA enabled in database
-          const { data: profile } = await supabase
+          // First, validate credentials
+          const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+
+          if (authError) {
+            console.error('❌ Auth error:', authError);
+            throw authError;
+          }
+          if (!authData.user) throw new Error('Authentication failed');
+
+          const userId = authData.user.id;
+          console.log('✅ Auth successful, user ID:', userId);
+
+          // Immediately sign out
+          await supabase.auth.signOut();
+          console.log('🚪 Signed out after validation');
+          
+          // Check if this user has 2FA enabled
+          const { data: profile, error: profileError } = await supabase
             .from('profiles')
             .select('totp_enabled')
-            .eq('user_id', (await supabase.auth.signInWithPassword({ email, password }))?.data?.user?.id)
+            .eq('user_id', userId)
             .maybeSingle();
           
-          // Sign out immediately after checking
-          await supabase.auth.signOut();
+          if (profileError) {
+            console.error('❌ Profile error:', profileError);
+          }
+          
+          console.log('🛡️ 2FA status:', profile?.totp_enabled);
           
           if (profile?.totp_enabled) {
             console.log('🔒 2FA required - showing verification UI');
