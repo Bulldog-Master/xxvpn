@@ -82,22 +82,19 @@ export const verifyTwoFactorAndSignIn = async (
     console.log('📧 Email:', email);
     console.log('🔢 TOTP Code:', totpCode);
     
-    // Verify we have pending auth
-    console.log('🔍 Checking pending auth...', { hasPendingAuth: !!pendingAuth, pendingEmail: pendingAuth?.email });
+    // Verify we have pending auth or re-authenticate if needed
     if (!pendingAuth || pendingAuth.email !== email) {
-      console.error('❌ Invalid authentication state:', { pendingAuth, email });
+      console.log('🔄 Re-establishing authentication state...');
       
-      // Try to recover by re-authenticating with the provided password
-      console.log('🔄 Attempting to recover authentication state...');
-      try {
-        const authResult = await checkTwoFactorRequirement(email, password);
-        if (!authResult.requiresTwoFactor) {
-          throw new Error('Authentication recovery failed - 2FA not required.');
-        }
-        console.log('✅ Authentication state recovered successfully');
-      } catch (recoveryError) {
-        console.error('❌ Recovery failed:', recoveryError);
-        throw new Error('Session expired. Please sign in again.');
+      // Re-authenticate and set up pending auth
+      const authResult = await checkTwoFactorRequirement(email, password);
+      if (!authResult.requiresTwoFactor) {
+        throw new Error('2FA is not enabled for this account');
+      }
+      
+      // pendingAuth should now be set by checkTwoFactorRequirement
+      if (!pendingAuth) {
+        throw new Error('Authentication setup failed. Please try signing in again.');
       }
     }
     
