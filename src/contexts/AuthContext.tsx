@@ -125,7 +125,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (isEmailProvider && has2FAEnabled && !is2FAVerified) {
             console.log('🔐 2FA verification required');
             setSession(session);
-            setUser({ ...session.user, requiresTwoFactor: true } as any);
+            // Create a properly typed user object with 2FA flag
+            setUser({
+              id: session.user.id,
+              email: session.user.email || '',
+              fullName: session.user.user_metadata?.full_name || '',
+              subscriptionTier: 'free',
+              xxCoinBalance: 0,
+              requiresTwoFactor: true
+            } as any);
             setLoading(false);
             return;
           } else {
