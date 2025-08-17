@@ -6,10 +6,11 @@ import { CreditCard, Smartphone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface PaymentMethodCardProps {
-  selectedPlan?: {
+  selectedPlan: {
     name: string;
     price: number;
     currency: string;
+    duration: string;
   };
 }
 
@@ -26,22 +27,32 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
     // Handle payment error
   };
 
-  const defaultPlan = {
-    name: 'xxVPN Premium',
-    price: 999, // $9.99 in cents
-    currency: 'USD'
+  const getMonthlyPrice = () => {
+    switch (selectedPlan.duration) {
+      case 'month':
+        return selectedPlan.price / 100;
+      case '6 months':
+        return (selectedPlan.price / 6) / 100;
+      case 'year':
+        return (selectedPlan.price / 12) / 100;
+      case '2 years':
+        return (selectedPlan.price / 24) / 100;
+      default:
+        return selectedPlan.price / 100;
+    }
   };
-
-  const plan = selectedPlan || defaultPlan;
 
   return (
     <Card className="bg-card/95 backdrop-blur-sm border-border">
       <CardContent className="p-6 space-y-6">
         <div className="text-center space-y-2">
-          <h3 className="text-xl font-semibold">{plan.name}</h3>
+          <h3 className="text-xl font-semibold">{selectedPlan.name}</h3>
           <p className="text-3xl font-bold text-primary">
-            ${(plan.price / 100).toFixed(2)}
+            ${getMonthlyPrice().toFixed(2)}
             <span className="text-sm text-muted-foreground font-normal">/month</span>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Total: ${(selectedPlan.price / 100).toFixed(2)} per {selectedPlan.duration}
           </p>
         </div>
 
@@ -53,15 +64,15 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
           {/* Digital Wallet Payments */}
           <div className="space-y-3">
             <ApplePayButton
-              amount={plan.price}
-              currency={plan.currency}
+              amount={selectedPlan.price}
+              currency={selectedPlan.currency}
               onSuccess={handlePaymentSuccess}
               onError={handlePaymentError}
             />
             
             <GooglePayButton
-              amount={plan.price}
-              currency={plan.currency}
+              amount={selectedPlan.price}
+              currency={selectedPlan.currency}
               onSuccess={handlePaymentSuccess}
               onError={handlePaymentError}
             />
