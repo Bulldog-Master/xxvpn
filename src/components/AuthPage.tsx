@@ -16,6 +16,7 @@ import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
+import { checkTwoFactorRequirement, verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -223,47 +224,14 @@ const AuthPage = () => {
       if (selectedMethod === 'email') {
         console.log('🔐 Starting email/password login...');
         
-        // First, find the user by email to check their 2FA status
-        const { data: profiles, error: profileError } = await supabase
-          .from('profiles')
-          .select('user_id, totp_enabled')
-          .eq('user_id', `(SELECT auth.uid() FROM auth.users WHERE email = '${email}')`);
+        // Use the new 2FA service to check requirements
+        const result = await checkTwoFactorRequirement(email, password);
         
-        // If we can't check the profile, try a different approach
-        // Attempt authentication to validate credentials and get user ID
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (authError) throw authError;
-        if (!authData.user) throw new Error('Authentication failed');
-
-        console.log('✅ Initial auth successful, user ID:', authData.user.id);
-
-        // Immediately sign out to prevent session persistence
-        await supabase.auth.signOut();
-        console.log('🚪 Signed out after auth check');
-
-        // Now check if user has 2FA enabled using the user ID
-        const { data: profile, error: profileCheckError } = await supabase
-          .from('profiles')
-          .select('totp_enabled')
-          .eq('user_id', authData.user.id)
-          .maybeSingle();
-
-        if (profileCheckError) {
-          console.error('Profile check error:', profileCheckError);
-        }
-
-        console.log('🛡️ 2FA enabled status:', profile?.totp_enabled);
-
-        // If 2FA is enabled, show the verification step
-        if (profile?.totp_enabled) {
+        if (result.requiresTwoFactor) {
           console.log('🔒 2FA required - showing verification UI');
           setPendingCredentials({ email, password });
           setShowTwoFactorVerification(true);
-          setIsLoading(false); // Stop loading as we're showing 2FA UI
+          setIsLoading(false);
           return;
         }
 
