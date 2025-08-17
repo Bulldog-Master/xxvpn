@@ -89,10 +89,23 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       
       console.log('✅ Using session user ID:', realUserId);
       
-      // Generate a random secret (32 bytes = 256 bits)
-      const randomBytes = new Uint8Array(32);
+      // Generate a random secret (20 bytes for base32)
+      const randomBytes = new Uint8Array(20);
       crypto.getRandomValues(randomBytes);
-      const newSecret = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+      
+      // Convert to base32 (TOTP standard)
+      const base32Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let newSecret = '';
+      for (let i = 0; i < randomBytes.length; i += 5) {
+        const chunk = Array.from(randomBytes.slice(i, i + 5));
+        while (chunk.length < 5) chunk.push(0);
+        
+        const val = (chunk[0] << 32) + (chunk[1] << 24) + (chunk[2] << 16) + (chunk[3] << 8) + chunk[4];
+        for (let j = 0; j < 8; j++) {
+          newSecret += base32Chars[(val >>> (35 - j * 5)) & 31];
+        }
+      }
+      newSecret = newSecret.substring(0, 32); // 32 characters for base32
       
       console.log('✅ Secret generated successfully');
       
