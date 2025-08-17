@@ -219,6 +219,8 @@ const AuthPage = () => {
     console.log('🚨 FUNCTION CALLED!');
     alert('Function called!'); // This should always show
     
+    alert(`Email: "${email}", Password: "${password ? 'HAS_VALUE' : 'EMPTY'}", Method: "${selectedMethod}"`);
+    
     if (!email || (!password && selectedMethod === 'email')) {
       alert('Missing email or password');
       return;
