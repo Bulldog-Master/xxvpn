@@ -105,12 +105,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
         description: 'Two-factor authentication verified successfully.',
       });
 
-      console.log('🎉 2FA verification complete, calling onSuccess');
+      console.log('🎉 2FA verification complete - forcing page reload to restart session');
       
-      // Small delay to ensure the metadata update is processed
-      setTimeout(() => {
-        onSuccess();
-      }, 500);
+      // Force a complete page reload to restart the auth session cleanly
+      window.location.href = '/';
     } catch (error: any) {
       console.error('2FA verification error:', error);
       
