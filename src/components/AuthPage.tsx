@@ -16,7 +16,7 @@ import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
-// import { checkTwoFactorRequirement, verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
+import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -216,20 +216,64 @@ const AuthPage = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('🚨 FUNCTION CALLED!');
-    alert('Function called!'); // This should always show
-    
-    alert(`Email: "${email}", Password: "${password ? 'HAS_VALUE' : 'EMPTY'}", Method: "${selectedMethod}"`);
     
     if (!email || (!password && selectedMethod === 'email')) {
-      alert('Missing email or password');
+      setError('Please enter both email and password');
       return;
     }
 
-    alert('About to show 2FA screen');
-    setPendingCredentials({ email, password });
-    setShowTwoFactorVerification(true);
-    return;
+    setIsLoading(true);
+    setError('');
+
+    try {
+      if (selectedMethod === 'email') {
+        // Check if this user has 2FA enabled first
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (authError) throw authError;
+        if (!authData.user) throw new Error('Authentication failed');
+
+        const userId = authData.user.id;
+        
+        // Immediately sign out
+        await supabase.auth.signOut();
+        
+        // Check if user has 2FA enabled
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('totp_enabled')
+          .eq('user_id', userId)
+          .maybeSingle();
+        
+        if (profile?.totp_enabled) {
+          // Show 2FA verification
+          setPendingCredentials({ email, password });
+          setShowTwoFactorVerification(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // No 2FA, proceed with normal sign in
+        await signIn(email, password);
+      } else if (selectedMethod === 'magic-link') {
+        await signInWithMagicLink(email);
+        setMagicLinkSent(true);
+        toast({
+          title: 'Magic link sent!',
+          description: 'Check your email for the sign-in link.',
+        });
+      } else if (selectedMethod === 'google') {
+        await signInWithGoogle();
+      }
+    } catch (error: any) {
+      console.error('Sign in error:', error);
+      setError(error.message || 'Failed to sign in');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleAuth = async () => {
