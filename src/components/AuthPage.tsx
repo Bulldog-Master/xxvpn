@@ -16,7 +16,7 @@ import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
-import { checkTwoFactorRequirement, verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
+// import { checkTwoFactorRequirement, verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
 
 type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
@@ -231,12 +231,20 @@ const AuthPage = () => {
         console.log('🔐 Starting email/password login for:', email?.slice(0, 3) + '***');
         
         try {
-          // Use the new 2FA service to check requirements
-          console.log('🔍 About to call checkTwoFactorRequirement...');
-          const result = await checkTwoFactorRequirement(email, password);
-          console.log('🛡️ 2FA check result:', result);
+          // Simple test - always show 2FA for now
+          console.log('🔍 Checking 2FA requirement...');
           
-          if (result.requiresTwoFactor) {
+          // Check if this user has 2FA enabled in database
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('totp_enabled')
+            .eq('user_id', (await supabase.auth.signInWithPassword({ email, password }))?.data?.user?.id)
+            .maybeSingle();
+          
+          // Sign out immediately after checking
+          await supabase.auth.signOut();
+          
+          if (profile?.totp_enabled) {
             console.log('🔒 2FA required - showing verification UI');
             setPendingCredentials({ email, password });
             setShowTwoFactorVerification(true);
