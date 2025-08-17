@@ -446,11 +446,12 @@ const AuthPage = () => {
                         </div>
                       )}
 
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
-                      >
+                       <Button
+                         type="submit"
+                         className="w-full"
+                         disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                         onClick={() => console.log('🔘 Button clicked!', { isLoading, email: !!email, password: !!password, selectedMethod })}
+                       >
                         {isLoading ? (
                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
                         ) : null}
