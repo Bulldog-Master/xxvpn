@@ -215,6 +215,7 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
+    console.log('🎯 Sign in function called');
     e.preventDefault();
     
     if (!email || (!password && selectedMethod === 'email')) {
