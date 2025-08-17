@@ -24,6 +24,16 @@ export const useAuthMethods = (
     try {
       setLoading(true);
       
+      // First, clear any existing 2FA verification status
+      try {
+        await supabase.auth.updateUser({
+          data: { twofa_verified: null }
+        });
+      } catch (clearError) {
+        // Continue even if this fails
+        console.log('Could not clear 2FA status:', clearError);
+      }
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -41,9 +51,8 @@ export const useAuthMethods = (
           .maybeSingle();
         
         const has2FA = profile?.totp_enabled === true;
-        const is2FAVerified = data.session.user.user_metadata?.twofa_verified === true;
         
-        if (has2FA && !is2FAVerified) {
+        if (has2FA) {
           // User needs 2FA verification - create a partial user object
           setSession(data.session);
           setUser({

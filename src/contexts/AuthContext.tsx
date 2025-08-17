@@ -70,9 +70,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 .maybeSingle();
               
               const has2FA = profile?.totp_enabled === true;
-              const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+              // Always require 2FA verification if enabled - ignore twofa_verified flag
               
-              if (has2FA && !is2FAVerified) {
+              if (has2FA) {
                 setUser({
                   id: session.user.id,
                   email: session.user.email || '',
@@ -114,9 +114,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               .maybeSingle();
             
             const has2FA = profile?.totp_enabled === true;
-            const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+            // Always require 2FA verification if enabled - ignore twofa_verified flag
             
-            if (has2FA && !is2FAVerified) {
+            if (has2FA) {
               setUser({
                 id: session.user.id,
                 email: session.user.email || '',
