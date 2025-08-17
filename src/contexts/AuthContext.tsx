@@ -108,12 +108,68 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     );
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
+    // CRITICAL: Check for existing session on mount (after page reload)
+    const initializeAuth = async () => {
+      console.log('🚀 Initializing auth context...');
+      const { data: { session }, error } = await supabase.auth.getSession();
+      console.log('📋 Initial session check:', {
+        hasSession: !!session,
+        userId: session?.user?.id,
+        email: session?.user?.email,
+        metadata: session?.user?.user_metadata,
+        error
+      });
+      
       if (session?.user) {
-        setSession(session);
+        console.log('✅ Found existing session during initialization');
         
-        // Set user immediately for existing sessions too
+        // Process 2FA check for existing session
+        if (session?.user) {
+          console.log('🔐 Processing existing session, checking 2FA status...');
+          
+          try {
+            // Check if user has 2FA enabled
+            const { data: profile, error: profileError } = await supabase
+              .from('profiles')
+              .select('totp_enabled')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+
+            if (profileError) {
+              console.error('Profile check error:', profileError);
+            }
+
+            // If 2FA is enabled, check verification status
+            if (profile?.totp_enabled) {
+              console.log('🛡️ 2FA enabled - checking if this is a verified session');
+              
+              // Check if this session has been 2FA verified
+              const sessionData = session.user.user_metadata || {};
+              console.log('🔍 Session metadata:', JSON.stringify(sessionData, null, 2));
+              console.log('🔍 twofa_verified value:', sessionData.twofa_verified);
+              console.log('🔍 twofa_verified type:', typeof sessionData.twofa_verified);
+              
+              if (!sessionData.twofa_verified) {
+                console.log('🔐 2FA required - keeping session for verification');
+                // Keep the session but don't fully authenticate until 2FA is complete
+                setSession(session);
+                setUser({ ...session.user, requiresTwoFactor: true } as any);
+                setLoading(false);
+                return;
+              } else {
+                console.log('✅ 2FA already verified - proceeding with full login');
+                // Continue with normal flow below
+              }
+            } else {
+              console.log('📝 No 2FA enabled - proceeding with normal login');
+            }
+          } catch (error) {
+            console.error('2FA check error:', error);
+          }
+        }
+        
+        // Set session and user normally
+        setSession(session);
         const immediateUser = createImmediateUser(session.user);
         setUser(immediateUser);
         setLoading(false);
@@ -125,6 +181,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           // Keep immediate user if profile fetch fails
         });
       } else {
+        console.log('❌ No existing session found during initialization');
         // Check for alternative authentication methods
         const altUser = checkAlternativeAuth();
         if (altUser) {
@@ -132,7 +189,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
         setLoading(false);
       }
-    });
+    };
+    
+    initializeAuth();
 
     return () => {
       subscription.unsubscribe();
