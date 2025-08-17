@@ -98,14 +98,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // Simple initial session check
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
         setSession(session);
+        
+        // Check 2FA for email providers on initial load too
+        const isEmailProvider = session.user.app_metadata?.provider === 'email';
+        
+        if (isEmailProvider) {
+          try {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('totp_enabled')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+            
+            const has2FA = profile?.totp_enabled === true;
+            const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
+            
+            if (has2FA && !is2FAVerified) {
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                fullName: session.user.user_metadata?.full_name || '',
+                subscriptionTier: 'free',
+                xxCoinBalance: 0,
+                requiresTwoFactor: true
+              } as any);
+              setLoading(false);
+              return;
+            }
+          } catch (error) {
+            console.error('Initial 2FA check error:', error);
+          }
+        }
+        
+        // No 2FA needed - create normal user
         const userData = createUserFromSession(session.user);
         setUser(userData);
       }
       
+      setLoading(false);
+    }).catch((error) => {
+      console.error('Initial session check error:', error);
       setLoading(false);
     });
 
