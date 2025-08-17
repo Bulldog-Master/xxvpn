@@ -93,21 +93,37 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       const randomBytes = new Uint8Array(20);
       crypto.getRandomValues(randomBytes);
       
-      // Convert to base32 (TOTP standard)
+      // Convert to base32 using a more reliable method
       const base32Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
       let newSecret = '';
+      
+      // Process bytes in groups of 5 to get 8 base32 characters
       for (let i = 0; i < randomBytes.length; i += 5) {
-        const chunk = Array.from(randomBytes.slice(i, i + 5));
-        while (chunk.length < 5) chunk.push(0);
+        const group = randomBytes.slice(i, Math.min(i + 5, randomBytes.length));
         
-        const val = (chunk[0] << 32) + (chunk[1] << 24) + (chunk[2] << 16) + (chunk[3] << 8) + chunk[4];
+        // Pad group to 5 bytes
+        const paddedGroup = new Uint8Array(5);
+        paddedGroup.set(group);
+        
+        // Convert 5 bytes (40 bits) to 8 base32 characters
+        const value = 
+          (paddedGroup[0] << 32) +
+          (paddedGroup[1] << 24) +
+          (paddedGroup[2] << 16) +
+          (paddedGroup[3] << 8) +
+          paddedGroup[4];
+        
         for (let j = 0; j < 8; j++) {
-          newSecret += base32Chars[(val >>> (35 - j * 5)) & 31];
+          const index = (value >>> (35 - j * 5)) & 0x1f;
+          newSecret += base32Chars[index];
         }
       }
-      newSecret = newSecret.substring(0, 32); // 32 characters for base32
       
-      console.log('✅ Secret generated successfully');
+      // Trim to exactly 32 characters
+      newSecret = newSecret.substring(0, 32);
+      
+      console.log('✅ Secret generated successfully, length:', newSecret.length);
+      console.log('✅ Secret preview:', newSecret.substring(0, 8) + '...');
       
       // Create TOTP instance
       const totp = new TOTP({
