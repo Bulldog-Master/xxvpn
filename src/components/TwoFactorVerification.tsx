@@ -27,24 +27,24 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
   const [error, setError] = useState('');
 
   const handleVerifyTOTP = async () => {
-    console.log('🚨 HANDLE VERIFY TOTP CALLED!');
-    alert('Verification function called!'); // Force debug
+    console.error('🚨🚨🚨 HANDLE VERIFY TOTP CALLED! 🚨🚨🚨');
     
     if (!verificationCode || verificationCode.length !== 6) {
+      console.error('❌ Invalid verification code length:', verificationCode.length);
       setError('Please enter a 6-digit verification code.');
       return;
     }
 
     setIsVerifying(true);
     setError('');
-    console.log('🔐 Starting 2FA verification with code:', verificationCode);
+    console.error('🔐 Starting 2FA verification with code:', verificationCode);
 
     try {
-      console.log('🔐 TwoFactorVerification: Starting verification...');
-      console.log('📧 Email:', email);
-      console.log('🔑 Password exists:', !!password);
-      console.log('🔑 Password length:', password?.length || 0);
-      console.log('🔢 Code:', verificationCode);
+      console.error('🔐 TwoFactorVerification: Starting verification...');
+      console.error('📧 Email:', email);
+      console.error('🔑 Password exists:', !!password);
+      console.error('🔑 Password length:', password?.length || 0);
+      console.error('🔢 Code:', verificationCode);
       
       // Check if we have the required parameters
       if (!email) {
@@ -141,14 +141,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
             Cancel
           </Button>
           <Button
-            onClick={(e) => {
-              console.log('🚨 BUTTON CLICKED!');
-              console.log('🔢 Code length:', verificationCode.length);
-              console.log('🔢 Code value:', verificationCode);
-              console.log('⏳ Is verifying:', isVerifying);
-              alert(`Button clicked! Code: ${verificationCode}, Length: ${verificationCode.length}`);
-              handleVerifyTOTP();
-            }}
+            onClick={handleVerifyTOTP}
             disabled={isVerifying || verificationCode.length !== 6}
             className="flex-1"
           >
