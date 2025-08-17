@@ -185,8 +185,8 @@ export const signOutService = async () => {
   
   await supabase.auth.signOut({ scope: 'global' });
   
-  // Force page reload for clean state
-  window.location.href = '/';
+  // NO RELOAD - let the auth context handle the state change
+  console.log('✅ Sign out completed');
 };
 
 export const updateUserProfile = async (userId: string, updates: Partial<User>) => {

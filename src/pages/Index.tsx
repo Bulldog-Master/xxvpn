@@ -93,10 +93,8 @@ const Index = () => {
             }}
             onCancel={() => {
               console.log('❌ 2FA verification cancelled - signing out');
-              // Sign out and reload to login page
-              supabase.auth.signOut().then(() => {
-                window.location.href = '/';
-              });
+              // Sign out without reload
+              supabase.auth.signOut();
             }}
           />
         </div>

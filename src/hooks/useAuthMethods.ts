@@ -110,12 +110,11 @@ export const useAuthMethods = (
         // Continue even if this fails
       }
       
-      // Force page reload for completely clean state
-      window.location.href = '/';
+      // NO RELOAD - let the auth context handle sign out
+      console.log('✅ Sign out successful - state cleared');
     } catch (error) {
       console.error('Sign out error:', error);
-      // Force reload even if sign out fails
-      window.location.href = '/';
+      // NO RELOAD - even if sign out fails
     }
   };
 
