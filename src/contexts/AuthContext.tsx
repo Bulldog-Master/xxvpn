@@ -1,192 +1,174 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import type { Session } from '@supabase/supabase-js';
-import type { User, AuthContextType } from '@/types/auth';
-import { 
-  fetchUserProfile, 
-  createImmediateUser, 
-  checkAlternativeAuth 
-} from '@/utils/authHelpers';
+import type { User } from '@/types/auth';
 import { useAuthMethods } from '@/hooks/useAuthMethods';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  session: any;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName?: string) => Promise<any>;
+  signInWithMagicLink: (email: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithPassphrase: (passphrase: string) => Promise<void>;
+  signInWithWebAuthn: (credential: any) => Promise<void>;
+  signOut: () => Promise<void>;
+  logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<any>;
+  updateUser: (updates: Partial<User>) => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
+  const createImmediateUser = (authUser: any): User => ({
+    id: authUser.id,
+    email: authUser.email,
+    fullName: authUser.user_metadata?.full_name || authUser.user_metadata?.display_name || '',
+    subscriptionTier: 'free',
+    xxCoinBalance: 0
+  });
+
+  const fetchUserProfile = async (authUser: any): Promise<User> => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', authUser.id)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116') {
+        throw error;
+      }
+
+      return {
+        id: authUser.id,
+        email: authUser.email,
+        fullName: data?.display_name || authUser.user_metadata?.full_name || '',
+        subscriptionTier: 'free',
+        xxCoinBalance: 0,
+        ...data
+      };
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      return createImmediateUser(authUser);
+    }
+  };
+
+  const checkAlternativeAuth = () => {
+    // Alternative auth methods (passphrase, WebAuthn) - preserved for compatibility
+    return null;
+  };
 
   useEffect(() => {
-    // Set up auth state listener first
+    console.log('🚀 AuthProvider initializing...');
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('🔄 Auth state change:', event, session?.user?.email);
-        console.log('🔍 Session user metadata:', session?.user?.user_metadata);
+        console.log('🔍 Session metadata:', session?.user?.user_metadata);
         
         if (event === 'SIGNED_OUT' || !session?.user) {
+          console.log('🚪 Signing out...');
           setUser(null);
           setSession(null);
           setLoading(false);
           return;
         }
 
-        // For ANY sign-in event, check if user has 2FA enabled
-        if (session?.user && event === 'SIGNED_IN') {
-          console.log('🔐 Sign-in detected, checking 2FA status...');
-          
-          try {
-            // Check if user has 2FA enabled
-            const { data: profile, error: profileError } = await supabase
-              .from('profiles')
-              .select('totp_enabled')
-              .eq('user_id', session.user.id)
-              .maybeSingle();
+        console.log('🔑 Processing session...');
+        
+        try {
+          // Check if user has 2FA enabled
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('totp_enabled')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
 
-            if (profileError) {
-              console.error('Profile check error:', profileError);
-            }
+          if (profileError) {
+            console.error('Profile check error:', profileError);
+          }
 
-            // If 2FA is enabled, check verification status
-            if (profile?.totp_enabled) {
-              console.log('🛡️ 2FA enabled - checking if this is a verified session');
-              
-              // Check if this session has been 2FA verified
-              const sessionData = session.user.user_metadata || {};
-              console.log('🔍 Session metadata:', JSON.stringify(sessionData, null, 2));
-              console.log('🔍 twofa_verified value:', sessionData.twofa_verified);
-              console.log('🔍 twofa_verified type:', typeof sessionData.twofa_verified);
-              
-              if (!sessionData.twofa_verified) {
-                console.log('🔐 2FA required - keeping session for verification');
-                // Keep the session but don't fully authenticate until 2FA is complete
-                setSession(session);
-                setUser({ ...session.user, requiresTwoFactor: true } as any);
-                setLoading(false);
-                return;
-              } else {
-                console.log('✅ 2FA already verified - proceeding with full login');
-                // Continue with normal flow below
-              }
+          // If 2FA is enabled, check verification status
+          if (profile?.totp_enabled) {
+            console.log('🛡️ 2FA enabled - checking verification');
+            
+            const metadata = session.user.user_metadata || {};
+            console.log('🔍 twofa_verified:', metadata.twofa_verified);
+            
+            if (!metadata.twofa_verified) {
+              console.log('🔐 2FA required');
+              setSession(session);
+              setUser({ ...session.user, requiresTwoFactor: true } as any);
+              setLoading(false);
+              return;
             } else {
-              console.log('📝 No 2FA enabled - proceeding with normal login');
+              console.log('✅ 2FA verified');
             }
-          } catch (error) {
-            console.error('2FA check error:', error);
+          } else {
+            console.log('📝 No 2FA required');
           }
-        }
-
-        setSession(session);
-        
-        // Create immediate user object to prevent loading state
-        const immediateUser = createImmediateUser(session.user);
-        setUser(immediateUser);
-        setLoading(false);
-        
-        // Fetch profile in background to update if needed
-        setTimeout(async () => {
-          try {
-            const userData = await fetchUserProfile(session.user);
-            setUser(userData);
-          } catch (error) {
-            // Keep immediate user if profile fetch fails
-          }
-        }, 100);
-      }
-    );
-
-    // CRITICAL: Check for existing session on mount (after page reload)
-    const initializeAuth = async () => {
-      console.log('🚀 Initializing auth context...');
-      const { data: { session }, error } = await supabase.auth.getSession();
-      console.log('📋 Initial session check:', {
-        hasSession: !!session,
-        userId: session?.user?.id,
-        email: session?.user?.email,
-        metadata: session?.user?.user_metadata,
-        error
-      });
-      
-      if (session?.user) {
-        console.log('✅ Found existing session during initialization');
-        
-        // Process 2FA check for existing session
-        if (session?.user) {
-          console.log('🔐 Processing existing session, checking 2FA status...');
-          
-          try {
-            // Check if user has 2FA enabled
-            const { data: profile, error: profileError } = await supabase
-              .from('profiles')
-              .select('totp_enabled')
-              .eq('user_id', session.user.id)
-              .maybeSingle();
-
-            if (profileError) {
-              console.error('Profile check error:', profileError);
-            }
-
-            // If 2FA is enabled, check verification status
-            if (profile?.totp_enabled) {
-              console.log('🛡️ 2FA enabled - checking if this is a verified session');
-              
-              // Check if this session has been 2FA verified
-              const sessionData = session.user.user_metadata || {};
-              console.log('🔍 Session metadata:', JSON.stringify(sessionData, null, 2));
-              console.log('🔍 twofa_verified value:', sessionData.twofa_verified);
-              console.log('🔍 twofa_verified type:', typeof sessionData.twofa_verified);
-              
-              if (!sessionData.twofa_verified) {
-                console.log('🔐 2FA required - keeping session for verification');
-                // Keep the session but don't fully authenticate until 2FA is complete
-                setSession(session);
-                setUser({ ...session.user, requiresTwoFactor: true } as any);
-                setLoading(false);
-                return;
-              } else {
-                console.log('✅ 2FA already verified - proceeding with full login');
-                // Continue with normal flow below
-              }
-            } else {
-              console.log('📝 No 2FA enabled - proceeding with normal login');
-            }
-          } catch (error) {
-            console.error('2FA check error:', error);
-          }
+        } catch (error) {
+          console.error('2FA check error:', error);
         }
         
-        // Set session and user normally
+        // Normal authentication - set user and session
+        console.log('✅ Setting authenticated user');
         setSession(session);
         const immediateUser = createImmediateUser(session.user);
         setUser(immediateUser);
         setLoading(false);
         
         // Background profile fetch
-        fetchUserProfile(session.user).then(userProfile => {
-          setUser(userProfile);
-        }).catch(error => {
-          // Keep immediate user if profile fetch fails
+        setTimeout(async () => {
+          try {
+            const userData = await fetchUserProfile(session.user);
+            setUser(userData);
+          } catch (error) {
+            console.error('Profile fetch error:', error);
+          }
+        }, 100);
+      }
+    );
+
+    // Check for existing session on mount
+    const initializeAuth = async () => {
+      console.log('🚀 Checking for existing session...');
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('📋 Existing session check:', {
+          hasSession: !!session,
+          email: session?.user?.email,
+          metadata: session?.user?.user_metadata
         });
-      } else {
-        console.log('❌ No existing session found during initialization');
-        // Check for alternative authentication methods
-        const altUser = checkAlternativeAuth();
-        if (altUser) {
-          setUser(altUser);
+        
+        if (session?.user) {
+          console.log('✅ Found existing session - will be processed by auth state change');
+          // The auth state change listener will handle this session
+        } else {
+          console.log('❌ No existing session');
+          const altUser = checkAlternativeAuth();
+          if (altUser) {
+            setUser(altUser);
+          }
+          setLoading(false);
         }
+      } catch (error) {
+        console.error('Session check error:', error);
         setLoading(false);
       }
     };
@@ -197,6 +179,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       subscription.unsubscribe();
     };
   }, []);
+
+  const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
   const value = {
     user,
