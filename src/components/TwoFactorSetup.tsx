@@ -62,7 +62,18 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         throw new Error('No user ID found');
       }
       
-      // Check if user ID is a valid UUID format
+      // Check for alternative auth methods that don't support 2FA
+      if (user.id === 'webauthn_user' || user.id === 'passphrase_user') {
+        toast({
+          title: 'Not Available',
+          description: '2FA is not available for this authentication method. Please use email/password authentication to enable 2FA.',
+          variant: 'destructive',
+        });
+        setShowSetup(false);
+        return;
+      }
+      
+      // Check if user ID is a valid UUID format for regular Supabase users
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       if (!uuidRegex.test(user.id)) {
         console.log('❌ Invalid UUID format for user ID:', user.id);
