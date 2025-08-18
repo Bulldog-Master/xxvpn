@@ -49,17 +49,13 @@ export const useAuthMethods = (
       // No 2FA needed - user is already signed in from checkTwoFactorRequirement
       console.log('✅ No 2FA required - completing sign in');
       
-      // Get the current session that should exist
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        setSession(session);
-        setUser({
-          id: session.user.id,
-          email: session.user.email || '',
-          fullName: session.user.user_metadata?.full_name || '',
-          subscriptionTier: 'free',
-          xxCoinBalance: 0
-        });
+      // Get the current session
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      if (currentSession?.user) {
+        const { fetchUserProfile } = await import('@/utils/authHelpers');
+        const userProfile = await fetchUserProfile(currentSession.user);
+        setUser(userProfile);
+        setSession(currentSession);
       }
       setLoading(false);
     } catch (error) {

@@ -181,21 +181,11 @@ export const signInWithWebAuthnService = async (credential: any): Promise<{ user
 };
 
 export const signOutService = async () => {
-  console.log('🚪 Starting sign out service...');
-  
-  // Clean auth state first
   cleanupAuthState();
   
-  // Clear pending 2FA auth
-  localStorage.removeItem('xxvpn_pending_2fa_auth');
-  
-  // Sign out from Supabase
   await supabase.auth.signOut({ scope: 'global' });
   
-  console.log('✅ Sign out completed - forcing reload');
-  
-  // Force immediate page reload to ensure clean state
-  window.location.href = '/';
+  console.log('✅ Sign out completed');
 };
 
 export const updateUserProfile = async (userId: string, updates: Partial<User>) => {
