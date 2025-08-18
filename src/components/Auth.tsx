@@ -6,14 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Mail, Shield } from 'lucide-react';
+import { Loader2, Mail, Shield, Key, Link, Fingerprint } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import PassphraseAuth from './PassphraseAuth';
+import WebAuthnAuth from './WebAuthnAuth';
+import TwoFactorVerification from './TwoFactorVerification';
+import { signInWithPassphraseService, signInWithWebAuthnService } from '@/services/authService';
+import { checkTwoFactorRequirement } from '@/services/twoFactorAuthService';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('signin');
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
   const { toast } = useToast();
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -49,6 +57,16 @@ export default function Auth() {
       setLoading(true);
       setError(null);
       
+      // Check if two-factor authentication is required
+      const twoFactorResult = await checkTwoFactorRequirement(email, password);
+      
+      if (twoFactorResult.requiresTwoFactor) {
+        setPendingCredentials({ email, password });
+        setShowTwoFactor(true);
+        setLoading(false);
+        return;
+      }
+      
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -82,6 +100,100 @@ export default function Auth() {
     }
   };
 
+  const handleMagicLink = async () => {
+    if (!email) {
+      setError('Please enter your email address first');
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Magic link sent!",
+        description: "Check your email for the login link.",
+      });
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePassphraseAuth = async (passphrase: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const { user } = await signInWithPassphraseService(passphrase);
+      
+      toast({
+        title: "Success!",
+        description: `Welcome back, ${user.email}!`,
+      });
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWebAuthnAuth = async (credential: any) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const { user } = await signInWithWebAuthnService(credential);
+      
+      toast({
+        title: "Success!",
+        description: `Welcome back, ${user.email}!`,
+      });
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleTwoFactorSuccess = () => {
+    setShowTwoFactor(false);
+    setPendingCredentials(null);
+    toast({
+      title: "Success!",
+      description: "You've been signed in successfully.",
+    });
+  };
+
+  const handleTwoFactorCancel = () => {
+    setShowTwoFactor(false);
+    setPendingCredentials(null);
+    setLoading(false);
+  };
+
+  if (showTwoFactor && pendingCredentials) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <TwoFactorVerification
+          email={pendingCredentials.email}
+          password={pendingCredentials.password}
+          onSuccess={handleTwoFactorSuccess}
+          onCancel={handleTwoFactorCancel}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -92,10 +204,13 @@ export default function Auth() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="passphrase">Passphrase</TabsTrigger>
+              <TabsTrigger value="webauthn">Passkey</TabsTrigger>
+              <TabsTrigger value="magic">Magic Link</TabsTrigger>
             </TabsList>
             
             <TabsContent value="signin" className="space-y-4">
@@ -136,6 +251,18 @@ export default function Auth() {
                   Sign In
                 </Button>
               </form>
+              
+              <div className="mt-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={handleMagicLink}
+                  disabled={loading || !email}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Link className="w-4 h-4 mr-2" />}
+                  Send Magic Link
+                </Button>
+              </div>
             </TabsContent>
             
             <TabsContent value="signup" className="space-y-4">
@@ -176,6 +303,52 @@ export default function Auth() {
                   Sign Up
                 </Button>
               </form>
+            </TabsContent>
+            
+            <TabsContent value="passphrase" className="space-y-4">
+              <PassphraseAuth 
+                onAuthenticate={handlePassphraseAuth}
+                isLoading={loading}
+              />
+            </TabsContent>
+            
+            <TabsContent value="webauthn" className="space-y-4">
+              <WebAuthnAuth 
+                onAuthenticate={handleWebAuthnAuth}
+                isLoading={loading}
+              />
+            </TabsContent>
+            
+            <TabsContent value="magic" className="space-y-4">
+              <div className="text-center space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="magic-email">Email</Label>
+                  <Input
+                    id="magic-email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+                
+                <Button 
+                  className="w-full" 
+                  onClick={handleMagicLink}
+                  disabled={loading || !email}
+                >
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Link className="w-4 h-4 mr-2" />}
+                  Send Magic Link
+                </Button>
+              </div>
             </TabsContent>
           </Tabs>
           
