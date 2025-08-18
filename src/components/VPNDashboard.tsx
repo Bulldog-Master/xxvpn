@@ -40,7 +40,7 @@ import {
   Moon,
   Sun
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
