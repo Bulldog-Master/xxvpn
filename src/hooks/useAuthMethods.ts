@@ -136,10 +136,10 @@ export const useAuthMethods = (
       setSession(null);
       setLoading(false);
       
-      // Force page reload to ensure clean state
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 100);
+      console.log('✅ Sign out successful - forcing page reload');
+      
+      // Force immediate page reload to ensure clean state
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
       // Force clear state even if sign out fails
