@@ -93,7 +93,9 @@ export const verifyTwoFactorAndSignIn = async (
   try {
     console.log('🔐 Starting 2FA verification...');
     console.log('📧 Email:', email);
-    console.log('🔢 TOTP Code:', totpCode);
+    console.log('🔢 TOTP Code provided:', totpCode);
+    console.log('🔢 TOTP Code length:', totpCode?.length);
+    console.log('🔢 TOTP Code type:', typeof totpCode);
     
     // Get pending auth from localStorage
     const pendingAuth = getPendingAuth();
@@ -135,6 +137,8 @@ export const verifyTwoFactorAndSignIn = async (
     // Verify the TOTP code BEFORE signing in
     console.log('🔐 Verifying TOTP code:', totpCode);
     console.log('🔑 Using secret (first 10 chars):', profile.totp_secret?.substring(0, 10) + '...');
+    console.log('🔑 Secret length:', profile.totp_secret?.length);
+    console.log('🔑 Secret type:', typeof profile.totp_secret);
     
     const totp = new TOTP({
       issuer: 'xxVPN',
@@ -147,18 +151,25 @@ export const verifyTwoFactorAndSignIn = async (
 
     // Debug: Generate current expected token for comparison
     const currentToken = totp.generate();
+    const currentTime = Math.floor(Date.now() / 1000);
+    console.log('🔍 Current timestamp:', currentTime);
     console.log('🔍 Current expected token:', currentToken);
     console.log('🔍 User provided token:', totpCode);
+    console.log('🔍 Tokens match exactly:', currentToken === totpCode);
 
     // Try validation with different time windows to account for clock drift
     let validationResult = null;
     for (let window = 1; window <= 3; window++) {
       console.log(`🕒 Trying validation with window ${window}...`);
-      validationResult = totp.validate({ token: totpCode, window });
-      console.log(`🔍 Window ${window} result:`, validationResult);
-      if (validationResult !== null) {
-        console.log('✅ TOTP validation successful!');
-        break;
+      try {
+        validationResult = totp.validate({ token: totpCode, window });
+        console.log(`🔍 Window ${window} result:`, validationResult);
+        if (validationResult !== null) {
+          console.log('✅ TOTP validation successful with window:', window);
+          break;
+        }
+      } catch (validateError) {
+        console.error(`❌ Error validating with window ${window}:`, validateError);
       }
     }
 
