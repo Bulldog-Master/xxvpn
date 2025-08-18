@@ -243,10 +243,8 @@ const AuthPage = () => {
           description: 'Check your email for the sign-in link.',
         });
       } else {
-        // Always show 2FA form first to avoid any auth cycles
-        console.log('🔒 Showing 2FA form for credentials validation');
-        setShowTwoFactorVerification(true);
-        setPendingCredentials({ email, password });
+        // Try regular sign in first
+        await signIn(email, password);
       }
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
@@ -281,27 +279,6 @@ const AuthPage = () => {
     );
   }
 
-  // Show 2FA verification if required
-  if (showTwoFactorVerification && pendingCredentials) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
-        <TwoFactorVerification
-          email={pendingCredentials.email}
-          password={pendingCredentials.password}
-          onSuccess={() => {
-            setShowTwoFactorVerification(false);
-            setPendingCredentials(null);
-            // The TwoFactorVerification component handles the actual sign-in
-          }}
-          onCancel={() => {
-            setShowTwoFactorVerification(false);
-            setPendingCredentials(null);
-            setError('');
-          }}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
@@ -425,28 +402,28 @@ const AuthPage = () => {
                               Forgot Password?
                             </button>
                           </div>
-                          <div className="relative">
-                            <Input
-                              id="signin-password"
-                              type={showSigninPassword ? "text" : "password"}
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              placeholder="Enter your password"
-                              required
-                              className="pr-10"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowSigninPassword(!showSigninPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                            >
-                              {showSigninPassword ? (
-                                <EyeOff className="w-4 h-4" />
-                              ) : (
-                                <Eye className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
+                           <div className="relative">
+                             <Input
+                               id="signin-password"
+                               type={showPassword ? "text" : "password"}
+                               value={password}
+                               onChange={(e) => setPassword(e.target.value)}
+                               placeholder="Enter your password"
+                               required
+                               className="pr-10"
+                             />
+                             <button
+                               type="button"
+                               onClick={() => setShowPassword(!showPassword)}
+                               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                             >
+                               {showPassword ? (
+                                 <EyeOff className="w-4 h-4" />
+                               ) : (
+                                 <Eye className="w-4 h-4" />
+                               )}
+                             </button>
+                           </div>
                         </div>
                       )}
 
