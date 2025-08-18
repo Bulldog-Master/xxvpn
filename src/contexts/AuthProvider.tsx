@@ -88,7 +88,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               
               const has2FA = profile?.totp_enabled === true;
               const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-              console.log('🛡️ 2FA status:', { has2FA, is2FAVerified, userMetadata: session.user.user_metadata });
+              console.log('🛡️ 2FA status:', { 
+                has2FA, 
+                is2FAVerified, 
+                userMetadata: session.user.user_metadata,
+                fullUserObject: session.user 
+              });
               
               if (has2FA && !is2FAVerified) {
                 console.log('🔒 Requiring 2FA verification');
@@ -98,7 +103,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                   fullName: session.user.user_metadata?.full_name || '',
                   subscriptionTier: 'free',
                   xxCoinBalance: 0,
-                  requiresTwoFactor: true
+                  requiresTwoFactor: true,
+                  pendingPassword: localStorage.getItem('xxvpn_pending_2fa_auth') ? 
+                    JSON.parse(localStorage.getItem('xxvpn_pending_2fa_auth')!).password : ''
                 } as any);
                 setLoading(false);
                 return;

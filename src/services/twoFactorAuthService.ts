@@ -192,6 +192,7 @@ export const verifyTwoFactorAndSignIn = async (
     if (!authData.user) throw new Error('Authentication failed');
 
     // Mark session as 2FA verified IMMEDIATELY after sign in
+    console.log('🔄 Updating user metadata to mark 2FA as verified...');
     const { error: updateError } = await supabase.auth.updateUser({
       data: {
         twofa_verified: true,
@@ -204,13 +205,22 @@ export const verifyTwoFactorAndSignIn = async (
       throw new Error('Failed to complete 2FA verification');
     }
 
+    console.log('✅ User metadata updated successfully');
+
     // Clear pending auth
     clearPendingAuth();
     
     console.log('✅ 2FA verification successful - user signed in with verified session');
     
-    // Force a small delay to ensure the auth state change is processed
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Force session refresh to ensure the updated metadata is reflected
+    console.log('🔄 Refreshing session to get updated metadata...');
+    const { data: refreshedSession, error: refreshError } = await supabase.auth.refreshSession();
+    
+    if (refreshError) {
+      console.warn('⚠️ Failed to refresh session, but 2FA verification was successful:', refreshError);
+    } else {
+      console.log('✅ Session refreshed successfully with updated metadata');
+    }
   } catch (error) {
     console.error('2FA verification error:', error);
     
