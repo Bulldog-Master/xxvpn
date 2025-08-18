@@ -24,33 +24,69 @@ const clearPendingAuth = () => {
 
 export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
   try {
-    console.log('🔍 Checking 2FA requirement for:', email);
+    console.log('🔍 Checking if user has 2FA enabled for:', email);
     
-    // Store the credentials and email for later validation
-    setPendingAuth({ email, password, userId: 'pending' });
+    // Try to find the user by email without signing them in
+    // We'll attempt a sign-in just to validate credentials, then immediately sign out
+    let userId: string;
     
-    // Set a special flag that tells AuthProvider to handle 2FA checking
-    localStorage.setItem('xxvpn_validate_2fa_on_signin', 'true');
-    
-    // Now sign in normally - AuthProvider will handle the 2FA check
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (authError) {
-      console.error('❌ Auth error:', authError.message);
-      localStorage.removeItem('xxvpn_validate_2fa_on_signin');
-      clearPendingAuth();
-      throw authError;
+      if (authError) {
+        throw authError;
+      }
+      
+      userId = authData.user!.id;
+      
+      // Immediately sign out to prevent any UI flash
+      await supabase.auth.signOut();
+      console.log('✅ Credentials validated and signed out immediately');
+      
+    } catch (error) {
+      console.error('❌ Credential validation failed:', error);
+      throw error;
     }
     
-    // The AuthProvider will handle the rest and call appropriate callbacks
-    return { requiresTwoFactor: false, userId: authData.user!.id };
+    // Now check if user has 2FA enabled
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('totp_enabled')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error('Profile check error:', profileError);
+      return { requiresTwoFactor: false, userId };
+    }
+
+    const requiresTwoFactor = profile?.totp_enabled || false;
+    console.log('🛡️ 2FA required:', requiresTwoFactor);
+
+    if (requiresTwoFactor) {
+      // Store credentials for later validation during 2FA
+      setPendingAuth({ email, password, userId });
+      return { requiresTwoFactor: true, userId };
+    } else {
+      // No 2FA required - sign them in properly now
+      const { data: finalAuthData, error: finalAuthError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (finalAuthError) {
+        throw finalAuthError;
+      }
+      
+      clearPendingAuth();
+      return { requiresTwoFactor: false, userId };
+    }
     
   } catch (error) {
     console.error('2FA check error:', error);
-    localStorage.removeItem('xxvpn_validate_2fa_on_signin');
     clearPendingAuth();
     throw error;
   }

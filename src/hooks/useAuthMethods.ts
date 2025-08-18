@@ -30,11 +30,32 @@ export const useAuthMethods = (
       setUser(null);
       setSession(null);
       
-      // Use the simplified 2FA service 
-      await checkTwoFactorRequirement(email, password);
+      // Check if 2FA is required WITHOUT signing the user in
+      const result = await checkTwoFactorRequirement(email, password);
+      console.log('🔍 2FA check result:', { 
+        requiresTwoFactor: result.requiresTwoFactor, 
+        userId: result.userId
+      });
       
-      // The AuthProvider will handle the rest of the flow
-      console.log('🔄 Sign-in initiated - AuthProvider will handle 2FA checking');
+      if (result.requiresTwoFactor) {
+        console.log('🔒 2FA required - showing 2FA form');
+        // Set user in 2FA pending state
+        setUser({
+          id: result.userId!,
+          email: email,
+          fullName: '',
+          subscriptionTier: 'free',
+          xxCoinBalance: 0,
+          requiresTwoFactor: true,
+          pendingPassword: password
+        } as any);
+        setLoading(false);
+        return;
+      }
+      
+      // No 2FA needed - user is already signed in from checkTwoFactorRequirement
+      console.log('✅ No 2FA required - user signed in');
+      setLoading(false);
       
     } catch (error) {
       console.error('❌ Sign in error:', error);

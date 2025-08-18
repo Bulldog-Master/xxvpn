@@ -70,66 +70,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('👤 User signed in, checking for 2FA validation flag...', {
+          console.log('👤 User signed in normally', {
             userId: session.user.id,
             provider: session.user.app_metadata?.provider
           });
           
           setSession(session);
           
-          // Check if we need to validate 2FA on this sign-in
-          const shouldValidate2FA = localStorage.getItem('xxvpn_validate_2fa_on_signin');
-          
-          if (shouldValidate2FA) {
-            console.log('🔒 Validating 2FA requirement after sign-in...');
-            localStorage.removeItem('xxvpn_validate_2fa_on_signin');
-            
-            // Check if user has 2FA enabled
-            setTimeout(async () => {
-              try {
-                const { data: profile } = await supabase
-                  .from('profiles')
-                  .select('totp_enabled')
-                  .eq('user_id', session.user.id)
-                  .maybeSingle();
-                
-                const requiresTwoFactor = profile?.totp_enabled || false;
-                console.log('🛡️ 2FA required:', requiresTwoFactor);
-                
-                if (requiresTwoFactor) {
-                  console.log('🔒 2FA required - signing out and setting 2FA state');
-                  // Sign out and set 2FA state
-                  await supabase.auth.signOut();
-                  
-                  const { getPendingAuth } = await import('@/services/twoFactorAuthService');
-                  const pendingAuth = getPendingAuth();
-                  setUser({
-                    id: session.user.id,
-                    email: session.user.email || '',
-                    fullName: '',
-                    subscriptionTier: 'free',
-                    xxCoinBalance: 0,
-                    requiresTwoFactor: true,
-                    pendingPassword: pendingAuth?.password || ''
-                  } as any);
-                } else {
-                  console.log('✅ No 2FA required - creating normal user');
-                  const userData = createUserFromSession(session.user);
-                  setUser(userData);
-                }
-                setLoading(false);
-              } catch (error) {
-                console.error('2FA validation error:', error);
-                const userData = createUserFromSession(session.user);
-                setUser(userData);
-                setLoading(false);
-              }
-            }, 0);
-            return;
-          }
-          
-          // Normal sign-in without 2FA validation
-          console.log('✅ Creating normal user - no 2FA validation needed');
+          // Create normal user - 2FA is handled before sign-in now
+          console.log('✅ Creating normal user - 2FA already validated');
           const userData = createUserFromSession(session.user);
           setUser(userData);
           setLoading(false);
