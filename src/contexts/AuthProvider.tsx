@@ -19,13 +19,34 @@ interface AuthContextType {
   updateUser: (updates: Partial<User>) => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+// Create default auth methods that do nothing (for initial context)
+const defaultAuthMethods = {
+  signIn: async () => {},
+  signUp: async () => ({ error: null }),
+  signInWithMagicLink: async () => {},
+  signInWithGoogle: async () => {},
+  signInWithPassphrase: async () => {},
+  signInWithWebAuthn: async () => {},
+  signOut: async () => {},
+  logout: async () => {},
+  resetPassword: async () => ({ error: null }),
+  updateUser: async () => {},
+};
+
+// Create context with a default value to prevent null issues
+const defaultContextValue: AuthContextType = {
+  user: null,
+  loading: true,
+  session: null,
+  ...defaultAuthMethods,
+};
+
+export const AuthContext = createContext<AuthContextType>(defaultContextValue);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [initialized, setInitialized] = useState(false);
 
   const createUserFromSession = (authUser: any): User => ({
     id: authUser.id,
@@ -95,8 +116,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
-    setInitialized(true);
-
     // Simple initial session check
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
@@ -149,18 +168,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  // Ensure authMethods is available even during initialization
+  // Get auth methods
   const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
-  // Always provide a valid context value
-  const value = {
+  // Create the context value
+  const contextValue: AuthContextType = {
     user,
     loading,
     session,
     ...authMethods,
   };
 
-  console.log('🔧 AuthProvider value created:', { user: !!user, loading, session: !!session, authMethods: !!authMethods });
+  console.log('🔧 AuthProvider providing context:', { 
+    user: !!user, 
+    loading, 
+    session: !!session, 
+    hasAuthMethods: !!authMethods 
+  });
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };
