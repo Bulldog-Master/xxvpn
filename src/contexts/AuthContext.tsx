@@ -85,15 +85,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
           console.log('👤 User signed in, checking 2FA...', session.user.id);
-          
-          // CRITICAL: Check if this is during a 2FA credential check
-          const pendingAuth = localStorage.getItem('xxvpn_pending_2fa_auth');
-          if (pendingAuth) {
-            console.log('🔒 2FA flow in progress - NOT setting user to prevent dashboard flash');
-            setLoading(false);
-            return; // Exit early to prevent dashboard flash
-          }
-          
           setSession(session);
           
           // Simple 2FA check - only for email provider
