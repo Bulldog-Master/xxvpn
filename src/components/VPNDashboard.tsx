@@ -95,12 +95,24 @@ const VPNDashboard = () => {
     });
   };
 
-  const handleLogout = () => {
-    logout();
-    toast({
-      title: "Logged out successfully",
-      description: "See you soon!",
-    });
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast({
+        title: "Logged out successfully",
+        description: "See you soon!",
+      });
+      // Force immediate redirect if logout doesn't redirect automatically
+      setTimeout(() => {
+        if (window.location.pathname !== '/') {
+          window.location.href = '/';
+        }
+      }, 1000);
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Force redirect even if logout fails
+      window.location.href = '/';
+    }
   };
 
   const connectVPN = (mode: VPNMode) => {

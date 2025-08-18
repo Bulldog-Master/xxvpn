@@ -59,7 +59,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     console.log('🛡️ 2FA required:', requiresTwoFactor);
 
     if (requiresTwoFactor) {
-      // IMMEDIATELY sign out to prevent dashboard flash
+      // IMMEDIATELY sign out to prevent dashboard flash (must complete within 300ms)
       console.log('🚪 IMMEDIATELY signing out to prevent dashboard flash...');
       await supabase.auth.signOut();
       
