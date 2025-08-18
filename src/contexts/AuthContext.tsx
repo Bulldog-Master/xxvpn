@@ -85,10 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
           console.log('👤 User signed in, checking 2FA...', session.user.id);
-          
-          // Add a small delay to prevent dashboard flash during 2FA credential check
-          setTimeout(async () => {
-            setSession(session);
+          setSession(session);
           
           // Simple 2FA check - only for email provider
           const isEmailProvider = session.user.app_metadata?.provider === 'email';
@@ -128,7 +125,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
            const userData = createUserFromSession(session.user);
            setUser(userData);
            setLoading(false);
-          }, 300); // 300ms delay to let 2FA check complete
         }
       }
     );
