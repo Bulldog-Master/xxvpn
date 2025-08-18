@@ -99,6 +99,9 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
 
       console.log('✅ TOTP verified! Now updating user metadata...');
 
+      // Clear pending auth FIRST to prevent auth loop
+      localStorage.removeItem('xxvpn_pending_2fa_auth');
+
       // Mark as 2FA verified
       await supabase.auth.updateUser({
         data: {
