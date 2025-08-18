@@ -23,24 +23,13 @@ const clearPendingAuth = () => {
 };
 
 export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
-  try {
-    console.log('🔍 Checking 2FA requirement for:', email);
-    
-    // Store credentials for validation later - don't validate now to avoid auth cycles
-    const tempUserId = 'pending_' + email + '_' + Date.now();
-    setPendingAuth({ email, password, userId: tempUserId });
-    
-    // We'll assume 2FA might be required and let the verification process handle validation
-    // This avoids any sign-in cycles during the initial check
-    console.log('🔒 Assuming 2FA required to avoid auth cycles - will validate during 2FA verification');
-    
-    return { requiresTwoFactor: true, userId: tempUserId };
-    
-  } catch (error) {
-    console.error('2FA check error:', error);
-    clearPendingAuth();
-    throw error;
-  }
+  // Don't do any auth operations here - just store credentials for later
+  console.log('🔍 Storing credentials for 2FA verification');
+  const tempUserId = 'pending_' + email;
+  setPendingAuth({ email, password, userId: tempUserId });
+  
+  // Always assume 2FA required to avoid any auth operations
+  return { requiresTwoFactor: true, userId: tempUserId };
 };
 
 export const verifyTwoFactorAndSignIn = async (
@@ -49,23 +38,26 @@ export const verifyTwoFactorAndSignIn = async (
   totpCode: string
 ): Promise<void> => {
   try {
-    console.log('🔐 Starting 2FA verification and sign-in...');
+    console.log('🔐 Starting credential validation and 2FA verification');
     
-    // First, validate credentials by attempting sign-in
-    console.log('🔍 Validating credentials for:', email);
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    // Step 1: Validate credentials first (but don't sign in yet)
+    console.log('🔍 Testing credentials...');
+    const { data: testAuth, error: testError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (authError) {
-      throw authError;
+    if (testError) {
+      throw new Error('Invalid email or password');
     }
     
-    const userId = authData.user!.id;
-    console.log('✅ Credentials validated, user signed in');
+    const userId = testAuth.user!.id;
     
-    // Check if user actually has 2FA enabled
+    // Immediately sign out to prevent dashboard flash
+    await supabase.auth.signOut();
+    console.log('✅ Credentials valid, signed out immediately');
+    
+    // Step 2: Check if user has 2FA enabled
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_secret, totp_enabled')
@@ -74,19 +66,20 @@ export const verifyTwoFactorAndSignIn = async (
 
     if (profileError) throw profileError;
     
-    // If no 2FA is enabled, we're done - user is already signed in
+    // Step 3: If no 2FA, sign in normally
     if (!profile.totp_enabled || !profile.totp_secret) {
-      console.log('✅ No 2FA configured - sign in complete');
+      console.log('✅ No 2FA required - signing in normally');
+      const { error: finalSignInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (finalSignInError) throw finalSignInError;
       clearPendingAuth();
       return;
     }
-
-    // Verify the TOTP code BEFORE signing in
-    console.log('🔐 Verifying TOTP code:', totpCode);
-    console.log('🔑 Using secret (first 10 chars):', profile.totp_secret?.substring(0, 10) + '...');
-    console.log('🔑 Secret length:', profile.totp_secret?.length);
-    console.log('🔑 Secret type:', typeof profile.totp_secret);
     
+    // Step 4: Verify TOTP code
+    console.log('🔐 Verifying TOTP code:', totpCode);
     const totp = new TOTP({
       issuer: 'xxVPN',
       label: email,
@@ -96,23 +89,12 @@ export const verifyTwoFactorAndSignIn = async (
       secret: profile.totp_secret,
     });
 
-    // Debug: Generate current expected token for comparison
-    const currentToken = totp.generate();
-    const currentTime = Math.floor(Date.now() / 1000);
-    console.log('🔍 Current timestamp:', currentTime);
-    console.log('🔍 Current expected token:', currentToken);
-    console.log('🔍 User provided token:', totpCode);
-    console.log('🔍 Tokens match exactly:', currentToken === totpCode);
-
-    // Try validation with different time windows to account for clock drift
     let validationResult = null;
     for (let window = 1; window <= 3; window++) {
-      console.log(`🕒 Trying validation with window ${window}...`);
       try {
         validationResult = totp.validate({ token: totpCode, window });
-        console.log(`🔍 Window ${window} result:`, validationResult);
         if (validationResult !== null) {
-          console.log('✅ TOTP validation successful with window:', window);
+          console.log('✅ TOTP validation successful');
           break;
         }
       } catch (validateError) {
@@ -124,48 +106,25 @@ export const verifyTwoFactorAndSignIn = async (
       throw new Error('Invalid verification code. Please try again.');
     }
 
-    console.log('✅ TOTP code verified, user is already signed in');
-    
-    // User is already signed in from the credential validation above
-    // No need to sign in again
-
-    // Mark session as 2FA verified IMMEDIATELY after sign in
-    console.log('🔄 Updating user metadata to mark 2FA as verified...');
-    const { error: updateError } = await supabase.auth.updateUser({
-      data: {
-        twofa_verified: true,
-        last_2fa_verification: new Date().toISOString()
-      }
+    // Step 5: NOW sign in for real since everything is validated
+    console.log('✅ 2FA verified - signing in now');
+    const { error: finalAuthError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
 
-    if (updateError) {
-      console.error('❌ Failed to update user metadata:', updateError);
-      throw new Error('Failed to complete 2FA verification');
-    }
-
-    console.log('✅ User metadata updated successfully');
-
+    if (finalAuthError) throw finalAuthError;
+    
     // Clear pending auth
     clearPendingAuth();
     
-    console.log('✅ 2FA verification successful - user signed in with verified session');
+    console.log('✅ Sign in successful with 2FA verification');
     
-    // Force session refresh to ensure the updated metadata is reflected
-    console.log('🔄 Refreshing session to get updated metadata...');
-    const { data: refreshedSession, error: refreshError } = await supabase.auth.refreshSession();
-    
-    if (refreshError) {
-      console.warn('⚠️ Failed to refresh session, but 2FA verification was successful:', refreshError);
-    } else {
-      console.log('✅ Session refreshed successfully with updated metadata');
-    }
   } catch (error) {
     console.error('2FA verification error:', error);
-    
-    // Clear pending auth on error
     clearPendingAuth();
     
-    // Make sure to sign out if there was an error
+    // Make sure we're signed out on any error
     try {
       await supabase.auth.signOut();
     } catch (signOutError) {
