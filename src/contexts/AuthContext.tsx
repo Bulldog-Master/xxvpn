@@ -157,7 +157,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       subscription.unsubscribe();
     };
-  }, [initialized]);
+  }, []);
 
   const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
