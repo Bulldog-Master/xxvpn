@@ -224,22 +224,17 @@ const AuthPage = () => {
   };
 
   const handleSignIn = async (e?: React.FormEvent) => {
-    console.log('🎯🎯🎯 HANDLE SIGN IN CALLED - FORM SUBMITTED');
     if (e) e.preventDefault();
-    console.log('🎯 Sign in function called with:', { email, password: password ? '****' : 'empty', selectedMethod });
     
     if (!email || (!password && selectedMethod === 'email')) {
-      console.log('❌ Missing email or password');
       setError('Please enter both email and password');
       return;
     }
 
-    console.log('🔄 Setting loading to true');
     setIsLoading(true);
     setError('');
 
     try {
-      console.log('📧 About to call signIn...');
       if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
@@ -250,12 +245,10 @@ const AuthPage = () => {
       } else {
         await signIn(email, password);
       }
-      console.log('✅ signIn returned successfully');
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
       setError(error.message || 'Failed to sign in');
     } finally {
-      console.log('🔄 Setting loading to false');
       setIsLoading(false);
     }
   };
