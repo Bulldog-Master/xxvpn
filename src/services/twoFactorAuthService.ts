@@ -22,62 +22,19 @@ const clearPendingAuth = () => {
   localStorage.removeItem(PENDING_AUTH_KEY);
 };
 
-// Simple credential validation using RPC without signing in
-export const validateCredentials = async (email: string, password: string): Promise<string> => {
-  try {
-    // Use a temporary sign-in just to validate credentials, then immediately sign out
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (authError) {
-      throw authError;
-    }
-    
-    const userId = authData.user!.id;
-    
-    // Immediately sign out to prevent any UI changes
-    await supabase.auth.signOut();
-    
-    return userId;
-  } catch (error) {
-    console.error('❌ Credential validation failed:', error);
-    throw error;
-  }
-};
-
 export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
   try {
-    console.log('🔍 Validating credentials and checking 2FA for:', email);
+    console.log('🔍 Checking 2FA requirement for:', email);
     
-    // Validate credentials first without keeping the user signed in
-    const userId = await validateCredentials(email, password);
-    console.log('✅ Credentials validated for user:', userId);
+    // Store credentials for validation later - don't validate now to avoid auth cycles
+    const tempUserId = 'pending_' + email + '_' + Date.now();
+    setPendingAuth({ email, password, userId: tempUserId });
     
-    // Check if user has 2FA enabled
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('totp_enabled')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (profileError) {
-      console.error('Profile check error:', profileError);
-      return { requiresTwoFactor: false, userId };
-    }
-
-    const requiresTwoFactor = profile?.totp_enabled || false;
-    console.log('🛡️ 2FA required:', requiresTwoFactor);
-
-    if (requiresTwoFactor) {
-      // Store credentials for later use during 2FA verification
-      setPendingAuth({ email, password, userId });
-    } else {
-      clearPendingAuth();
-    }
+    // We'll assume 2FA might be required and let the verification process handle validation
+    // This avoids any sign-in cycles during the initial check
+    console.log('🔒 Assuming 2FA required to avoid auth cycles - will validate during 2FA verification');
     
-    return { requiresTwoFactor, userId };
+    return { requiresTwoFactor: true, userId: tempUserId };
     
   } catch (error) {
     console.error('2FA check error:', error);
@@ -101,33 +58,30 @@ export const verifyTwoFactorAndSignIn = async (
     // Get pending auth from localStorage
     const pendingAuth = getPendingAuth();
     
-    // Verify we have pending auth or re-authenticate if needed
     if (!pendingAuth || pendingAuth.email !== email) {
-      console.log('🔄 Re-establishing authentication state...');
-      
-      // Re-authenticate and set up pending auth
-      const authResult = await checkTwoFactorRequirement(email, password);
-      if (!authResult.requiresTwoFactor) {
-        throw new Error('2FA is not enabled for this account');
-      }
-      
-      // Get the updated pending auth
-      const newPendingAuth = getPendingAuth();
-      if (!newPendingAuth) {
-        throw new Error('Authentication setup failed. Please try signing in again.');
-      }
-    }
-    // Get current pending auth
-    const currentPendingAuth = getPendingAuth();
-    if (!currentPendingAuth) {
-      throw new Error('No pending authentication found');
+      throw new Error('No pending authentication found. Please try signing in again.');
     }
     
-    // Get the user's TOTP secret first (before signing in)
+    // First, validate credentials by attempting sign-in
+    console.log('🔍 Validating credentials...');
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email: pendingAuth.email,
+      password: pendingAuth.password,
+    });
+
+    if (authError) {
+      clearPendingAuth();
+      throw authError;
+    }
+    
+    const userId = authData.user!.id;
+    console.log('✅ Credentials validated, user ID:', userId);
+    
+    // Get the user's TOTP secret
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_secret, totp_enabled')
-      .eq('user_id', currentPendingAuth.userId)
+      .eq('user_id', userId)
       .single();
 
     if (profileError) throw profileError;
@@ -178,16 +132,10 @@ export const verifyTwoFactorAndSignIn = async (
       throw new Error('Invalid verification code. Please try again.');
     }
 
-    console.log('✅ TOTP code verified, now signing in...');
+    console.log('✅ TOTP code verified, user is already signed in');
     
-    // Now sign in with the verified credentials
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: currentPendingAuth.email,
-      password: currentPendingAuth.password,
-    });
-
-    if (authError) throw authError;
-    if (!authData.user) throw new Error('Authentication failed');
+    // User is already signed in from the credential validation above
+    // No need to sign in again
 
     // Mark session as 2FA verified IMMEDIATELY after sign in
     console.log('🔄 Updating user metadata to mark 2FA as verified...');

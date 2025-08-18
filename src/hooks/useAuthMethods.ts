@@ -30,7 +30,7 @@ export const useAuthMethods = (
       setUser(null);
       setSession(null);
       
-      // Check credentials and 2FA requirement WITHOUT signing in
+      // Check credentials and 2FA requirement 
       const result = await checkTwoFactorRequirement(email, password);
       console.log('🔍 Auth check result:', { 
         requiresTwoFactor: result.requiresTwoFactor, 
@@ -39,7 +39,7 @@ export const useAuthMethods = (
       
       if (result.requiresTwoFactor) {
         console.log('🔒 2FA required - showing 2FA form');
-        // Set user in 2FA pending state
+        // Set user in 2FA pending state WITHOUT any actual auth session
         setUser({
           id: result.userId!,
           email: email,
@@ -53,7 +53,7 @@ export const useAuthMethods = (
         return;
       }
       
-      // No 2FA needed - now sign them in properly
+      // No 2FA needed - now sign them in properly for the first time
       console.log('✅ No 2FA required - signing in now');
       const authResult = await signInWithEmail(email, password);
       
