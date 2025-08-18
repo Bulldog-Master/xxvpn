@@ -24,14 +24,22 @@ export const useAuthMethods = (
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      console.log('🔑 Starting sign in process...');
+      console.log('🔑 Starting sign in process for:', email);
+      
+      // Clear any existing user state first
+      setUser(null);
+      setSession(null);
       
       // Use the proper 2FA service that handles the complete flow
       const result = await checkTwoFactorRequirement(email, password);
-      console.log('🔍 2FA check result:', result);
+      console.log('🔍 2FA check result:', { 
+        requiresTwoFactor: result.requiresTwoFactor, 
+        userId: result.userId,
+        resultKeys: Object.keys(result)
+      });
       
       if (result.requiresTwoFactor) {
-        console.log('🔒 2FA required - setting up 2FA state');
+        console.log('🔒 2FA required - setting up 2FA state for user ID:', result.userId);
         // Set user in 2FA pending state
         setUser({
           id: result.userId!,
@@ -43,6 +51,7 @@ export const useAuthMethods = (
           pendingPassword: password
         } as any);
         setLoading(false);
+        console.log('🔒 2FA state set - user should see 2FA form');
         return;
       }
       
@@ -51,9 +60,18 @@ export const useAuthMethods = (
       
       // Get the current session
       const { data: { session: currentSession } } = await supabase.auth.getSession();
+      console.log('📦 Current session after sign in:', { 
+        hasSession: !!currentSession, 
+        userId: currentSession?.user?.id 
+      });
+      
       if (currentSession?.user) {
         const { fetchUserProfile } = await import('@/utils/authHelpers');
         const userProfile = await fetchUserProfile(currentSession.user);
+        console.log('👤 User profile fetched:', { 
+          id: userProfile.id, 
+          email: userProfile.email 
+        });
         setUser(userProfile);
         setSession(currentSession);
       }
