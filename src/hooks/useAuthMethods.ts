@@ -30,9 +30,9 @@ export const useAuthMethods = (
       setUser(null);
       setSession(null);
       
-      // Check if 2FA is required WITHOUT signing the user in
+      // Check credentials and 2FA requirement WITHOUT signing in
       const result = await checkTwoFactorRequirement(email, password);
-      console.log('🔍 2FA check result:', { 
+      console.log('🔍 Auth check result:', { 
         requiresTwoFactor: result.requiresTwoFactor, 
         userId: result.userId
       });
@@ -53,8 +53,14 @@ export const useAuthMethods = (
         return;
       }
       
-      // No 2FA needed - user is already signed in from checkTwoFactorRequirement
-      console.log('✅ No 2FA required - user signed in');
+      // No 2FA needed - now sign them in properly
+      console.log('✅ No 2FA required - signing in now');
+      const authResult = await signInWithEmail(email, password);
+      
+      if (authResult.user) {
+        console.log('✅ User signed in successfully');
+      }
+      
       setLoading(false);
       
     } catch (error) {

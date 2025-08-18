@@ -22,36 +22,40 @@ const clearPendingAuth = () => {
   localStorage.removeItem(PENDING_AUTH_KEY);
 };
 
-export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
+// Simple credential validation using RPC without signing in
+export const validateCredentials = async (email: string, password: string): Promise<string> => {
   try {
-    console.log('🔍 Checking if user has 2FA enabled for:', email);
-    
-    // Try to find the user by email without signing them in
-    // We'll attempt a sign-in just to validate credentials, then immediately sign out
-    let userId: string;
-    
-    try {
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    // Use a temporary sign-in just to validate credentials, then immediately sign out
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (authError) {
-        throw authError;
-      }
-      
-      userId = authData.user!.id;
-      
-      // Immediately sign out to prevent any UI flash
-      await supabase.auth.signOut();
-      console.log('✅ Credentials validated and signed out immediately');
-      
-    } catch (error) {
-      console.error('❌ Credential validation failed:', error);
-      throw error;
+    if (authError) {
+      throw authError;
     }
     
-    // Now check if user has 2FA enabled
+    const userId = authData.user!.id;
+    
+    // Immediately sign out to prevent any UI changes
+    await supabase.auth.signOut();
+    
+    return userId;
+  } catch (error) {
+    console.error('❌ Credential validation failed:', error);
+    throw error;
+  }
+};
+
+export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
+  try {
+    console.log('🔍 Validating credentials and checking 2FA for:', email);
+    
+    // Validate credentials first without keeping the user signed in
+    const userId = await validateCredentials(email, password);
+    console.log('✅ Credentials validated for user:', userId);
+    
+    // Check if user has 2FA enabled
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_enabled')
@@ -67,23 +71,13 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     console.log('🛡️ 2FA required:', requiresTwoFactor);
 
     if (requiresTwoFactor) {
-      // Store credentials for later validation during 2FA
+      // Store credentials for later use during 2FA verification
       setPendingAuth({ email, password, userId });
-      return { requiresTwoFactor: true, userId };
     } else {
-      // No 2FA required - sign them in properly now
-      const { data: finalAuthData, error: finalAuthError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      if (finalAuthError) {
-        throw finalAuthError;
-      }
-      
       clearPendingAuth();
-      return { requiresTwoFactor: false, userId };
     }
+    
+    return { requiresTwoFactor, userId };
     
   } catch (error) {
     console.error('2FA check error:', error);
