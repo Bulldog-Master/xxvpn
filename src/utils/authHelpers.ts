@@ -19,6 +19,7 @@ export const cleanupAuthState = () => {
     localStorage.removeItem('authenticated_webauthn');
     localStorage.removeItem('auth_passphrase');
     localStorage.removeItem('webauthn_credentials');
+    localStorage.removeItem('xxvpn_pending_2fa_auth');
     
     // Remove from sessionStorage if in use
     Object.keys(sessionStorage || {}).forEach((key) => {

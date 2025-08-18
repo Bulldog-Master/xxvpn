@@ -34,82 +34,10 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       console.log('📧 Email:', email);
       console.log('🔢 Code:', verificationCode);
       
-      // Sign in first to access profile
-      console.log('🔐 Signing in to access profile...');
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (signInError) {
-        console.error('❌ Sign-in error:', signInError);
-        throw new Error(`Authentication failed: ${signInError.message}`);
-      }
-
-      console.log('✅ Signed in successfully, now getting profile...');
+      // Use the 2FA service to verify and sign in
+      const { verifyTwoFactorAndSignIn } = await import('@/services/twoFactorAuthService');
+      await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      const { data: profiles, error: profileError } = await supabase
-        .from('profiles')
-        .select('totp_secret, totp_enabled')
-        .eq('user_id', signInData.user.id)
-        .maybeSingle();
-
-      if (profileError) {
-        console.error('❌ Profile error:', profileError);
-        throw new Error(`Profile lookup failed: ${profileError.message}`);
-      }
-
-      if (!profiles) {
-        console.error('❌ No profile found for user:', signInData.user.id);
-        throw new Error('User profile not found');
-      }
-
-      if (!profiles.totp_enabled || !profiles.totp_secret) {
-        console.error('❌ 2FA not configured:', { enabled: profiles.totp_enabled, hasSecret: !!profiles.totp_secret });
-        throw new Error('2FA is not properly configured');
-      }
-
-      console.log('🔑 Using TOTP secret:', profiles.totp_secret.substring(0, 10) + '...');
-
-      // Verify the TOTP code
-      const totp = new TOTP({
-        issuer: 'xxVPN',
-        label: email,
-        algorithm: 'SHA1',
-        digits: 6,
-        period: 30,
-        secret: profiles.totp_secret,
-      });
-
-      const currentToken = totp.generate();
-      console.log('🔍 Expected token:', currentToken);
-      console.log('🔍 User token:', verificationCode);
-
-      // Try validation with time windows
-      let validationResult = null;
-      for (let window = 1; window <= 3; window++) {
-        validationResult = totp.validate({ token: verificationCode, window });
-        console.log(`🕒 Window ${window} result:`, validationResult);
-        if (validationResult !== null) break;
-      }
-
-      if (validationResult === null) {
-        throw new Error('Invalid verification code');
-      }
-
-      console.log('✅ TOTP verified! Now updating user metadata...');
-
-      // Clear pending auth FIRST to prevent auth loop
-      localStorage.removeItem('xxvpn_pending_2fa_auth');
-
-      // Mark as 2FA verified
-      await supabase.auth.updateUser({
-        data: {
-          twofa_verified: true,
-          last_2fa_verification: new Date().toISOString()
-        }
-      });
-
       console.log('✅ 2FA verification complete!');
       onSuccess();
     } catch (error: any) {
