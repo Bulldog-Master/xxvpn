@@ -26,8 +26,11 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
   try {
     console.log('🔍 Checking 2FA requirement for:', email);
     
+    // Set flag to prevent AuthContext from setting user during credential check
+    localStorage.setItem('xxvpn_checking_2fa', 'true');
+    
     // Validate credentials by attempting sign in
-    console.log('🔐 Validating credentials...');
+    console.log('🔐 Validating credentials (AuthContext should ignore this)...');
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -35,9 +38,13 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
 
     if (authError) {
       console.error('❌ Auth error:', authError.message);
+      localStorage.removeItem('xxvpn_checking_2fa');
       throw authError;
     }
-    if (!authData.user) throw new Error('Authentication failed');
+    if (!authData.user) {
+      localStorage.removeItem('xxvpn_checking_2fa');
+      throw new Error('Authentication failed');
+    }
 
     const userId = authData.user.id;
     console.log('✅ Credentials valid, user ID:', userId);
@@ -59,9 +66,12 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     console.log('🛡️ 2FA required:', requiresTwoFactor);
 
     if (requiresTwoFactor) {
-      // IMMEDIATELY sign out to prevent dashboard flash (must complete within 300ms)
+      // IMMEDIATELY sign out to prevent dashboard flash
       console.log('🚪 IMMEDIATELY signing out to prevent dashboard flash...');
       await supabase.auth.signOut();
+      
+      // Clear the flag after signing out
+      localStorage.removeItem('xxvpn_checking_2fa');
       
       // Store credentials for later use during 2FA verification
       setPendingAuth({ email, password, userId });
@@ -71,6 +81,8 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
         userId
       };
     } else {
+      // Clear flag for non-2FA users
+      localStorage.removeItem('xxvpn_checking_2fa');
       // No 2FA required - user stays signed in
       console.log('✅ No 2FA required - user is signed in');
       return {
