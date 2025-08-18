@@ -46,32 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    
     console.log('🚀 AuthContext initializing...');
-    
-    // Skip cleanup during 2FA flow to preserve pending auth state
-    const skip2FACleanup = localStorage.getItem('xxvpn_pending_2fa_auth');
-    if (!skip2FACleanup) {
-      // FIRST: Clean up any stale auth state that might cause loops
-      const cleanupStaleState = () => {
-        try {
-          Object.keys(localStorage).forEach((key) => {
-            if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-              const value = localStorage.getItem(key);
-              console.log('🧹 Found auth key:', key, value?.substring(0, 50) + '...');
-              localStorage.removeItem(key);
-            }
-          });
-          console.log('✅ Stale auth state cleaned');
-        } catch (error) {
-          console.error('Cleanup error:', error);
-        }
-      };
-      
-      cleanupStaleState();
-    } else {
-      console.log('🔒 Skipping auth cleanup during 2FA flow');
-    }
     
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -85,14 +60,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
           console.log('👤 User signed in, checking 2FA...', session.user.id);
-          
-          // Check if we're in the middle of a 2FA credential check
-          const checking2FA = localStorage.getItem('xxvpn_checking_2fa');
-          if (checking2FA) {
-            console.log('🔒 2FA credential check in progress - NOT setting user to prevent dashboard flash');
-            setLoading(false);
-            return;
-          }
           
           setSession(session);
           
