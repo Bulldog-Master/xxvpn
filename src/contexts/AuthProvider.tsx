@@ -149,14 +149,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
+  // Ensure authMethods is available even during initialization
   const authMethods = useAuthMethods(user, session, setUser, setSession, setLoading);
 
+  // Always provide a valid context value
   const value = {
     user,
     loading,
     session,
     ...authMethods,
   };
+
+  console.log('🔧 AuthProvider value created:', { user: !!user, loading, session: !!session, authMethods: !!authMethods });
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
