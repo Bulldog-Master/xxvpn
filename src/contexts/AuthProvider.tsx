@@ -95,8 +95,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 fullUserObject: session.user 
               });
               
+              // Only require 2FA if user has it enabled AND hasn't verified in this session
               if (has2FA && !is2FAVerified) {
-                console.log('🔒 Requiring 2FA verification');
+                console.log('🔒 User needs 2FA verification');
+                // Don't sign out - just mark as requiring 2FA
                 setUser({
                   id: session.user.id,
                   email: session.user.email || '',
