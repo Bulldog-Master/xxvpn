@@ -26,7 +26,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
   try {
     console.log('🔍 Checking 2FA requirement for:', email);
     
-    // Validate credentials by attempting sign in
+    // First check if user exists and validate credentials WITHOUT signing in
     console.log('🔐 Validating credentials...');
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
@@ -59,8 +59,8 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     console.log('🛡️ 2FA required:', requiresTwoFactor);
 
     if (requiresTwoFactor) {
-      // ONLY sign out if 2FA is required
-      console.log('🚪 Signing out temporarily for 2FA flow...');
+      // IMMEDIATELY sign out if 2FA is required to prevent dashboard flash
+      console.log('🚪 Signing out immediately for 2FA flow...');
       await supabase.auth.signOut();
       
       // Store credentials for later use during 2FA verification
