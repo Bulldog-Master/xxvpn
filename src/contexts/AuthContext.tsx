@@ -50,23 +50,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     console.log('🚀 AuthContext initializing...');
     
-    // FIRST: Clean up any stale auth state that might cause loops
-    const cleanupStaleState = () => {
-      try {
-        Object.keys(localStorage).forEach((key) => {
-          if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
-            const value = localStorage.getItem(key);
-            console.log('🧹 Found auth key:', key, value?.substring(0, 50) + '...');
-            localStorage.removeItem(key);
-          }
-        });
-        console.log('✅ Stale auth state cleaned');
-      } catch (error) {
-        console.error('Cleanup error:', error);
-      }
-    };
-    
-    cleanupStaleState();
+    // Skip cleanup during 2FA flow to preserve pending auth state
+    const skip2FACleanup = localStorage.getItem('xxvpn_pending_2fa_auth');
+    if (!skip2FACleanup) {
+      // FIRST: Clean up any stale auth state that might cause loops
+      const cleanupStaleState = () => {
+        try {
+          Object.keys(localStorage).forEach((key) => {
+            if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+              const value = localStorage.getItem(key);
+              console.log('🧹 Found auth key:', key, value?.substring(0, 50) + '...');
+              localStorage.removeItem(key);
+            }
+          });
+          console.log('✅ Stale auth state cleaned');
+        } catch (error) {
+          console.error('Cleanup error:', error);
+        }
+      };
+      
+      cleanupStaleState();
+    } else {
+      console.log('🔒 Skipping auth cleanup during 2FA flow');
+    }
     
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
