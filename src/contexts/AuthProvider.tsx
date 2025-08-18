@@ -70,22 +70,69 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('👤 User signed in, processing normally', {
+          console.log('👤 User signed in, checking for 2FA validation flag...', {
             userId: session.user.id,
-            provider: session.user.app_metadata?.provider,
-            userMetadata: session.user.user_metadata
+            provider: session.user.app_metadata?.provider
           });
           
           setSession(session);
           
-           // For now, disable AuthProvider 2FA checking to avoid conflicts
-           // Let the sign-in process handle 2FA directly
-           console.log('✅ Creating normal user - 2FA handled by sign-in flow');
-           
-           // No 2FA needed - create normal user
-           const userData = createUserFromSession(session.user);
-           setUser(userData);
-           setLoading(false);
+          // Check if we need to validate 2FA on this sign-in
+          const shouldValidate2FA = localStorage.getItem('xxvpn_validate_2fa_on_signin');
+          
+          if (shouldValidate2FA) {
+            console.log('🔒 Validating 2FA requirement after sign-in...');
+            localStorage.removeItem('xxvpn_validate_2fa_on_signin');
+            
+            // Check if user has 2FA enabled
+            setTimeout(async () => {
+              try {
+                const { data: profile } = await supabase
+                  .from('profiles')
+                  .select('totp_enabled')
+                  .eq('user_id', session.user.id)
+                  .maybeSingle();
+                
+                const requiresTwoFactor = profile?.totp_enabled || false;
+                console.log('🛡️ 2FA required:', requiresTwoFactor);
+                
+                if (requiresTwoFactor) {
+                  console.log('🔒 2FA required - signing out and setting 2FA state');
+                  // Sign out and set 2FA state
+                  await supabase.auth.signOut();
+                  
+                  const { getPendingAuth } = await import('@/services/twoFactorAuthService');
+                  const pendingAuth = getPendingAuth();
+                  setUser({
+                    id: session.user.id,
+                    email: session.user.email || '',
+                    fullName: '',
+                    subscriptionTier: 'free',
+                    xxCoinBalance: 0,
+                    requiresTwoFactor: true,
+                    pendingPassword: pendingAuth?.password || ''
+                  } as any);
+                } else {
+                  console.log('✅ No 2FA required - creating normal user');
+                  const userData = createUserFromSession(session.user);
+                  setUser(userData);
+                }
+                setLoading(false);
+              } catch (error) {
+                console.error('2FA validation error:', error);
+                const userData = createUserFromSession(session.user);
+                setUser(userData);
+                setLoading(false);
+              }
+            }, 0);
+            return;
+          }
+          
+          // Normal sign-in without 2FA validation
+          console.log('✅ Creating normal user - no 2FA validation needed');
+          const userData = createUserFromSession(session.user);
+          setUser(userData);
+          setLoading(false);
         }
       }
     );

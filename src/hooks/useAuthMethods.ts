@@ -30,52 +30,12 @@ export const useAuthMethods = (
       setUser(null);
       setSession(null);
       
-      // Use the proper 2FA service that handles the complete flow
-      const result = await checkTwoFactorRequirement(email, password);
-      console.log('🔍 2FA check result:', { 
-        requiresTwoFactor: result.requiresTwoFactor, 
-        userId: result.userId,
-        resultKeys: Object.keys(result)
-      });
+      // Use the simplified 2FA service 
+      await checkTwoFactorRequirement(email, password);
       
-      if (result.requiresTwoFactor) {
-        console.log('🔒 2FA required - setting up 2FA state for user ID:', result.userId);
-        // Set user in 2FA pending state
-        setUser({
-          id: result.userId!,
-          email: email,
-          fullName: '',
-          subscriptionTier: 'free',
-          xxCoinBalance: 0,
-          requiresTwoFactor: true,
-          pendingPassword: password
-        } as any);
-        setLoading(false);
-        console.log('🔒 2FA state set - user should see 2FA form');
-        return;
-      }
+      // The AuthProvider will handle the rest of the flow
+      console.log('🔄 Sign-in initiated - AuthProvider will handle 2FA checking');
       
-      // No 2FA needed - user is already signed in from checkTwoFactorRequirement
-      console.log('✅ No 2FA required - completing sign in');
-      
-      // Get the current session
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      console.log('📦 Current session after sign in:', { 
-        hasSession: !!currentSession, 
-        userId: currentSession?.user?.id 
-      });
-      
-      if (currentSession?.user) {
-        const { fetchUserProfile } = await import('@/utils/authHelpers');
-        const userProfile = await fetchUserProfile(currentSession.user);
-        console.log('👤 User profile fetched:', { 
-          id: userProfile.id, 
-          email: userProfile.email 
-        });
-        setUser(userProfile);
-        setSession(currentSession);
-      }
-      setLoading(false);
     } catch (error) {
       console.error('❌ Sign in error:', error);
       setLoading(false);
