@@ -70,13 +70,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          // Check if we're in the middle of a 2FA check to prevent flash
-          const checking2FA = localStorage.getItem('xxvpn_checking_2fa');
-          if (checking2FA) {
-            console.log('⏳ Ignoring auth state change - 2FA check in progress');
-            return;
-          }
-          
           console.log('👤 User signed in, processing normally', {
             userId: session.user.id,
             provider: session.user.app_metadata?.provider,
