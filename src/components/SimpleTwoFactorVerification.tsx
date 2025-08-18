@@ -34,23 +34,71 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       console.log('📧 Email:', email);
       console.log('🔢 Code:', verificationCode);
       
-      // First, get the user's 2FA secret
-      const { data: profiles, error: profileError } = await supabase
-        .from('profiles')
-        .select('totp_secret, totp_enabled')
-        .eq('user_id', '4d0b76fb-aa5b-49c1-aba1-4c5d4ff292b3')
-        .single();
+      // First, get the user's 2FA secret by email lookup
+      console.log('🔍 Looking up user profile...');
+      
+      // Get user ID from email first
+      const { data: { user }, error: getUserError } = await supabase.auth.getUser();
+      if (getUserError || !user) {
+        console.log('⚠️ No current user, trying alternative lookup...');
+        
+        // Alternative: lookup via pending auth
+        const pendingAuth = localStorage.getItem('xxvpn_pending_2fa_auth');
+        if (!pendingAuth) {
+          throw new Error('No user authentication found');
+        }
+        
+        const { userId } = JSON.parse(pendingAuth);
+        console.log('📋 Using pending auth user ID:', userId);
+        
+        const { data: profiles, error: profileError } = await supabase
+          .from('profiles')
+          .select('totp_secret, totp_enabled')
+          .eq('user_id', userId)
+          .maybeSingle();
 
-      if (profileError) {
-        console.error('❌ Profile error:', profileError);
-        throw new Error('Failed to get user profile');
+        if (profileError) {
+          console.error('❌ Profile error:', profileError);
+          throw new Error(`Profile lookup failed: ${profileError.message}`);
+        }
+
+        if (!profiles) {
+          throw new Error('User profile not found');
+        }
+
+        if (!profiles.totp_enabled || !profiles.totp_secret) {
+          throw new Error('2FA is not properly configured');
+        }
+
+        console.log('🔑 Got TOTP secret via pending auth');
+        var userProfile = profiles;
+      } else {
+        console.log('👤 Using current user:', user.id);
+        
+        const { data: profiles, error: profileError } = await supabase
+          .from('profiles')
+          .select('totp_secret, totp_enabled')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (profileError) {
+          console.error('❌ Profile error:', profileError);
+          throw new Error(`Profile lookup failed: ${profileError.message}`);
+        }
+
+        if (!profiles) {
+          throw new Error('User profile not found');
+        }
+
+        if (!profiles.totp_enabled || !profiles.totp_secret) {
+          throw new Error('2FA is not properly configured');
+        }
+
+        console.log('🔑 Got TOTP secret via current user');
+        var userProfile = profiles;
       }
 
-      if (!profiles.totp_enabled || !profiles.totp_secret) {
-        throw new Error('2FA is not properly configured');
-      }
-
-      console.log('🔑 Got TOTP secret:', profiles.totp_secret.substring(0, 10) + '...');
+      console.log('🔑 Using TOTP secret:', userProfile.totp_secret.substring(0, 10) + '...');
 
       // Verify the TOTP code
       const totp = new TOTP({
@@ -59,7 +107,7 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
         algorithm: 'SHA1',
         digits: 6,
         period: 30,
-        secret: profiles.totp_secret,
+        secret: userProfile.totp_secret,
       });
 
       const currentToken = totp.generate();
