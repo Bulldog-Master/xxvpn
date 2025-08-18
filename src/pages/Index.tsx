@@ -11,23 +11,57 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+    console.log('🚀 Index: Starting auth check...');
+    
+    // Get initial session with timeout
+    const initAuth = async () => {
+      try {
+        console.log('🔍 Index: Getting session...');
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('📋 Index: Session result:', { session: !!session, error });
+        
+        if (error) {
+          console.error('❌ Index: Session error:', error);
+        }
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+        
+        console.log('✅ Index: Auth state updated:', { 
+          hasSession: !!session, 
+          hasUser: !!session?.user,
+          userId: session?.user?.id 
+        });
+      } catch (err) {
+        console.error('❌ Index: Auth initialization error:', err);
+        setLoading(false);
+      }
+    };
+
+    // Set a timeout to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      console.log('⏰ Index: Auth timeout - forcing loading to false');
       setLoading(false);
-    });
+    }, 5000);
+
+    initAuth();
 
     // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('🔄 Index: Auth state change:', event, !!session);
+      clearTimeout(timeoutId);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      clearTimeout(timeoutId);
+      subscription.unsubscribe();
+    };
   }, []);
 
   if (loading) {
