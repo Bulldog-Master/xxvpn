@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import VPNDashboard from '@/components/VPNDashboard';
 import AuthPage from '@/components/AuthPage';
-import TwoFactorVerification from '@/components/TwoFactorVerification';
+import SimpleTwoFactorVerification from '@/components/SimpleTwoFactorVerification';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -29,7 +29,7 @@ const Index = () => {
     
     return (
       <div className="min-h-screen bg-background">
-        <TwoFactorVerification 
+        <SimpleTwoFactorVerification 
           email={user.email || ''}
           password={pendingPassword || ''}
           onSuccess={() => {
