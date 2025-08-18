@@ -26,6 +26,9 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
   try {
     console.log('🔍 Checking 2FA requirement for:', email);
     
+    // Set a flag to prevent AuthProvider from reacting during 2FA check
+    localStorage.setItem('xxvpn_checking_2fa', 'true');
+    
     // Validate credentials by attempting sign in
     console.log('🔐 Validating credentials...');
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
@@ -35,9 +38,11 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
 
     if (authError) {
       console.error('❌ Auth error:', authError.message);
+      localStorage.removeItem('xxvpn_checking_2fa');
       throw authError;
     }
     if (!authData.user) {
+      localStorage.removeItem('xxvpn_checking_2fa');
       throw new Error('Authentication failed');
     }
 
@@ -53,6 +58,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
 
     if (profileError) {
       console.error('Profile check error:', profileError);
+      localStorage.removeItem('xxvpn_checking_2fa');
       // Don't sign out - let the user stay signed in if no 2FA
       return { requiresTwoFactor: false, userId };
     }
@@ -68,6 +74,9 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
       // Store credentials for later use during 2FA verification
       setPendingAuth({ email, password, userId });
       
+      // Clear the checking flag
+      localStorage.removeItem('xxvpn_checking_2fa');
+      
       return {
         requiresTwoFactor: true,
         userId
@@ -75,6 +84,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     } else {
       // No 2FA required - user stays signed in
       console.log('✅ No 2FA required - user is signed in');
+      localStorage.removeItem('xxvpn_checking_2fa');
       clearPendingAuth(); // Clean up any stale pending auth
       return {
         requiresTwoFactor: false,
@@ -83,6 +93,7 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
     }
   } catch (error) {
     console.error('2FA check error:', error);
+    localStorage.removeItem('xxvpn_checking_2fa');
     clearPendingAuth();
     throw error;
   }
