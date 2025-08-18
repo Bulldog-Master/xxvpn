@@ -30,31 +30,7 @@ export const useAuthMethods = (
       setUser(null);
       setSession(null);
       
-      // Check credentials and 2FA requirement 
-      const result = await checkTwoFactorRequirement(email, password);
-      console.log('🔍 Auth check result:', { 
-        requiresTwoFactor: result.requiresTwoFactor, 
-        userId: result.userId
-      });
-      
-      if (result.requiresTwoFactor) {
-        console.log('🔒 2FA required - showing 2FA form');
-        // Set user in 2FA pending state WITHOUT any actual auth session
-        setUser({
-          id: result.userId!,
-          email: email,
-          fullName: '',
-          subscriptionTier: 'free',
-          xxCoinBalance: 0,
-          requiresTwoFactor: true,
-          pendingPassword: password
-        } as any);
-        setLoading(false);
-        return;
-      }
-      
-      // No 2FA needed - now sign them in properly for the first time
-      console.log('✅ No 2FA required - signing in now');
+      // Directly attempt sign in - let AuthPage handle 2FA logic
       const authResult = await signInWithEmail(email, password);
       
       if (authResult.user) {
