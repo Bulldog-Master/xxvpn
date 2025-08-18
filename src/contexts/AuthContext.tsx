@@ -46,7 +46,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    if (initialized) return; // Prevent multiple initializations
     
     console.log('🚀 AuthContext initializing...');
     

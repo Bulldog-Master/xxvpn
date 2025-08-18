@@ -34,30 +34,16 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       console.log('📧 Email:', email);
       console.log('🔢 Code:', verificationCode);
       
-      // Get the user ID from pending auth (since user isn't signed in yet)
-      console.log('🔍 Looking up user profile...');
-      
-      const pendingAuth = localStorage.getItem('xxvpn_pending_2fa_auth');
-      let userId = '4d0b76fb-aa5b-49c1-aba1-4c5d4ff292b3'; // Default fallback
-      
-      if (pendingAuth) {
-        const parsed = JSON.parse(pendingAuth);
-        userId = parsed.userId;
-        console.log('📋 Using pending auth user ID:', userId);
-      } else {
-        console.log('⚠️ No pending auth, using default user ID:', userId);
-      }
-      
-      // Since the user isn't signed in yet, we need to sign in first to access the profile
+      // Sign in first to access profile
       console.log('🔐 Signing in to access profile...');
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (authError) {
-        console.error('❌ Auth error:', authError);
-        throw new Error(`Authentication failed: ${authError.message}`);
+      if (signInError) {
+        console.error('❌ Sign-in error:', signInError);
+        throw new Error(`Authentication failed: ${signInError.message}`);
       }
 
       console.log('✅ Signed in successfully, now getting profile...');
@@ -65,7 +51,7 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       const { data: profiles, error: profileError } = await supabase
         .from('profiles')
         .select('totp_secret, totp_enabled')
-        .eq('user_id', userId)
+        .eq('user_id', signInData.user.id)
         .maybeSingle();
 
       if (profileError) {
@@ -74,7 +60,7 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       }
 
       if (!profiles) {
-        console.error('❌ No profile found for user:', userId);
+        console.error('❌ No profile found for user:', signInData.user.id);
         throw new Error('User profile not found');
       }
 
@@ -122,7 +108,6 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       });
 
       console.log('✅ 2FA verification complete!');
-
       onSuccess();
     } catch (error: any) {
       console.error('❌ Simple 2FA error:', error);
