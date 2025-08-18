@@ -37,6 +37,8 @@ const UserProfile = () => {
     const fetchProfileData = async () => {
       if (!user?.id) return;
       
+      console.log('🔍 Fetching profile data for user:', user.id);
+      
       try {
         const { data, error } = await supabase
           .from('profiles')
@@ -46,7 +48,10 @@ const UserProfile = () => {
 
         if (error) throw error;
         
+        console.log('📋 Profile data fetched:', data);
+        
         if (data) {
+          console.log('🛡️ Setting 2FA enabled to:', data.totp_enabled);
           setTwoFactorEnabled(data.totp_enabled || false);
           if (data.display_name) {
             setFullName(data.display_name);
