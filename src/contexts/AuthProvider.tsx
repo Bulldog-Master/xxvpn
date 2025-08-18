@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔄 Auth state change:', event, !!session);
+        console.log('🔄 Auth state change:', { event, hasSession: !!session, userId: session?.user?.id });
         
         if (event === 'SIGNED_OUT' || !session?.user) {
           console.log('👤 User signed out');
@@ -70,7 +70,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('👤 User signed in, checking 2FA...', session.user.id);
+          console.log('👤 User signed in, checking 2FA...', {
+            userId: session.user.id,
+            provider: session.user.app_metadata?.provider,
+            userMetadata: session.user.user_metadata
+          });
           
           setSession(session);
           
