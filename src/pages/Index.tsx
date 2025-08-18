@@ -34,8 +34,8 @@ const Index = () => {
           password={pendingPassword || ''}
           onSuccess={() => {
             console.log('🎉 2FA success callback triggered');
-            // Force a complete page refresh to ensure clean state
-            window.location.href = '/';
+            // The auth state will update automatically through AuthProvider
+            // No need to force a page refresh - let React handle the state change
           }}
           onCancel={() => {
             supabase.auth.signOut();
