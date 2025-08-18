@@ -33,9 +33,8 @@ const Index = () => {
           email={user.email || ''}
           password={pendingPassword || ''}
           onSuccess={() => {
-            console.log('🎉 2FA success callback triggered');
-            // The auth state will update automatically through AuthProvider
-            // No need to force a page refresh - let React handle the state change
+            console.log('🎉 2FA success callback triggered - this should not run due to page reload');
+            // Page reload happens in SimpleTwoFactorVerification after successful 2FA
           }}
           onCancel={() => {
             supabase.auth.signOut();

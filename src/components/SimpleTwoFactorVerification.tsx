@@ -34,16 +34,22 @@ const SimpleTwoFactorVerification = ({ email, password, onSuccess, onCancel }: S
       console.log('📧 Email:', email);
       console.log('🔢 Code:', verificationCode);
       
+      // Clean up any existing auth state first
+      const { cleanupAuthState } = await import('@/utils/authHelpers');
+      cleanupAuthState();
+      
       // Use the 2FA service to verify and sign in
       const { verifyTwoFactorAndSignIn } = await import('@/services/twoFactorAuthService');
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
-      console.log('✅ 2FA verification complete!');
-      onSuccess();
+      console.log('✅ 2FA verification complete! Forcing page reload...');
+      
+      // Force a complete page reload to ensure clean auth state
+      window.location.href = '/';
+      
     } catch (error: any) {
       console.error('❌ Simple 2FA error:', error);
       setError(error.message || 'Failed to verify 2FA code. Please try again.');
-    } finally {
       setIsVerifying(false);
     }
   };
