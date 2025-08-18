@@ -78,48 +78,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           setSession(session);
           
-          // Simple 2FA check - only for email provider
-          const isEmailProvider = session.user.app_metadata?.provider === 'email';
-          console.log('📧 Is email provider:', isEmailProvider);
-          
-          if (isEmailProvider) {
-            try {
-              const { data: profile } = await supabase
-                .from('profiles')
-                .select('totp_enabled')
-                .eq('user_id', session.user.id)
-                .maybeSingle();
-              
-              const has2FA = profile?.totp_enabled === true;
-              const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-              console.log('🛡️ 2FA status:', { 
-                has2FA, 
-                is2FAVerified, 
-                userMetadata: session.user.user_metadata,
-                fullUserObject: session.user 
-              });
-              
-              // Only require 2FA if user has it enabled AND hasn't verified in this session
-              if (has2FA && !is2FAVerified) {
-                console.log('🔒 User needs 2FA verification');
-                // Don't sign out - just mark as requiring 2FA
-                setUser({
-                  id: session.user.id,
-                  email: session.user.email || '',
-                  fullName: session.user.user_metadata?.full_name || '',
-                  subscriptionTier: 'free',
-                  xxCoinBalance: 0,
-                  requiresTwoFactor: true,
-                  pendingPassword: localStorage.getItem('xxvpn_pending_2fa_auth') ? 
-                    JSON.parse(localStorage.getItem('xxvpn_pending_2fa_auth')!).password : ''
-                } as any);
-                setLoading(false);
-                return;
-              }
-            } catch (error) {
-              console.error('2FA check error:', error);
-            }
-           }
+           // For now, disable AuthProvider 2FA checking to avoid conflicts
+           // Let the sign-in process handle 2FA directly
+           console.log('✅ Creating normal user - 2FA handled by sign-in flow');
            
            // No 2FA needed - create normal user
            const userData = createUserFromSession(session.user);
@@ -134,38 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (session?.user) {
         setSession(session);
         
-        // Check 2FA for email providers on initial load too
-        const isEmailProvider = session.user.app_metadata?.provider === 'email';
-        
-        if (isEmailProvider) {
-          try {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('totp_enabled')
-              .eq('user_id', session.user.id)
-              .maybeSingle();
-            
-            const has2FA = profile?.totp_enabled === true;
-            const is2FAVerified = session.user.user_metadata?.twofa_verified === true;
-            
-            if (has2FA && !is2FAVerified) {
-              setUser({
-                id: session.user.id,
-                email: session.user.email || '',
-                fullName: session.user.user_metadata?.full_name || '',
-                subscriptionTier: 'free',
-                xxCoinBalance: 0,
-                requiresTwoFactor: true
-              } as any);
-              setLoading(false);
-              return;
-            }
-          } catch (error) {
-            console.error('Initial 2FA check error:', error);
-          }
-        }
-        
-        // No 2FA needed - create normal user
+        // Create normal user - 2FA handled by sign-in flow
         const userData = createUserFromSession(session.user);
         setUser(userData);
       }
