@@ -26,8 +26,12 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
   try {
     console.log('🔍 Checking 2FA requirement for:', email);
     
-    // CRITICAL: Validate credentials but IMMEDIATELY sign out to prevent dashboard flash
-    console.log('🔐 Validating credentials (temporary sign-in)...');
+    // CRITICAL: Set pending auth BEFORE sign-in to prevent dashboard flash
+    const tempUserId = 'temp-' + Math.random().toString(36).substr(2, 9);
+    setPendingAuth({ email, password, userId: tempUserId });
+    
+    // Validate credentials (this will trigger AuthContext but it will be ignored)
+    console.log('🔐 Validating credentials (AuthContext will ignore this)...');
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -35,12 +39,19 @@ export const checkTwoFactorRequirement = async (email: string, password: string)
 
     if (authError) {
       console.error('❌ Auth error:', authError.message);
+      clearPendingAuth(); // Clear on error
       throw authError;
     }
-    if (!authData.user) throw new Error('Authentication failed');
+    if (!authData.user) {
+      clearPendingAuth(); // Clear on error
+      throw new Error('Authentication failed');
+    }
 
     const userId = authData.user.id;
     console.log('✅ Credentials valid, user ID:', userId);
+    
+    // Update pending auth with real user ID
+    setPendingAuth({ email, password, userId });
 
     // Check if user has 2FA enabled BEFORE signing out
     const { data: profile, error: profileError } = await supabase
