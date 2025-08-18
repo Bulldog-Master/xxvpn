@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase';
 import type { User, MockSession } from '@/types/auth';
 import { cleanupAuthState } from '@/utils/authHelpers';
 

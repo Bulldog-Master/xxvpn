@@ -1,59 +1,47 @@
-import React from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import VPNDashboard from '@/components/VPNDashboard';
-import AuthPage from '@/components/AuthPage';
-import SimpleTwoFactorVerification from '@/components/SimpleTwoFactorVerification';
-import { supabase } from '@/integrations/supabase/client';
+import { useState, useEffect } from 'react';
+import { Session, User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+import Auth from '@/components/Auth';
+import Dashboard from '@/components/Dashboard';
 import { Loader2 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 const Index = () => {
-  const { user, loading } = useAuth();
-  const { t } = useTranslation();
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">{t('common.loading')}</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // Check if user requires 2FA verification
-  if (user && (user as any).requiresTwoFactor) {
-    const pendingPassword = (user as any).pendingPassword;
-    console.log('🔒 2FA required - password available:', !!pendingPassword);
-    
-    return (
-      <div className="min-h-screen bg-background">
-        <SimpleTwoFactorVerification 
-          email={user.email || ''}
-          password={pendingPassword || ''}
-          onSuccess={() => {
-            console.log('🎉 2FA success callback triggered');
-            // Force a complete page refresh to ensure clean state
-            window.location.href = '/';
-          }}
-          onCancel={() => {
-            supabase.auth.signOut();
-          }}
-        />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background">
-        <AuthPage />
-      </div>
-    );
-  }
-
-  return <VPNDashboard />;
+  return user ? <Dashboard /> : <Auth />;
 };
 
 export default Index;

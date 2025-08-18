@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { User } from '@/types/auth';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase';
 import {
   signInWithEmail,
   signUpWithEmail,
