@@ -9,7 +9,6 @@ import { Shield, AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { verifyTwoFactorAndSignIn } from '@/services/twoFactorAuthService';
-import { useAuth } from '@/contexts/AuthContext';
 
 interface TwoFactorVerificationProps {
   email: string;
