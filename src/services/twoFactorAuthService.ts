@@ -49,35 +49,23 @@ export const verifyTwoFactorAndSignIn = async (
   totpCode: string
 ): Promise<void> => {
   try {
-    console.log('🔐 Starting 2FA verification...');
-    console.log('📧 Email:', email);
-    console.log('🔢 TOTP Code provided:', totpCode);
-    console.log('🔢 TOTP Code length:', totpCode?.length);
-    console.log('🔢 TOTP Code type:', typeof totpCode);
-    
-    // Get pending auth from localStorage
-    const pendingAuth = getPendingAuth();
-    
-    if (!pendingAuth || pendingAuth.email !== email) {
-      throw new Error('No pending authentication found. Please try signing in again.');
-    }
+    console.log('🔐 Starting 2FA verification and sign-in...');
     
     // First, validate credentials by attempting sign-in
-    console.log('🔍 Validating credentials...');
+    console.log('🔍 Validating credentials for:', email);
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: pendingAuth.email,
-      password: pendingAuth.password,
+      email,
+      password,
     });
 
     if (authError) {
-      clearPendingAuth();
       throw authError;
     }
     
     const userId = authData.user!.id;
-    console.log('✅ Credentials validated, user ID:', userId);
+    console.log('✅ Credentials validated, user signed in');
     
-    // Get the user's TOTP secret
+    // Check if user actually has 2FA enabled
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_secret, totp_enabled')
@@ -85,8 +73,12 @@ export const verifyTwoFactorAndSignIn = async (
       .single();
 
     if (profileError) throw profileError;
+    
+    // If no 2FA is enabled, we're done - user is already signed in
     if (!profile.totp_enabled || !profile.totp_secret) {
-      throw new Error('2FA is not properly configured for this account');
+      console.log('✅ No 2FA configured - sign in complete');
+      clearPendingAuth();
+      return;
     }
 
     // Verify the TOTP code BEFORE signing in

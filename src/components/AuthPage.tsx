@@ -243,23 +243,10 @@ const AuthPage = () => {
           description: 'Check your email for the sign-in link.',
         });
       } else {
-        // First check if 2FA is required before signing in
-        try {
-          const result = await checkTwoFactorRequirement(email, password);
-          
-          if (result.requiresTwoFactor) {
-            console.log('🔒 2FA required - showing 2FA form');
-            setShowTwoFactorVerification(true);
-            setPendingCredentials({ email, password });
-            return;
-          }
-          
-          // No 2FA needed - proceed with normal sign in
-          await signIn(email, password);
-        } catch (error: any) {
-          // If checkTwoFactorRequirement fails, try direct sign in
-          await signIn(email, password);
-        }
+        // Always show 2FA form first to avoid any auth cycles
+        console.log('🔒 Showing 2FA form for credentials validation');
+        setShowTwoFactorVerification(true);
+        setPendingCredentials({ email, password });
       }
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
