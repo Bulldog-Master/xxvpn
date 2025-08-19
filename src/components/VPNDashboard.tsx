@@ -69,7 +69,7 @@ const VPNDashboard = () => {
   const { user, logout, updateUser } = useAuth();
   const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
-  const { subscribed, subscription_tier, is_trial, trial_end } = useSubscription();
+  const { subscribed, subscription_tier, is_trial, trial_end, hasAccess } = useSubscription();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
   const [selectedServer, setSelectedServer] = useState('Auto');
@@ -119,17 +119,50 @@ const VPNDashboard = () => {
   };
 
   const connectVPN = (mode: VPNMode) => {
+    // Check if user is authenticated
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to use VPN features.",
+        variant: "destructive",
+      });
+      setActiveTab('dashboard'); // Keep them on dashboard to see login prompt
+      return;
+    }
+
+    // Check subscription access for the requested mode
+    const requiredTier = mode === 'ultra-secure' ? 'business' : 'personal';
+    if (!hasAccess(requiredTier)) {
+      toast({
+        title: "Subscription Required",
+        description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a subscription. Start your free trial to access this feature.`,
+        variant: "destructive",
+      });
+      setActiveTab('payments');
+      return;
+    }
+
+    // Proceed with connection if user has access
     setConnectionStatus('connecting');
     setVpnMode(mode);
+    
     // Simulate connection
     setTimeout(() => {
       setConnectionStatus('connected');
+      toast({
+        title: "Connected",
+        description: `Successfully connected to ${mode} mode.`,
+      });
     }, 2000);
   };
 
   const disconnectVPN = () => {
     setConnectionStatus('disconnected');
     setVpnMode('off');
+    toast({
+      title: "Disconnected",
+      description: "VPN connection has been terminated.",
+    });
   };
 
   const statusColors = {
@@ -376,7 +409,11 @@ const VPNDashboard = () => {
                 ) : connectionStatus === 'connecting' ? (
                   <Wifi className="w-8 h-8 text-warning" />
                 ) : (
-                  <Shield className="w-8 h-8 text-muted-foreground" />
+                  !user || !subscribed ? (
+                    <Lock className="w-8 h-8 text-muted-foreground" />
+                  ) : (
+                    <Shield className="w-8 h-8 text-muted-foreground" />
+                  )
                 )}
               </div>
               {connectionStatus === 'connected' && (
@@ -384,22 +421,30 @@ const VPNDashboard = () => {
               )}
             </div>
             <CardTitle className={`text-2xl ${statusColors[connectionStatus]}`}>
-              {statusText[connectionStatus]}
+              {!user || !subscribed ? 'Subscription Required' : statusText[connectionStatus]}
             </CardTitle>
             <CardDescription className="space-y-2">
               <div>
-                {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
-                  t('dashboard.connectionStatus.ultraFastActive')
-                }
-                {connectionStatus === 'connected' && vpnMode === 'secure' && 
-                  t('dashboard.connectionStatus.secureActive')
-                }
-                {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
-                  t('dashboard.connectionStatus.ultraSecureActive')
-                }
-                {connectionStatus === 'disconnected' && 
-                  t('dashboard.connectionStatus.notProtected')
-                }
+                {!user ? (
+                  'Sign in to access VPN features'
+                ) : !subscribed ? (
+                  'Start your free trial to connect to VPN servers'
+                ) : (
+                  <>
+                    {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
+                      t('dashboard.connectionStatus.ultraFastActive')
+                    }
+                    {connectionStatus === 'connected' && vpnMode === 'secure' && 
+                      t('dashboard.connectionStatus.secureActive')
+                    }
+                    {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
+                      t('dashboard.connectionStatus.ultraSecureActive')
+                    }
+                    {connectionStatus === 'disconnected' && 
+                      t('dashboard.connectionStatus.notProtected')
+                    }
+                  </>
+                )}
               </div>
               {connectionStatus === 'connected' && (
                 <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -658,13 +703,14 @@ const VPNDashboard = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Quick Connect Button */}
-        {connectionStatus === 'disconnected' && activeTab === 'dashboard' && (
+        {/* Quick Connect Button - Only show for subscribed users */}
+        {connectionStatus === 'disconnected' && activeTab === 'dashboard' && user && subscribed && (
           <div className="fixed bottom-6 right-6">
             <Button 
               size="lg" 
               className="rounded-full w-16 h-16 gradient-primary shadow-quantum"
               onClick={() => connectVPN('secure')}
+              title="Quick connect to Secure mode"
             >
               <Shield className="w-6 h-6" />
             </Button>
