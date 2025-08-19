@@ -93,24 +93,18 @@ export const useAuthMethods = (
   };
 
   const signOut = async () => {
+    // Clear state immediately for instant UI feedback
+    setUser(null);
+    setSession(null);
+    
+    // Sign out from Supabase in background
     try {
-      setLoading(true);
-      
-      // Clear state immediately for smooth UX
-      setUser(null);
-      setSession(null);
-      
-      // Sign out from Supabase
       await signOutService();
-      
-      setLoading(false);
-      
     } catch (error) {
-      // Clear state even if sign out fails
-      setUser(null);
-      setSession(null);
-      setLoading(false);
+      // Ignore sign out errors - state is already cleared
     }
+    
+    setLoading(false);
   };
 
   const resetPasswordMethod = async (email: string) => {

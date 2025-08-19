@@ -177,8 +177,6 @@ export const signInWithWebAuthnService = async (credential: any): Promise<{ user
 };
 
 export const signOutService = async () => {
-  cleanupAuthState();
-  
   await supabase.auth.signOut({ scope: 'global' });
 };
 
