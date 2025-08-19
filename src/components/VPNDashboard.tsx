@@ -63,6 +63,7 @@ import SubscriptionStatus from './SubscriptionStatus';
 import { useSubscription } from '@/hooks/useSubscription';
 import { ConnectionHistory } from './ConnectionHistory';
 import { RealTimeStatus } from './RealTimeStatus';
+import { KillSwitchSettings } from './KillSwitchSettings';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -590,7 +591,7 @@ const VPNDashboard = () => {
           </TabsContent>
 
           <TabsContent value="network" className="space-y-4">
-            <NetworkStatus />
+            <KillSwitchSettings />
           </TabsContent>
 
           <TabsContent value="apps" className="space-y-4">
