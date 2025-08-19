@@ -64,6 +64,7 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { ConnectionHistory } from './ConnectionHistory';
 import { RealTimeStatus } from './RealTimeStatus';
 import { KillSwitchSettings } from './KillSwitchSettings';
+import { CustomDNS } from './CustomDNS';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -590,8 +591,9 @@ const VPNDashboard = () => {
             />
           </TabsContent>
 
-          <TabsContent value="network" className="space-y-4">
+          <TabsContent value="network" className="space-y-6">
             <KillSwitchSettings />
+            <CustomDNS />
           </TabsContent>
 
           <TabsContent value="apps" className="space-y-4">
