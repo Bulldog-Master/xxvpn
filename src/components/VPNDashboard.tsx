@@ -134,8 +134,8 @@ const VPNDashboard = () => {
     const requiredTier = mode === 'ultra-secure' ? 'business' : 'personal';
     if (!hasAccess(requiredTier)) {
       toast({
-        title: "Demo Subscription Required",
-        description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a demo subscription. Try our demo to access this feature.`,
+        title: "Subscription Required",
+        description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a subscription. Start your free trial to access this feature.`,
         variant: "destructive",
       });
       setActiveTab('payments');
@@ -421,14 +421,14 @@ const VPNDashboard = () => {
               )}
             </div>
             <CardTitle className={`text-2xl ${statusColors[connectionStatus]}`}>
-              {!user || !subscribed ? 'Demo Subscription Required' : statusText[connectionStatus]}
+              {!user || !subscribed ? 'Subscription Required' : statusText[connectionStatus]}
             </CardTitle>
             <CardDescription className="space-y-2">
               <div>
                 {!user ? (
                   'Sign in to access VPN features'
                 ) : !subscribed ? (
-                  'Try our demo subscription to connect to VPN servers'
+                  'Start your free trial to connect to VPN servers'
                 ) : (
                   <>
                     {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
@@ -464,8 +464,8 @@ const VPNDashboard = () => {
             feature="Ultra-Fast"
             onUpgrade={() => setActiveTab('payments')}
           >
-            <Card className={`bg-card/80 backdrop-blur-sm border-border transition-all ${hasAccess('personal') ? 'hover:quantum-glow cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                  onClick={() => hasAccess('personal') && (vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN())}>
+            <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
+                  onClick={() => vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN()}>
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
@@ -501,8 +501,8 @@ const VPNDashboard = () => {
             feature="Secure"
             onUpgrade={() => setActiveTab('payments')}
           >
-            <Card className={`bg-card/80 backdrop-blur-sm border-border transition-all ${hasAccess('personal') ? 'hover:quantum-glow cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                  onClick={() => hasAccess('personal') && (vpnMode !== 'secure' ? connectVPN('secure') : disconnectVPN())}>
+            <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
+                  onClick={() => vpnMode !== 'secure' ? connectVPN('secure') : disconnectVPN()}>
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
@@ -538,8 +538,8 @@ const VPNDashboard = () => {
             feature="Ultra-Secure"
             onUpgrade={() => setActiveTab('payments')}
           >
-            <Card className={`bg-card/80 backdrop-blur-sm border-border transition-all ${hasAccess('business') ? 'hover:neural-glow cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                  onClick={() => hasAccess('business') && (vpnMode !== 'ultra-secure' ? connectVPN('ultra-secure') : disconnectVPN())}>
+            <Card className="bg-card/80 backdrop-blur-sm border-border hover:neural-glow transition-all cursor-pointer"
+                  onClick={() => vpnMode !== 'ultra-secure' ? connectVPN('ultra-secure') : disconnectVPN()}>
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-gradient-neural flex items-center justify-center">

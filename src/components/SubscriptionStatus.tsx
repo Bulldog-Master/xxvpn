@@ -62,10 +62,10 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
         </CardHeader>
         <CardContent className="text-center space-y-3">
           <p className="text-sm text-muted-foreground">
-            Try our demo subscription to unlock all VPN modes and premium features
+            Start your 7-day free trial to unlock all VPN modes and premium features
           </p>
           <Button onClick={onManageSubscription} className="w-full">
-            Try Demo Subscription
+            View Plans
           </Button>
         </CardContent>
       </Card>

@@ -1,1 +1,0 @@
-DELETE FROM subscribers WHERE email = 'bulldog64@hotmail.ca';
