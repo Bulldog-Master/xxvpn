@@ -436,97 +436,101 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-lg p-8 h-96 overflow-hidden">
-                    {/* World Map with Regional Colors */}
-                    <svg viewBox="0 0 100 60" className="absolute inset-0 w-full h-full">
-                      {/* North America - Blue */}
-                      <path 
-                        d="M10 20 L25 15 L30 25 L25 35 L15 40 L8 30 Z" 
-                        fill="#3B82F6" 
-                        fillOpacity="0.8"
-                        stroke="#ffffff"
-                        strokeWidth="0.3"
-                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                    {/* SVG World Map with proper continent outlines */}
+                    <svg viewBox="0 0 1000 500" className="absolute inset-0 w-full h-full">
+                      {/* North America */}
+                      <path
+                        d="M120 120 Q180 100 250 130 L280 150 Q320 140 350 160 L380 180 Q400 200 380 240 L350 280 Q320 300 280 290 L250 280 Q200 270 160 250 L120 220 Q100 180 120 120 Z"
+                        fill="rgba(59, 130, 246, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-blue-400 transition-colors cursor-pointer"
                       />
                       
-                      {/* Europe - Purple */}
-                      <path 
-                        d="M45 18 L58 15 L65 25 L60 32 L50 30 L45 25 Z" 
-                        fill="#8B5CF6" 
-                        fillOpacity="0.8"
-                        stroke="#ffffff"
-                        strokeWidth="0.3"
-                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      {/* Europe */}
+                      <path
+                        d="M420 140 Q460 130 500 140 L530 150 Q550 160 540 180 L520 200 Q500 210 480 200 L450 190 Q430 180 420 160 Z"
+                        fill="rgba(139, 92, 246, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-purple-400 transition-colors cursor-pointer"
                       />
                       
-                      {/* Asia - Cyan */}
-                      <path 
-                        d="M65 20 L85 18 L90 35 L80 40 L70 35 L65 25 Z" 
-                        fill="#06B6D4" 
-                        fillOpacity="0.8"
-                        stroke="#ffffff"
-                        strokeWidth="0.3"
-                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      {/* Asia */}
+                      <path
+                        d="M550 120 Q620 110 700 130 L750 150 Q800 140 820 160 L840 180 Q850 200 830 220 L800 240 Q750 250 700 240 L650 230 Q600 220 570 200 L550 180 Q540 150 550 120 Z"
+                        fill="rgba(6, 182, 212, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-cyan-400 transition-colors cursor-pointer"
                       />
                       
-                      {/* Australia - Green */}
-                      <path 
-                        d="M85 45 L95 43 L98 50 L90 52 L85 48 Z" 
-                        fill="#10B981" 
-                        fillOpacity="0.8"
-                        stroke="#ffffff"
-                        strokeWidth="0.3"
-                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      {/* South America */}
+                      <path
+                        d="M250 300 Q280 290 300 310 L320 340 Q330 380 320 420 L300 450 Q280 460 260 450 L240 430 Q230 390 240 350 L250 320 Z"
+                        fill="rgba(245, 158, 11, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-amber-400 transition-colors cursor-pointer"
                       />
                       
-                      {/* South America - Orange */}
-                      <path 
-                        d="M28 45 L35 40 L40 55 L32 58 L25 50 Z" 
-                        fill="#F59E0B" 
-                        fillOpacity="0.8"
-                        stroke="#ffffff"
-                        strokeWidth="0.3"
-                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      {/* Africa */}
+                      <path
+                        d="M450 220 Q480 210 510 230 L530 260 Q540 300 530 340 L510 380 Q480 390 450 380 L420 360 Q410 320 420 280 L430 240 Z"
+                        fill="rgba(34, 197, 94, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-green-400 transition-colors cursor-pointer"
+                      />
+                      
+                      {/* Australia */}
+                      <path
+                        d="M720 350 Q760 340 800 360 L820 380 Q830 400 820 420 L800 430 Q760 440 720 430 L700 410 Q690 390 700 370 Z"
+                        fill="rgba(168, 85, 247, 0.8)"
+                        stroke="rgba(255, 255, 255, 0.6)"
+                        strokeWidth="2"
+                        className="hover:fill-violet-400 transition-colors cursor-pointer"
                       />
                     </svg>
 
                     {/* Regional Percentage Labels */}
-                    <div className="absolute top-8 left-16 text-white font-bold text-xl">
+                    <div className="absolute top-16 left-16 text-white font-bold text-xl z-10">
                       22%
                       <div className="text-xs font-normal opacity-80">NORTH AMERICA</div>
                     </div>
                     
-                    <div className="absolute top-6 left-1/2 text-white font-bold text-xl">
+                    <div className="absolute top-12 left-1/2 transform -translate-x-1/2 text-white font-bold text-xl z-10">
                       42%
                       <div className="text-xs font-normal opacity-80">EUROPE</div>
                     </div>
                     
-                    <div className="absolute top-8 right-16 text-white font-bold text-xl">
+                    <div className="absolute top-16 right-16 text-white font-bold text-xl z-10">
                       28%
                       <div className="text-xs font-normal opacity-80">ASIA</div>
                     </div>
                     
-                    <div className="absolute bottom-16 right-12 text-white font-bold text-lg">
+                    <div className="absolute bottom-20 right-20 text-white font-bold text-lg z-10">
                       5%
                       <div className="text-xs font-normal opacity-80">AUSTRALIA</div>
                     </div>
                     
-                    <div className="absolute bottom-12 left-20 text-white font-bold text-lg">
+                    <div className="absolute bottom-16 left-20 text-white font-bold text-lg z-10">
                       3%
                       <div className="text-xs font-normal opacity-80">SOUTH AMERICA</div>
                     </div>
 
-                    {/* Animated Server Nodes */}
+                    {/* Animated Server Nodes with proper positioning */}
                     {[
-                      { x: 25, y: 35, status: 'excellent', users: '1.2K' },
-                      { x: 18, y: 40, status: 'good', users: '980' },
-                      { x: 50, y: 32, status: 'good', users: '1.8K' },
-                      { x: 52, y: 34, status: 'excellent', users: '1.4K' },
-                      { x: 85, y: 42, status: 'excellent', users: '1.7K' },
-                      { x: 88, y: 78, status: 'excellent', users: '420' },
+                      { x: 25, y: 35, status: 'excellent', users: '1.2K', country: 'US East' },
+                      { x: 18, y: 40, status: 'good', users: '980', country: 'US West' },
+                      { x: 50, y: 32, status: 'good', users: '1.8K', country: 'Germany' },
+                      { x: 52, y: 34, status: 'excellent', users: '1.4K', country: 'UK' },
+                      { x: 75, y: 35, status: 'excellent', users: '1.7K', country: 'Japan' },
+                      { x: 80, y: 85, status: 'excellent', users: '420', country: 'Australia' },
                     ].map((server, index) => (
                       <div
                         key={index}
-                        className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                        className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20"
                         style={{ 
                           left: `${server.x}%`, 
                           top: `${server.y}%` 
@@ -545,9 +549,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                                style={{ animationDelay: `${Math.random() * 2}s` }}></div>
                           
                           {/* Tooltip */}
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity z-30">
                             <div className="bg-black/90 backdrop-blur text-white rounded-lg p-3 shadow-2xl min-w-32 border border-white/20">
-                              <div className="font-bold text-sm">{server.users} users</div>
+                              <div className="font-bold text-sm">{server.country}</div>
+                              <div className="text-xs opacity-80">{server.users} users</div>
                               <div className="text-xs opacity-80">{server.status}</div>
                             </div>
                           </div>
