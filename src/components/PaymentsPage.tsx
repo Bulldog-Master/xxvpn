@@ -20,7 +20,7 @@ interface PaymentOrder {
 const PaymentsPage = () => {
   const { t } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
-  const { startTrial } = useSubscription();
+  const { startTrial, checkSubscription } = useSubscription();
 
   const handlePlanSelect = (plan: SubscriptionPlan) => {
     setSelectedPlan(plan);
@@ -28,10 +28,24 @@ const PaymentsPage = () => {
 
   const handleStartDemo = async () => {
     try {
-      await startTrial('personal-premium');
-      // Demo started successfully - user now has access to all 3 tiers
+      console.log('Starting demo trial...');
+      const result = await startTrial('personal-premium');
+      console.log('Demo trial result:', result);
+      
+      if (result.success) {
+        // Force refresh subscription status
+        await checkSubscription();
+        // Demo started successfully - show success message
+        alert('Demo started! You now have access to all VPN features for 7 days.');
+        // Redirect to dashboard to see changes
+        window.location.href = '/';
+      } else {
+        console.error('Demo trial failed:', result.error);
+        alert('Failed to start demo. Please try again.');
+      }
     } catch (error) {
       console.error('Failed to start demo:', error);
+      alert('Failed to start demo. Please make sure you are logged in.');
     }
   };
 
