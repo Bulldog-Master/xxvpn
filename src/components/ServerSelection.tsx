@@ -18,12 +18,13 @@ import {
   Filter,
   Star,
   Settings,
-  AlertCircle
+  AlertCircle,
+  Users,
+  Server
 } from 'lucide-react';
 import { vpnServers, VPNServer, getAllRegions, getServersByRegion, getLoadColor, getLoadLevel } from '@/data/vpnServers';
 import { useServerTesting } from '@/hooks/useServerTesting';
 import { cn } from '@/lib/utils';
-import { ServerActivityMap } from './ServerActivityMap';
 
 interface ServerSelectionProps {
   selectedServer: string;
@@ -319,7 +320,231 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
           </div>
 
           <TabsContent value="activity">
-            <ServerActivityMap />
+            <div className="space-y-6">
+              {/* Global Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users className="h-4 w-4 text-blue-500" />
+                      <span className="text-sm font-medium">Total Users</span>
+                    </div>
+                    <div className="text-2xl font-bold">12,910</div>
+                    <div className="text-xs text-muted-foreground">Online now</div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Globe className="h-4 w-4 text-green-500" />
+                      <span className="text-sm font-medium">Active Servers</span>
+                    </div>
+                    <div className="text-2xl font-bold">12</div>
+                    <div className="text-xs text-muted-foreground">Worldwide</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Activity className="h-4 w-4 text-purple-500" />
+                      <span className="text-sm font-medium">Avg Load</span>
+                    </div>
+                    <div className="text-2xl font-bold">56%</div>
+                    <div className="text-xs text-muted-foreground">Across all servers</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Zap className="h-4 w-4 text-orange-500" />
+                      <span className="text-sm font-medium">Total Bandwidth</span>
+                    </div>
+                    <div className="text-2xl font-bold">24.3 Gbps</div>
+                    <div className="text-xs text-muted-foreground">Peak capacity</div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Interactive World Map */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Globe className="h-5 w-5" />
+                    Global Network Activity
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-lg p-8 h-96 overflow-hidden">
+                    {/* World Map with Regional Colors */}
+                    <svg viewBox="0 0 100 60" className="absolute inset-0 w-full h-full">
+                      {/* North America - Blue */}
+                      <path 
+                        d="M10 20 L25 15 L30 25 L25 35 L15 40 L8 30 Z" 
+                        fill="#3B82F6" 
+                        fillOpacity="0.8"
+                        stroke="#ffffff"
+                        strokeWidth="0.3"
+                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      />
+                      
+                      {/* Europe - Purple */}
+                      <path 
+                        d="M45 18 L58 15 L65 25 L60 32 L50 30 L45 25 Z" 
+                        fill="#8B5CF6" 
+                        fillOpacity="0.8"
+                        stroke="#ffffff"
+                        strokeWidth="0.3"
+                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      />
+                      
+                      {/* Asia - Cyan */}
+                      <path 
+                        d="M65 20 L85 18 L90 35 L80 40 L70 35 L65 25 Z" 
+                        fill="#06B6D4" 
+                        fillOpacity="0.8"
+                        stroke="#ffffff"
+                        strokeWidth="0.3"
+                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      />
+                      
+                      {/* Australia - Green */}
+                      <path 
+                        d="M85 45 L95 43 L98 50 L90 52 L85 48 Z" 
+                        fill="#10B981" 
+                        fillOpacity="0.8"
+                        stroke="#ffffff"
+                        strokeWidth="0.3"
+                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      />
+                      
+                      {/* South America - Orange */}
+                      <path 
+                        d="M28 45 L35 40 L40 55 L32 58 L25 50 Z" 
+                        fill="#F59E0B" 
+                        fillOpacity="0.8"
+                        stroke="#ffffff"
+                        strokeWidth="0.3"
+                        className="hover:fill-opacity-100 transition-all cursor-pointer"
+                      />
+                    </svg>
+
+                    {/* Regional Percentage Labels */}
+                    <div className="absolute top-8 left-16 text-white font-bold text-xl">
+                      22%
+                      <div className="text-xs font-normal opacity-80">NORTH AMERICA</div>
+                    </div>
+                    
+                    <div className="absolute top-6 left-1/2 text-white font-bold text-xl">
+                      42%
+                      <div className="text-xs font-normal opacity-80">EUROPE</div>
+                    </div>
+                    
+                    <div className="absolute top-8 right-16 text-white font-bold text-xl">
+                      28%
+                      <div className="text-xs font-normal opacity-80">ASIA</div>
+                    </div>
+                    
+                    <div className="absolute bottom-16 right-12 text-white font-bold text-lg">
+                      5%
+                      <div className="text-xs font-normal opacity-80">AUSTRALIA</div>
+                    </div>
+                    
+                    <div className="absolute bottom-12 left-20 text-white font-bold text-lg">
+                      3%
+                      <div className="text-xs font-normal opacity-80">SOUTH AMERICA</div>
+                    </div>
+
+                    {/* Animated Server Nodes */}
+                    {[
+                      { x: 25, y: 35, status: 'excellent', users: '1.2K' },
+                      { x: 18, y: 40, status: 'good', users: '980' },
+                      { x: 50, y: 32, status: 'good', users: '1.8K' },
+                      { x: 52, y: 34, status: 'excellent', users: '1.4K' },
+                      { x: 85, y: 42, status: 'excellent', users: '1.7K' },
+                      { x: 88, y: 78, status: 'excellent', users: '420' },
+                    ].map((server, index) => (
+                      <div
+                        key={index}
+                        className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                        style={{ 
+                          left: `${server.x}%`, 
+                          top: `${server.y}%` 
+                        }}
+                      >
+                        <div className="relative group cursor-pointer">
+                          <div className={`w-4 h-4 rounded-full ${
+                            server.status === 'excellent' ? 'bg-green-500' : 
+                            server.status === 'good' ? 'bg-yellow-500' : 'bg-red-500'
+                          } animate-pulse border-2 border-white shadow-lg`}>
+                            <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping"></div>
+                          </div>
+                          
+                          {/* Activity Ring */}
+                          <div className="absolute inset-0 rounded-full border-2 border-white opacity-60 animate-pulse" 
+                               style={{ animationDelay: `${Math.random() * 2}s` }}></div>
+                          
+                          {/* Tooltip */}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                            <div className="bg-black/90 backdrop-blur text-white rounded-lg p-3 shadow-2xl min-w-32 border border-white/20">
+                              <div className="font-bold text-sm">{server.users} users</div>
+                              <div className="text-xs opacity-80">{server.status}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Title Overlay */}
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                      <h2 className="text-white text-2xl font-bold tracking-wide">GLOBAL NETWORK ACTIVITY</h2>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Regional Statistics */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Regional Distribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {[
+                      { name: 'Europe', percentage: 42, color: '#8B5CF6', servers: 4, users: 5280 },
+                      { name: 'Asia', percentage: 28, color: '#06B6D4', servers: 3, users: 3950 },
+                      { name: 'North America', percentage: 22, color: '#3B82F6', servers: 3, users: 2880 },
+                      { name: 'Australia', percentage: 5, color: '#10B981', servers: 1, users: 420 },
+                      { name: 'South America', percentage: 3, color: '#F59E0B', servers: 1, users: 380 },
+                    ].map((region) => (
+                      <div key={region.name} className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div 
+                              className="w-4 h-4 rounded-full" 
+                              style={{ backgroundColor: region.color }}
+                            ></div>
+                            <div>
+                              <div className="font-medium">{region.name}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {region.servers} servers • {region.users.toLocaleString()} users
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold text-lg">{region.percentage}%</div>
+                            <div className="text-xs text-muted-foreground">of total traffic</div>
+                          </div>
+                        </div>
+                        <Progress value={region.percentage} className="h-2" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="map">
