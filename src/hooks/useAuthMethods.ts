@@ -24,7 +24,6 @@ export const useAuthMethods = (
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      console.log('🔑 Starting basic sign in process for:', email);
       
       // Clear any existing user state first
       setUser(null);
@@ -34,13 +33,12 @@ export const useAuthMethods = (
       const authResult = await signInWithEmail(email, password);
       
       if (authResult.user) {
-        console.log('✅ User signed in successfully');
+        // User signed in successfully
       }
       
       setLoading(false);
       
     } catch (error) {
-      console.error('❌ Sign in error:', error);
       setLoading(false);
       throw error;
     }
@@ -97,7 +95,6 @@ export const useAuthMethods = (
   const signOut = async () => {
     try {
       setLoading(true);
-      console.log('🚪 Signing out...');
       
       // Clear state immediately for smooth UX
       setUser(null);
@@ -107,10 +104,8 @@ export const useAuthMethods = (
       await signOutService();
       
       setLoading(false);
-      console.log('✅ Signed out successfully');
       
     } catch (error) {
-      console.error('Sign out error:', error);
       // Clear state even if sign out fails
       setUser(null);
       setSession(null);
@@ -130,7 +125,7 @@ export const useAuthMethods = (
         const updatedUser = { ...user, ...updates };
         setUser(updatedUser);
       } catch (error) {
-        console.error('Error updating user profile:', error);
+        // Error updating user profile - fail silently
       }
     }
   };

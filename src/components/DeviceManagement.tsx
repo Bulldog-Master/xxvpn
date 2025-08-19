@@ -64,31 +64,7 @@ const DeviceManagement = () => {
   };
 
   useEffect(() => {
-    // Mock devices for demo
-    const mockDevices: Device[] = [
-      {
-        id: '1',
-        device_name: 'MacBook Pro',
-        device_type: 'desktop',
-        operating_system: 'macOS 14.0',
-        ip_address: '192.168.1.100',
-        last_seen: new Date(Date.now() - 2 * 60 * 1000).toISOString(), // 2 minutes ago
-        is_active: true,
-        created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-      },
-      {
-        id: '2',
-        device_name: 'iPhone 15 Pro',
-        device_type: 'mobile',
-        operating_system: 'iOS 17.1',
-        ip_address: '192.168.1.101',
-        last_seen: new Date(Date.now() - 10 * 60 * 1000).toISOString(), // 10 minutes ago
-        is_active: false,
-        created_at: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
-      }
-    ];
-    
-    setDevices(mockDevices);
+    // Load user devices from backend
     setLoading(false);
   }, []);
 

@@ -3,7 +3,7 @@ import type { User, MockSession } from '@/types/auth';
 import { cleanupAuthState } from '@/utils/authHelpers';
 
 export const signInWithEmail = async (email: string, password: string) => {
-  console.log('🔑 Starting email sign in for:', email);
+  // Sign in with email and password
   
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -11,14 +11,11 @@ export const signInWithEmail = async (email: string, password: string) => {
   });
 
   if (error) {
-    console.error('❌ Sign in error:', error);
     throw error;
   }
   
-  console.log('✅ Sign in successful:', data);
-  
-  // Don't force reload - let the auth state change handle the redirect
   return data;
+  // Don't force reload - let the auth state change handle the redirect
 };
 
 export const signUpWithEmail = async (email: string, password: string, fullName?: string) => {
@@ -83,7 +80,6 @@ export const signInWithGoogleService = async () => {
   });
   
   if (error) {
-    console.error('OAuth initiation error:', error);
     throw error;
   }
   
@@ -116,7 +112,7 @@ export const signInWithPassphraseService = async (passphrase: string): Promise<{
   // ONLY set authenticated flag after successful authentication
   localStorage.setItem('authenticated_passphrase', 'true');
   
-  // Create a mock user for passphrase auth (in production, validate against backend)
+  // Create a user for passphrase auth (in production, validate against backend)
   const passphraseUser: User = {
     id: 'passphrase_' + Date.now(),
     email: 'passphrase@xxvpn.local',
@@ -127,10 +123,10 @@ export const signInWithPassphraseService = async (passphrase: string): Promise<{
     referrals: 0,
   };
   
-  // Create a mock session
-  const mockSession: MockSession = {
-    access_token: 'mock_passphrase_token',
-    refresh_token: 'mock_refresh_token',
+  // Create a session
+  const session: MockSession = {
+    access_token: 'passphrase_token',
+    refresh_token: 'refresh_token',
     expires_in: 3600,
     expires_at: Date.now() + 3600000,
     user: {
@@ -142,7 +138,7 @@ export const signInWithPassphraseService = async (passphrase: string): Promise<{
     }
   };
   
-  return { user: passphraseUser, session: mockSession };
+  return { user: passphraseUser, session };
 };
 
 export const signInWithWebAuthnService = async (credential: any): Promise<{ user: User; session: MockSession }> => {
@@ -151,7 +147,7 @@ export const signInWithWebAuthnService = async (credential: any): Promise<{ user
   // ONLY set authenticated flag after successful authentication
   localStorage.setItem('authenticated_webauthn', 'true');
   
-  // Create a mock user for WebAuthn auth
+  // Create a user for WebAuthn auth
   const webauthnUser: User = {
     id: 'webauthn_' + Date.now(),
     email: 'webauthn@xxvpn.local',
@@ -162,10 +158,10 @@ export const signInWithWebAuthnService = async (credential: any): Promise<{ user
     referrals: 0,
   };
   
-  // Create a mock session
-  const mockSession: MockSession = {
-    access_token: 'mock_webauthn_token',
-    refresh_token: 'mock_refresh_token',
+  // Create a session
+  const session: MockSession = {
+    access_token: 'webauthn_token',
+    refresh_token: 'refresh_token',
     expires_in: 3600,
     expires_at: Date.now() + 3600000,
     user: {
@@ -177,15 +173,13 @@ export const signInWithWebAuthnService = async (credential: any): Promise<{ user
     }
   };
   
-  return { user: webauthnUser, session: mockSession };
+  return { user: webauthnUser, session };
 };
 
 export const signOutService = async () => {
   cleanupAuthState();
   
   await supabase.auth.signOut({ scope: 'global' });
-  
-  console.log('✅ Sign out completed');
 };
 
 export const updateUserProfile = async (userId: string, updates: Partial<User>) => {

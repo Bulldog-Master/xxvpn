@@ -77,10 +77,10 @@ const VPNDashboard = () => {
   const [editingName, setEditingName] = useState(false);
   const [tempName, setTempName] = useState(user?.fullName || '');
   
-  // Mock data for referrals and total users
-  const userReferrals = user?.referrals || 12;
+  // User data
+  const userReferrals = user?.referrals || 0;
   const totalUsers = 847592;
-  const userReferralLink = `https://xxvpn.app/ref/${user?.id || 'user123'}`;
+  const userReferralLink = `https://xxvpn.app/ref/${user?.id || 'unknown'}`;
 
   // Sync tempName with user's fullName when user changes
   React.useEffect(() => {
@@ -109,7 +109,6 @@ const VPNDashboard = () => {
         }
       }, 1000);
     } catch (error) {
-      console.error('Logout error:', error);
       // Force redirect even if logout fails
       window.location.href = '/';
     }

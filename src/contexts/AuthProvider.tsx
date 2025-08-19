@@ -57,28 +57,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    console.log('🚀 AuthContext initializing...');
+    // Initialize auth context
     
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔄 Auth state change:', { event, hasSession: !!session, userId: session?.user?.id });
+        // Handle auth state changes
         
         if (event === 'SIGNED_OUT' || !session?.user) {
-          console.log('👤 User signed out');
+          // User signed out
           setSession(null);
           setUser(null);
           setLoading(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || session?.user) {
-          console.log('👤 User signed in normally', {
-            userId: session.user.id,
-            provider: session.user.app_metadata?.provider
-          });
+          // User signed in
           
           setSession(session);
           
-          // Create normal user - 2FA is handled before sign-in now
-          console.log('✅ Creating normal user - 2FA already validated');
+          // Create user from session
           const userData = createUserFromSession(session.user);
           setUser(userData);
           setLoading(false);
@@ -97,8 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       setLoading(false);
-    }).catch((error) => {
-      console.error('Initial session check error:', error);
+    }).catch(() => {
       setLoading(false);
     });
 
@@ -117,13 +112,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     ...authMethods,
   };
-
-  console.log('🔧 AuthProvider providing context:', { 
-    user: !!user, 
-    loading, 
-    session: !!session, 
-    hasAuthMethods: !!authMethods 
-  });
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };
