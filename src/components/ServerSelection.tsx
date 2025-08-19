@@ -23,6 +23,7 @@ import {
 import { vpnServers, VPNServer, getAllRegions, getServersByRegion, getLoadColor, getLoadLevel } from '@/data/vpnServers';
 import { useServerTesting } from '@/hooks/useServerTesting';
 import { cn } from '@/lib/utils';
+import { ServerActivityMap } from './ServerActivityMap';
 
 interface ServerSelectionProps {
   selectedServer: string;
@@ -275,7 +276,8 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="activity">Activity Map</TabsTrigger>
             <TabsTrigger value="map">Map View</TabsTrigger>
             <TabsTrigger value="list">List View</TabsTrigger>
             <TabsTrigger value="recommended">Recommended</TabsTrigger>
@@ -315,6 +317,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               Premium Only
             </Button>
           </div>
+
+          <TabsContent value="activity">
+            <ServerActivityMap />
+          </TabsContent>
 
           <TabsContent value="map">
             <WorldMap />
