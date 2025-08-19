@@ -65,6 +65,7 @@ import { ConnectionHistory } from './ConnectionHistory';
 import { RealTimeStatus } from './RealTimeStatus';
 import { KillSwitchSettings } from './KillSwitchSettings';
 import { CustomDNS } from './CustomDNS';
+import { BandwidthMonitoring } from './BandwidthMonitoring';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -606,6 +607,7 @@ const VPNDashboard = () => {
 
           <TabsContent value="devices" className="space-y-4">
             <DeviceManagement />
+            <BandwidthMonitoring />
           </TabsContent>
 
           <TabsContent value="payments" className="space-y-4">
