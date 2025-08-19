@@ -243,7 +243,7 @@ const AuthPage = () => {
           description: 'Check your email for the sign-in link.',
         });
       } else {
-        // Try regular sign in first
+        // Simple email/password sign in
         await signIn(email, password);
       }
     } catch (error: any) {

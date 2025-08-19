@@ -22,27 +22,7 @@ const Index = () => {
     );
   }
 
-  // Check if user requires 2FA verification
-  if (user && (user as any).requiresTwoFactor) {
-    const pendingPassword = (user as any).pendingPassword;
-    console.log('🔒 2FA required - password available:', !!pendingPassword);
-    
-    return (
-      <div className="min-h-screen bg-background">
-        <SimpleTwoFactorVerification 
-          email={user.email || ''}
-          password={pendingPassword || ''}
-          onSuccess={() => {
-            console.log('🎉 2FA success callback triggered - this should not run due to page reload');
-            // Page reload happens in SimpleTwoFactorVerification after successful 2FA
-          }}
-          onCancel={() => {
-            supabase.auth.signOut();
-          }}
-        />
-      </div>
-    );
-  }
+  // 2FA is disabled - proceed with normal flow
 
   if (!user) {
     return (

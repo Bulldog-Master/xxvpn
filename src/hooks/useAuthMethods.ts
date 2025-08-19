@@ -24,13 +24,13 @@ export const useAuthMethods = (
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      console.log('🔑 Starting sign in process for:', email);
+      console.log('🔑 Starting basic sign in process for:', email);
       
       // Clear any existing user state first
       setUser(null);
       setSession(null);
       
-      // Directly attempt sign in - let AuthPage handle 2FA logic
+      // Simple email/password sign in without 2FA
       const authResult = await signInWithEmail(email, password);
       
       if (authResult.user) {
