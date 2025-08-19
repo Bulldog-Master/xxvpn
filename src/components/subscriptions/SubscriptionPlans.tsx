@@ -5,6 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, Crown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 export interface SubscriptionPlan {
   id: string;
@@ -26,6 +29,9 @@ interface SubscriptionPlansProps {
 
 const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProps) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const { subscription_tier, is_trial, subscribed, startTrial, loading } = useSubscription();
 
   const personalPlans: SubscriptionPlan[] = [
     {
@@ -132,6 +138,58 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
     return plan.price / 100;
   };
 
+  const handleStartTrial = async (plan: SubscriptionPlan) => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to start your free trial.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (subscribed && subscription_tier === plan.id) {
+      toast({
+        title: "Already Subscribed",
+        description: `You already have an active ${is_trial ? 'trial' : 'subscription'} for this plan.`,
+      });
+      return;
+    }
+
+    try {
+      const result = await startTrial(plan.id);
+      if (result.success) {
+        toast({
+          title: "Trial Started!",
+          description: `Your 7-day free trial for ${plan.name} has started. Enjoy full access to all VPN tiers!`,
+        });
+        onPlanSelect(plan);
+      } else {
+        throw result.error;
+      }
+    } catch (error) {
+      console.error('Error starting trial:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start trial. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getButtonText = (plan: SubscriptionPlan) => {
+    if (loading) return 'Loading...';
+    if (subscription_tier === plan.id && subscribed) {
+      return is_trial ? 'Active Trial' : 'Active Plan';
+    }
+    if (selectedPlan?.id === plan.id) return 'Selected';
+    return 'Start Free Trial';
+  };
+
+  const isCurrentPlan = (plan: SubscriptionPlan) => {
+    return subscription_tier === plan.id && subscribed;
+  };
+
   const renderPlanCards = (plans: SubscriptionPlan[]) => (
     <div className="grid md:grid-cols-3 gap-4">
       {plans.map((plan) => (
@@ -189,11 +247,16 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             </ul>
 
             <Button
-              variant={selectedPlan?.id === plan.id ? "default" : "outline"}
+              variant={isCurrentPlan(plan) ? "default" : "outline"}
               className="w-full"
               size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleStartTrial(plan);
+              }}
+              disabled={loading || isCurrentPlan(plan)}
             >
-              {selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan'}
+              {getButtonText(plan)}
             </Button>
           </CardContent>
         </Card>
