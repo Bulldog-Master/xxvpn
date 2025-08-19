@@ -61,6 +61,8 @@ import LanguageSelector from './LanguageSelector';
 import SubscriptionGate from './SubscriptionGate';
 import SubscriptionStatus from './SubscriptionStatus';
 import { useSubscription } from '@/hooks/useSubscription';
+import { ConnectionHistory } from './ConnectionHistory';
+import { RealTimeStatus } from './RealTimeStatus';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -573,109 +575,11 @@ const VPNDashboard = () => {
         {/* Subscription Status */}
         <SubscriptionStatus onManageSubscription={() => setActiveTab('payments')} />
 
-            {/* Additional Features - Sub Tabs */}
-            <Tabs defaultValue="stats" className="space-y-4">
-              <TabsList className="grid w-full grid-cols-3 bg-muted/30">
-                <TabsTrigger value="stats">{t('dashboard.statistics.title')}</TabsTrigger>
-                <TabsTrigger value="usage">{t('dashboard.tabs.usage')}</TabsTrigger>
-                <TabsTrigger value="history">{t('dashboard.tabs.history')}</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="stats" className="space-y-4">
-                <div className="grid md:grid-cols-3 gap-4">
-                  <Card className="bg-card/80 backdrop-blur-sm">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.dataTransferred')}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-primary">2.4 GB</div>
-                      <div className="text-xs text-muted-foreground">↗ 1.2 GB ↙ 1.2 GB</div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-card/80 backdrop-blur-sm">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.sessionTime')}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-success">2h 34m</div>
-                      <div className="text-xs text-muted-foreground">{t('dashboard.statistics.currentSession')}</div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-card/80 backdrop-blur-sm">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">{t('dashboard.statistics.networkLatency')}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-warning">42ms</div>
-                      <div className="text-xs text-muted-foreground">{t('dashboard.statistics.averagePing')}</div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="usage" className="space-y-4">
-                <Card className="bg-card/80 backdrop-blur-sm">
-                  <CardHeader>
-                    <CardTitle>Today's Usage</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm">Ultra-fast Mode</span>
-                            <span className="text-sm font-medium">1h 15m</span>
-                          </div>
-                          <Progress value={50} className="h-2" />
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm">Secure Mode</span>
-                            <span className="text-sm font-medium">45m</span>
-                          </div>
-                          <Progress value={30} className="h-2" />
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span className="text-sm">Ultra Secure Mode</span>
-                            <span className="text-sm font-medium">34m</span>
-                          </div>
-                          <Progress value={20} className="h-2" />
-                        </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="history" className="space-y-4">
-                <Card className="bg-card/80 backdrop-blur-sm">
-                  <CardHeader>
-                    <CardTitle>Recent Sessions</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {[
-                        { time: '2h ago', mode: 'Fast', duration: '1h 23m', server: 'US East' },
-                        { time: '5h ago', mode: 'Privacy', duration: '45m', server: 'Switzerland' },
-                        { time: 'Yesterday', mode: 'Fast', duration: '3h 12m', server: 'Singapore' }
-                      ].map((session, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 rounded-lg border bg-muted/20">
-                          <div>
-                            <div className="font-medium">{session.mode} Mode</div>
-                            <div className="text-sm text-muted-foreground">{session.time}</div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm font-medium">{session.duration}</div>
-                            <div className="text-xs text-muted-foreground">{session.server}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            {/* Real-time Status and Connection History */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              <RealTimeStatus />
+              <ConnectionHistory />
+            </div>
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
