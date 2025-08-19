@@ -8,7 +8,6 @@ import { CreditCard, Download, HelpCircle, Shield, User, Smartphone, Play } from
 import PaymentMethodCard from './payments/PaymentMethodCard';
 import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
 import { useSubscription } from '@/hooks/useSubscription';
-import { useAuth } from '@/hooks/useAuth';
 
 interface PaymentOrder {
   id: string;
@@ -22,42 +21,31 @@ const PaymentsPage = () => {
   const { t } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
   const { startTrial, checkSubscription } = useSubscription();
-  const { user } = useAuth();
 
   const handlePlanSelect = (plan: SubscriptionPlan) => {
     setSelectedPlan(plan);
   };
 
   const handleStartDemo = async () => {
-    console.log('Demo button clicked!');
-    console.log('Current user:', user);
-    
-    if (!user) {
-      alert('You need to be logged in to start a demo. Please sign in first.');
-      return;
-    }
-    
     try {
-      console.log('Starting demo trial for user:', user.email);
+      console.log('Starting demo trial...');
       const result = await startTrial('personal-premium');
       console.log('Demo trial result:', result);
       
       if (result.success) {
-        console.log('Demo successful, refreshing subscription...');
         // Force refresh subscription status
         await checkSubscription();
-        alert('🎉 Demo activated! You now have access to all VPN features for 7 days. Redirecting to dashboard...');
-        // Small delay then redirect
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
+        // Demo started successfully - show success message
+        alert('Demo started! You now have access to all VPN features for 7 days.');
+        // Redirect to dashboard to see changes
+        window.location.href = '/';
       } else {
         console.error('Demo trial failed:', result.error);
-        alert('❌ Failed to start demo: ' + (result.error?.message || 'Unknown error'));
+        alert('Failed to start demo. Please try again.');
       }
     } catch (error) {
       console.error('Failed to start demo:', error);
-      alert('❌ Error starting demo: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      alert('Failed to start demo. Please make sure you are logged in.');
     }
   };
 
