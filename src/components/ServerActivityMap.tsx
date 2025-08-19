@@ -153,7 +153,6 @@ export const ServerActivityMap: React.FC = () => {
             </Card>
           </div>
 
-          {/* Interactive World Map */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -165,20 +164,82 @@ export const ServerActivityMap: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="relative bg-slate-900 rounded-lg p-8 h-96 overflow-hidden">
-                {/* Stylized World Map Background */}
-                <div className="absolute inset-0 opacity-20">
-                  <svg viewBox="0 0 100 60" className="w-full h-full">
-                    {/* Simplified continent shapes */}
-                    <path d="M15 25 Q20 20 30 25 Q35 30 30 35 Q25 40 15 35 Q10 30 15 25" fill={regionStats[2].color} fillOpacity="0.6" />
-                    <path d="M45 20 Q55 15 65 20 Q70 25 65 30 Q60 35 50 32 Q45 25 45 20" fill={regionStats[0].color} fillOpacity="0.6" />
-                    <path d="M70 25 Q85 20 95 30 Q90 40 80 42 Q75 35 70 25" fill={regionStats[1].color} fillOpacity="0.6" />
-                    <path d="M85 70 Q95 65 100 75 Q95 85 85 80 Q80 75 85 70" fill={regionStats[3].color} fillOpacity="0.6" />
-                    <path d="M30 65 Q40 60 45 70 Q40 80 30 75 Q25 70 30 65" fill={regionStats[4].color} fillOpacity="0.6" />
-                  </svg>
+              <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-lg p-8 h-96 overflow-hidden">
+                {/* World Map with Regional Colors */}
+                <svg viewBox="0 0 100 60" className="absolute inset-0 w-full h-full">
+                  {/* North America - Blue */}
+                  <path 
+                    d="M10 20 L25 15 L30 25 L25 35 L15 40 L8 30 Z" 
+                    fill="#3B82F6" 
+                    fillOpacity="0.7"
+                    className="hover:fillOpacity-0.9 transition-all cursor-pointer"
+                    onClick={() => setSelectedRegion(selectedRegion === 'North America' ? null : 'North America')}
+                  />
+                  
+                  {/* Europe - Purple */}
+                  <path 
+                    d="M45 18 L58 15 L65 25 L60 32 L50 30 L45 25 Z" 
+                    fill="#8B5CF6" 
+                    fillOpacity="0.7"
+                    className="hover:fillOpacity-0.9 transition-all cursor-pointer"
+                    onClick={() => setSelectedRegion(selectedRegion === 'Europe' ? null : 'Europe')}
+                  />
+                  
+                  {/* Asia - Cyan */}
+                  <path 
+                    d="M65 20 L85 18 L90 35 L80 40 L70 35 L65 25 Z" 
+                    fill="#06B6D4" 
+                    fillOpacity="0.7"
+                    className="hover:fillOpacity-0.9 transition-all cursor-pointer"
+                    onClick={() => setSelectedRegion(selectedRegion === 'Asia' ? null : 'Asia')}
+                  />
+                  
+                  {/* Australia - Green */}
+                  <path 
+                    d="M85 45 L95 43 L98 50 L90 52 L85 48 Z" 
+                    fill="#10B981" 
+                    fillOpacity="0.7"
+                    className="hover:fillOpacity-0.9 transition-all cursor-pointer"
+                    onClick={() => setSelectedRegion(selectedRegion === 'Australia' ? null : 'Australia')}
+                  />
+                  
+                  {/* South America - Orange */}
+                  <path 
+                    d="M28 45 L35 40 L40 55 L32 58 L25 50 Z" 
+                    fill="#F59E0B" 
+                    fillOpacity="0.7"
+                    className="hover:fillOpacity-0.9 transition-all cursor-pointer"
+                    onClick={() => setSelectedRegion(selectedRegion === 'South America' ? null : 'South America')}
+                  />
+                </svg>
+
+                {/* Regional Percentage Labels */}
+                <div className="absolute top-8 left-16 text-white font-bold text-xl">
+                  22%
+                  <div className="text-xs font-normal opacity-80">NORTH AMERICA</div>
+                </div>
+                
+                <div className="absolute top-6 left-1/2 text-white font-bold text-xl">
+                  42%
+                  <div className="text-xs font-normal opacity-80">EUROPE</div>
+                </div>
+                
+                <div className="absolute top-8 right-16 text-white font-bold text-xl">
+                  28%
+                  <div className="text-xs font-normal opacity-80">ASIA</div>
+                </div>
+                
+                <div className="absolute bottom-16 right-12 text-white font-bold text-lg">
+                  5%
+                  <div className="text-xs font-normal opacity-80">AUSTRALIA</div>
+                </div>
+                
+                <div className="absolute bottom-12 left-20 text-white font-bold text-lg">
+                  3%
+                  <div className="text-xs font-normal opacity-80">SOUTH AMERICA</div>
                 </div>
 
-                {/* Server Nodes */}
+                {/* Animated Server Nodes */}
                 {filteredServers.map((server) => (
                   <div
                     key={server.id}
@@ -190,38 +251,45 @@ export const ServerActivityMap: React.FC = () => {
                     onMouseEnter={() => setHoveredServer(server.id)}
                     onMouseLeave={() => setHoveredServer(null)}
                   >
-                    {/* Server Node */}
-                    <div className={`w-4 h-4 rounded-full ${getStatusColor(server.status)} relative`}>
-                      <div className="absolute inset-0 rounded-full animate-ping opacity-30 bg-current"></div>
+                    {/* Pulsing Server Node */}
+                    <div className="relative">
+                      <div className={`w-3 h-3 rounded-full ${getStatusColor(server.status)} animate-pulse`}>
+                        <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping"></div>
+                      </div>
+                      
+                      {/* Activity Ring */}
+                      <div className="absolute inset-0 rounded-full border-2 border-white opacity-60 animate-pulse" 
+                           style={{ animationDelay: `${Math.random() * 2}s` }}></div>
                     </div>
 
-                    {/* Server Info Tooltip */}
+                    {/* Enhanced Tooltip */}
                     {hoveredServer === server.id && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-10">
-                        <div className="bg-card border rounded-lg p-3 shadow-lg min-w-48">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-lg">{server.flag}</span>
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 z-20 animate-fade-in">
+                        <div className="bg-black/90 backdrop-blur text-white rounded-lg p-4 shadow-2xl min-w-56 border border-white/20">
+                          <div className="flex items-center gap-3 mb-3">
+                            <span className="text-2xl">{server.flag}</span>
                             <div>
-                              <div className="font-medium">{server.city}, {server.country}</div>
-                              <div className="text-xs text-muted-foreground">{server.region}</div>
+                              <div className="font-bold text-lg">{server.city}</div>
+                              <div className="text-sm opacity-80">{server.country} • {server.region}</div>
                             </div>
                           </div>
-                          <div className="space-y-1 text-sm">
-                            <div className="flex justify-between">
-                              <span>Users:</span>
-                              <span className="font-medium">{server.users.toLocaleString()}</span>
+                          
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div className="bg-white/10 rounded p-2">
+                              <div className="opacity-70">Active Users</div>
+                              <div className="font-bold text-lg text-blue-400">{server.users.toLocaleString()}</div>
                             </div>
-                            <div className="flex justify-between">
-                              <span>Load:</span>
-                              <span className={`font-medium ${getLoadColor(server.load)}`}>{server.load}%</span>
+                            <div className="bg-white/10 rounded p-2">
+                              <div className="opacity-70">Server Load</div>
+                              <div className={`font-bold text-lg ${getLoadColor(server.load)}`}>{server.load}%</div>
                             </div>
-                            <div className="flex justify-between">
-                              <span>Ping:</span>
-                              <span className="font-medium">{server.ping}ms</span>
+                            <div className="bg-white/10 rounded p-2">
+                              <div className="opacity-70">Latency</div>
+                              <div className="font-bold text-lg text-green-400">{server.ping}ms</div>
                             </div>
-                            <div className="flex justify-between">
-                              <span>Bandwidth:</span>
-                              <span className="font-medium">{server.bandwidth}</span>
+                            <div className="bg-white/10 rounded p-2">
+                              <div className="opacity-70">Bandwidth</div>
+                              <div className="font-bold text-lg text-purple-400">{server.bandwidth}</div>
                             </div>
                           </div>
                         </div>
@@ -230,49 +298,9 @@ export const ServerActivityMap: React.FC = () => {
                   </div>
                 ))}
 
-                {/* Regional Activity Labels */}
-                <div className="absolute top-4 left-4 space-y-2">
-                  {regionStats.map((region) => (
-                    <div 
-                      key={region.name}
-                      className={`flex items-center gap-2 px-3 py-1 rounded-full bg-card/90 border cursor-pointer transition-all hover:scale-105 ${
-                        selectedRegion === region.name ? 'ring-2 ring-primary' : ''
-                      }`}
-                      onClick={() => setSelectedRegion(selectedRegion === region.name ? null : region.name)}
-                    >
-                      <div 
-                        className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: region.color }}
-                      ></div>
-                      <span className="text-sm font-medium">{region.name}</span>
-                      <Badge variant="secondary" className="text-xs">
-                        {region.percentage}%
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Connection Quality Legend */}
-                <div className="absolute bottom-4 left-4 bg-card/90 rounded-lg p-3 border">
-                  <div className="text-sm font-medium mb-2">Connection Quality</div>
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                      <span>Excellent (&lt;20ms)</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                      <span>Good (20-50ms)</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 rounded-full bg-orange-500"></div>
-                      <span>Fair (50-100ms)</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                      <span>Poor (&gt;100ms)</span>
-                    </div>
-                  </div>
+                {/* Title Overlay */}
+                <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                  <h2 className="text-white text-2xl font-bold tracking-wide">GLOBAL NETWORK ACTIVITY</h2>
                 </div>
               </div>
             </CardContent>
