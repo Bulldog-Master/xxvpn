@@ -103,6 +103,7 @@ const PaymentsPage = () => {
                 <div className="grid lg:grid-cols-2 gap-6">
                   {/* Quick Payment Options */}
                   <PaymentMethodCard selectedPlan={{
+                    id: selectedPlan.id,
                     name: selectedPlan.name,
                     price: selectedPlan.price,
                     currency: selectedPlan.currency,
