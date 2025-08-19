@@ -436,105 +436,92 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-lg h-96 overflow-hidden border border-slate-700">
-                    {/* Embedded World Map SVG with styled continents */}
-                    <svg 
-                      viewBox="0 0 1000 500" 
-                      className="absolute inset-0 w-full h-full"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* World map background */}
-                      <rect width="1000" height="500" fill="transparent"/>
-                      
-                      {/* Simplified continent outlines - recognizable shapes */}
+                    {/* Simple CSS-based World Map using positioned blocks */}
+                    <div className="absolute inset-0 flex items-center justify-center">
                       
                       {/* North America */}
-                      <g fill="rgba(59, 130, 246, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-blue-500/80 transition-colors">
-                        {/* USA/Canada outline */}
-                        <path d="M50 150 Q100 120 180 140 Q220 130 280 150 Q320 145 350 160 Q380 170 400 190 Q420 210 410 240 Q395 270 370 290 Q340 310 300 300 Q260 295 220 285 Q180 275 140 260 Q100 245 70 220 Q40 195 45 170 Q50 150 50 150 Z"/>
-                        {/* Alaska */}
-                        <path d="M20 180 Q40 170 60 175 Q80 180 85 200 Q90 220 80 235 Q70 250 50 245 Q30 240 25 220 Q20 200 20 180 Z"/>
-                        {/* Mexico */}
-                        <path d="M200 280 Q240 275 280 285 Q300 295 295 315 Q290 335 270 340 Q250 345 230 340 Q210 335 200 315 Q195 295 200 280 Z"/>
-                      </g>
-
-                      {/* South America */}
-                      <g fill="rgba(245, 158, 11, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-amber-500/80 transition-colors">
-                        <path d="M260 320 Q280 315 300 325 Q320 340 325 370 Q330 400 325 430 Q320 460 300 480 Q280 495 260 490 Q240 485 230 465 Q220 445 225 415 Q230 385 235 355 Q240 325 260 320 Z"/>
-                      </g>
+                      <div className="absolute w-24 h-20 bg-blue-500/60 rounded-2xl border-2 border-white/60 hover:bg-blue-500/80 transition-colors"
+                           style={{ left: '8%', top: '25%', transform: 'rotate(-15deg)' }}>
+                        <div className="absolute top-1 left-1 text-white text-xs font-bold">22%</div>
+                        <div className="absolute bottom-1 right-1 text-white text-xs">N.AMERICA</div>
+                      </div>
 
                       {/* Europe */}
-                      <g fill="rgba(139, 92, 246, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-purple-500/80 transition-colors">
-                        <path d="M450 140 Q480 135 510 145 Q540 155 560 170 Q570 185 565 200 Q560 215 545 225 Q530 235 515 230 Q500 225 485 215 Q470 205 460 190 Q450 175 450 160 Q450 145 450 140 Z"/>
-                      </g>
-
-                      {/* Africa */}
-                      <g fill="rgba(34, 197, 94, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-green-500/80 transition-colors">
-                        <path d="M480 230 Q510 225 535 240 Q560 260 570 290 Q580 320 575 350 Q570 380 560 410 Q550 440 535 460 Q520 475 500 470 Q480 465 465 450 Q450 435 445 410 Q440 385 445 360 Q450 335 455 310 Q460 285 465 260 Q470 235 480 230 Z"/>
-                      </g>
+                      <div className="absolute w-16 h-12 bg-purple-500/60 rounded-xl border-2 border-white/60 hover:bg-purple-500/80 transition-colors"
+                           style={{ left: '45%', top: '20%' }}>
+                        <div className="absolute top-0 left-1 text-white text-xs font-bold">42%</div>
+                        <div className="absolute bottom-0 right-1 text-white text-xs">EUROPE</div>
+                      </div>
 
                       {/* Asia */}
-                      <g fill="rgba(6, 182, 212, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-cyan-500/80 transition-colors">
-                        {/* Main Asia */}
-                        <path d="M580 130 Q620 125 670 135 Q720 145 770 160 Q820 175 860 195 Q880 215 875 240 Q870 265 855 285 Q840 305 820 315 Q800 325 780 320 Q760 315 740 305 Q720 295 700 280 Q680 265 665 245 Q650 225 640 200 Q630 175 625 150 Q620 135 605 130 Q590 125 580 130 Z"/>
-                        {/* India */}
-                        <path d="M650 280 Q680 275 700 290 Q720 305 725 330 Q730 355 720 375 Q710 395 690 400 Q670 405 655 395 Q640 385 635 365 Q630 345 635 325 Q640 305 650 280 Z"/>
-                      </g>
+                      <div className="absolute w-32 h-24 bg-cyan-500/60 rounded-3xl border-2 border-white/60 hover:bg-cyan-500/80 transition-colors"
+                           style={{ left: '60%', top: '18%', transform: 'rotate(10deg)' }}>
+                        <div className="absolute top-1 left-2 text-white text-xs font-bold">28%</div>
+                        <div className="absolute bottom-1 right-2 text-white text-xs">ASIA</div>
+                      </div>
+
+                      {/* Africa */}
+                      <div className="absolute w-18 h-28 bg-green-500/60 rounded-2xl border-2 border-white/60 hover:bg-green-500/80 transition-colors"
+                           style={{ left: '48%', top: '40%' }}>
+                        <div className="absolute top-1 left-1 text-white text-xs font-bold">8%</div>
+                        <div className="absolute bottom-1 right-1 text-white text-xs">AFRICA</div>
+                      </div>
+
+                      {/* South America */}
+                      <div className="absolute w-12 h-24 bg-amber-500/60 rounded-2xl border-2 border-white/60 hover:bg-amber-500/80 transition-colors"
+                           style={{ left: '25%', top: '50%', transform: 'rotate(-10deg)' }}>
+                        <div className="absolute top-1 left-1 text-white text-xs font-bold">3%</div>
+                        <div className="absolute bottom-1 right-1 text-white text-xs">S.AMERICA</div>
+                      </div>
 
                       {/* Australia */}
-                      <g fill="rgba(168, 85, 247, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-violet-500/80 transition-colors">
-                        <path d="M750 370 Q785 365 820 375 Q855 385 875 405 Q880 425 870 440 Q860 455 845 460 Q830 465 815 460 Q800 455 785 445 Q770 435 760 420 Q750 405 750 390 Q750 375 750 370 Z"/>
-                      </g>
-                    </svg>
+                      <div className="absolute w-14 h-8 bg-violet-500/60 rounded-xl border-2 border-white/60 hover:bg-violet-500/80 transition-colors"
+                           style={{ left: '75%', top: '70%' }}>
+                        <div className="absolute top-0 left-1 text-white text-xs font-bold">5%</div>
+                        <div className="absolute bottom-0 right-1 text-white text-xs">AUS</div>
+                      </div>
 
-                    {/* Server markers positioned over real continents */}
-                    <div className="absolute inset-0">
+                      {/* Server markers positioned on continents */}
                       {[
                         // North America
-                        { x: 20, y: 35, status: 'excellent', users: '1.2K', country: 'US East', region: 'North America' },
-                        { x: 15, y: 40, status: 'good', users: '980', country: 'US West', region: 'North America' },
-                        { x: 25, y: 52, status: 'good', users: '650', country: 'Mexico', region: 'North America' },
+                        { x: 15, y: 35, status: 'excellent', users: '1.2K', country: 'US East', region: 'North America' },
+                        { x: 12, y: 40, status: 'good', users: '980', country: 'US West', region: 'North America' },
                         
                         // Europe  
-                        { x: 52, y: 34, status: 'excellent', users: '1.8K', country: 'Germany', region: 'Europe' },
-                        { x: 48, y: 32, status: 'excellent', users: '1.4K', country: 'UK', region: 'Europe' },
-                        { x: 55, y: 36, status: 'good', users: '890', country: 'France', region: 'Europe' },
+                        { x: 48, y: 28, status: 'excellent', users: '1.8K', country: 'Germany', region: 'Europe' },
+                        { x: 45, y: 25, status: 'excellent', users: '1.4K', country: 'UK', region: 'Europe' },
                         
                         // Asia
-                        { x: 75, y: 35, status: 'excellent', users: '1.7K', country: 'Japan', region: 'Asia' },
-                        { x: 70, y: 42, status: 'good', users: '1.1K', country: 'Singapore', region: 'Asia' },
-                        { x: 65, y: 38, status: 'good', users: '980', country: 'India', region: 'Asia' },
+                        { x: 75, y: 30, status: 'excellent', users: '1.7K', country: 'Japan', region: 'Asia' },
+                        { x: 68, y: 35, status: 'good', users: '1.1K', country: 'Singapore', region: 'Asia' },
                         
                         // Australia
-                        { x: 82, y: 82, status: 'excellent', users: '420', country: 'Sydney', region: 'Australia' },
+                        { x: 78, y: 72, status: 'excellent', users: '420', country: 'Sydney', region: 'Australia' },
                         
                         // South America
-                        { x: 28, y: 72, status: 'good', users: '380', country: 'Brazil', region: 'South America' },
+                        { x: 28, y: 62, status: 'good', users: '380', country: 'Brazil', region: 'South America' },
                         
                         // Africa
-                        { x: 52, y: 62, status: 'good', users: '290', country: 'South Africa', region: 'Africa' },
+                        { x: 52, y: 55, status: 'good', users: '290', country: 'South Africa', region: 'Africa' },
                       ].map((server, index) => (
                         <div
                           key={index}
-                          className="absolute transform -translate-x-1/2 -translate-y-1/2 z-20"
+                          className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30"
                           style={{ 
                             left: `${server.x}%`, 
                             top: `${server.y}%` 
                           }}
                         >
                           <div className="relative group cursor-pointer">
-                            <div className={`w-3 h-3 rounded-full ${
+                            <div className={`w-4 h-4 rounded-full ${
                               server.status === 'excellent' ? 'bg-green-400' : 
                               server.status === 'good' ? 'bg-yellow-400' : 'bg-red-400'
-                            } border-2 border-white shadow-lg hover:scale-125 transition-transform animate-pulse`}>
+                            } border-2 border-white shadow-lg hover:scale-125 transition-all animate-pulse`}>
                               <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping"></div>
                             </div>
                             
-                            {/* Activity Ring */}
-                            <div className="absolute -inset-1 rounded-full border border-white/40" 
-                                 style={{ animationDelay: `${Math.random() * 2}s` }}></div>
-                            
                             {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-40">
                               <div className="bg-black/90 backdrop-blur text-white rounded-lg px-3 py-2 shadow-xl text-xs whitespace-nowrap border border-white/20">
                                 <div className="font-bold">{server.country}</div>
                                 <div className="opacity-80">{server.users} users</div>
@@ -546,35 +533,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       ))}
                     </div>
 
-                    {/* Regional Activity Labels */}
-                    <div className="absolute top-6 left-12 text-white z-10">
-                      <div className="text-lg font-bold">22%</div>
-                      <div className="text-xs opacity-80">NORTH AMERICA</div>
-                    </div>
-                    
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white z-10">
-                      <div className="text-lg font-bold">42%</div>
-                      <div className="text-xs opacity-80">EUROPE</div>
-                    </div>
-                    
-                    <div className="absolute top-6 right-12 text-white z-10">
-                      <div className="text-lg font-bold">28%</div>
-                      <div className="text-xs opacity-80">ASIA</div>
-                    </div>
-                    
-                    <div className="absolute bottom-8 right-16 text-white z-10">
-                      <div className="text-lg font-bold">5%</div>
-                      <div className="text-xs opacity-80">AUSTRALIA</div>
-                    </div>
-                    
-                    <div className="absolute bottom-12 left-16 text-white z-10">
-                      <div className="text-lg font-bold">3%</div>
-                      <div className="text-xs opacity-80">SOUTH AMERICA</div>
-                    </div>
-
-                    {/* Global Activity Title */}
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-white z-10">
+                    {/* Center title */}
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-white z-20">
                       <h3 className="text-xl font-bold tracking-wide">GLOBAL SERVER ACTIVITY</h3>
+                      <p className="text-sm opacity-75">Real-time server distribution worldwide</p>
                     </div>
 
                     {/* Center title */}
