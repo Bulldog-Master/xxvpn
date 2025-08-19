@@ -28,84 +28,75 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
 
   const plans: SubscriptionPlan[] = [
     {
-      id: 'monthly',
-      name: 'Monthly',
+      id: 'personal',
+      name: 'Personal',
       duration: 'month',
-      price: 999, // $9.99 in cents
+      price: 1299, // $12.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
+        'Up to 10 devices',
         'Unlimited bandwidth',
         'All server locations',
+        'Advanced cMixx technology',
         'Gaming & Privacy modes',
-        'XX Network integration',
         'Cross-platform support'
       ]
     },
     {
-      id: '6-month',
-      name: '6 Months',
-      duration: '6 months',
-      price: 4794, // $47.94 in cents ($7.99/month)
-      originalPrice: 5994, // $59.94 original price
+      id: 'business',
+      name: 'Business',
+      duration: 'month',
+      price: 2999, // $29.99 in cents
       currency: 'USD',
-      savings: 'Save 20%',
       popular: true,
       trialDays: 7,
       features: [
-        'Everything in Monthly',
+        '11-25 devices',
+        'Everything in Personal',
         'Priority customer support',
         'Advanced security features',
-        'Early access to new features'
+        'Team management dashboard',
+        'Centralized billing'
       ]
     },
     {
-      id: 'annual',
-      name: 'Annual',
-      duration: 'year',
-      price: 7188, // $71.88 in cents ($5.99/month)
-      originalPrice: 11988, // $119.88 original price
+      id: 'professional',
+      name: 'Professional',
+      duration: 'month',
+      price: 5999, // $59.99 in cents
       currency: 'USD',
-      savings: 'Save 40%',
       trialDays: 7,
       features: [
-        'Everything in 6 Months',
+        '26-100 devices',
+        'Everything in Business',
         'Dedicated account manager',
         'Custom configuration options',
-        'Premium support'
+        'Advanced analytics',
+        'SLA guarantee'
       ]
     },
     {
-      id: '2-year',
-      name: '2 Years',
-      duration: '2 years',
-      price: 11976, // $119.76 in cents ($4.99/month)
-      originalPrice: 23976, // $239.76 original price
+      id: 'enterprise',
+      name: 'Enterprise',
+      duration: 'month',
+      price: 9999, // $99.99 in cents
       currency: 'USD',
-      savings: 'Save 50%',
       trialDays: 7,
       features: [
-        'Everything in Annual',
-        'Lifetime price guarantee',
-        'VIP support',
-        'Exclusive beta features'
+        '101+ devices',
+        'Everything in Professional',
+        'Custom deployment options',
+        'White-label solutions',
+        'On-premise integration',
+        '24/7 premium support',
+        'Custom SLA'
       ]
     }
   ];
 
   const getMonthlyPrice = (plan: SubscriptionPlan) => {
-    switch (plan.id) {
-      case 'monthly':
-        return plan.price / 100;
-      case '6-month':
-        return (plan.price / 6) / 100;
-      case 'annual':
-        return (plan.price / 12) / 100;
-      case '2-year':
-        return (plan.price / 24) / 100;
-      default:
-        return plan.price / 100;
-    }
+    return plan.price / 100;
   };
 
   return (
