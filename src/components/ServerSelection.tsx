@@ -38,7 +38,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [showOnlyPremium, setShowOnlyPremium] = useState(false);
-  const [activeTab, setActiveTab] = useState('map');
+  const [activeTab, setActiveTab] = useState('list');
   
   const {
     testServerPing,
@@ -335,11 +335,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="activity">Activity Map</TabsTrigger>
-            <TabsTrigger value="map">Map View</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="list">List View</TabsTrigger>
             <TabsTrigger value="recommended">Recommended</TabsTrigger>
+            <TabsTrigger value="stats">Statistics</TabsTrigger>
           </TabsList>
 
           {/* Filters */}
@@ -377,7 +376,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
             </Button>
           </div>
 
-          <TabsContent value="activity">
+          <TabsContent value="stats">
             <div className="space-y-6">
               {/* Global Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -395,10 +394,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <Globe className="h-4 w-4 text-green-500" />
+                      <Server className="h-4 w-4 text-green-500" />
                       <span className="text-sm font-medium">Active Servers</span>
                     </div>
-                    <div className="text-2xl font-bold">12</div>
+                    <div className="text-2xl font-bold">{vpnServers.length}</div>
                     <div className="text-xs text-muted-foreground">Worldwide</div>
                   </CardContent>
                 </Card>
@@ -409,7 +408,9 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       <Activity className="h-4 w-4 text-purple-500" />
                       <span className="text-sm font-medium">Avg Load</span>
                     </div>
-                    <div className="text-2xl font-bold">56%</div>
+                    <div className="text-2xl font-bold">
+                      {Math.round(vpnServers.reduce((acc, s) => acc + s.load, 0) / vpnServers.length)}%
+                    </div>
                     <div className="text-xs text-muted-foreground">Across all servers</div>
                   </CardContent>
                 </Card>
@@ -418,137 +419,15 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Zap className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-medium">Total Bandwidth</span>
+                      <span className="text-sm font-medium">Premium Servers</span>
                     </div>
-                    <div className="text-2xl font-bold">24.3 Gbps</div>
-                    <div className="text-xs text-muted-foreground">Peak capacity</div>
+                    <div className="text-2xl font-bold">
+                      {vpnServers.filter(s => s.premium).length}
+                    </div>
+                    <div className="text-xs text-muted-foreground">High-speed access</div>
                   </CardContent>
                 </Card>
               </div>
-
-              {/* Interactive World Map */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Globe className="h-5 w-5" />
-                    Global Network Activity
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-lg h-96 overflow-hidden border border-slate-700">
-                    {/* Simple CSS-based World Map using positioned blocks */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      
-                      {/* North America */}
-                      <div className="absolute w-24 h-20 bg-blue-500/60 rounded-2xl border-2 border-white/60 hover:bg-blue-500/80 transition-colors"
-                           style={{ left: '8%', top: '25%', transform: 'rotate(-15deg)' }}>
-                        <div className="absolute top-1 left-1 text-white text-xs font-bold">22%</div>
-                        <div className="absolute bottom-1 right-1 text-white text-xs">N.AMERICA</div>
-                      </div>
-
-                      {/* Europe */}
-                      <div className="absolute w-16 h-12 bg-purple-500/60 rounded-xl border-2 border-white/60 hover:bg-purple-500/80 transition-colors"
-                           style={{ left: '45%', top: '20%' }}>
-                        <div className="absolute top-0 left-1 text-white text-xs font-bold">42%</div>
-                        <div className="absolute bottom-0 right-1 text-white text-xs">EUROPE</div>
-                      </div>
-
-                      {/* Asia */}
-                      <div className="absolute w-32 h-24 bg-cyan-500/60 rounded-3xl border-2 border-white/60 hover:bg-cyan-500/80 transition-colors"
-                           style={{ left: '60%', top: '18%', transform: 'rotate(10deg)' }}>
-                        <div className="absolute top-1 left-2 text-white text-xs font-bold">28%</div>
-                        <div className="absolute bottom-1 right-2 text-white text-xs">ASIA</div>
-                      </div>
-
-                      {/* Africa */}
-                      <div className="absolute w-18 h-28 bg-green-500/60 rounded-2xl border-2 border-white/60 hover:bg-green-500/80 transition-colors"
-                           style={{ left: '48%', top: '40%' }}>
-                        <div className="absolute top-1 left-1 text-white text-xs font-bold">8%</div>
-                        <div className="absolute bottom-1 right-1 text-white text-xs">AFRICA</div>
-                      </div>
-
-                      {/* South America */}
-                      <div className="absolute w-12 h-24 bg-amber-500/60 rounded-2xl border-2 border-white/60 hover:bg-amber-500/80 transition-colors"
-                           style={{ left: '25%', top: '50%', transform: 'rotate(-10deg)' }}>
-                        <div className="absolute top-1 left-1 text-white text-xs font-bold">3%</div>
-                        <div className="absolute bottom-1 right-1 text-white text-xs">S.AMERICA</div>
-                      </div>
-
-                      {/* Australia */}
-                      <div className="absolute w-14 h-8 bg-violet-500/60 rounded-xl border-2 border-white/60 hover:bg-violet-500/80 transition-colors"
-                           style={{ left: '75%', top: '70%' }}>
-                        <div className="absolute top-0 left-1 text-white text-xs font-bold">5%</div>
-                        <div className="absolute bottom-0 right-1 text-white text-xs">AUS</div>
-                      </div>
-
-                      {/* Server markers positioned on continents */}
-                      {[
-                        // North America
-                        { x: 15, y: 35, status: 'excellent', users: '1.2K', country: 'US East', region: 'North America' },
-                        { x: 12, y: 40, status: 'good', users: '980', country: 'US West', region: 'North America' },
-                        
-                        // Europe  
-                        { x: 48, y: 28, status: 'excellent', users: '1.8K', country: 'Germany', region: 'Europe' },
-                        { x: 45, y: 25, status: 'excellent', users: '1.4K', country: 'UK', region: 'Europe' },
-                        
-                        // Asia
-                        { x: 75, y: 30, status: 'excellent', users: '1.7K', country: 'Japan', region: 'Asia' },
-                        { x: 68, y: 35, status: 'good', users: '1.1K', country: 'Singapore', region: 'Asia' },
-                        
-                        // Australia
-                        { x: 78, y: 72, status: 'excellent', users: '420', country: 'Sydney', region: 'Australia' },
-                        
-                        // South America
-                        { x: 28, y: 62, status: 'good', users: '380', country: 'Brazil', region: 'South America' },
-                        
-                        // Africa
-                        { x: 52, y: 55, status: 'good', users: '290', country: 'South Africa', region: 'Africa' },
-                      ].map((server, index) => (
-                        <div
-                          key={index}
-                          className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30"
-                          style={{ 
-                            left: `${server.x}%`, 
-                            top: `${server.y}%` 
-                          }}
-                        >
-                          <div className="relative group cursor-pointer">
-                            <div className={`w-4 h-4 rounded-full ${
-                              server.status === 'excellent' ? 'bg-green-400' : 
-                              server.status === 'good' ? 'bg-yellow-400' : 'bg-red-400'
-                            } border-2 border-white shadow-lg hover:scale-125 transition-all animate-pulse`}>
-                              <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping"></div>
-                            </div>
-                            
-                            {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-40">
-                              <div className="bg-black/90 backdrop-blur text-white rounded-lg px-3 py-2 shadow-xl text-xs whitespace-nowrap border border-white/20">
-                                <div className="font-bold">{server.country}</div>
-                                <div className="opacity-80">{server.users} users</div>
-                                <div className="opacity-60 text-xs">{server.region}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Center title */}
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-white z-20">
-                      <h3 className="text-xl font-bold tracking-wide">GLOBAL SERVER ACTIVITY</h3>
-                      <p className="text-sm opacity-75">Real-time server distribution worldwide</p>
-                    </div>
-
-                    {/* Center title */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="text-center text-white">
-                        <h3 className="text-2xl font-bold mb-2">Global Server Network</h3>
-                        <p className="text-sm opacity-75">Select a continent to view servers</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Regional Statistics */}
               <Card>
@@ -557,43 +436,92 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {[
-                      { name: 'Europe', percentage: 42, color: '#8B5CF6', servers: 4, users: 5280 },
-                      { name: 'Asia', percentage: 28, color: '#06B6D4', servers: 3, users: 3950 },
-                      { name: 'North America', percentage: 22, color: '#3B82F6', servers: 3, users: 2880 },
-                      { name: 'Australia', percentage: 5, color: '#10B981', servers: 1, users: 420 },
-                      { name: 'South America', percentage: 3, color: '#F59E0B', servers: 1, users: 380 },
-                    ].map((region) => (
-                      <div key={region.name} className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div 
-                              className="w-4 h-4 rounded-full" 
-                              style={{ backgroundColor: region.color }}
-                            ></div>
-                            <div>
-                              <div className="font-medium">{region.name}</div>
-                              <div className="text-sm text-muted-foreground">
-                                {region.servers} servers • {region.users.toLocaleString()} users
+                    {regions.map((region) => {
+                      const regionServers = getServersByRegion(region);
+                      const percentage = Math.round((regionServers.length / vpnServers.length) * 100);
+                      const avgLoad = Math.round(regionServers.reduce((acc, s) => acc + s.load, 0) / regionServers.length);
+                      
+                      return (
+                        <div key={region} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-primary"></div>
+                              <div>
+                                <div className="font-medium">{region}</div>
+                                <div className="text-sm text-muted-foreground">
+                                  {regionServers.length} servers • {avgLoad}% avg load
+                                </div>
                               </div>
                             </div>
+                            <div className="text-right">
+                              <div className="font-bold text-lg">{percentage}%</div>
+                              <div className="text-xs text-muted-foreground">of total servers</div>
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <div className="font-bold text-lg">{region.percentage}%</div>
-                            <div className="text-xs text-muted-foreground">of total traffic</div>
-                          </div>
+                          <Progress value={percentage} className="h-2" />
                         </div>
-                        <Progress value={region.percentage} className="h-2" />
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Server Performance Overview */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Server Performance</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold mb-3">Load Distribution</h4>
+                      <div className="space-y-2">
+                        {[
+                          { label: 'Low (0-30%)', count: vpnServers.filter(s => s.load <= 30).length, color: 'bg-green-500' },
+                          { label: 'Medium (31-70%)', count: vpnServers.filter(s => s.load > 30 && s.load <= 70).length, color: 'bg-yellow-500' },
+                          { label: 'High (71-100%)', count: vpnServers.filter(s => s.load > 70).length, color: 'bg-red-500' },
+                        ].map((item) => (
+                          <div key={item.label} className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
+                              <span className="text-sm">{item.label}</span>
+                            </div>
+                            <span className="font-medium">{item.count} servers</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-3">Server Types</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Crown className="w-3 h-3 text-yellow-500" />
+                            <span className="text-sm">Premium</span>
+                          </div>
+                          <span className="font-medium">{vpnServers.filter(s => s.premium).length} servers</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Globe className="w-3 h-3 text-blue-500" />
+                            <span className="text-sm">Standard</span>
+                          </div>
+                          <span className="font-medium">{vpnServers.filter(s => !s.premium).length} servers</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <AlertCircle className="w-3 h-3 text-red-500" />
+                            <span className="text-sm">Maintenance</span>
+                          </div>
+                          <span className="font-medium">{vpnServers.filter(s => s.maintenance).length} servers</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-
-          <TabsContent value="map">
-            <WorldMap />
           </TabsContent>
 
           <TabsContent value="list" className="space-y-3">
