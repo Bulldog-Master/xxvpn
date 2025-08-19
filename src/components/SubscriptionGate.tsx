@@ -86,31 +86,38 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
   }
 
   return (
-    <Card className="border-dashed border-muted-foreground/30">
-      <CardHeader className="text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          {getFeatureIcon()}
-          <CardTitle className="text-lg">{feature} VPN Mode</CardTitle>
-          <Lock className="w-4 h-4 text-muted-foreground" />
-        </div>
-        <p className="text-muted-foreground">
-          Requires {tierNames[requiredTier as keyof typeof tierNames] || requiredTier} plan or higher
-        </p>
-        {subscription_tier && subscribed && (
-          <p className="text-sm text-muted-foreground">
-            Current plan: {tierNames[subscription_tier as keyof typeof tierNames]}
+    <div className="relative">
+      <Card className="border-dashed border-muted-foreground/30">
+        <CardHeader className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            {getFeatureIcon()}
+            <CardTitle className="text-lg">{feature} VPN Mode</CardTitle>
+            <Lock className="w-4 h-4 text-muted-foreground" />
+          </div>
+          <p className="text-muted-foreground">
+            Requires {tierNames[requiredTier as keyof typeof tierNames] || requiredTier} plan or higher
           </p>
-        )}
-      </CardHeader>
-      <CardContent className="text-center space-y-3">
-        <div className="text-sm text-muted-foreground">
-          Start your 7-day free trial to unlock this feature
-        </div>
-        <Button variant="default" onClick={onUpgrade}>
-          Upgrade Plan
-        </Button>
-      </CardContent>
-    </Card>
+          {subscription_tier && subscribed && (
+            <p className="text-sm text-muted-foreground">
+              Current plan: {tierNames[subscription_tier as keyof typeof tierNames]}
+            </p>
+          )}
+        </CardHeader>
+        <CardContent className="text-center space-y-3">
+          <div className="text-sm text-muted-foreground">
+            Start your 7-day free trial to unlock this feature
+          </div>
+          <Button variant="default" onClick={onUpgrade}>
+            Upgrade Plan
+          </Button>
+        </CardContent>
+      </Card>
+      
+      {/* Render disabled children behind the gate */}
+      <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
+        {children}
+      </div>
+    </div>
   );
 };
 
