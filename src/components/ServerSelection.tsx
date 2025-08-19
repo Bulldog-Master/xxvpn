@@ -173,9 +173,67 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
 
   const WorldMap: React.FC = () => {
     return (
-      <div className="relative h-96 bg-muted/20 rounded-lg overflow-hidden">
-        {/* Simplified world map background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-green-50 dark:from-blue-950/20 dark:to-green-950/20" />
+      <div className="relative h-96 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-lg overflow-hidden">
+        {/* World map with continent outlines */}
+        <svg
+          viewBox="0 0 1000 500"
+          className="absolute inset-0 w-full h-full"
+          style={{ filter: 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.3))' }}
+        >
+          {/* North America */}
+          <path
+            d="M120 120 Q180 100 250 130 L280 150 Q320 140 350 160 L380 180 Q400 200 380 240 L350 280 Q320 300 280 290 L250 280 Q200 270 160 250 L120 220 Q100 180 120 120 Z"
+            fill="rgba(59, 130, 246, 0.3)"
+            stroke="rgba(59, 130, 246, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-blue-400/40 transition-colors cursor-pointer"
+          />
+          
+          {/* Europe */}
+          <path
+            d="M420 140 Q460 130 500 140 L530 150 Q550 160 540 180 L520 200 Q500 210 480 200 L450 190 Q430 180 420 160 Z"
+            fill="rgba(139, 92, 246, 0.3)"
+            stroke="rgba(139, 92, 246, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-purple-400/40 transition-colors cursor-pointer"
+          />
+          
+          {/* Asia */}
+          <path
+            d="M550 120 Q620 110 700 130 L750 150 Q800 140 820 160 L840 180 Q850 200 830 220 L800 240 Q750 250 700 240 L650 230 Q600 220 570 200 L550 180 Q540 150 550 120 Z"
+            fill="rgba(6, 182, 212, 0.3)"
+            stroke="rgba(6, 182, 212, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-cyan-400/40 transition-colors cursor-pointer"
+          />
+          
+          {/* South America */}
+          <path
+            d="M250 300 Q280 290 300 310 L320 340 Q330 380 320 420 L300 450 Q280 460 260 450 L240 430 Q230 390 240 350 L250 320 Z"
+            fill="rgba(245, 158, 11, 0.3)"
+            stroke="rgba(245, 158, 11, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-amber-400/40 transition-colors cursor-pointer"
+          />
+          
+          {/* Africa */}
+          <path
+            d="M450 220 Q480 210 510 230 L530 260 Q540 300 530 340 L510 380 Q480 390 450 380 L420 360 Q410 320 420 280 L430 240 Z"
+            fill="rgba(34, 197, 94, 0.3)"
+            stroke="rgba(34, 197, 94, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-green-400/40 transition-colors cursor-pointer"
+          />
+          
+          {/* Australia */}
+          <path
+            d="M720 350 Q760 340 800 360 L820 380 Q830 400 820 420 L800 430 Q760 440 720 430 L700 410 Q690 390 700 370 Z"
+            fill="rgba(168, 85, 247, 0.3)"
+            stroke="rgba(168, 85, 247, 0.6)"
+            strokeWidth="2"
+            className="hover:fill-violet-400/40 transition-colors cursor-pointer"
+          />
+        </svg>
         
         {/* Server markers */}
         <div className="absolute inset-0">
@@ -192,7 +250,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               <div
                 key={server.id}
                 className={cn(
-                  "absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:scale-110",
+                  "absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all hover:scale-110 group",
                   isSelected && "scale-125 z-10"
                 )}
                 style={{ left: `${x}%`, top: `${y}%` }}
