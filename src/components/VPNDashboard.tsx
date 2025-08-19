@@ -53,7 +53,7 @@ import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
 import NetworkStatus from './NetworkStatus';
-import AppTunneling from './AppTunneling';
+import { AppTunneling } from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
 import { ServerSelection } from './ServerSelection';

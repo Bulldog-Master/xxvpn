@@ -1,244 +1,243 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { 
-  Smartphone, 
-  Monitor, 
-  Gamepad2, 
-  MessageCircle, 
-  Wallet, 
-  Chrome,
-  Youtube,
-  Twitch,
-  MessageSquare,
-  Settings
-} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Search, Plus, Globe, Shield, Zap, Chrome, MessageSquare, Download, Music } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
-interface AppRoute {
+interface App {
   id: string;
   name: string;
-  icon: any;
-  category: 'gaming' | 'streaming' | 'crypto' | 'messaging' | 'browser';
-  tunnel: 'direct' | 'vpn' | 'mixnet';
-  autoDetected: boolean;
+  icon: React.ReactNode;
+  category: 'browser' | 'social' | 'gaming' | 'streaming' | 'work' | 'other';
+  isEnabled: boolean;
+  bandwidth?: string;
 }
 
-const AppTunneling = () => {
-  const { t } = useTranslation();
-  const [apps, setApps] = useState<AppRoute[]>([
-    { id: '1', name: 'Steam', icon: Gamepad2, category: 'gaming', tunnel: 'direct', autoDetected: true },
-    { id: '2', name: 'YouTube', icon: Youtube, category: 'streaming', tunnel: 'vpn', autoDetected: true },
-    { id: '3', name: 'MetaMask', icon: Wallet, category: 'crypto', tunnel: 'mixnet', autoDetected: false },
-    { id: '4', name: 'Discord', icon: MessageSquare, category: 'messaging', tunnel: 'mixnet', autoDetected: true },
-    { id: '5', name: 'Chrome', icon: Chrome, category: 'browser', tunnel: 'vpn', autoDetected: false },
-    { id: '6', name: 'Twitch', icon: Twitch, category: 'streaming', tunnel: 'vpn', autoDetected: true }
-  ]);
+const defaultApps: App[] = [
+  { id: 'chrome', name: 'Chrome', icon: <Chrome className="h-5 w-5" />, category: 'browser', isEnabled: false },
+  { id: 'discord', name: 'Discord', icon: <MessageSquare className="h-5 w-5" />, category: 'social', isEnabled: false },
+  { id: 'steam', name: 'Steam', icon: <Download className="h-5 w-5" />, category: 'gaming', isEnabled: false },
+  { id: 'spotify', name: 'Spotify', icon: <Music className="h-5 w-5" />, category: 'streaming', isEnabled: false },
+];
 
-  const [aiRouting, setAiRouting] = useState(true);
+export const AppTunneling: React.FC = () => {
+  const [apps, setApps] = useState<App[]>(defaultApps);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [newAppName, setNewAppName] = useState('');
+  const [splitTunnelingEnabled, setSplitTunnelingEnabled] = useState(false);
+  const [tunnelingMode, setTunnelingMode] = useState<'include' | 'exclude'>('include');
+  const { toast } = useToast();
 
-  const updateAppTunnel = (appId: string, tunnel: 'direct' | 'vpn' | 'mixnet') => {
-    setApps(prev => prev.map(app => 
-      app.id === appId ? { ...app, tunnel, autoDetected: false } : app
+  const filteredApps = apps.filter(app =>
+    app.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const enabledApps = apps.filter(app => app.isEnabled);
+
+  const toggleApp = (appId: string) => {
+    setApps(apps.map(app =>
+      app.id === appId ? { ...app, isEnabled: !app.isEnabled } : app
     ));
-  };
-
-  const getTunnelColor = (tunnel: string) => {
-    switch (tunnel) {
-      case 'direct': return 'text-warning';
-      case 'vpn': return 'text-primary';
-      case 'mixnet': return 'text-secondary';
-      default: return 'text-muted-foreground';
+    
+    const app = apps.find(a => a.id === appId);
+    if (app) {
+      toast({
+        title: app.isEnabled ? "App Removed" : "App Added",
+        description: `${app.name} ${app.isEnabled ? 'removed from' : 'added to'} VPN tunneling`,
+      });
     }
   };
 
-  const getTunnelDescription = (tunnel: string) => {
-    switch (tunnel) {
-      case 'direct': return t('apps.tunnels.directDesc');
-      case 'vpn': return t('apps.tunnels.vpnDesc');
-      case 'mixnet': return t('apps.tunnels.mixnetDesc');
-      default: return '';
+  const addCustomApp = () => {
+    if (!newAppName.trim()) return;
+
+    const newApp: App = {
+      id: `custom-${Date.now()}`,
+      name: newAppName,
+      icon: <Globe className="h-5 w-5" />,
+      category: 'other',
+      isEnabled: false,
+    };
+
+    setApps([...apps, newApp]);
+    setNewAppName('');
+    toast({
+      title: "Custom App Added",
+      description: `${newAppName} has been added to the app list`,
+    });
+  };
+
+  const toggleSplitTunneling = () => {
+    setSplitTunnelingEnabled(!splitTunnelingEnabled);
+    toast({
+      title: splitTunnelingEnabled ? "Split Tunneling Disabled" : "Split Tunneling Enabled",
+      description: splitTunnelingEnabled 
+        ? "All traffic will now use the VPN" 
+        : "Selected apps will use split tunneling",
+    });
+  };
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'browser': return <Globe className="h-4 w-4" />;
+      case 'social': return <MessageSquare className="h-4 w-4" />;
+      case 'gaming': return <Zap className="h-4 w-4" />;
+      case 'streaming': return <Music className="h-4 w-4" />;
+      default: return <Shield className="h-4 w-4" />;
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* AI Routing Control */}
-      <Card className="bg-card/80 backdrop-blur-sm">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="w-5 h-5" />
-            {t('apps.aiPoweredTitle')}
-          </CardTitle>
-          <CardDescription>
-            {t('apps.aiPoweredDesc')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-medium">{t('apps.smartRouting')}</h4>
-              <p className="text-sm text-muted-foreground">
-                {t('apps.smartRoutingDesc')}
-              </p>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Split Tunneling
+              </CardTitle>
+              <CardDescription>
+                Control which applications use the VPN connection
+              </CardDescription>
             </div>
-            <Switch 
-              checked={aiRouting} 
-              onCheckedChange={setAiRouting}
+            <Switch
+              checked={splitTunnelingEnabled}
+              onCheckedChange={toggleSplitTunneling}
             />
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Tunnel Explanation */}
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-warning">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-warning">{t('apps.tunnels.direct')}</CardTitle>
-            <CardDescription>{t('apps.tunnels.directSubtitle')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {t('apps.tunnels.directDescription')}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-primary">{t('apps.tunnels.vpn')}</CardTitle>
-            <CardDescription>{t('apps.tunnels.vpnSubtitle')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {t('apps.tunnels.vpnDescription')}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card/80 backdrop-blur-sm border-l-4 border-l-secondary">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-secondary">{t('apps.tunnels.mixnet')}</CardTitle>
-            <CardDescription>{t('apps.tunnels.mixnetSubtitle')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {t('apps.tunnels.mixnetDescription')}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* App List */}
-      <Card className="bg-card/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle>{t('apps.applicationRouting')}</CardTitle>
-          <CardDescription>
-            {t('apps.applicationRoutingDesc')}
-          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {apps.map((app) => (
-              <div key={app.id} className="flex items-center justify-between p-4 rounded-lg border bg-muted/20">
-                <div className="flex items-center gap-3">
-                  <app.icon className="w-8 h-8 text-primary" />
-                  <div>
-                    <div className="font-medium flex items-center gap-2">
-                      {app.name === 'Chrome' ? t('apps.appNames.chrome') : 
-                       app.name === 'Twitch' ? t('apps.appNames.twitch') : 
-                       app.name}
-                      {app.autoDetected && (
-                        <Badge variant="outline" className="text-xs">
-                          Auto
-                        </Badge>
-                      )}
-                    </div>
-                     <div className="text-sm text-muted-foreground capitalize">
-                       {t(`apps.categories.${app.category}`)}
-                     </div>
-                  </div>
+        
+        {splitTunnelingEnabled && (
+          <CardContent className="space-y-6">
+            <Tabs value={tunnelingMode} onValueChange={(value) => setTunnelingMode(value as 'include' | 'exclude')}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="include">Include Mode</TabsTrigger>
+                <TabsTrigger value="exclude">Exclude Mode</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="include" className="space-y-4">
+                <div className="p-4 bg-primary/5 rounded-lg border">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Include Mode:</strong> Only selected apps will use the VPN. 
+                    All other traffic goes through your regular internet connection.
+                  </p>
                 </div>
+              </TabsContent>
+              
+              <TabsContent value="exclude" className="space-y-4">
+                <div className="p-4 bg-destructive/5 rounded-lg border">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Exclude Mode:</strong> Selected apps bypass the VPN. 
+                    All other traffic uses the VPN connection.
+                  </p>
+                </div>
+              </TabsContent>
+            </Tabs>
 
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <div className={`text-sm font-medium ${getTunnelColor(app.tunnel)}`}>
-                      {app.tunnel.charAt(0).toUpperCase() + app.tunnel.slice(1)}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {getTunnelDescription(app.tunnel)}
-                    </div>
-                  </div>
-
-                  {!aiRouting && (
-                    <Select 
-                      value={app.tunnel} 
-                      onValueChange={(value: 'direct' | 'vpn' | 'mixnet') => 
-                        updateAppTunnel(app.id, value)
-                      }
-                    >
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="direct">{t('apps.tunnels.direct')}</SelectItem>
-                        <SelectItem value="vpn">{t('apps.tunnels.vpn')}</SelectItem>
-                        <SelectItem value="mixnet">{t('apps.tunnels.mixnet')}</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search applications..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
 
-          <div className="mt-6 pt-4 border-t">
-            <Button variant="outline" className="w-full">
-              <Monitor className="w-4 h-4 mr-2" />
-              {t('apps.scanForApps')}
-            </Button>
-          </div>
-        </CardContent>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add custom application..."
+                  value={newAppName}
+                  onChange={(e) => setNewAppName(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && addCustomApp()}
+                />
+                <Button onClick={addCustomApp} size="sm">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {enabledApps.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">
+                    Active Apps ({enabledApps.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {enabledApps.map((app) => (
+                      <Badge key={app.id} variant="default" className="flex items-center gap-1">
+                        {app.icon}
+                        {app.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                <h4 className="text-sm font-medium">Available Applications</h4>
+                {filteredApps.map((app) => (
+                  <div
+                    key={app.id}
+                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        {app.icon}
+                      </div>
+                      <div>
+                        <div className="font-medium">{app.name}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          {getCategoryIcon(app.category)}
+                          {app.category}
+                        </div>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={app.isEnabled}
+                      onCheckedChange={() => toggleApp(app.id)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        )}
       </Card>
 
-      {/* Platform Support */}
-      <Card className="bg-card/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle>{t('apps.crossPlatformSupport')}</CardTitle>
-          <CardDescription>
-            {t('apps.crossPlatformDesc')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { platform: 'Windows', status: 'available' },
-              { platform: 'macOS', status: 'available' },
-              { platform: 'Linux', status: 'available' },
-              { platform: 'Android', status: 'available' },
-              { platform: 'iOS', status: 'available' },
-              { platform: 'Chrome OS', status: 'beta' },
-              { platform: 'Router', status: 'comingSoon' },
-              { platform: 'Browser', status: 'extension' }
-            ].map((item) => (
-              <div key={item.platform} className="text-center p-3 rounded-lg border bg-muted/10">
-                <div className="font-medium">{item.platform}</div>
-                <Badge 
-                  variant={item.status === 'available' ? 'default' : 'secondary'}
-                  className="mt-1 text-xs"
-                >
-                  {t(`apps.status.${item.status}`)}
+      {splitTunnelingEnabled && enabledApps.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Tunneling Status</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span>Mode:</span>
+                <Badge variant={tunnelingMode === 'include' ? 'default' : 'destructive'}>
+                  {tunnelingMode === 'include' ? 'Include' : 'Exclude'}
                 </Badge>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div className="flex justify-between text-sm">
+                <span>Apps configured:</span>
+                <span className="font-medium">{enabledApps.length}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Status:</span>
+                <Badge variant="default" className="bg-green-500">
+                  Active
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
-
-export default AppTunneling;
