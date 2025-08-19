@@ -96,34 +96,22 @@ export const useAuthMethods = (
 
   const signOut = async () => {
     try {
-      console.log('🚪 Starting sign out process...');
+      setLoading(true);
+      console.log('🚪 Signing out...');
       
-      // Import cleanup function
-      const { cleanupAuthState } = await import('@/utils/authHelpers');
-      
-      // Clean up auth state first
-      cleanupAuthState();
-      
-      // Attempt global sign out
-      try {
-        await signOutService();
-      } catch (err) {
-        console.error('Sign out service error:', err);
-        // Continue even if this fails
-      }
-      
-      // Clear user state to trigger immediate logout UI
+      // Clear state immediately for smooth UX
       setUser(null);
       setSession(null);
+      
+      // Sign out from Supabase
+      await signOutService();
+      
       setLoading(false);
+      console.log('✅ Signed out successfully');
       
-      console.log('✅ Sign out successful - forcing page reload');
-      
-      // Force immediate page reload to ensure clean state
-      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
-      // Force clear state even if sign out fails
+      // Clear state even if sign out fails
       setUser(null);
       setSession(null);
       setLoading(false);
