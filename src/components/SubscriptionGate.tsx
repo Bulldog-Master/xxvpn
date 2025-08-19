@@ -105,10 +105,10 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
         </CardHeader>
         <CardContent className="text-center space-y-3">
           <div className="text-sm text-muted-foreground">
-            Start your 7-day free trial to unlock this feature
+            Try our demo subscription to unlock this feature
           </div>
           <Button variant="default" onClick={onUpgrade}>
-            Upgrade Plan
+            Try Demo Subscription
           </Button>
         </CardContent>
       </Card>
