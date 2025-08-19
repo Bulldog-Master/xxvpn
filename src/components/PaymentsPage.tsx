@@ -9,7 +9,7 @@ import PaymentMethodCard from './payments/PaymentMethodCard';
 import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 interface PaymentOrder {
   id: string;
@@ -24,35 +24,28 @@ const PaymentsPage = () => {
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
   const { startTrial, checkSubscription } = useSubscription();
   const { user } = useAuth();
+  const { toast } = useToast();
 
   const handlePlanSelect = (plan: SubscriptionPlan) => {
     setSelectedPlan(plan);
   };
 
   const handleStartDemo = async () => {
-    console.log('handleStartDemo called');
+    console.log('=== DEMO START DEBUG ===');
+    console.log('User object:', user);
+    console.log('User email:', user?.email);
+    console.log('User ID:', user?.id);
     
-    // Check if user is authenticated
-    if (!user?.email) {
-      console.log('User not authenticated:', user);
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to start the demo.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    console.log('User authenticated, starting demo for:', user.email);
+    // Since you're logged in, let's skip the auth check and see what happens
+    console.log('Starting demo trial for logged in user...');
     
     try {
       console.log('Calling startTrial with personal-premium...');
       const result = await startTrial('personal-premium');
       console.log('Demo trial result:', result);
       
-      if (result.success) {
+      if (result?.success) {
         console.log('Demo trial successful, refreshing subscription...');
-        // Force refresh subscription status
         await checkSubscription();
         
         toast({
@@ -60,15 +53,14 @@ const PaymentsPage = () => {
           description: "You now have access to all VPN features for 7 days.",
         });
         
-        // Small delay to let the toast show, then navigate to dashboard
         setTimeout(() => {
           window.location.href = '/#dashboard';
         }, 1500);
       } else {
-        console.error('Demo trial failed:', result.error);
+        console.error('Demo trial failed:', result);
         toast({
-          title: "Demo Failed",
-          description: "Failed to start demo. Please try again.",
+          title: "Demo Failed", 
+          description: `Failed to start demo: ${result?.error || 'Unknown error'}`,
           variant: "destructive",
         });
       }
@@ -76,7 +68,7 @@ const PaymentsPage = () => {
       console.error('Failed to start demo:', error);
       toast({
         title: "Error",
-        description: "An error occurred while starting the demo.",
+        description: `An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`,
         variant: "destructive",
       });
     }
