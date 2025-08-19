@@ -3,13 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CreditCard, Download, HelpCircle, Shield, User, Smartphone, Play } from 'lucide-react';
+import { CreditCard, Download, HelpCircle, Shield, User, Smartphone } from 'lucide-react';
 import PaymentMethodCard from './payments/PaymentMethodCard';
 import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
-import { useSubscription } from '@/hooks/useSubscription';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
 
 interface PaymentOrder {
   id: string;
@@ -22,56 +18,9 @@ interface PaymentOrder {
 const PaymentsPage = () => {
   const { t } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
-  const { startTrial, checkSubscription } = useSubscription();
-  const { user } = useAuth();
-  const { toast } = useToast();
 
   const handlePlanSelect = (plan: SubscriptionPlan) => {
     setSelectedPlan(plan);
-  };
-
-  const handleStartDemo = async () => {
-    console.log('=== DEMO START DEBUG ===');
-    console.log('User object:', user);
-    console.log('User email:', user?.email);
-    console.log('User ID:', user?.id);
-    
-    // Since you're logged in, let's skip the auth check and see what happens
-    console.log('Starting demo trial for logged in user...');
-    
-    try {
-      console.log('Calling startTrial with personal-premium...');
-      const result = await startTrial('personal-premium');
-      console.log('Demo trial result:', result);
-      
-      if (result?.success) {
-        console.log('Demo trial successful, refreshing subscription...');
-        await checkSubscription();
-        
-        toast({
-          title: "Demo Started!",
-          description: "You now have access to all VPN features for 7 days.",
-        });
-        
-        setTimeout(() => {
-          window.location.href = '/#dashboard';
-        }, 1500);
-      } else {
-        console.error('Demo trial failed:', result);
-        toast({
-          title: "Demo Failed", 
-          description: `Failed to start demo: ${result?.error || 'Unknown error'}`,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Failed to start demo:', error);
-      toast({
-        title: "Error",
-        description: `An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        variant: "destructive",
-      });
-    }
   };
 
   // Sample data - in a real app this would come from an API
@@ -140,69 +89,11 @@ const PaymentsPage = () => {
             <CardTitle className="text-2xl font-semibold">{t('payments.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-8">
-            <Tabs defaultValue="subscription" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="subscription">Subscription Plans</TabsTrigger>
-                <TabsTrigger value="demo" className="gap-2">
-                  <Play className="w-4 h-4" />
-                  Try Demo
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="subscription" className="space-y-6 mt-6">
-                {/* Subscription Plans Section */}
-                <div className="space-y-6">
-                  <h2 className="text-xl font-medium">Select Your Plan</h2>
-                  <SubscriptionPlans onPlanSelect={handlePlanSelect} selectedPlan={selectedPlan} />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="demo" className="space-y-6 mt-6">
-                {/* Demo Section */}
-                <div className="space-y-6">
-                  <h2 className="text-xl font-medium">Demo Access</h2>
-                  <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-                    <CardContent className="p-6 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <Play className="w-8 h-8 text-primary" />
-                        <div>
-                          <h3 className="text-lg font-semibold">Try All VPN Features</h3>
-                          <p className="text-muted-foreground">Get instant access to all 3 VPN tiers for demonstration</p>
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                        <div className="p-4 bg-card/50 rounded-lg border">
-                          <h4 className="font-medium text-primary">Standard VPN</h4>
-                          <p className="text-sm text-muted-foreground">Basic secure connection</p>
-                        </div>
-                        <div className="p-4 bg-card/50 rounded-lg border">
-                          <h4 className="font-medium text-primary">Ultra-Fast VPN</h4>
-                          <p className="text-sm text-muted-foreground">High-speed optimized servers</p>
-                        </div>
-                        <div className="p-4 bg-card/50 rounded-lg border">
-                          <h4 className="font-medium text-primary">Ultra-Secure VPN</h4>
-                          <p className="text-sm text-muted-foreground">Maximum encryption & privacy</p>
-                        </div>
-                      </div>
-                      
-                      <Button 
-                        onClick={handleStartDemo}
-                        className="w-full mt-6" 
-                        size="lg"
-                      >
-                        <Play className="w-4 h-4 mr-2" />
-                        Start Demo Now (7 Days Free)
-                      </Button>
-                      
-                      <p className="text-xs text-muted-foreground text-center">
-                        No payment required • Instant access • Cancel anytime
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-            </Tabs>
+            {/* Subscription Plans Section */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-medium">Select Your Plan</h2>
+              <SubscriptionPlans onPlanSelect={handlePlanSelect} selectedPlan={selectedPlan} />
+            </div>
 
             {/* Payment Methods Section - Only show when plan is selected */}
             {selectedPlan && (
