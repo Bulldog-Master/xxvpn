@@ -288,8 +288,45 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
         </TabsContent>
       </Tabs>
 
-      <div className="text-center text-sm text-muted-foreground">
-        <p>All plans include a 7-day free trial. Cancel anytime during the trial period without charge.</p>
+      <div className="text-center space-y-4">
+        <div className="text-sm text-muted-foreground">
+          <p>All plans include a 7-day free trial. Cancel anytime during the trial period without charge.</p>
+        </div>
+        
+        <div className="pt-4 border-t">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              if (!user) {
+                toast({
+                  title: "Authentication Required",
+                  description: "Please sign in to test the demo subscription.",
+                  variant: "destructive",
+                });
+                return;
+              }
+              
+              // Demo: Instantly activate Personal Pro trial for testing
+              handleStartTrial({
+                id: 'personal-pro',
+                name: 'Personal Pro',
+                duration: 'month',
+                price: 1299,
+                currency: 'USD',
+                popular: true,
+                trialDays: 7,
+                features: []
+              });
+            }}
+            disabled={loading || (subscribed && subscription_tier === 'personal-pro')}
+          >
+            🧪 Demo: Start Personal Pro Trial (Test Mode)
+          </Button>
+          <p className="text-xs text-muted-foreground mt-2">
+            Demo button to test subscription flow without payment
+          </p>
+        </div>
       </div>
     </div>
   );
