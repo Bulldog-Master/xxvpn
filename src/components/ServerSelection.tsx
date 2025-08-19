@@ -436,18 +436,55 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-lg h-96 overflow-hidden border border-slate-700">
-                    {/* Proper World Map SVG - now in public folder */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <img 
-                        src="/world-map.svg" 
-                        alt="World Map" 
-                        className="w-full h-full object-contain opacity-80"
-                        style={{ 
-                          filter: 'brightness(1.2) contrast(1.1) hue-rotate(200deg)',
-                          mixBlendMode: 'lighten'
-                        }}
-                      />
-                    </div>
+                    {/* Embedded World Map SVG with styled continents */}
+                    <svg 
+                      viewBox="0 0 1000 500" 
+                      className="absolute inset-0 w-full h-full"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* World map background */}
+                      <rect width="1000" height="500" fill="transparent"/>
+                      
+                      {/* Simplified continent outlines - recognizable shapes */}
+                      
+                      {/* North America */}
+                      <g fill="rgba(59, 130, 246, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-blue-500/80 transition-colors">
+                        {/* USA/Canada outline */}
+                        <path d="M50 150 Q100 120 180 140 Q220 130 280 150 Q320 145 350 160 Q380 170 400 190 Q420 210 410 240 Q395 270 370 290 Q340 310 300 300 Q260 295 220 285 Q180 275 140 260 Q100 245 70 220 Q40 195 45 170 Q50 150 50 150 Z"/>
+                        {/* Alaska */}
+                        <path d="M20 180 Q40 170 60 175 Q80 180 85 200 Q90 220 80 235 Q70 250 50 245 Q30 240 25 220 Q20 200 20 180 Z"/>
+                        {/* Mexico */}
+                        <path d="M200 280 Q240 275 280 285 Q300 295 295 315 Q290 335 270 340 Q250 345 230 340 Q210 335 200 315 Q195 295 200 280 Z"/>
+                      </g>
+
+                      {/* South America */}
+                      <g fill="rgba(245, 158, 11, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-amber-500/80 transition-colors">
+                        <path d="M260 320 Q280 315 300 325 Q320 340 325 370 Q330 400 325 430 Q320 460 300 480 Q280 495 260 490 Q240 485 230 465 Q220 445 225 415 Q230 385 235 355 Q240 325 260 320 Z"/>
+                      </g>
+
+                      {/* Europe */}
+                      <g fill="rgba(139, 92, 246, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-purple-500/80 transition-colors">
+                        <path d="M450 140 Q480 135 510 145 Q540 155 560 170 Q570 185 565 200 Q560 215 545 225 Q530 235 515 230 Q500 225 485 215 Q470 205 460 190 Q450 175 450 160 Q450 145 450 140 Z"/>
+                      </g>
+
+                      {/* Africa */}
+                      <g fill="rgba(34, 197, 94, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-green-500/80 transition-colors">
+                        <path d="M480 230 Q510 225 535 240 Q560 260 570 290 Q580 320 575 350 Q570 380 560 410 Q550 440 535 460 Q520 475 500 470 Q480 465 465 450 Q450 435 445 410 Q440 385 445 360 Q450 335 455 310 Q460 285 465 260 Q470 235 480 230 Z"/>
+                      </g>
+
+                      {/* Asia */}
+                      <g fill="rgba(6, 182, 212, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-cyan-500/80 transition-colors">
+                        {/* Main Asia */}
+                        <path d="M580 130 Q620 125 670 135 Q720 145 770 160 Q820 175 860 195 Q880 215 875 240 Q870 265 855 285 Q840 305 820 315 Q800 325 780 320 Q760 315 740 305 Q720 295 700 280 Q680 265 665 245 Q650 225 640 200 Q630 175 625 150 Q620 135 605 130 Q590 125 580 130 Z"/>
+                        {/* India */}
+                        <path d="M650 280 Q680 275 700 290 Q720 305 725 330 Q730 355 720 375 Q710 395 690 400 Q670 405 655 395 Q640 385 635 365 Q630 345 635 325 Q640 305 650 280 Z"/>
+                      </g>
+
+                      {/* Australia */}
+                      <g fill="rgba(168, 85, 247, 0.6)" stroke="rgba(255, 255, 255, 0.8)" strokeWidth="1.5" className="hover:fill-violet-500/80 transition-colors">
+                        <path d="M750 370 Q785 365 820 375 Q855 385 875 405 Q880 425 870 440 Q860 455 845 460 Q830 465 815 460 Q800 455 785 445 Q770 435 760 420 Q750 405 750 390 Q750 375 750 370 Z"/>
+                      </g>
+                    </svg>
 
                     {/* Server markers positioned over real continents */}
                     <div className="absolute inset-0">
@@ -455,20 +492,26 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                         // North America
                         { x: 20, y: 35, status: 'excellent', users: '1.2K', country: 'US East', region: 'North America' },
                         { x: 15, y: 40, status: 'good', users: '980', country: 'US West', region: 'North America' },
+                        { x: 25, y: 52, status: 'good', users: '650', country: 'Mexico', region: 'North America' },
                         
                         // Europe  
-                        { x: 52, y: 30, status: 'good', users: '1.8K', country: 'Germany', region: 'Europe' },
-                        { x: 48, y: 28, status: 'excellent', users: '1.4K', country: 'UK', region: 'Europe' },
+                        { x: 52, y: 34, status: 'excellent', users: '1.8K', country: 'Germany', region: 'Europe' },
+                        { x: 48, y: 32, status: 'excellent', users: '1.4K', country: 'UK', region: 'Europe' },
+                        { x: 55, y: 36, status: 'good', users: '890', country: 'France', region: 'Europe' },
                         
                         // Asia
-                        { x: 75, y: 32, status: 'excellent', users: '1.7K', country: 'Japan', region: 'Asia' },
-                        { x: 70, y: 35, status: 'good', users: '1.1K', country: 'Singapore', region: 'Asia' },
+                        { x: 75, y: 35, status: 'excellent', users: '1.7K', country: 'Japan', region: 'Asia' },
+                        { x: 70, y: 42, status: 'good', users: '1.1K', country: 'Singapore', region: 'Asia' },
+                        { x: 65, y: 38, status: 'good', users: '980', country: 'India', region: 'Asia' },
                         
                         // Australia
-                        { x: 78, y: 75, status: 'excellent', users: '420', country: 'Sydney', region: 'Australia' },
+                        { x: 82, y: 82, status: 'excellent', users: '420', country: 'Sydney', region: 'Australia' },
                         
                         // South America
-                        { x: 28, y: 65, status: 'good', users: '380', country: 'Brazil', region: 'South America' },
+                        { x: 28, y: 72, status: 'good', users: '380', country: 'Brazil', region: 'South America' },
+                        
+                        // Africa
+                        { x: 52, y: 62, status: 'good', users: '290', country: 'South Africa', region: 'Africa' },
                       ].map((server, index) => (
                         <div
                           key={index}
@@ -479,23 +522,23 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                           }}
                         >
                           <div className="relative group cursor-pointer">
-                            <div className={`w-4 h-4 rounded-full ${
-                              server.status === 'excellent' ? 'bg-green-500' : 
-                              server.status === 'good' ? 'bg-yellow-500' : 'bg-red-500'
-                            } animate-pulse border-2 border-white shadow-lg hover:scale-125 transition-transform`}>
+                            <div className={`w-3 h-3 rounded-full ${
+                              server.status === 'excellent' ? 'bg-green-400' : 
+                              server.status === 'good' ? 'bg-yellow-400' : 'bg-red-400'
+                            } border-2 border-white shadow-lg hover:scale-125 transition-transform animate-pulse`}>
                               <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping"></div>
                             </div>
                             
                             {/* Activity Ring */}
-                            <div className="absolute -inset-2 rounded-full border-2 border-white/40 animate-pulse" 
+                            <div className="absolute -inset-1 rounded-full border border-white/40" 
                                  style={{ animationDelay: `${Math.random() * 2}s` }}></div>
                             
                             {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity z-30">
-                              <div className="bg-black/90 backdrop-blur text-white rounded-lg p-3 shadow-2xl min-w-32 border border-white/20">
-                                <div className="font-bold text-sm">{server.country}</div>
-                                <div className="text-xs opacity-80">{server.users} users</div>
-                                <div className="text-xs opacity-60">{server.region}</div>
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                              <div className="bg-black/90 backdrop-blur text-white rounded-lg px-3 py-2 shadow-xl text-xs whitespace-nowrap border border-white/20">
+                                <div className="font-bold">{server.country}</div>
+                                <div className="opacity-80">{server.users} users</div>
+                                <div className="opacity-60 text-xs">{server.region}</div>
                               </div>
                             </div>
                           </div>
@@ -503,7 +546,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       ))}
                     </div>
 
-                    {/* Regional Activity Overlays */}
+                    {/* Regional Activity Labels */}
                     <div className="absolute top-6 left-12 text-white z-10">
                       <div className="text-lg font-bold">22%</div>
                       <div className="text-xs opacity-80">NORTH AMERICA</div>
@@ -527,6 +570,11 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                     <div className="absolute bottom-12 left-16 text-white z-10">
                       <div className="text-lg font-bold">3%</div>
                       <div className="text-xs opacity-80">SOUTH AMERICA</div>
+                    </div>
+
+                    {/* Global Activity Title */}
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-white z-10">
+                      <h3 className="text-xl font-bold tracking-wide">GLOBAL SERVER ACTIVITY</h3>
                     </div>
 
                     {/* Center title */}
