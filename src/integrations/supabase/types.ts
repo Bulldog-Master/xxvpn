@@ -137,6 +137,71 @@ export type Database = {
         }
         Relationships: []
       }
+      vpn_sessions: {
+        Row: {
+          bytes_received: number | null
+          bytes_sent: number | null
+          connected_at: string
+          connection_quality: string | null
+          created_at: string
+          device_id: string | null
+          device_name: string
+          disconnect_reason: string | null
+          disconnected_at: string | null
+          duration_seconds: number | null
+          id: string
+          server_location: string
+          server_name: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bytes_received?: number | null
+          bytes_sent?: number | null
+          connected_at?: string
+          connection_quality?: string | null
+          created_at?: string
+          device_id?: string | null
+          device_name: string
+          disconnect_reason?: string | null
+          disconnected_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          server_location: string
+          server_name: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bytes_received?: number | null
+          bytes_sent?: number | null
+          connected_at?: string
+          connection_quality?: string | null
+          created_at?: string
+          device_id?: string | null
+          device_name?: string
+          disconnect_reason?: string | null
+          disconnected_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          server_location?: string
+          server_name?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vpn_sessions_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
