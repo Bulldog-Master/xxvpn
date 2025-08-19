@@ -436,12 +436,12 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 rounded-lg h-96 overflow-hidden border border-slate-700">
-                    {/* Proper World Map SVG - imported from external source */}
+                    {/* Proper World Map SVG - now in public folder */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <img 
-                        src="/src/assets/world-map.svg" 
+                        src="/world-map.svg" 
                         alt="World Map" 
-                        className="w-full h-full object-contain opacity-80 filter brightness-110"
+                        className="w-full h-full object-contain opacity-80"
                         style={{ 
                           filter: 'brightness(1.2) contrast(1.1) hue-rotate(200deg)',
                           mixBlendMode: 'lighten'
