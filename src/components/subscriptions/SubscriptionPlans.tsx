@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, Crown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -26,46 +27,78 @@ interface SubscriptionPlansProps {
 const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProps) => {
   const { t } = useTranslation();
 
-  const plans: SubscriptionPlan[] = [
+  const personalPlans: SubscriptionPlan[] = [
     {
-      id: 'personal',
+      id: 'personal-basic',
       name: 'Personal',
       duration: 'month',
-      price: 1299, // $12.99 in cents
+      price: 999, // $9.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        'Up to 10 devices',
+        'Up to 5 devices',
         'Unlimited bandwidth',
         'All server locations',
         'Advanced cMixx technology',
+        'Basic support'
+      ]
+    },
+    {
+      id: 'personal-pro',
+      name: 'Personal Pro',
+      duration: 'month',
+      price: 1299, // $12.99 in cents
+      currency: 'USD',
+      popular: true,
+      trialDays: 7,
+      features: [
+        'Up to 10 devices',
+        'Everything in Personal',
         'Gaming & Privacy modes',
+        'Priority support',
         'Cross-platform support'
       ]
     },
+    {
+      id: 'personal-premium',
+      name: 'Personal Premium',
+      duration: 'month',
+      price: 1999, // $19.99 in cents
+      currency: 'USD',
+      trialDays: 7,
+      features: [
+        'Up to 15 devices',
+        'Everything in Personal Pro',
+        'Advanced security features',
+        'Custom configurations',
+        'Premium support'
+      ]
+    }
+  ];
+
+  const businessPlans: SubscriptionPlan[] = [
     {
       id: 'business',
       name: 'Business',
       duration: 'month',
       price: 2999, // $29.99 in cents
       currency: 'USD',
-      popular: true,
       trialDays: 7,
       features: [
         '11-25 devices',
-        'Everything in Personal',
-        'Priority customer support',
-        'Advanced security features',
         'Team management dashboard',
-        'Centralized billing'
+        'Centralized billing',
+        'Priority customer support',
+        'Advanced security features'
       ]
     },
     {
-      id: 'professional',
-      name: 'Professional',
+      id: 'business-plus',
+      name: 'Business +',
       duration: 'month',
       price: 5999, // $59.99 in cents
       currency: 'USD',
+      popular: true,
       trialDays: 7,
       features: [
         '26-100 devices',
@@ -85,7 +118,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
       trialDays: 7,
       features: [
         '101+ devices',
-        'Everything in Professional',
+        'Everything in Business +',
         'Custom deployment options',
         'White-label solutions',
         'On-premise integration',
@@ -99,6 +132,75 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
     return plan.price / 100;
   };
 
+  const renderPlanCards = (plans: SubscriptionPlan[]) => (
+    <div className="grid md:grid-cols-3 gap-4">
+      {plans.map((plan) => (
+        <Card
+          key={plan.id}
+          className={`relative cursor-pointer transition-all duration-200 ${
+            selectedPlan?.id === plan.id
+              ? 'border-primary bg-primary/5 scale-105'
+              : 'border-border hover:border-primary/50 hover:scale-102'
+          } ${plan.popular ? 'ring-2 ring-primary/20' : ''}`}
+          onClick={() => onPlanSelect(plan)}
+        >
+          {plan.popular && (
+            <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
+              <Crown className="w-3 h-3 mr-1" />
+              Most Popular
+            </Badge>
+          )}
+
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="text-lg font-semibold">{plan.name}</CardTitle>
+            <div className="space-y-1">
+              <div className="text-3xl font-bold text-primary">
+                ${getMonthlyPrice(plan).toFixed(2)}
+                <span className="text-sm text-muted-foreground font-normal">/month</span>
+              </div>
+              {plan.originalPrice && (
+                <div className="text-sm text-muted-foreground">
+                  <span className="line-through">${(plan.originalPrice / 100).toFixed(2)}</span>
+                  <Badge variant="secondary" className="ml-2 text-xs">
+                    {plan.savings}
+                  </Badge>
+                </div>
+              )}
+              <div className="text-sm text-muted-foreground">
+                Billed ${(plan.price / 100).toFixed(2)} every {plan.duration}
+              </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            <div className="text-center">
+              <Badge variant="outline" className="text-xs">
+                {plan.trialDays}-day free trial
+              </Badge>
+            </div>
+
+            <ul className="space-y-2">
+              {plan.features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-2 text-sm">
+                  <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Button
+              variant={selectedPlan?.id === plan.id ? "default" : "outline"}
+              className="w-full"
+              size="sm"
+            >
+              {selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan'}
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
@@ -108,72 +210,20 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {plans.map((plan) => (
-          <Card
-            key={plan.id}
-            className={`relative cursor-pointer transition-all duration-200 ${
-              selectedPlan?.id === plan.id
-                ? 'border-primary bg-primary/5 scale-105'
-                : 'border-border hover:border-primary/50 hover:scale-102'
-            } ${plan.popular ? 'ring-2 ring-primary/20' : ''}`}
-            onClick={() => onPlanSelect(plan)}
-          >
-            {plan.popular && (
-              <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
-                <Crown className="w-3 h-3 mr-1" />
-                Most Popular
-              </Badge>
-            )}
-
-            <CardHeader className="text-center pb-4">
-              <CardTitle className="text-lg font-semibold">{plan.name}</CardTitle>
-              <div className="space-y-1">
-                <div className="text-3xl font-bold text-primary">
-                  ${getMonthlyPrice(plan).toFixed(2)}
-                  <span className="text-sm text-muted-foreground font-normal">/month</span>
-                </div>
-                {plan.originalPrice && (
-                  <div className="text-sm text-muted-foreground">
-                    <span className="line-through">${(plan.originalPrice / 100).toFixed(2)}</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">
-                      {plan.savings}
-                    </Badge>
-                  </div>
-                )}
-                <div className="text-sm text-muted-foreground">
-                  Billed ${(plan.price / 100).toFixed(2)} every {plan.duration}
-                </div>
-              </div>
-            </CardHeader>
-
-            <CardContent className="space-y-4">
-              <div className="text-center">
-                <Badge variant="outline" className="text-xs">
-                  {plan.trialDays}-day free trial
-                </Badge>
-              </div>
-
-              <ul className="space-y-2">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                variant={selectedPlan?.id === plan.id ? "default" : "outline"}
-                className="w-full"
-                size="sm"
-              >
-                {selectedPlan?.id === plan.id ? 'Selected' : 'Select Plan'}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <Tabs defaultValue="personal" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="personal">Personal</TabsTrigger>
+          <TabsTrigger value="business">Business</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="personal" className="space-y-4">
+          {renderPlanCards(personalPlans)}
+        </TabsContent>
+        
+        <TabsContent value="business" className="space-y-4">
+          {renderPlanCards(businessPlans)}
+        </TabsContent>
+      </Tabs>
 
       <div className="text-center text-sm text-muted-foreground">
         <p>All plans include a 7-day free trial. Cancel anytime during the trial period without charge.</p>
