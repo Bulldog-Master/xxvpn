@@ -56,7 +56,7 @@ import NetworkStatus from './NetworkStatus';
 import AppTunneling from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
-import ServerSelector from './ServerSelector';
+import { ServerSelection } from './ServerSelection';
 import LanguageSelector from './LanguageSelector';
 import SubscriptionGate from './SubscriptionGate';
 import SubscriptionStatus from './SubscriptionStatus';
@@ -583,7 +583,10 @@ const VPNDashboard = () => {
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
-            <ServerSelector />
+            <ServerSelection 
+              selectedServer={selectedServer}
+              onServerSelect={setSelectedServer}
+            />
           </TabsContent>
 
           <TabsContent value="network" className="space-y-4">
