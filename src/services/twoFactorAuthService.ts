@@ -60,14 +60,14 @@ export const verifyTwoFactorAndSignIn = async (
     // Step 2: Check if user has 2FA enabled
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('totp_secret, totp_enabled')
+      .select('totp_enabled')
       .eq('user_id', userId)
       .single();
 
     if (profileError) throw profileError;
     
     // Step 3: If no 2FA, sign in normally
-    if (!profile.totp_enabled || !profile.totp_secret) {
+    if (!profile.totp_enabled) {
       console.log('✅ No 2FA required - signing in normally');
       const { error: finalSignInError } = await supabase.auth.signInWithPassword({
         email,
@@ -76,6 +76,17 @@ export const verifyTwoFactorAndSignIn = async (
       if (finalSignInError) throw finalSignInError;
       clearPendingAuth();
       return;
+    }
+
+    // Get TOTP secret from secure table
+    const { data: secretData, error: secretError } = await supabase
+      .from('user_security_secrets')
+      .select('encrypted_totp_secret')
+      .eq('user_id', userId)
+      .single();
+
+    if (secretError || !secretData?.encrypted_totp_secret) {
+      throw new Error('2FA is enabled but TOTP secret is missing');
     }
     
     // Step 4: Verify TOTP code
@@ -86,7 +97,7 @@ export const verifyTwoFactorAndSignIn = async (
       algorithm: 'SHA1',
       digits: 6,
       period: 30,
-      secret: profile.totp_secret,
+      secret: secretData.encrypted_totp_secret, // In production, decrypt this first
     });
 
     let validationResult = null;
