@@ -62,7 +62,6 @@ export type Database = {
           referrals: number
           subscription_tier: string
           totp_enabled: boolean | null
-          totp_secret: string | null
           updated_at: string
           user_id: string
           xx_coin_balance: number
@@ -75,7 +74,6 @@ export type Database = {
           referrals?: number
           subscription_tier?: string
           totp_enabled?: boolean | null
-          totp_secret?: string | null
           updated_at?: string
           user_id: string
           xx_coin_balance?: number
@@ -88,7 +86,6 @@ export type Database = {
           referrals?: number
           subscription_tier?: string
           totp_enabled?: boolean | null
-          totp_secret?: string | null
           updated_at?: string
           user_id?: string
           xx_coin_balance?: number
@@ -134,6 +131,30 @@ export type Database = {
           trial_end?: string | null
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_security_secrets: {
+        Row: {
+          created_at: string | null
+          encrypted_totp_secret: string | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          encrypted_totp_secret?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          encrypted_totp_secret?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -207,7 +228,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_old_device_ips: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
