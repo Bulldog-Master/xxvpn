@@ -52,7 +52,6 @@ import PaymentsPage from './PaymentsPage';
 import { toast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-quantum-network.jpg';
 import shieldIcon from '@/assets/vpn-shield-icon.jpg';
-import NetworkStatus from './NetworkStatus';
 import { AppTunneling } from './AppTunneling';
 import DeviceManagement from './DeviceManagement';
 import UserProfile from './UserProfile';
@@ -66,6 +65,9 @@ import { RealTimeStatus } from './RealTimeStatus';
 import { KillSwitchSettings } from './KillSwitchSettings';
 import { CustomDNS } from './CustomDNS';
 import { BandwidthMonitoring } from './BandwidthMonitoring';
+import NetworkStatus from './NetworkStatus';
+import { VPNModeSelector } from './dashboard/VPNModeSelector';
+import { ConnectionStatusCard } from './dashboard/ConnectionStatusCard';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -401,179 +403,20 @@ const VPNDashboard = () => {
           <TabsContent value="dashboard" className="space-y-6">
 
         {/* Connection Status */}
-        <Card className="bg-card/80 backdrop-blur-sm border-border quantum-glow">
-          <CardHeader className="text-center">
-            <div className="mx-auto w-24 h-24 relative mb-4">
-              <div className={`w-24 h-24 rounded-full border-4 ${
-                connectionStatus === 'connected' ? 'border-success' :
-                connectionStatus === 'connecting' ? 'border-warning animate-spin' :
-                'border-muted'
-              } flex items-center justify-center`}>
-                {connectionStatus === 'connected' ? (
-                  <ShieldCheck className="w-8 h-8 text-success" />
-                ) : connectionStatus === 'connecting' ? (
-                  <Wifi className="w-8 h-8 text-warning" />
-                ) : (
-                  !user || !subscribed ? (
-                    <Lock className="w-8 h-8 text-muted-foreground" />
-                  ) : (
-                    <Shield className="w-8 h-8 text-muted-foreground" />
-                  )
-                )}
-              </div>
-              {connectionStatus === 'connected' && (
-                <div className="absolute inset-0 rounded-full bg-success/20 animate-pulse-glow" />
-              )}
-            </div>
-            <CardTitle className={`text-2xl ${statusColors[connectionStatus]}`}>
-              {!user || !subscribed ? 'Subscription Required' : statusText[connectionStatus]}
-            </CardTitle>
-            <CardDescription className="space-y-2">
-              <div>
-                {!user ? (
-                  'Sign in to access VPN features'
-                ) : !subscribed ? (
-                  'Start your free trial to connect to VPN servers'
-                ) : (
-                  <>
-                    {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 
-                      t('dashboard.connectionStatus.ultraFastActive')
-                    }
-                    {connectionStatus === 'connected' && vpnMode === 'secure' && 
-                      t('dashboard.connectionStatus.secureActive')
-                    }
-                    {connectionStatus === 'connected' && vpnMode === 'ultra-secure' && 
-                      t('dashboard.connectionStatus.ultraSecureActive')
-                    }
-                    {connectionStatus === 'disconnected' && 
-                      t('dashboard.connectionStatus.notProtected')
-                    }
-                  </>
-                )}
-              </div>
-              {connectionStatus === 'connected' && (
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span>{t('dashboard.localIP')}:</span>
-                  <code className="px-2 py-1 bg-muted rounded text-xs font-mono">192.168.1.{Math.floor(Math.random() * 254) + 1}</code>
-                </div>
-              )}
-            </CardDescription>
-          </CardHeader>
-        </Card>
+        <ConnectionStatusCard 
+          connectionStatus={connectionStatus}
+          vpnMode={vpnMode}
+          user={user}
+          subscribed={subscribed}
+        />
 
-        {/* VPN Mode Selection with Subscription Gates */}
-        <div className="grid grid-cols-3 gap-3">
-          {/* Ultra-Fast Mode - Available to all users */}
-          <SubscriptionGate
-            requiredTier="personal"
-            feature="Ultra-Fast"
-            onUpgrade={() => setActiveTab('payments')}
-          >
-            <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
-                  onClick={() => vpnMode !== 'ultra-fast' ? connectVPN('ultra-fast') : disconnectVPN()}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base">{t('dashboard.connectionModes.ultraFast')}</CardTitle>
-                    <CardDescription className="text-xs">{t('dashboard.connectionModes.gamingStreaming')}</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">{t('apps.tunnels.direct').toUpperCase()}</Badge>
-                    <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.noVPN')}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {t('dashboard.connectionModes.ultraFastDesc')}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs">
-                    <Zap className="w-3 h-3 text-warning" />
-                    <span>{t('dashboard.connectionModes.maximumSpeed')}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </SubscriptionGate>
-
-          {/* Secure Mode - Requires Personal or higher */}
-          <SubscriptionGate
-            requiredTier="personal"
-            feature="Secure"
-            onUpgrade={() => setActiveTab('payments')}
-          >
-            <Card className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
-                  onClick={() => vpnMode !== 'secure' ? connectVPN('secure') : disconnectVPN()}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base">{t('dashboard.connectionModes.secure')}</CardTitle>
-                    <CardDescription className="text-xs">{t('dashboard.connectionModes.standardProtection')}</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">VPN</Badge>
-                    <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.encryptedTunnel')}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {t('dashboard.connectionModes.secureDesc')}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs">
-                    <Shield className="w-3 h-3 text-primary" />
-                    <span>{t('dashboard.connectionModes.encryptedTunnel')}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </SubscriptionGate>
-
-          {/* Ultra-Secure Mode - Requires Business or higher */}
-          <SubscriptionGate
-            requiredTier="business"
-            feature="Ultra-Secure"
-            onUpgrade={() => setActiveTab('payments')}
-          >
-            <Card className="bg-card/80 backdrop-blur-sm border-border hover:neural-glow transition-all cursor-pointer"
-                  onClick={() => vpnMode !== 'ultra-secure' ? connectVPN('ultra-secure') : disconnectVPN()}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-neural flex items-center justify-center">
-                    <Lock className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base">{t('dashboard.connectionModes.ultraSecure')}</CardTitle>
-                    <CardDescription className="text-xs">{t('dashboard.connectionModes.metadataShredding')}</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">CMIXX</Badge>
-                    <span className="text-xs text-muted-foreground">XX Network</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {t('dashboard.connectionModes.metadataShredDesc')}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs">
-                    <Eye className="w-3 h-3 text-primary" />
-                    <span>{t('dashboard.connectionModes.metadataProtection')}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </SubscriptionGate>
-        </div>
+        {/* VPN Mode Selection */}
+        <VPNModeSelector 
+          vpnMode={vpnMode}
+          onConnect={connectVPN}
+          onDisconnect={disconnectVPN}
+          onUpgrade={() => setActiveTab('payments')}
+        />
 
         {/* Subscription Status */}
         <SubscriptionStatus onManageSubscription={() => setActiveTab('payments')} />
@@ -593,6 +436,7 @@ const VPNDashboard = () => {
           </TabsContent>
 
           <TabsContent value="network" className="space-y-6">
+            <NetworkStatus />
             <KillSwitchSettings />
             <CustomDNS />
           </TabsContent>
