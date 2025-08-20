@@ -459,12 +459,12 @@ const VPNDashboard = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Quick Connect Button - Only show for subscribed users */}
+        {/* Quick Connect Button - Enhanced with animations */}
         {connectionStatus === 'disconnected' && activeTab === 'dashboard' && user && subscribed && (
-          <div className="fixed bottom-6 right-6">
+          <div className="fixed bottom-6 right-6 animate-float">
             <Button 
               size="lg" 
-              className="rounded-full w-16 h-16 gradient-primary shadow-quantum"
+              className="rounded-full w-16 h-16 gradient-primary shadow-quantum hover-lift hover:shadow-neural transition-all duration-300"
               onClick={() => connectVPN('secure')}
               title="Quick connect to Secure mode"
             >

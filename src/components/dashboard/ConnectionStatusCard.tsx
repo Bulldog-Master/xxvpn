@@ -26,18 +26,18 @@ export const ConnectionStatusCard = ({ connectionStatus, vpnMode, user, subscrib
   };
 
   return (
-    <Card className="bg-card/80 backdrop-blur-sm border-border quantum-glow">
+    <Card className="bg-card/80 backdrop-blur-sm border-border quantum-glow glass-effect animate-slide-up">
       <CardHeader className="text-center">
-        <div className="mx-auto w-24 h-24 relative mb-4">
-          <div className={`w-24 h-24 rounded-full border-4 ${
-            connectionStatus === 'connected' ? 'border-success' :
+        <div className="mx-auto w-24 h-24 relative mb-4 animate-float">
+          <div className={`w-24 h-24 rounded-full border-4 transition-all duration-500 ${
+            connectionStatus === 'connected' ? 'border-success shadow-quantum' :
             connectionStatus === 'connecting' ? 'border-warning animate-spin' :
             'border-muted'
-          } flex items-center justify-center`}>
+          } flex items-center justify-center hover-lift`}>
             {connectionStatus === 'connected' ? (
-              <ShieldCheck className="w-8 h-8 text-success" />
+              <ShieldCheck className="w-8 h-8 text-success animate-scale-in" />
             ) : connectionStatus === 'connecting' ? (
-              <Wifi className="w-8 h-8 text-warning" />
+              <Wifi className="w-8 h-8 text-warning animate-bounce-gentle" />
             ) : (
               !user || !subscribed ? (
                 <Lock className="w-8 h-8 text-muted-foreground" />
@@ -50,7 +50,7 @@ export const ConnectionStatusCard = ({ connectionStatus, vpnMode, user, subscrib
             <div className="absolute inset-0 rounded-full bg-success/20 animate-pulse-glow" />
           )}
         </div>
-        <CardTitle className={`text-2xl ${statusColors[connectionStatus]}`}>
+        <CardTitle className={`text-2xl transition-colors duration-300 ${statusColors[connectionStatus]}`}>
           {!user || !subscribed ? 'Subscription Required' : statusText[connectionStatus]}
         </CardTitle>
         <CardDescription className="space-y-2">

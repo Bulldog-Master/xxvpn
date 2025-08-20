@@ -23,16 +23,16 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
         onUpgrade={onUpgrade}
       >
         <Card 
-          className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
+          className="bg-card/80 backdrop-blur-sm border-border glass-effect hover-lift tab-glow transition-all duration-300 cursor-pointer group"
           onClick={() => vpnMode !== 'ultra-fast' ? onConnect('ultra-fast') : onDisconnect()}
         >
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Zap className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-base">{t('dashboard.connectionModes.ultraFast')}</CardTitle>
+                <CardTitle className="text-base group-hover:text-primary transition-colors">{t('dashboard.connectionModes.ultraFast')}</CardTitle>
                 <CardDescription className="text-xs">{t('dashboard.connectionModes.gamingStreaming')}</CardDescription>
               </div>
             </div>
@@ -62,16 +62,16 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
         onUpgrade={onUpgrade}
       >
         <Card 
-          className="bg-card/80 backdrop-blur-sm border-border hover:quantum-glow transition-all cursor-pointer"
+          className="bg-card/80 backdrop-blur-sm border-border glass-effect hover-lift tab-glow transition-all duration-300 cursor-pointer group"
           onClick={() => vpnMode !== 'secure' ? onConnect('secure') : onDisconnect()}
         >
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Shield className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-base">{t('dashboard.connectionModes.secure')}</CardTitle>
+                <CardTitle className="text-base group-hover:text-primary transition-colors">{t('dashboard.connectionModes.secure')}</CardTitle>
                 <CardDescription className="text-xs">{t('dashboard.connectionModes.standardProtection')}</CardDescription>
               </div>
             </div>
@@ -101,16 +101,16 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
         onUpgrade={onUpgrade}
       >
         <Card 
-          className="bg-card/80 backdrop-blur-sm border-border hover:neural-glow transition-all cursor-pointer"
+          className="bg-card/80 backdrop-blur-sm border-border glass-effect hover-lift tab-glow hover:neural-glow transition-all duration-300 cursor-pointer group"
           onClick={() => vpnMode !== 'ultra-secure' ? onConnect('ultra-secure') : onDisconnect()}
         >
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-neural flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-neural flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Lock className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-base">{t('dashboard.connectionModes.ultraSecure')}</CardTitle>
+                <CardTitle className="text-base group-hover:text-secondary transition-colors">{t('dashboard.connectionModes.ultraSecure')}</CardTitle>
                 <CardDescription className="text-xs">{t('dashboard.connectionModes.metadataShredding')}</CardDescription>
               </div>
             </div>
