@@ -43,11 +43,10 @@ const AuthPage = () => {
   const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
 
   const handleClearBrowserData = () => {
-    console.log('🧹 Manually clearing all browser auth data...');
+    // Clear browser auth data
     cleanupAuthState();
     // Also clear any Supabase sessions
     supabase.auth.signOut({ scope: 'global' }).then(() => {
-      console.log('✅ Manual cleanup complete - please try signing in again');
       window.location.reload();
     });
   };
