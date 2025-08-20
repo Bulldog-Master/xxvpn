@@ -68,6 +68,8 @@ import { BandwidthMonitoring } from './BandwidthMonitoring';
 import NetworkStatus from './NetworkStatus';
 import { VPNModeSelector } from './dashboard/VPNModeSelector';
 import { ConnectionStatusCard } from './dashboard/ConnectionStatusCard';
+import SmartAutomationPanel from './dashboard/SmartAutomationPanel';
+import ComingSoonPanel from './dashboard/ComingSoonPanel';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -390,13 +392,15 @@ const VPNDashboard = () => {
 
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-9 bg-muted/50">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
+            <TabsTrigger value="automation">AI Automation</TabsTrigger>
             <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
             <TabsTrigger value="payments">{t('dashboard.tabs.payments')}</TabsTrigger>
+            <TabsTrigger value="advanced">Advanced</TabsTrigger>
             <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
           </TabsList>
 
@@ -445,8 +449,8 @@ const VPNDashboard = () => {
             <AppTunneling />
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-4">
-            <UserProfile />
+          <TabsContent value="automation" className="space-y-4">
+            <SmartAutomationPanel />
           </TabsContent>
 
           <TabsContent value="devices" className="space-y-4">
@@ -456,6 +460,14 @@ const VPNDashboard = () => {
 
           <TabsContent value="payments" className="space-y-4">
             <PaymentsPage />
+          </TabsContent>
+
+          <TabsContent value="advanced" className="space-y-4">
+            <ComingSoonPanel />
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-4">
+            <UserProfile />
           </TabsContent>
         </Tabs>
 
