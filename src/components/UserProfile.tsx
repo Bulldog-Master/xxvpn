@@ -185,13 +185,14 @@ const UserProfile = () => {
                         Choose your preferred connection mode
                       </p>
                     </div>
-                    <Select defaultValue="gaming">
-                      <SelectTrigger className="w-32">
+                    <Select defaultValue="secure">
+                      <SelectTrigger className="w-40">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="gaming">Gaming</SelectItem>
-                        <SelectItem value="privacy">Privacy</SelectItem>
+                        <SelectItem value="ultra-fast">Ultra-Fast</SelectItem>
+                        <SelectItem value="secure">Secure</SelectItem>
+                        <SelectItem value="ultra-secure">Ultra-Secure</SelectItem>
                         <SelectItem value="auto">Auto</SelectItem>
                       </SelectContent>
                     </Select>
