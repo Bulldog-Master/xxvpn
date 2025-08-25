@@ -64,13 +64,13 @@ const VPNDashboard = () => {
       if (isConnected) {
         await disconnect();
         toast({
-          title: t("dashboard.status.disconnected"),
-          description: t("dashboard.connectionStatus.notProtected"),
+          title: t("dashboard.toasts.disconnected"),
+          description: t("dashboard.toasts.disconnectedDesc"),
         });
       } else {
         await connect();
         toast({
-          title: t("dashboard.status.connected"),
+          title: t("dashboard.toasts.connected"),
           description: getConnectionStatusMessage(),
         });
       }

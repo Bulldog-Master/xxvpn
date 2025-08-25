@@ -92,7 +92,16 @@
       "free": "Kostenlos",
       "premium": "Premium", 
       "enterprise": "Unternehmen"
-    }
+    },
+    "toasts": {
+      "referralCopied": "Empfehlungslink kopiert!",
+      "referralCopiedDesc": "Teilen Sie ihn mit Freunden, um XX-Coins zu verdienen.",
+      "connected": "Verbunden",
+      "disconnected": "Getrennt",
+      "disconnectedDesc": "VPN-Verbindung wurde beendet."
+    },
+    "referralLinkCopied": "Empfehlungslink kopiert!",
+    "shareMessage": "Teilen Sie ihn mit Freunden, um XX-Coins zu verdienen."
   },
   "auth": {
     "title": "Willkommen bei xxVPN",
