@@ -1,16 +1,16 @@
 {
   "languages": [
     {
-      "code": "en",
-      "name": "English",
-      "nativeName": "English",
-      "flag": "🇺🇸"
-    },
-    {
       "code": "ar",
       "name": "Arabic",
       "nativeName": "العربية",
       "flag": "🇸🇦"
+    },
+    {
+      "code": "zh",
+      "name": "Chinese",
+      "nativeName": "中文",
+      "flag": "🇨🇳"
     },
     {
       "code": "da",
@@ -19,22 +19,22 @@
       "flag": "🇩🇰"
     },
     {
-      "code": "de",
-      "name": "German",
-      "nativeName": "Deutsch",
-      "flag": "🇩🇪"
-    },
-    {
-      "code": "es",
-      "name": "Spanish",
-      "nativeName": "Español",
-      "flag": "🇪🇸"
+      "code": "en",
+      "name": "English",
+      "nativeName": "English",
+      "flag": "🇺🇸"
     },
     {
       "code": "fr",
       "name": "French",
       "nativeName": "Français",
       "flag": "🇫🇷"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "nativeName": "Deutsch",
+      "flag": "🇩🇪"
     },
     {
       "code": "hi",
@@ -73,16 +73,16 @@
       "flag": "🇷🇺"
     },
     {
+      "code": "es",
+      "name": "Spanish",
+      "nativeName": "Español",
+      "flag": "🇪🇸"
+    },
+    {
       "code": "tr",
       "name": "Turkish",
       "nativeName": "Türkçe",
       "flag": "🇹🇷"
-    },
-    {
-      "code": "zh",
-      "name": "Chinese",
-      "nativeName": "中文",
-      "flag": "🇨🇳"
     }
   ]
 }
