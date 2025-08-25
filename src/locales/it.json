@@ -2,6 +2,8 @@
   "dashboard": {
     "title": "Dashboard xxVPN",
     "welcomeBack": "Bentornato",
+    "referralLinkCopied": "Link di referenza copiato!",
+    "shareMessage": "Condividi il tuo link di referenza per guadagnare XX coins!",
     "status": {
       "connected": "Connesso",
       "connecting": "Connessione in corso...",

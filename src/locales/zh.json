@@ -1,7 +1,10 @@
+
 {
   "dashboard": {
     "title": "xxVPN 仪表板",
     "welcomeBack": "欢迎回来",
+    "referralLinkCopied": "推荐链接已复制！",
+    "shareMessage": "分享您的推荐链接赚取XX币！",
     "status": {
       "connected": "已连接",
       "connecting": "连接中...",
@@ -41,8 +44,11 @@
       "servers": "服务器", 
       "network": "网络",
       "apps": "应用",
+      "automation": "AI自动化",
+      "performance": "性能",
       "devices": "设备",
       "payments": "支付",
+      "advanced": "高级",
       "settings": "设置",
       "usage": "使用量",
       "history": "历史"

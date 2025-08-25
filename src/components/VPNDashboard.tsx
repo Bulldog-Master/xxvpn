@@ -1,603 +1,328 @@
-import { useState } from 'react';
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Progress } from '@/components/ui/progress';
+
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "@/hooks/use-toast";
 import { 
   Shield, 
-  Zap, 
-  Lock, 
+  Wifi, 
   Globe, 
-  Settings, 
-  Activity,
-  Wifi,
-  Eye,
-  EyeOff,
-  Server,
-  ShieldCheck,
-  Network,
-  Route,
-  User,
-  Coins,
-  Users,
-  Link,
-  Monitor,
-  CreditCard,
-  HelpCircle,
-  LogOut,
-  ChevronDown,
+  Clock, 
+  Activity, 
+  Zap, 
+  Users, 
+  Gift,
   Copy,
-  Bitcoin,
-  Banknote,
-  X,
-  Camera,
-  Edit2,
-  Upload,
-  Check,
-  Moon,
-  Sun
-} from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useTheme } from 'next-themes';
-import { useTranslation } from 'react-i18next';
-import { Input } from '@/components/ui/input';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
-import PaymentsPage from './PaymentsPage';
-import { toast } from '@/hooks/use-toast';
-import heroImage from '@/assets/hero-quantum-network.jpg';
-import shieldIcon from '@/assets/vpn-shield-icon.jpg';
-import { AppTunneling } from './AppTunneling';
-import DeviceManagement from './DeviceManagement';
-import UserProfile from './UserProfile';
-import { ServerSelection } from './ServerSelection';
-import LanguageSelector from './LanguageSelector';
-import SubscriptionGate from './SubscriptionGate';
-import SubscriptionStatus from './SubscriptionStatus';
-import { useSubscription } from '@/hooks/useSubscription';
-import { ConnectionHistory } from './ConnectionHistory';
-import { RealTimeStatus } from './RealTimeStatus';
-import { KillSwitchSettings } from './KillSwitchSettings';
-import { CustomDNS } from './CustomDNS';
-import { BandwidthMonitoring } from './BandwidthMonitoring';
-import NetworkStatus from './NetworkStatus';
-import { VPNModeSelector } from './dashboard/VPNModeSelector';
-import { ConnectionStatusCard } from './dashboard/ConnectionStatusCard';
-import SmartAutomationPanel from './dashboard/SmartAutomationPanel';
-import ComingSoonPanel from './dashboard/ComingSoonPanel';
-import PerformanceOptimizationPanel from './dashboard/PerformanceOptimizationPanel';
+  Play,
+  Square
+} from "lucide-react";
 
-type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
-type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
+import { useVPNSession } from "@/hooks/useVPNSession";
+import { useAuth } from "@/hooks/useAuth";
+import { VPNModeSelector } from "./dashboard/VPNModeSelector";
+import { ConnectionStatusCard } from "./dashboard/ConnectionStatusCard";
+import { ServerSelection } from "./ServerSelection";
+import { NetworkStatus } from "./NetworkStatus";
+import { AppTunneling } from "./AppTunneling";
+import { SmartAutomationPanel } from "./dashboard/SmartAutomationPanel";
+import { PerformanceOptimizationPanel } from "./dashboard/PerformanceOptimizationPanel";
+import { ComingSoonPanel } from "./dashboard/ComingSoonPanel";
+import { DeviceManagement } from "./DeviceManagement";
+import { PaymentsPage } from "./PaymentsPage";
+import { ConnectionHistory } from "./ConnectionHistory";
+import LanguageSelector from "./LanguageSelector";
 
 const VPNDashboard = () => {
-  const { user, logout, updateUser } = useAuth();
-  const { theme, setTheme } = useTheme();
-  const { t } = useTranslation();
-  const { subscribed, subscription_tier, is_trial, trial_end, hasAccess } = useSubscription();
-  const [vpnMode, setVpnMode] = useState<VPNMode>('off');
-  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
-  const [selectedServer, setSelectedServer] = useState('Auto');
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [supportOpen, setSupportOpen] = useState(false);
-  
-  const [supportMessage, setSupportMessage] = useState('');
-  const [avatarOpen, setAvatarOpen] = useState(false);
-  const [editingName, setEditingName] = useState(false);
-  const [tempName, setTempName] = useState(user?.fullName || '');
-  
-  // User data
-  const userReferrals = user?.referrals || 0;
-  const totalUsers = 847592;
-  const userReferralLink = `https://xxvpn.app/ref/${user?.id || 'unknown'}`;
+  const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const { 
+    isConnected, 
+    isConnecting, 
+    connectionMode, 
+    connect, 
+    disconnect, 
+    sessionData 
+  } = useVPNSession();
 
-  // Sync tempName with user's fullName when user changes
-  React.useEffect(() => {
-    setTempName(user?.fullName || '');
-  }, [user?.fullName]);
+  // Debug logging for translation issues
+  useEffect(() => {
+    console.log('VPNDashboard: Current language:', i18n.language);
+    console.log('VPNDashboard: Translation function available:', typeof t === 'function');
+    console.log('VPNDashboard: Sample translation test:', t('dashboard.title'));
+  }, [i18n.language, t]);
+
+  const [activeTab, setActiveTab] = useState("main");
+
+  const handleConnectionToggle = async () => {
+    try {
+      if (isConnected) {
+        await disconnect();
+        toast({
+          title: t("dashboard.status.disconnected"),
+          description: t("dashboard.connectionStatus.notProtected"),
+        });
+      } else {
+        await connect();
+        toast({
+          title: t("dashboard.status.connected"),
+          description: getConnectionStatusMessage(),
+        });
+      }
+    } catch (error) {
+      console.error('Connection toggle failed:', error);
+      toast({
+        title: t("common.error"),
+        description: "Connection failed. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getConnectionStatusMessage = () => {
+    console.log('Getting connection status message for mode:', connectionMode);
+    switch (connectionMode) {
+      case 'ultraFast':
+        return t("dashboard.connectionStatus.ultraFastActive");
+      case 'secure':
+        return t("dashboard.connectionStatus.secureActive");  
+      case 'ultraSecure':
+        return t("dashboard.connectionStatus.ultraSecureActive");
+      default:
+        return t("dashboard.connectionStatus.notProtected");
+    }
+  };
 
   const copyReferralLink = () => {
-    navigator.clipboard.writeText(userReferralLink);
+    const referralLink = `https://xxvpn.com/ref/${user?.id || 'demo'}`;
+    navigator.clipboard.writeText(referralLink);
+    console.log('Copying referral link, showing toast with text:', t("dashboard.referralLinkCopied"));
     toast({
-      title: t('dashboard.toasts.referralCopied'),
-      description: t('dashboard.toasts.referralCopiedDesc'),
+      title: t("dashboard.referralLinkCopied"),
+      description: t("dashboard.shareMessage"),
     });
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      toast({
-        title: t('dashboard.toasts.loggedOut'),
-        description: t('dashboard.toasts.loggedOutDesc'),
-      });
-      // Force immediate redirect if logout doesn't redirect automatically
-      setTimeout(() => {
-        if (window.location.pathname !== '/') {
-          window.location.href = '/';
-        }
-      }, 1000);
-    } catch (error) {
-      // Force redirect even if logout fails
-      window.location.href = '/';
-    }
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const connectVPN = (mode: VPNMode) => {
-    // Check if user is authenticated
-    if (!user) {
-      toast({
-        title: t('dashboard.toasts.authRequired'),
-        description: t('dashboard.toasts.authRequiredDesc'),
-        variant: "destructive",
-      });
-      setActiveTab('dashboard'); // Keep them on dashboard to see login prompt
-      return;
-    }
-
-    // Check subscription access for the requested mode
-    const requiredTier = mode === 'ultra-secure' ? 'business' : 'personal';
-    if (!hasAccess(requiredTier)) {
-      toast({
-        title: t('dashboard.toasts.subscriptionRequired'),
-        description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a subscription. Start your free trial to access this feature.`,
-        variant: "destructive",
-      });
-      setActiveTab('payments');
-      return;
-    }
-
-    // Proceed with connection if user has access
-    setConnectionStatus('connecting');
-    setVpnMode(mode);
-    
-    // Simulate connection
-    setTimeout(() => {
-      setConnectionStatus('connected');
-      toast({
-        title: t('dashboard.toasts.connected'),
-        description: `Successfully connected to ${mode} mode.`,
-      });
-    }, 2000);
+  const formatBytes = (bytes: number) => {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    if (bytes === 0) return '0 Bytes';
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
   };
 
-  const disconnectVPN = () => {
-    setConnectionStatus('disconnected');
-    setVpnMode('off');
-    toast({
-      title: t('dashboard.toasts.disconnected'),
-      description: t('dashboard.toasts.disconnectedDesc'),
-    });
-  };
-
-  const statusColors = {
-    connected: 'text-success',
-    connecting: 'text-warning',
-    disconnected: 'text-muted-foreground'
-  };
-
-  const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const avatarUrl = e.target?.result as string;
-        updateUser({ avatarUrl });
-        setAvatarOpen(false);
-        toast({
-          title: t('dashboard.toasts.avatarUpdated'),
-          description: t('dashboard.toasts.avatarUpdatedDesc')
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleNameSave = () => {
-    if (tempName.trim() && tempName !== user?.fullName) {
-      updateUser({ fullName: tempName.trim() });
-      toast({
-        title: t('dashboard.toasts.nameUpdated'),
-        description: t('dashboard.toasts.nameUpdatedDesc')
-      });
-    }
-    setEditingName(false);
-  };
-
-  const handleNameCancel = () => {
-    setTempName(user?.fullName || '');
-    setEditingName(false);
-  };
-
-  const statusText = {
-    connected: t('dashboard.status.connected'),
-    connecting: t('dashboard.status.connecting'),
-    disconnected: t('dashboard.status.disconnected')
-  };
+  console.log('VPNDashboard rendering with activeTab:', activeTab);
+  console.log('Available translations for tabs:', {
+    main: t('dashboard.tabs.main'),
+    servers: t('dashboard.tabs.servers'),
+    network: t('dashboard.tabs.network'),
+    apps: t('dashboard.tabs.apps'),
+    automation: t('dashboard.tabs.automation'),
+    performance: t('dashboard.tabs.performance'),
+    devices: t('dashboard.tabs.devices'),
+    payments: t('dashboard.tabs.payments'),
+    advanced: t('dashboard.tabs.advanced'),
+    settings: t('dashboard.tabs.settings'),
+    usage: t('dashboard.tabs.usage'),
+    history: t('dashboard.tabs.history')
+  });
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background Hero */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-quantum opacity-30" />
-      
-      {/* Main Content */}
-      <div className="relative z-10 container mx-auto p-6 space-y-6">
-      {/* Header */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <img src={shieldIcon} alt="xxVPN" className="w-12 h-12" />
-            <div>
-              <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
-                xxVPN
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {t('dashboard.welcomeBack')}, {user?.fullName || t('dashboard.defaultUserName')}
-              </p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="container mx-auto p-4 space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
+            <p className="text-muted-foreground">{t("dashboard.welcomeBack")}, {user?.name || t("dashboard.defaultUserName")}</p>
           </div>
-          <div className="flex items-center gap-3 overflow-x-auto">
-            {/* Referral Section */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer group">
-                  <CardContent className="flex items-center gap-3 p-3">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-primary" />
-                      <div className="text-xs">
-                        <div className="font-medium">{userReferrals} {t('dashboard.referrals.referrals')}</div>
-                        <div className="text-muted-foreground">{totalUsers.toLocaleString()} {t('dashboard.referrals.users')}</div>
-                      </div>
-                    </div>
-                    <ChevronDown className="w-3 h-3 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  </CardContent>
-                </Card>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 p-4">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-sm mb-2">{t('dashboard.referrals.program')}</h4>
-                    <div className="grid grid-cols-2 gap-4 text-xs">
-                      <div>
-                        <div className="text-muted-foreground">{t('dashboard.referrals.yourReferrals')}</div>
-                        <div className="font-semibold text-lg">{userReferrals}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground">{t('dashboard.referrals.totalUsers')}</div>
-                        <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground text-xs mb-2">{t('dashboard.referrals.yourLink')}</div>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded border">
-                      <code className="text-xs flex-1 truncate">{userReferralLink}</code>
-                      <Button size="sm" variant="ghost" onClick={copyReferralLink} className="h-6 w-6 p-0">
-                        <Copy className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {t('dashboard.referrals.shareMessage')}
-                  </p>
-                </div>
-              </PopoverContent>
-            </Popover>
-
-            <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
-              <Coins className="w-4 h-4 text-warning" />
-              <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
-            </div>
-            
-            <Badge variant="outline" className="bg-card/50">
-              {t('dashboard.auto')}
-            </Badge>
-
+          <div className="flex items-center gap-4">
             <LanguageSelector />
-
-            {/* User Menu */}
-            <div className="flex items-center gap-3">
-              {/* Clickable Avatar */}
-              <div 
-                className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
-                onClick={() => setAvatarOpen(true)}
-              >
-                {user?.avatarUrl ? (
-                  <img 
-                    src={user.avatarUrl} 
-                    alt="Profile" 
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
-                )}
-                <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <Camera className="w-3 h-3 text-white" />
-                </div>
-              </div>
-
-              {/* User Info Display/Edit */}
-              {editingName ? (
-                <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
-                  <Input
-                    value={tempName}
-                    onChange={(e) => setTempName(e.target.value)}
-                    className="h-6 text-sm px-2 w-32"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleNameSave();
-                      if (e.key === 'Escape') handleNameCancel();
-                    }}
-                    autoFocus
-                  />
-                  <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameSave}>
-                    <Check className="w-3 h-3" />
-                  </Button>
-                  <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={handleNameCancel}>
-                    <X className="w-3 h-3" />
-                  </Button>
-                </div>
-              ) : (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center gap-2 bg-card/50 hover:bg-card/70 px-3 py-2 h-auto group">
-                      <div className="text-left hidden sm:block">
-                        <div className="text-sm font-medium">{user?.fullName || t('dashboard.defaultUserName')}</div>
-                        <div className="text-xs text-muted-foreground">{t(`dashboard.subscriptionTier.${user?.subscriptionTier || 'free'}`)}</div>
-                      </div>
-                      <ChevronDown className="w-3 h-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-sm border-border">
-                  <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('settings')}>
-                    <Settings className="w-4 h-4 mr-2" />
-                    {t('settings.title')}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer" onClick={() => {
-                    setEditingName(true);
-                    setTempName(user?.fullName || '');
-                  }}>
-                    <Edit2 className="w-4 h-4 mr-2" />
-                    {t('dashboard.menu.editName')}
-                  </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => setSupportOpen(true)}>
-                  <HelpCircle className="w-4 h-4 mr-2" />
-                  {t('dashboard.menu.customerSupport')}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('devices')}>
-                  <Monitor className="w-4 h-4 mr-2" />
-                  {t('dashboard.menu.devices')}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => setActiveTab('payments')}>
-                  <CreditCard className="w-4 h-4 mr-2" />
-                  {t('dashboard.menu.payments')}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer text-destructive" onClick={handleLogout}>
-                  <LogOut className="w-4 h-4 mr-2" />
-                  {t('dashboard.menu.logout')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </div>
+            <Badge variant={isConnected ? "default" : "secondary"}>
+              {isConnected ? t("dashboard.status.connected") : t("dashboard.status.disconnected")}
+            </Badge>
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-10 bg-muted/50">
-            <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
-            <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
-            <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
-            <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
-            <TabsTrigger value="automation">{t('dashboard.tabs.automation')}</TabsTrigger>
-            <TabsTrigger value="performance">{t('dashboard.tabs.performance')}</TabsTrigger>
-            <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
-            <TabsTrigger value="payments">{t('dashboard.tabs.payments')}</TabsTrigger>
-            <TabsTrigger value="advanced">{t('dashboard.tabs.advanced')}</TabsTrigger>
-            <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
+        {/* Main Content */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12">
+            <TabsTrigger value="main">{t("dashboard.tabs.main")}</TabsTrigger>
+            <TabsTrigger value="servers">{t("dashboard.tabs.servers")}</TabsTrigger>
+            <TabsTrigger value="network">{t("dashboard.tabs.network")}</TabsTrigger>
+            <TabsTrigger value="apps">{t("dashboard.tabs.apps")}</TabsTrigger>
+            <TabsTrigger value="automation">{t("dashboard.tabs.automation")}</TabsTrigger>
+            <TabsTrigger value="performance">{t("dashboard.tabs.performance")}</TabsTrigger>
+            <TabsTrigger value="devices">{t("dashboard.tabs.devices")}</TabsTrigger>
+            <TabsTrigger value="payments">{t("dashboard.tabs.payments")}</TabsTrigger>
+            <TabsTrigger value="advanced">{t("dashboard.tabs.advanced")}</TabsTrigger>
+            <TabsTrigger value="settings">{t("dashboard.tabs.settings")}</TabsTrigger>
+            <TabsTrigger value="usage">{t("dashboard.tabs.usage")}</TabsTrigger>
+            <TabsTrigger value="history">{t("dashboard.tabs.history")}</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dashboard" className="space-y-6">
+          {/* Main Tab */}
+          <TabsContent value="main" className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {/* Connection Status */}
+              <ConnectionStatusCard 
+                isConnected={isConnected}
+                isConnecting={isConnecting}
+                connectionMode={connectionMode}
+                onToggle={handleConnectionToggle}
+              />
 
-        {/* Connection Status */}
-        <ConnectionStatusCard 
-          connectionStatus={connectionStatus}
-          vpnMode={vpnMode}
-          user={user}
-          subscribed={subscribed}
-        />
+              {/* VPN Mode Selector */}
+              <VPNModeSelector />
 
-        {/* VPN Mode Selection */}
-        <VPNModeSelector 
-          vpnMode={vpnMode}
-          onConnect={connectVPN}
-          onDisconnect={disconnectVPN}
-          onUpgrade={() => setActiveTab('payments')}
-        />
-
-        {/* Subscription Status */}
-        <SubscriptionStatus onManageSubscription={() => setActiveTab('payments')} />
-
-            {/* Real-time Status and Connection History */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              <RealTimeStatus />
-              <ConnectionHistory />
+              {/* Statistics */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Activity className="w-5 h-5" />
+                    {t("dashboard.statistics.title")}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>{t("dashboard.statistics.dataTransferred")}</span>
+                      <span className="font-medium">{formatBytes(sessionData.dataTransferred)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>{t("dashboard.statistics.sessionTime")}</span>
+                      <span className="font-medium">{formatTime(sessionData.sessionTime)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>{t("dashboard.statistics.networkLatency")}</span>
+                      <span className="font-medium">{sessionData.latency}ms</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>{t("dashboard.statistics.xxCoinsEarned")}</span>
+                      <span className="font-medium">{sessionData.xxCoinsEarned} XX</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
+
+            {/* Referral Program */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Gift className="w-5 h-5" />
+                  {t("dashboard.referrals.program")}
+                </CardTitle>
+                <CardDescription>
+                  {t("dashboard.referrals.shareMessage")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">12</div>
+                    <div className="text-sm text-muted-foreground">{t("dashboard.referrals.referrals")}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">847</div>
+                    <div className="text-sm text-muted-foreground">{t("dashboard.referrals.users")}</div>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <Button onClick={copyReferralLink} className="gap-2">
+                      <Copy className="w-4 h-4" />
+                      {t("dashboard.referrals.yourLink")}
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
-          <TabsContent value="servers" className="space-y-4">
-            <ServerSelection 
-              selectedServer={selectedServer}
-              onServerSelect={setSelectedServer}
-            />
+          <TabsContent value="servers">
+            <ServerSelection />
           </TabsContent>
 
-          <TabsContent value="network" className="space-y-6">
+          <TabsContent value="network">
             <NetworkStatus />
-            <KillSwitchSettings />
-            <CustomDNS />
           </TabsContent>
 
-          <TabsContent value="apps" className="space-y-4">
+          <TabsContent value="apps">
             <AppTunneling />
           </TabsContent>
 
-          <TabsContent value="automation" className="space-y-4">
+          <TabsContent value="automation">
             <SmartAutomationPanel />
           </TabsContent>
 
-          <TabsContent value="performance" className="space-y-4">
+          <TabsContent value="performance">
             <PerformanceOptimizationPanel />
           </TabsContent>
 
-          <TabsContent value="devices" className="space-y-4">
+          <TabsContent value="devices">
             <DeviceManagement />
-            <BandwidthMonitoring />
           </TabsContent>
 
-          <TabsContent value="payments" className="space-y-4">
+          <TabsContent value="payments">
             <PaymentsPage />
           </TabsContent>
 
-          <TabsContent value="advanced" className="space-y-4">
+          <TabsContent value="advanced">
             <ComingSoonPanel />
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-4">
-            <UserProfile />
+          <TabsContent value="settings">
+            <ComingSoonPanel />
+          </TabsContent>
+
+          <TabsContent value="usage">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("dashboard.usage.todaysUsage")}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm font-medium">{t("dashboard.usage.ultraFastMode")}</span>
+                      <span className="text-sm text-muted-foreground">2.4 GB</span>
+                    </div>
+                    <Progress value={65} />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm font-medium">{t("dashboard.usage.secureMode")}</span>
+                      <span className="text-sm text-muted-foreground">1.8 GB</span>
+                    </div>
+                    <Progress value={45} />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm font-medium">{t("dashboard.usage.ultraSecureMode")}</span>
+                      <span className="text-sm text-muted-foreground">0.5 GB</span>
+                    </div>
+                    <Progress value={15} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="history">
+            <ConnectionHistory />
           </TabsContent>
         </Tabs>
-
-        {/* Quick Connect Button - Enhanced with animations */}
-        {connectionStatus === 'disconnected' && activeTab === 'dashboard' && user && subscribed && (
-          <div className="fixed bottom-6 right-6 animate-float">
-            <Button 
-              size="lg" 
-              className="rounded-full w-16 h-16 gradient-primary shadow-quantum hover-lift hover:shadow-neural transition-all duration-300"
-              onClick={() => connectVPN('secure')}
-              title="Quick connect to Secure mode"
-            >
-              <Shield className="w-6 h-6" />
-            </Button>
-          </div>
-        )}
       </div>
-
-      {/* Customer Support Modal */}
-      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
-        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <HelpCircle className="w-5 h-5 text-primary" />
-              Customer Support
-            </DialogTitle>
-            <DialogDescription>
-              Need help? Send us a message and we'll get back to you within 24 hours.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <Textarea
-              placeholder="Describe your issue or question..."
-              value={supportMessage}
-              onChange={(e) => setSupportMessage(e.target.value)}
-              className="min-h-[100px]"
-            />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setSupportOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={() => {
-                toast({
-                  title: t('dashboard.toasts.supportTicketCreated'),
-                  description: t('dashboard.toasts.supportTicketCreatedDesc')
-                });
-                setSupportMessage('');
-                setSupportOpen(false);
-              }}>
-                Send Message
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-
-      {/* Avatar Upload Modal */}
-      <Dialog open={avatarOpen} onOpenChange={setAvatarOpen}>
-        <DialogContent className="bg-card/95 backdrop-blur-sm border-border max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Camera className="w-5 h-5 text-primary" />
-              Update Profile Picture
-            </DialogTitle>
-            <DialogDescription>
-              Upload a new profile picture or remove your current one.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-6">
-            <div className="flex justify-center">
-              <div className="relative w-24 h-24 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-2xl">
-                {user?.avatarUrl ? (
-                  <img 
-                    src={user.avatarUrl} 
-                    alt="Current avatar" 
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  user?.fullName?.split(' ').map(name => name[0]).join('') || 'U'
-                )}
-              </div>
-            </div>
-            
-            <div className="grid gap-3">
-              <label htmlFor="avatar-upload">
-                <Button asChild className="w-full">
-                  <div className="cursor-pointer">
-                    <Upload className="w-4 h-4 mr-2" />
-                    Upload New Picture
-                  </div>
-                </Button>
-                <input
-                  id="avatar-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarUpload}
-                  className="hidden"
-                />
-              </label>
-              
-              {user?.avatarUrl && (
-                <Button 
-                  variant="outline" 
-                  onClick={() => {
-                    updateUser({ avatarUrl: undefined });
-                    setAvatarOpen(false);
-                    toast({
-                      title: t('dashboard.toasts.avatarRemoved'),
-                      description: t('dashboard.toasts.avatarRemovedDesc')
-                    });
-                  }}
-                >
-                  Remove Current Picture
-                </Button>
-              )}
-              
-              <Button variant="outline" onClick={() => setAvatarOpen(false)}>
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

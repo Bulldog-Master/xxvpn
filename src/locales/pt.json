@@ -1,7 +1,10 @@
+
 {
   "dashboard": {
     "title": "Painel xxVPN",
     "welcomeBack": "Bem-vindo de volta",
+    "referralLinkCopied": "Link de indicação copiado!",
+    "shareMessage": "Compartilhe seu link de indicação para ganhar XX coins!",
     "status": {
       "connected": "Conectado",
       "connecting": "Conectando...",
