@@ -104,8 +104,8 @@ const VPNDashboard = () => {
   const copyReferralLink = () => {
     navigator.clipboard.writeText(userReferralLink);
     toast({
-      title: "Referral link copied!",
-      description: "Share it with friends to earn XX coins.",
+      title: t('dashboard.toasts.referralCopied'),
+      description: t('dashboard.toasts.referralCopiedDesc'),
     });
   };
 
@@ -113,8 +113,8 @@ const VPNDashboard = () => {
     try {
       await logout();
       toast({
-        title: "Logged out successfully",
-        description: "See you soon!",
+        title: t('dashboard.toasts.loggedOut'),
+        description: t('dashboard.toasts.loggedOutDesc'),
       });
       // Force immediate redirect if logout doesn't redirect automatically
       setTimeout(() => {
@@ -132,8 +132,8 @@ const VPNDashboard = () => {
     // Check if user is authenticated
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please sign in to use VPN features.",
+        title: t('dashboard.toasts.authRequired'),
+        description: t('dashboard.toasts.authRequiredDesc'),
         variant: "destructive",
       });
       setActiveTab('dashboard'); // Keep them on dashboard to see login prompt
@@ -144,7 +144,7 @@ const VPNDashboard = () => {
     const requiredTier = mode === 'ultra-secure' ? 'business' : 'personal';
     if (!hasAccess(requiredTier)) {
       toast({
-        title: "Subscription Required",
+        title: t('dashboard.toasts.subscriptionRequired'),
         description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a subscription. Start your free trial to access this feature.`,
         variant: "destructive",
       });
@@ -160,7 +160,7 @@ const VPNDashboard = () => {
     setTimeout(() => {
       setConnectionStatus('connected');
       toast({
-        title: "Connected",
+        title: t('dashboard.toasts.connected'),
         description: `Successfully connected to ${mode} mode.`,
       });
     }, 2000);
@@ -170,8 +170,8 @@ const VPNDashboard = () => {
     setConnectionStatus('disconnected');
     setVpnMode('off');
     toast({
-      title: "Disconnected",
-      description: "VPN connection has been terminated.",
+      title: t('dashboard.toasts.disconnected'),
+      description: t('dashboard.toasts.disconnectedDesc'),
     });
   };
 
@@ -190,8 +190,8 @@ const VPNDashboard = () => {
         updateUser({ avatarUrl });
         setAvatarOpen(false);
         toast({
-          title: "Avatar updated",
-          description: "Your profile picture has been updated successfully."
+          title: t('dashboard.toasts.avatarUpdated'),
+          description: t('dashboard.toasts.avatarUpdatedDesc')
         });
       };
       reader.readAsDataURL(file);
@@ -202,8 +202,8 @@ const VPNDashboard = () => {
     if (tempName.trim() && tempName !== user?.fullName) {
       updateUser({ fullName: tempName.trim() });
       toast({
-        title: "Name updated",
-        description: "Your display name has been updated successfully."
+        title: t('dashboard.toasts.nameUpdated'),
+        description: t('dashboard.toasts.nameUpdatedDesc')
       });
     }
     setEditingName(false);
@@ -517,8 +517,8 @@ const VPNDashboard = () => {
               </Button>
               <Button onClick={() => {
                 toast({
-                  title: "Support ticket created",
-                  description: "We'll get back to you within 24 hours!"
+                  title: t('dashboard.toasts.supportTicketCreated'),
+                  description: t('dashboard.toasts.supportTicketCreatedDesc')
                 });
                 setSupportMessage('');
                 setSupportOpen(false);
@@ -582,8 +582,8 @@ const VPNDashboard = () => {
                     updateUser({ avatarUrl: undefined });
                     setAvatarOpen(false);
                     toast({
-                      title: "Avatar removed",
-                      description: "Your profile picture has been removed."
+                      title: t('dashboard.toasts.avatarRemoved'),
+                      description: t('dashboard.toasts.avatarRemovedDesc')
                     });
                   }}
                 >

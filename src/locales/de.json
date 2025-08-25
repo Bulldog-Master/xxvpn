@@ -43,8 +43,11 @@
       "servers": "Server", 
       "network": "Netzwerk",
       "apps": "Apps",
+      "automation": "KI-Automatisierung",
+      "performance": "Leistung",
       "devices": "Geräte",
       "payments": "Zahlungen",
+      "advanced": "Erweitert",
       "settings": "Einstellungen",
       "usage": "Nutzung",
       "history": "Verlauf"
