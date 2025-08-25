@@ -398,11 +398,11 @@ const VPNDashboard = () => {
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
-            <TabsTrigger value="automation">AI Automation</TabsTrigger>
-            <TabsTrigger value="performance">Performance</TabsTrigger>
+            <TabsTrigger value="automation">{t('dashboard.tabs.automation')}</TabsTrigger>
+            <TabsTrigger value="performance">{t('dashboard.tabs.performance')}</TabsTrigger>
             <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
             <TabsTrigger value="payments">{t('dashboard.tabs.payments')}</TabsTrigger>
-            <TabsTrigger value="advanced">Advanced</TabsTrigger>
+            <TabsTrigger value="advanced">{t('dashboard.tabs.advanced')}</TabsTrigger>
             <TabsTrigger value="settings">{t('dashboard.tabs.settings')}</TabsTrigger>
           </TabsList>
 

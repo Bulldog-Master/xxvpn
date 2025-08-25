@@ -43,8 +43,11 @@
       "servers": "Serveurs", 
       "network": "Réseau",
       "apps": "Applications",
+      "automation": "Automatisation IA",
+      "performance": "Performance",
       "devices": "Appareils",
       "payments": "Paiements",
+      "advanced": "Avancé",
       "settings": "Paramètres",
       "usage": "Utilisation",
       "history": "Historique"
