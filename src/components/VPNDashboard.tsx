@@ -157,20 +157,63 @@ const VPNDashboard = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-6">
             <TabsTrigger value="main">{t("dashboard.tabs.main")}</TabsTrigger>
             <TabsTrigger value="servers">{t("dashboard.tabs.servers")}</TabsTrigger>
             <TabsTrigger value="network">{t("dashboard.tabs.network")}</TabsTrigger>
             <TabsTrigger value="apps">{t("dashboard.tabs.apps")}</TabsTrigger>
             <TabsTrigger value="automation">{t("dashboard.tabs.automation")}</TabsTrigger>
             <TabsTrigger value="performance">{t("dashboard.tabs.performance")}</TabsTrigger>
-            <TabsTrigger value="devices">{t("dashboard.tabs.devices")}</TabsTrigger>
-            <TabsTrigger value="payments">{t("dashboard.tabs.payments")}</TabsTrigger>
-            <TabsTrigger value="advanced">{t("dashboard.tabs.advanced")}</TabsTrigger>
-            <TabsTrigger value="settings">{t("dashboard.tabs.settings")}</TabsTrigger>
-            <TabsTrigger value="usage">{t("dashboard.tabs.usage")}</TabsTrigger>
-            <TabsTrigger value="history">{t("dashboard.tabs.history")}</TabsTrigger>
           </TabsList>
+          
+          <div className="mt-4">
+            <ScrollArea className="w-full">
+              <div className="flex gap-2 pb-2">
+                <Button 
+                  variant={activeTab === "devices" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("devices")}
+                >
+                  {t("dashboard.tabs.devices")}
+                </Button>
+                <Button 
+                  variant={activeTab === "payments" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("payments")}
+                >
+                  {t("dashboard.tabs.payments")}
+                </Button>
+                <Button 
+                  variant={activeTab === "advanced" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("advanced")}
+                >
+                  {t("dashboard.tabs.advanced")}
+                </Button>
+                <Button 
+                  variant={activeTab === "settings" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("settings")}
+                >
+                  {t("dashboard.tabs.settings")}
+                </Button>
+                <Button 
+                  variant={activeTab === "usage" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("usage")}
+                >
+                  {t("dashboard.tabs.usage")}
+                </Button>
+                <Button 
+                  variant={activeTab === "history" ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setActiveTab("history")}
+                >
+                  {t("dashboard.tabs.history")}
+                </Button>
+              </div>
+            </ScrollArea>
+          </div>
 
           {/* Main Tab */}
           <TabsContent value="main" className="space-y-6">

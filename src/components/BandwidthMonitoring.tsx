@@ -19,7 +19,7 @@ import {
   Wifi,
   Globe
 } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 
 interface BandwidthData {
   time: string;
@@ -93,7 +93,6 @@ export const BandwidthMonitoring: React.FC = () => {
   const [speedTestPhase, setSpeedTestPhase] = useState<'ping' | 'download' | 'upload' | 'complete'>('ping');
   const [currentSpeedTest, setCurrentSpeedTest] = useState<Partial<SpeedTestResult>>({});
   const [speedTestHistory, setSpeedTestHistory] = useState<SpeedTestResult[]>(mockSpeedTests);
-  const { toast } = useToast();
 
   const currentDownload = bandwidthData[bandwidthData.length - 1]?.download || 0;
   const currentUpload = bandwidthData[bandwidthData.length - 1]?.upload || 0;

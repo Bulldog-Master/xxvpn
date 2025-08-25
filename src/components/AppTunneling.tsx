@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Plus, Globe, Shield, Zap, Chrome, MessageSquare, Download, Music } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 
 interface App {
   id: string;
@@ -30,7 +30,6 @@ export const AppTunneling: React.FC = () => {
   const [newAppName, setNewAppName] = useState('');
   const [splitTunnelingEnabled, setSplitTunnelingEnabled] = useState(false);
   const [tunnelingMode, setTunnelingMode] = useState<'include' | 'exclude'>('include');
-  const { toast } = useToast();
 
   const filteredApps = apps.filter(app =>
     app.name.toLowerCase().includes(searchTerm.toLowerCase())
