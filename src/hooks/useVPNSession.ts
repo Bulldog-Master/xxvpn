@@ -12,6 +12,10 @@ interface SessionConfig {
 
 export const useVPNSession = () => {
   const [loading, setLoading] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionMode, setConnectionMode] = useState<'ultraFast' | 'secure' | 'ultraSecure'>('secure');
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const { user } = useAuth();
 
   const startSession = async (config: SessionConfig) => {
@@ -120,10 +124,47 @@ export const useVPNSession = () => {
     }
   };
 
+  const connect = async () => {
+    setIsConnecting(true);
+    try {
+      const sessionData = await startSession({
+        serverName: 'Auto-Selected Server',
+        serverLocation: 'New York, USA',
+        deviceName: 'Browser Client',
+        connectionQuality: 'good'
+      });
+      setCurrentSessionId(sessionData.id);
+      setIsConnected(true);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const disconnect = async () => {
+    if (currentSessionId) {
+      await endSession(currentSessionId);
+      setCurrentSessionId(null);
+    }
+    setIsConnected(false);
+  };
+
+  const sessionData = {
+    dataTransferred: 2547891456, // 2.4 GB
+    sessionTime: 3847, // ~1 hour
+    latency: 23,
+    xxCoinsEarned: 45
+  };
+
   return {
     startSession,
     endSession,
     updateSessionStats,
-    loading
+    loading,
+    isConnected,
+    isConnecting,
+    connectionMode,
+    connect,
+    disconnect,
+    sessionData
   };
 };

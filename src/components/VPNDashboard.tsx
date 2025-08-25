@@ -28,13 +28,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { VPNModeSelector } from "./dashboard/VPNModeSelector";
 import { ConnectionStatusCard } from "./dashboard/ConnectionStatusCard";
 import { ServerSelection } from "./ServerSelection";
-import { NetworkStatus } from "./NetworkStatus";
+import NetworkStatus from "./NetworkStatus";
 import { AppTunneling } from "./AppTunneling";
-import { SmartAutomationPanel } from "./dashboard/SmartAutomationPanel";
-import { PerformanceOptimizationPanel } from "./dashboard/PerformanceOptimizationPanel";
-import { ComingSoonPanel } from "./dashboard/ComingSoonPanel";
-import { DeviceManagement } from "./DeviceManagement";
-import { PaymentsPage } from "./PaymentsPage";
+import SmartAutomationPanel from "./dashboard/SmartAutomationPanel";
+import PerformanceOptimizationPanel from "./dashboard/PerformanceOptimizationPanel";
+import ComingSoonPanel from "./dashboard/ComingSoonPanel";
+import DeviceManagement from "./DeviceManagement";
+import PaymentsPage from "./PaymentsPage";
 import { ConnectionHistory } from "./ConnectionHistory";
 import LanguageSelector from "./LanguageSelector";
 
@@ -145,7 +145,7 @@ const VPNDashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
-            <p className="text-muted-foreground">{t("dashboard.welcomeBack")}, {user?.name || t("dashboard.defaultUserName")}</p>
+            <p className="text-muted-foreground">{t("dashboard.welcomeBack")}, {user?.email?.split('@')[0] || t("dashboard.defaultUserName")}</p>
           </div>
           <div className="flex items-center gap-4">
             <LanguageSelector />
@@ -177,14 +177,19 @@ const VPNDashboard = () => {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {/* Connection Status */}
               <ConnectionStatusCard 
-                isConnected={isConnected}
-                isConnecting={isConnecting}
-                connectionMode={connectionMode}
-                onToggle={handleConnectionToggle}
+                connectionStatus={isConnected ? 'connected' : isConnecting ? 'connecting' : 'disconnected'}
+                vpnMode={connectionMode === 'ultraFast' ? 'ultra-fast' : connectionMode === 'secure' ? 'secure' : 'ultra-secure'}
+                user={user}
+                subscribed={true}
               />
 
               {/* VPN Mode Selector */}
-              <VPNModeSelector />
+              <VPNModeSelector 
+                vpnMode={connectionMode === 'ultraFast' ? 'ultra-fast' : connectionMode === 'secure' ? 'secure' : 'ultra-secure'}
+                onConnect={connect}
+                onDisconnect={disconnect}
+                onUpgrade={() => {}}
+              />
 
               {/* Statistics */}
               <Card>
@@ -250,7 +255,10 @@ const VPNDashboard = () => {
           </TabsContent>
 
           <TabsContent value="servers">
-            <ServerSelection />
+            <ServerSelection 
+              selectedServer="ny-1"
+              onServerSelect={() => {}}
+            />
           </TabsContent>
 
           <TabsContent value="network">
