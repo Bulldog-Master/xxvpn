@@ -1,6 +1,12 @@
 {
   "languages": [
     {
+      "code": "en",
+      "name": "English",
+      "nativeName": "English",
+      "flag": "🇺🇸"
+    },
+    {
       "code": "ar",
       "name": "Arabic",
       "nativeName": "العربية",
@@ -17,12 +23,6 @@
       "name": "Danish",
       "nativeName": "Dansk",
       "flag": "🇩🇰"
-    },
-    {
-      "code": "en",
-      "name": "English",
-      "nativeName": "English",
-      "flag": "🇺🇸"
     },
     {
       "code": "fr",
