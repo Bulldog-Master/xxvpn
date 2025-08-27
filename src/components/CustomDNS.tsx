@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Shield, Globe, Zap, Check, X, Plus, Trash2, AlertTriangle, CheckCircle } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 interface DNSServer {
   id: string;
@@ -87,6 +87,7 @@ export const CustomDNS: React.FC = () => {
   const [newPrimary, setNewPrimary] = useState('');
   const [newSecondary, setNewSecondary] = useState('');
   const [newName, setNewName] = useState('');
+  const { toast } = useToast();
 
   const currentDNS = [...presetDNSServers, ...customDNSServers].find(dns => dns.id === selectedDNS);
   const enabledBlockLists = blockLists.filter(list => list.enabled);

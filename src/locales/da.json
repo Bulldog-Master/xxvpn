@@ -2,8 +2,6 @@
   "dashboard": {
     "title": "xxVPN Dashboard",
     "welcomeBack": "Velkommen tilbage",
-    "referralLinkCopied": "Henvisnings link kopieret!",
-    "shareMessage": "Del dit henvisnings link for at tjene XX coins!",
     "status": {
       "connected": "Forbundet",
       "connecting": "Forbinder...",
@@ -45,11 +43,8 @@
       "servers": "Servere", 
       "network": "Netværk",
       "apps": "Apps",
-      "automation": "AI Automatisering",
-      "performance": "Performance",
       "devices": "Enheder",
       "payments": "Betalinger",
-      "advanced": "Avanceret",
       "settings": "Indstillinger",
       "usage": "Forbrug",
       "history": "Historik"

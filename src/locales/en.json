@@ -43,11 +43,8 @@
       "servers": "Servers", 
       "network": "Network",
       "apps": "Applications",
-      "automation": "AI Automation",
-      "performance": "Performance",
       "devices": "Devices",
       "payments": "Payments",
-      "advanced": "Advanced",
       "settings": "Settings",
       "usage": "Usage",
       "history": "History"
@@ -90,26 +87,6 @@
       "free": "Free",
       "premium": "Premium", 
       "enterprise": "Enterprise"
-    },
-    "toasts": {
-      "referralCopied": "Referral link copied!",
-      "referralCopiedDesc": "Share it with friends to earn XX coins.",
-      "loggedOut": "Logged out successfully",
-      "loggedOutDesc": "See you soon!",
-      "authRequired": "Authentication Required",
-      "authRequiredDesc": "Please sign in to use VPN features.",
-      "subscriptionRequired": "Subscription Required",
-      "connected": "Connected",
-      "disconnected": "Disconnected",
-      "disconnectedDesc": "VPN connection has been terminated.",
-      "avatarUpdated": "Avatar updated",
-      "avatarUpdatedDesc": "Your profile picture has been updated successfully.",
-      "nameUpdated": "Name updated",
-      "nameUpdatedDesc": "Your display name has been updated successfully.",
-      "supportTicketCreated": "Support ticket created",
-      "supportTicketCreatedDesc": "We'll get back to you within 24 hours!",
-      "avatarRemoved": "Avatar removed",
-      "avatarRemovedDesc": "Your profile picture has been removed."
     }
   },
   "auth": {

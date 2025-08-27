@@ -43,11 +43,8 @@
       "servers": "Serveurs", 
       "network": "Réseau",
       "apps": "Applications",
-      "automation": "Automatisation IA",
-      "performance": "Performance",
       "devices": "Appareils",
       "payments": "Paiements",
-      "advanced": "Avancé",
       "settings": "Paramètres",
       "usage": "Utilisation",
       "history": "Historique"
@@ -90,16 +87,7 @@
       "free": "Gratuit",
       "premium": "Premium", 
       "enterprise": "Entreprise"
-    },
-    "toasts": {
-      "referralCopied": "Lien de parrainage copié !",
-      "referralCopiedDesc": "Partagez-le avec des amis pour gagner des XX coins.",
-      "connected": "Connecté",
-      "disconnected": "Déconnecté",
-      "disconnectedDesc": "La connexion VPN a été interrompue."
-    },
-    "referralLinkCopied": "Lien de parrainage copié !",
-    "shareMessage": "Partagez-le avec des amis pour gagner des XX coins."
+    }
   },
   "auth": {
     "title": "Bienvenue sur xxVPN",

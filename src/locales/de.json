@@ -2,8 +2,6 @@
   "dashboard": {
     "title": "xxVPN Dashboard",
     "welcomeBack": "Willkommen zurück",
-    "referralLinkCopied": "Empfehlungslink kopiert!",
-    "shareMessage": "Teilen Sie Ihren Empfehlungslink um XX Coins zu verdienen!",
     "status": {
       "connected": "Verbunden",
       "connecting": "Verbindung wird hergestellt...",
@@ -45,11 +43,8 @@
       "servers": "Server", 
       "network": "Netzwerk",
       "apps": "Apps",
-      "automation": "KI-Automatisierung",
-      "performance": "Leistung",
       "devices": "Geräte",
       "payments": "Zahlungen",
-      "advanced": "Erweitert",
       "settings": "Einstellungen",
       "usage": "Nutzung",
       "history": "Verlauf"
@@ -92,16 +87,7 @@
       "free": "Kostenlos",
       "premium": "Premium", 
       "enterprise": "Unternehmen"
-    },
-    "toasts": {
-      "referralCopied": "Empfehlungslink kopiert!",
-      "referralCopiedDesc": "Teilen Sie ihn mit Freunden, um XX-Coins zu verdienen.",
-      "connected": "Verbunden",
-      "disconnected": "Getrennt",
-      "disconnectedDesc": "VPN-Verbindung wurde beendet."
-    },
-    "referralLinkCopied": "Empfehlungslink kopiert!",
-    "shareMessage": "Teilen Sie ihn mit Freunden, um XX-Coins zu verdienen."
+    }
   },
   "auth": {
     "title": "Willkommen bei xxVPN",

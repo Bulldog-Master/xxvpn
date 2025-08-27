@@ -1,10 +1,7 @@
-
 {
   "dashboard": {
     "title": "xxVPN Paneli",
     "welcomeBack": "Tekrar hoş geldiniz",
-    "referralLinkCopied": "Yönlendirme bağlantısı kopyalandı!",
-    "shareMessage": "XX coin kazanmak için yönlendirme bağlantınızı paylaşın!",
     "status": {
       "connected": "Bağlı",
       "connecting": "Bağlanıyor...",
@@ -46,11 +43,8 @@
       "servers": "Sunucular", 
       "network": "Ağ",
       "apps": "Uygulamalar",
-      "automation": "AI Otomasyonu",
-      "performance": "Performans",
       "devices": "Cihazlar",
       "payments": "Ödemeler",
-      "advanced": "Gelişmiş",
       "settings": "Ayarlar",
       "usage": "Kullanım",
       "history": "Geçmiş"

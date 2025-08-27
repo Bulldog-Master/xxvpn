@@ -43,11 +43,8 @@
       "servers": "サーバー", 
       "network": "ネットワーク",
       "apps": "アプリ",
-      "automation": "AI自動化",
-      "performance": "パフォーマンス",
       "devices": "デバイス",
       "payments": "支払い",
-      "advanced": "高度",
       "settings": "設定",
       "usage": "使用量",
       "history": "履歴"
@@ -90,16 +87,7 @@
       "free": "無料",
       "premium": "プレミアム", 
       "enterprise": "エンタープライズ"
-    },
-    "toasts": {
-      "referralCopied": "紹介リンクがコピーされました！",
-      "referralCopiedDesc": "友達と共有してXXコインを獲得しましょう。",
-      "connected": "接続済み",
-      "disconnected": "切断済み",
-      "disconnectedDesc": "VPN接続が終了しました。"
-    },
-    "referralLinkCopied": "紹介リンクがコピーされました！",
-    "shareMessage": "友達と共有してXXコインを獲得しましょう。"
+    }
   },
   "auth": {
     "title": "xxVPNへようこそ",

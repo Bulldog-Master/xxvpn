@@ -43,11 +43,8 @@
       "servers": "Servidores", 
       "network": "Red",
       "apps": "Aplicaciones",
-      "automation": "Automatización IA",
-      "performance": "Rendimiento",
       "devices": "Dispositivos",
       "payments": "Pagos",
-      "advanced": "Avanzado",
       "settings": "Configuración",
       "usage": "Uso",
       "history": "Historial"
@@ -90,16 +87,7 @@
       "free": "Gratuito",
       "premium": "Premium", 
       "enterprise": "Empresarial"
-    },
-    "toasts": {
-      "referralCopied": "¡Enlace de referencia copiado!",
-      "referralCopiedDesc": "Compártelo con amigos para ganar XX coins.",
-      "connected": "Conectado",
-      "disconnected": "Desconectado",
-      "disconnectedDesc": "La conexión VPN ha sido terminada."
-    },
-    "referralLinkCopied": "¡Enlace de referencia copiado!",
-    "shareMessage": "Compártelo con amigos para ganar XX coins."
+    }
   },
   "settings": {
     "title": "Configuración",
@@ -127,10 +115,6 @@
       "nodeContribution": "Contribución de Nodo",
       "nodeContributionDesc": "Permitir que tu dispositivo contribuya a la mixnet",
       "currentBalance": "Saldo Actual"
-    },
-    "language": {
-      "title": "Idioma",
-      "description": "Elige tu idioma preferido"
     }
   },
   "servers": {
@@ -168,21 +152,6 @@
     "warning": "Advertencia",
     "error": "Error",
     "success": "Éxito"
-  },
-  "auth": {
-    "title": "Bienvenido a xxVPN",
-    "subtitle": "Protección VPN segura, privada y resistente a cuánticos",
-    "welcome": "Bienvenido a xxVPN",
-    "signIn": "Iniciar Sesión",
-    "signUp": "Registrarse",
-    "email": "Correo",
-    "password": "Contraseña",
-    "confirmPassword": "Confirmar Contraseña",
-    "forgotPassword": "¿Olvidaste tu contraseña?",
-    "noAccount": "¿No tienes una cuenta?",
-    "hasAccount": "¿Ya tienes una cuenta?",
-    "signInWithGoogle": "Iniciar sesión con Google",
-    "signUpWithGoogle": "Registrarse con Google"
   },
   "payments": {
     "title": "Pagos",
