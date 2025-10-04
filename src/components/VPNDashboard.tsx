@@ -72,6 +72,8 @@ import SmartAutomationPanel from './dashboard/SmartAutomationPanel';
 import ComingSoonPanel from './dashboard/ComingSoonPanel';
 import PerformanceOptimizationPanel from './dashboard/PerformanceOptimizationPanel';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import { XXNetworkStatus } from './XXNetworkStatus';
+import { XXNetworkInfoPanel } from './dashboard/XXNetworkInfoPanel';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -451,11 +453,17 @@ const VPNDashboard = () => {
         {/* Subscription Status */}
         <SubscriptionStatus onManageSubscription={() => setActiveTab('payments')} />
 
-            {/* Real-time Status and Connection History */}
+            {/* xx Network Status + Connection History */}
             <div className="grid lg:grid-cols-2 gap-6">
+              <XXNetworkStatus />
               <RealTimeStatus />
-              <ConnectionHistory />
             </div>
+
+            {/* Connection History */}
+            <ConnectionHistory />
+
+            {/* xx Network Info */}
+            <XXNetworkInfoPanel />
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
