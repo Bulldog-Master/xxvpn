@@ -3,11 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Check, Crown } from 'lucide-react';
+import { Check, Crown, Coins } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { CryptoPaymentModal } from './CryptoPaymentModal';
 
 export interface SubscriptionPlan {
   id: string;
@@ -32,6 +33,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const { user } = useAuth();
   const { toast } = useToast();
   const { subscription_tier, is_trial, subscribed, startTrial, loading } = useSubscription();
+  const [cryptoModalOpen, setCryptoModalOpen] = useState(false);
+  const [selectedCryptoPlan, setSelectedCryptoPlan] = useState<SubscriptionPlan | null>(null);
 
   const personalPlans: SubscriptionPlan[] = [
     {
@@ -246,18 +249,36 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
               ))}
             </ul>
 
-            <Button
-              variant={isCurrentPlan(plan) ? "default" : "outline"}
-              className="w-full"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleStartTrial(plan);
-              }}
-              disabled={loading || isCurrentPlan(plan)}
-            >
-              {getButtonText(plan)}
-            </Button>
+            <div className="space-y-2">
+              <Button
+                variant={isCurrentPlan(plan) ? "default" : "outline"}
+                className="w-full"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleStartTrial(plan);
+                }}
+                disabled={loading || isCurrentPlan(plan)}
+              >
+                {getButtonText(plan)}
+              </Button>
+              
+              {!isCurrentPlan(plan) && (
+                <Button
+                  variant="ghost"
+                  className="w-full"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCryptoPlan(plan);
+                    setCryptoModalOpen(true);
+                  }}
+                >
+                  <Coins className="w-4 h-4 mr-2" />
+                  Pay with Crypto
+                </Button>
+              )}
+            </div>
           </CardContent>
         </Card>
       ))}
@@ -291,6 +312,18 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
       <div className="text-center text-sm text-muted-foreground">
         <p>All plans include a 7-day free trial. Cancel anytime during the trial period without charge.</p>
       </div>
+
+      {selectedCryptoPlan && (
+        <CryptoPaymentModal
+          open={cryptoModalOpen}
+          onOpenChange={setCryptoModalOpen}
+          plan={{
+            name: selectedCryptoPlan.name,
+            price: selectedCryptoPlan.price / 100,
+            interval: selectedCryptoPlan.duration
+          }}
+        />
+      )}
     </div>
   );
 };
