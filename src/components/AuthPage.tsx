@@ -19,7 +19,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cleanupAuthState } from '@/utils/authHelpers';
 import { checkTwoFactorRequirement } from '@/services/twoFactorAuthService';
 
-type AuthMethod = 'email' | 'magic-link' | 'google' | 'passphrase' | 'passkey';
+type AuthMethod = 'magic-link' | 'google' | 'passphrase' | 'passkey';
 
 const AuthPage = () => {
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, resetPassword, loading } = useAuth();
@@ -27,7 +27,7 @@ const AuthPage = () => {
   const { t } = useTranslation();
   
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('email');
+  const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('magic-link');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -52,14 +52,6 @@ const AuthPage = () => {
   };
 
   const authMethods = [
-    {
-      id: 'email' as const,
-      name: 'Email & Password',
-      description: 'Traditional email and password authentication',
-      icon: Mail,
-      available: true,
-      recommended: false,
-    },
     {
       id: 'magic-link' as const,
       name: 'Magic Link',
@@ -133,36 +125,15 @@ const AuthPage = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedMethod === 'google' || !email || (!password && selectedMethod === 'email')) {
+    if (selectedMethod === 'google' || !email) {
       if (selectedMethod !== 'google' && !email) return;
-      if (selectedMethod === 'email' && !password) return;
-    }
-
-    // Check password confirmation for email signup
-    if (selectedMethod === 'email' && password !== confirmPassword) {
-      setError('Passwords do not match. Please check and try again.');
-      return;
     }
 
     setIsLoading(true);
     setError('');
 
     try {
-      if (selectedMethod === 'email') {
-        const data = await signUpWithEmail(email, password, fullName);
-        
-        // For legitimate new signups, we get a user object even without session
-        // Only flag as duplicate if we get no user at all
-        if (!data.user) {
-          setError('An account with this email already exists. Please sign in instead.');
-          return;
-        }
-
-        toast({
-          title: 'Account created successfully!',
-          description: 'Please check your email to verify your account.',
-        });
-      } else if (selectedMethod === 'magic-link') {
+      if (selectedMethod === 'magic-link') {
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
         toast({
@@ -225,8 +196,8 @@ const AuthPage = () => {
   const handleSignIn = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
-    if (!email || (!password && selectedMethod === 'email')) {
-      setError('Please enter both email and password');
+    if (!email) {
+      setError('Please enter your email');
       return;
     }
 
@@ -234,17 +205,12 @@ const AuthPage = () => {
     setError('');
 
     try {
-      if (selectedMethod === 'magic-link') {
-        await signInWithMagicLink(email);
-        setMagicLinkSent(true);
-        toast({
-          title: 'Magic link sent!',
-          description: 'Check your email for the sign-in link.',
-        });
-      } else {
-        // Simple email/password sign in
-        await signIn(email, password);
-      }
+      await signInWithMagicLink(email);
+      setMagicLinkSent(true);
+      toast({
+        title: 'Magic link sent!',
+        description: 'Check your email for the sign-in link.',
+      });
     } catch (error: any) {
       console.error('❌ Sign in error:', error);
       setError(error.message || 'Failed to sign in');
@@ -389,54 +355,16 @@ const AuthPage = () => {
                         />
                       </div>
 
-                      {selectedMethod === 'email' && (
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <Label htmlFor="signin-password">Password</Label>
-                            <button
-                              type="button"
-                              onClick={() => setShowForgotPassword(true)}
-                              className="text-xs text-primary hover:underline"
-                            >
-                              Forgot Password?
-                            </button>
-                          </div>
-                           <div className="relative">
-                             <Input
-                               id="signin-password"
-                               type={showPassword ? "text" : "password"}
-                               value={password}
-                               onChange={(e) => setPassword(e.target.value)}
-                               placeholder="Enter your password"
-                               required
-                               className="pr-10"
-                             />
-                             <button
-                               type="button"
-                               onClick={() => setShowPassword(!showPassword)}
-                               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                             >
-                               {showPassword ? (
-                                 <EyeOff className="w-4 h-4" />
-                               ) : (
-                                 <Eye className="w-4 h-4" />
-                               )}
-                             </button>
-                           </div>
-                        </div>
-                      )}
-
                       <div className="space-y-2">
-
                         <Button
                           onClick={handleSignIn}
-                          disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                          disabled={isLoading || !email}
                           className="w-full"
                         >
                           {isLoading ? (
                             <Loader2 className="w-4 h-4 animate-spin mr-2" />
                           ) : null}
-                          {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Sign In'}
+                          Send Magic Link
                         </Button>
                       </div>
                     </>
@@ -483,71 +411,15 @@ const AuthPage = () => {
                         />
                       </div>
 
-                      {selectedMethod === 'email' && (
-                        <>
-                          <div className="space-y-2">
-                            <Label htmlFor="signup-password">Password</Label>
-                            <div className="relative">
-                              <Input
-                                id="signup-password"
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Create a password"
-                                required
-                                className="pr-10"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                              >
-                                {showPassword ? (
-                                  <EyeOff className="w-4 h-4" />
-                                ) : (
-                                  <Eye className="w-4 h-4" />
-                                )}
-                              </button>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <Label htmlFor="confirm-password">Confirm Password</Label>
-                            <div className="relative">
-                              <Input
-                                id="confirm-password"
-                                type={showConfirmPassword ? "text" : "password"}
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Confirm your password"
-                                required
-                                className="pr-10"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                              >
-                                {showConfirmPassword ? (
-                                  <EyeOff className="w-4 h-4" />
-                                ) : (
-                                  <Eye className="w-4 h-4" />
-                                )}
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      )}
-
                       <Button
                         type="submit"
                         className="w-full"
-                        disabled={isLoading || !email || (selectedMethod === 'email' && !password)}
+                        disabled={isLoading || !email}
                       >
                         {isLoading ? (
                           <Loader2 className="w-4 h-4 animate-spin mr-2" />
                         ) : null}
-                        {selectedMethod === 'magic-link' ? 'Send Magic Link' : 'Create Account'}
+                        Send Magic Link
                       </Button>
                     </>
                   )}
