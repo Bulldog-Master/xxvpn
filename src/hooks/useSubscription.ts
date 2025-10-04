@@ -32,8 +32,8 @@ export const useSubscription = () => {
       const { data, error } = await supabase
         .from('subscribers')
         .select('*')
-        .eq('email', user.email)
-        .single();
+        .eq('user_id', user.id)
+        .maybeSingle();
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error checking subscription:', error);

@@ -71,12 +71,14 @@ import { ConnectionStatusCard } from './dashboard/ConnectionStatusCard';
 import SmartAutomationPanel from './dashboard/SmartAutomationPanel';
 import ComingSoonPanel from './dashboard/ComingSoonPanel';
 import PerformanceOptimizationPanel from './dashboard/PerformanceOptimizationPanel';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
 
 const VPNDashboard = () => {
   const { user, logout, updateUser } = useAuth();
+  const { isOnline } = useNetworkStatus();
   const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
   const { subscribed, subscription_tier, is_trial, trial_end, hasAccess } = useSubscription();
@@ -129,6 +131,16 @@ const VPNDashboard = () => {
   };
 
   const connectVPN = (mode: VPNMode) => {
+    // Check network connection
+    if (!isOnline) {
+      toast({
+        title: "No Internet Connection",
+        description: "Please check your network connection and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // Check if user is authenticated
     if (!user) {
       toast({
@@ -136,7 +148,7 @@ const VPNDashboard = () => {
         description: "Please sign in to use VPN features.",
         variant: "destructive",
       });
-      setActiveTab('dashboard'); // Keep them on dashboard to see login prompt
+      setActiveTab('dashboard');
       return;
     }
 
@@ -231,6 +243,18 @@ const VPNDashboard = () => {
       
       {/* Main Content */}
       <div className="relative z-10 container mx-auto p-6 space-y-6">
+        {/* Offline Warning */}
+        {!isOnline && (
+          <Card className="bg-destructive/10 border-destructive/50">
+            <CardContent className="flex items-center gap-3 p-4">
+              <Wifi className="w-5 h-5 text-destructive" />
+              <p className="text-sm text-destructive font-medium">
+                No internet connection. VPN features are unavailable.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
       {/* Header */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
