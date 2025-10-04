@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
@@ -53,6 +53,96 @@ export type Database = {
         }
         Relationships: []
       }
+      governance_proposals: {
+        Row: {
+          created_at: string | null
+          description: string
+          end_time: string
+          execution_data: string | null
+          id: string
+          proposal_type: string
+          proposer: string
+          quorum: number
+          status: string
+          title: string
+          votes_abstain: number | null
+          votes_against: number | null
+          votes_for: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          end_time: string
+          execution_data?: string | null
+          id?: string
+          proposal_type: string
+          proposer: string
+          quorum: number
+          status?: string
+          title: string
+          votes_abstain?: number | null
+          votes_against?: number | null
+          votes_for?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          end_time?: string
+          execution_data?: string | null
+          id?: string
+          proposal_type?: string
+          proposer?: string
+          quorum?: number
+          status?: string
+          title?: string
+          votes_abstain?: number | null
+          votes_against?: number | null
+          votes_for?: number | null
+        }
+        Relationships: []
+      }
+      node_operators: {
+        Row: {
+          bandwidth: number
+          created_at: string | null
+          id: string
+          location: string
+          node_id: string
+          reputation_score: number
+          staked_amount: number
+          status: string
+          total_uptime: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          bandwidth: number
+          created_at?: string | null
+          id?: string
+          location: string
+          node_id: string
+          reputation_score?: number
+          staked_amount?: number
+          status?: string
+          total_uptime?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          bandwidth?: number
+          created_at?: string | null
+          id?: string
+          location?: string
+          node_id?: string
+          reputation_score?: number
+          staked_amount?: number
+          status?: string
+          total_uptime?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -89,6 +179,74 @@ export type Database = {
           updated_at?: string
           user_id?: string
           xx_coin_balance?: number
+        }
+        Relationships: []
+      }
+      proposal_votes: {
+        Row: {
+          created_at: string | null
+          id: string
+          proposal_id: string
+          support: string
+          voter: string
+          voting_power: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          proposal_id: string
+          support: string
+          voter: string
+          voting_power: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          proposal_id?: string
+          support?: string
+          voter?: string
+          voting_power?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposal_votes_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "governance_proposals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staking_positions: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          lock_period: number
+          node_id: string | null
+          rewards_claimed: number | null
+          unstaked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          lock_period: number
+          node_id?: string | null
+          rewards_claimed?: number | null
+          unstaked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          lock_period?: number
+          node_id?: string | null
+          rewards_claimed?: number | null
+          unstaked_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -263,6 +421,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_vote_count: {
+        Args: { p_amount: number; p_field: string; p_proposal_id: string }
+        Returns: undefined
       }
     }
     Enums: {
