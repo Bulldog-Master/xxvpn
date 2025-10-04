@@ -101,48 +101,6 @@ export type Database = {
         }
         Relationships: []
       }
-      node_operators: {
-        Row: {
-          bandwidth: number
-          created_at: string | null
-          id: string
-          location: string
-          node_id: string
-          reputation_score: number
-          staked_amount: number
-          status: string
-          total_uptime: number | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          bandwidth: number
-          created_at?: string | null
-          id?: string
-          location: string
-          node_id: string
-          reputation_score?: number
-          staked_amount?: number
-          status?: string
-          total_uptime?: number | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          bandwidth?: number
-          created_at?: string | null
-          id?: string
-          location?: string
-          node_id?: string
-          reputation_score?: number
-          staked_amount?: number
-          status?: string
-          total_uptime?: number | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -216,39 +174,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      staking_positions: {
-        Row: {
-          amount: number
-          created_at: string | null
-          id: string
-          lock_period: number
-          node_id: string | null
-          rewards_claimed: number | null
-          unstaked_at: string | null
-          user_id: string
-        }
-        Insert: {
-          amount: number
-          created_at?: string | null
-          id?: string
-          lock_period: number
-          node_id?: string | null
-          rewards_claimed?: number | null
-          unstaked_at?: string | null
-          user_id: string
-        }
-        Update: {
-          amount?: number
-          created_at?: string | null
-          id?: string
-          lock_period?: number
-          node_id?: string | null
-          rewards_claimed?: number | null
-          unstaked_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
       }
       subscribers: {
         Row: {

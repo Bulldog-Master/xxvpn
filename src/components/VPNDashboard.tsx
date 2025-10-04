@@ -74,6 +74,7 @@ import PerformanceOptimizationPanel from './dashboard/PerformanceOptimizationPan
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { XXNetworkStatus } from './XXNetworkStatus';
 import { XXNetworkInfoPanel } from './dashboard/XXNetworkInfoPanel';
+import { DAOGovernance } from './dashboard/DAOGovernance';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -419,13 +420,14 @@ const VPNDashboard = () => {
 
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-10 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-11 bg-muted/50">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
             <TabsTrigger value="automation">AI Automation</TabsTrigger>
             <TabsTrigger value="performance">Performance</TabsTrigger>
+            <TabsTrigger value="governance">DAO</TabsTrigger>
             <TabsTrigger value="devices">{t('dashboard.tabs.devices')}</TabsTrigger>
             <TabsTrigger value="payments">{t('dashboard.tabs.payments')}</TabsTrigger>
             <TabsTrigger value="advanced">Advanced</TabsTrigger>
@@ -498,6 +500,10 @@ const VPNDashboard = () => {
 
           <TabsContent value="payments" className="space-y-4">
             <PaymentsPage />
+          </TabsContent>
+
+          <TabsContent value="governance" className="space-y-4">
+            <DAOGovernance />
           </TabsContent>
 
           <TabsContent value="advanced" className="space-y-4">
