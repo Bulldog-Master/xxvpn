@@ -160,7 +160,6 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       });
 
       // Verify the token with a larger time window for clock drift
-      // Try validation with different time windows to account for clock drift
       let validationResult = null;
       for (let window = 1; window <= 3; window++) {
         validationResult = totp.validate({ token: verificationCode, window });
@@ -178,16 +177,38 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
         return;
       }
 
-      // Save to database using session user ID
-      const { error } = await supabase
+      // Encrypt the secret before storing
+      const { data: encryptData, error: encryptError } = await supabase.functions.invoke(
+        'encrypt-totp-secret',
+        {
+          body: { action: 'encrypt', secret }
+        }
+      );
+
+      if (encryptError) throw encryptError;
+      const encryptedSecret = encryptData.encrypted;
+
+      // Save encrypted secret to user_security_secrets table
+      const { error: secretError } = await supabase
+        .from('user_security_secrets')
+        .upsert({
+          user_id: session?.user?.id,
+          encrypted_totp_secret: encryptedSecret,
+        }, {
+          onConflict: 'user_id'
+        });
+
+      if (secretError) throw secretError;
+
+      // Update profile to mark 2FA as enabled
+      const { error: profileError } = await supabase
         .from('profiles')
         .update({
-          totp_secret: secret,
           totp_enabled: true,
         })
         .eq('user_id', session?.user?.id);
 
-      if (error) throw error;
+      if (profileError) throw profileError;
 
       toast({
         title: 'Success',
@@ -212,15 +233,23 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   const disable2FA = async () => {
     setIsDisabling(true);
     try {
-      const { error } = await supabase
+      // Remove encrypted secret from user_security_secrets
+      const { error: secretError } = await supabase
+        .from('user_security_secrets')
+        .delete()
+        .eq('user_id', session?.user?.id);
+
+      if (secretError) throw secretError;
+
+      // Update profile to disable 2FA
+      const { error: profileError } = await supabase
         .from('profiles')
         .update({
-          totp_secret: null,
           totp_enabled: false,
         })
         .eq('user_id', session?.user?.id);
 
-      if (error) throw error;
+      if (profileError) throw profileError;
 
       toast({
         title: 'Success',

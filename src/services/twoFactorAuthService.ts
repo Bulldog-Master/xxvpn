@@ -102,7 +102,7 @@ export const verifyTwoFactorAndSignIn = async (
     
     const userId = authData.user!.id;
     
-    // Step 2: Get TOTP secret and verify
+    // Step 2: Get encrypted TOTP secret
     const { data: secretData, error: secretError } = await supabase
       .from('user_security_secrets')
       .select('encrypted_totp_secret')
@@ -115,14 +115,32 @@ export const verifyTwoFactorAndSignIn = async (
       throw new Error('2FA is enabled but TOTP secret is missing');
     }
     
-    // Step 3: Verify TOTP code (WARNING: Secret should be decrypted in production!)
+    // Step 3: Decrypt the TOTP secret using Edge Function
+    const { data: decryptData, error: decryptError } = await supabase.functions.invoke(
+      'encrypt-totp-secret',
+      {
+        body: { 
+          action: 'decrypt', 
+          secret: secretData.encrypted_totp_secret 
+        }
+      }
+    );
+
+    if (decryptError || !decryptData?.decrypted) {
+      await supabase.auth.signOut();
+      throw new Error('Failed to decrypt 2FA secret');
+    }
+
+    const decryptedSecret = decryptData.decrypted;
+    
+    // Step 4: Verify TOTP code with decrypted secret
     const totp = new TOTP({
       issuer: 'xxVPN',
       label: email,
       algorithm: 'SHA1',
       digits: 6,
       period: 30,
-      secret: secretData.encrypted_totp_secret, // TODO: Decrypt this secret first!
+      secret: decryptedSecret,
     });
 
     let validationResult = null;

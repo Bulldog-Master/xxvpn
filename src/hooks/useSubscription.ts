@@ -81,28 +81,19 @@ export const useSubscription = () => {
       throw new Error('User not authenticated');
     }
 
-    const trialEnd = new Date();
-    trialEnd.setDate(trialEnd.getDate() + 7); // 7 day trial
-
     try {
-      const { error } = await supabase
-        .from('subscribers')
-        .upsert({
-          user_id: user.id,
-          email: user.email,
-          subscription_tier: tier,
-          trial_end: trialEnd.toISOString(),
-          is_trial: true,
-          subscribed: true,
-          updated_at: new Date().toISOString(),
-        }, { 
-          onConflict: 'email' 
-        });
+      // Use server-side Edge Function for trial management
+      const { data, error } = await supabase.functions.invoke('manage-subscription', {
+        body: { 
+          action: 'start-trial',
+          tier 
+        }
+      });
 
       if (error) throw error;
 
       await checkSubscription();
-      return { success: true };
+      return { success: true, message: data.message };
     } catch (error) {
       console.error('Error starting trial:', error);
       return { success: false, error };
