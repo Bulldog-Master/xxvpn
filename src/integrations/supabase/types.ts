@@ -95,7 +95,6 @@ export type Database = {
       subscribers: {
         Row: {
           created_at: string
-          email: string
           id: string
           is_trial: boolean
           stripe_customer_id: string | null
@@ -108,7 +107,6 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          email: string
           id?: string
           is_trial?: boolean
           stripe_customer_id?: string | null
@@ -121,7 +119,6 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          email?: string
           id?: string
           is_trial?: boolean
           stripe_customer_id?: string | null
