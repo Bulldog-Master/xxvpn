@@ -100,12 +100,12 @@ const GooglePayButton = ({
           parameters: {
             gateway: 'stripe',
             'stripe:version': '2018-10-31',
-            'stripe:publishableKey': 'pk_test_your_key_here' // Replace with your Stripe publishable key
+            'stripe:publishableKey': import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || ''
           }
         }
       }],
       merchantInfo: {
-        merchantId: 'YOUR_MERCHANT_ID', // Replace with your Google Pay merchant ID
+        merchantId: import.meta.env.VITE_GOOGLE_PAY_MERCHANT_ID || '',
         merchantName: 'xxVPN'
       },
       transactionInfo: {

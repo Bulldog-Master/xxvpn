@@ -100,80 +100,16 @@ export const resetPassword = async (email: string) => {
   return { success: true };
 };
 
+// DEPRECATED: Passphrase authentication removed for security
+// Use proper authentication methods instead
 export const signInWithPassphraseService = async (passphrase: string): Promise<{ user: User; session: MockSession }> => {
-  // Validate passphrase (24 words)
-  const words = passphrase.trim().split(/\s+/);
-  if (words.length !== 24) {
-    throw new Error('Passphrase must contain exactly 24 words');
-  }
-  
-  // Store passphrase for reference (not for auto-login)
-  localStorage.setItem('auth_passphrase', btoa(passphrase));
-  // ONLY set authenticated flag after successful authentication
-  localStorage.setItem('authenticated_passphrase', 'true');
-  
-  // Create a user for passphrase auth (in production, validate against backend)
-  const passphraseUser: User = {
-    id: 'passphrase_' + Date.now(),
-    email: 'passphrase@xxvpn.local',
-    fullName: 'Passphrase User',
-    avatarUrl: '',
-    subscriptionTier: 'premium' as const,
-    xxCoinBalance: 50,
-    referrals: 0,
-  };
-  
-  // Create a session
-  const session: MockSession = {
-    access_token: 'passphrase_token',
-    refresh_token: 'refresh_token',
-    expires_in: 3600,
-    expires_at: Date.now() + 3600000,
-    user: {
-      id: passphraseUser.id,
-      email: passphraseUser.email,
-      user_metadata: {
-        full_name: passphraseUser.fullName,
-      }
-    }
-  };
-  
-  return { user: passphraseUser, session };
+  throw new Error('Passphrase authentication has been disabled for security reasons. Please use email/password or other secure authentication methods.');
 };
 
+// DEPRECATED: Mock WebAuthn authentication removed for security
+// Implement proper server-side WebAuthn validation instead
 export const signInWithWebAuthnService = async (credential: any): Promise<{ user: User; session: MockSession }> => {
-  // In production, validate the credential on your backend
-  
-  // ONLY set authenticated flag after successful authentication
-  localStorage.setItem('authenticated_webauthn', 'true');
-  
-  // Create a user for WebAuthn auth
-  const webauthnUser: User = {
-    id: 'webauthn_' + Date.now(),
-    email: 'webauthn@xxvpn.local',
-    fullName: 'WebAuthn User',
-    avatarUrl: '',
-    subscriptionTier: 'enterprise' as const,
-    xxCoinBalance: 100,
-    referrals: 0,
-  };
-  
-  // Create a session
-  const session: MockSession = {
-    access_token: 'webauthn_token',
-    refresh_token: 'refresh_token',
-    expires_in: 3600,
-    expires_at: Date.now() + 3600000,
-    user: {
-      id: webauthnUser.id,
-      email: webauthnUser.email,
-      user_metadata: {
-        full_name: webauthnUser.fullName,
-      }
-    }
-  };
-  
-  return { user: webauthnUser, session };
+  throw new Error('WebAuthn authentication requires proper backend implementation. Mock authentication has been disabled for security.');
 };
 
 export const signOutService = async () => {

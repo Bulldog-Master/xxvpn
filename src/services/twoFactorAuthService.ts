@@ -6,38 +6,38 @@ export interface TwoFactorAuthResult {
   userId?: string;
 }
 
-// Store credentials in localStorage during 2FA flow for better persistence
-const PENDING_AUTH_KEY = 'xxvpn_pending_2fa_auth';
+// SECURITY: Never store passwords in localStorage - use session-based challenges instead
+// Store only temporary challenge tokens
+const PENDING_2FA_CHALLENGE_KEY = 'xxvpn_2fa_challenge';
 
-const setPendingAuth = (auth: { email: string; password: string; userId: string }) => {
-  localStorage.setItem(PENDING_AUTH_KEY, JSON.stringify(auth));
+const setPending2FAChallenge = (challengeToken: string) => {
+  // Store only a temporary token, expires in 5 minutes
+  const challenge = {
+    token: challengeToken,
+    expiresAt: Date.now() + (5 * 60 * 1000)
+  };
+  sessionStorage.setItem(PENDING_2FA_CHALLENGE_KEY, JSON.stringify(challenge));
 };
 
-export const getPendingAuth = (): { email: string; password: string; userId: string } | null => {
-  const stored = localStorage.getItem(PENDING_AUTH_KEY);
-  return stored ? JSON.parse(stored) : null;
+export const getPending2FAChallenge = (): string | null => {
+  const stored = sessionStorage.getItem(PENDING_2FA_CHALLENGE_KEY);
+  if (!stored) return null;
+  
+  const challenge = JSON.parse(stored);
+  if (Date.now() > challenge.expiresAt) {
+    clearPending2FAChallenge();
+    return null;
+  }
+  return challenge.token;
 };
 
-const clearPendingAuth = () => {
-  localStorage.removeItem(PENDING_AUTH_KEY);
+const clearPending2FAChallenge = () => {
+  sessionStorage.removeItem(PENDING_2FA_CHALLENGE_KEY);
 };
 
 export const checkTwoFactorRequirement = async (email: string, password: string): Promise<TwoFactorAuthResult> => {
-  // Store credentials for 2FA verification
-  const tempUserId = 'pending_' + email;
-  setPendingAuth({ email, password, userId: tempUserId });
-  
-  // Always assume 2FA required to avoid any auth operations
-  return { requiresTwoFactor: true, userId: tempUserId };
-};
-
-export const verifyTwoFactorAndSignIn = async (
-  email: string, 
-  password: string, 
-  totpCode: string
-): Promise<void> => {
   try {
-    // Step 1: Validate credentials first (but don't sign in yet)
+    // Test credentials without signing in
     const { data: testAuth, error: testError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -49,10 +49,10 @@ export const verifyTwoFactorAndSignIn = async (
     
     const userId = testAuth.user!.id;
     
-    // Immediately sign out to prevent dashboard flash
+    // Immediately sign out
     await supabase.auth.signOut();
     
-    // Step 2: Check if user has 2FA enabled
+    // Check if user has 2FA enabled
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('totp_enabled')
@@ -61,19 +61,48 @@ export const verifyTwoFactorAndSignIn = async (
 
     if (profileError) throw profileError;
     
-    // Step 3: If no 2FA, sign in normally
-    if (!profile.totp_enabled) {
-      // If 2FA is not enabled, sign in normally
-      const { error: finalSignInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (finalSignInError) throw finalSignInError;
-      clearPendingAuth();
-      return;
+    if (profile.totp_enabled) {
+      // Create a temporary challenge token instead of storing password
+      const challengeToken = crypto.randomUUID();
+      setPending2FAChallenge(challengeToken);
+      return { requiresTwoFactor: true, userId };
     }
+    
+    // No 2FA required, sign in normally
+    await supabase.auth.signInWithPassword({ email, password });
+    return { requiresTwoFactor: false };
+    
+  } catch (error) {
+    clearPending2FAChallenge();
+    throw error;
+  }
+};
 
-    // Get TOTP secret from secure table
+export const verifyTwoFactorAndSignIn = async (
+  email: string, 
+  password: string, 
+  totpCode: string
+): Promise<void> => {
+  try {
+    // Verify challenge token exists
+    const challengeToken = getPending2FAChallenge();
+    if (!challengeToken) {
+      throw new Error('2FA challenge expired. Please sign in again.');
+    }
+    
+    // Step 1: Validate credentials (single sign-in attempt)
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (authError) {
+      throw new Error('Invalid email or password');
+    }
+    
+    const userId = authData.user!.id;
+    
+    // Step 2: Get TOTP secret and verify
     const { data: secretData, error: secretError } = await supabase
       .from('user_security_secrets')
       .select('encrypted_totp_secret')
@@ -81,17 +110,19 @@ export const verifyTwoFactorAndSignIn = async (
       .single();
 
     if (secretError || !secretData?.encrypted_totp_secret) {
+      // Sign out if secret is missing
+      await supabase.auth.signOut();
       throw new Error('2FA is enabled but TOTP secret is missing');
     }
     
-    // Step 4: Verify TOTP code
+    // Step 3: Verify TOTP code (WARNING: Secret should be decrypted in production!)
     const totp = new TOTP({
       issuer: 'xxVPN',
       label: email,
       algorithm: 'SHA1',
       digits: 6,
       period: 30,
-      secret: secretData.encrypted_totp_secret, // In production, decrypt this first
+      secret: secretData.encrypted_totp_secret, // TODO: Decrypt this secret first!
     });
 
     let validationResult = null;
@@ -107,22 +138,16 @@ export const verifyTwoFactorAndSignIn = async (
     }
 
     if (validationResult === null) {
+      // TOTP verification failed - sign out
+      await supabase.auth.signOut();
       throw new Error('Invalid verification code. Please try again.');
     }
 
-    // Step 5: Sign in for real since everything is validated
-    const { error: finalAuthError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (finalAuthError) throw finalAuthError;
-    
-    // Clear pending auth
-    clearPendingAuth();
+    // Success! User is already signed in from step 1
+    clearPending2FAChallenge();
     
   } catch (error) {
-    clearPendingAuth();
+    clearPending2FAChallenge();
     
     // Make sure we're signed out on any error
     try {
@@ -135,7 +160,7 @@ export const verifyTwoFactorAndSignIn = async (
   }
 };
 
-// Clear pending auth when needed
+// Clear pending 2FA challenge when needed
 export const clearPendingAuthState = () => {
-  clearPendingAuth();
+  clearPending2FAChallenge();
 };

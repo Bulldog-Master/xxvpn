@@ -19,7 +19,9 @@ export const cleanupAuthState = () => {
     localStorage.removeItem('authenticated_webauthn');
     localStorage.removeItem('auth_passphrase');
     localStorage.removeItem('webauthn_credentials');
-    localStorage.removeItem('xxvpn_pending_2fa_auth');
+    
+    // Clear 2FA challenge from sessionStorage
+    sessionStorage.removeItem('xxvpn_2fa_challenge');
     
     // Remove from sessionStorage if in use
     Object.keys(sessionStorage || {}).forEach((key) => {
@@ -96,34 +98,13 @@ export const createImmediateUser = (user: SupabaseUser): User => {
   };
 };
 
+// DEPRECATED: Mock authentication removed for security
 export const checkAlternativeAuth = (): User | null => {
-  // Only check for AUTHENTICATED sessions, not just stored credentials
-  const authenticatedPassphrase = localStorage.getItem('authenticated_passphrase');
-  if (authenticatedPassphrase) {
-    return {
-      id: 'passphrase_user',
-      email: 'passphrase@xxvpn.local',
-      fullName: 'Passphrase User',
-      avatarUrl: '',
-      subscriptionTier: 'premium' as const,
-      xxCoinBalance: 50,
-      referrals: 0,
-    };
-  }
-
-  // Only check for AUTHENTICATED WebAuthn sessions
-  const authenticatedWebAuthn = localStorage.getItem('authenticated_webauthn');
-  if (authenticatedWebAuthn) {
-    return {
-      id: 'webauthn_user',
-      email: 'webauthn@xxvpn.local',
-      fullName: 'WebAuthn User',
-      avatarUrl: '',
-      subscriptionTier: 'enterprise' as const,
-      xxCoinBalance: 100,
-      referrals: 0,
-    };
-  }
-
+  // Clear any legacy auth flags
+  localStorage.removeItem('authenticated_passphrase');
+  localStorage.removeItem('authenticated_webauthn');
+  localStorage.removeItem('auth_passphrase');
+  localStorage.removeItem('webauthn_credentials');
+  
   return null;
 };
