@@ -25,7 +25,7 @@ export const DAOGovernance = () => {
   const [newProposal, setNewProposal] = useState({
     title: '',
     description: '',
-    type: 'parameter' as const,
+    type: 'pricing' as const,
   });
 
   const handleCreateProposal = async () => {
@@ -38,15 +38,15 @@ export const DAOGovernance = () => {
         newProposal.type
       );
       setCreateDialogOpen(false);
-      setNewProposal({ title: '', description: '', type: 'parameter' });
+      setNewProposal({ title: '', description: '', type: 'pricing' });
     } catch (error) {
       console.error('Failed to create proposal:', error);
     }
   };
 
   const handleVote = async (proposalId: string, support: 'for' | 'against' | 'abstain') => {
-    // In production, this would check user's XX token balance
-    const votingPower = 1000; // Mock 1000 XX tokens
+    // In production, this would check user's DAO token balance
+    const votingPower = 1000; // Mock 1000 DAO tokens
     await vote(proposalId, support, votingPower);
   };
 
@@ -87,9 +87,9 @@ export const DAOGovernance = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>DAO Governance</CardTitle>
+              <CardTitle>VPN Service DAO</CardTitle>
               <CardDescription>
-                Community-driven protocol governance via xxChain
+                Community governance for xxVPN service decisions and treasury
               </CardDescription>
             </div>
             <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
@@ -101,9 +101,9 @@ export const DAOGovernance = () => {
               </DialogTrigger>
               <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                  <DialogTitle>Create Governance Proposal</DialogTitle>
+                  <DialogTitle>Create VPN Service Proposal</DialogTitle>
                   <DialogDescription>
-                    Propose changes to the protocol. Requires minimum stake to create.
+                    Propose changes to xxVPN service. Community votes with DAO tokens.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
@@ -126,10 +126,11 @@ export const DAOGovernance = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="parameter">Parameter Change</SelectItem>
-                        <SelectItem value="upgrade">Protocol Upgrade</SelectItem>
+                        <SelectItem value="pricing">Pricing & Subscription</SelectItem>
+                        <SelectItem value="feature">New Feature</SelectItem>
                         <SelectItem value="treasury">Treasury Allocation</SelectItem>
-                        <SelectItem value="node">Node Management</SelectItem>
+                        <SelectItem value="server">Server Selection</SelectItem>
+                        <SelectItem value="partnership">Partnership</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -205,9 +206,9 @@ export const DAOGovernance = () => {
                     </span>
                   </div>
                   <Progress value={Math.min(100, progress)} className="h-2" />
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>
-                      {(proposal.votesFor + proposal.votesAgainst).toLocaleString()} / {proposal.quorum.toLocaleString()} XX
+                      {(proposal.votesFor + proposal.votesAgainst).toLocaleString()} / {proposal.quorum.toLocaleString()} DAO tokens
                     </span>
                     <div className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
