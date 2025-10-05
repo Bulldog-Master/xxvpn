@@ -1,5 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
-import { ErrorLogger } from '@/utils/errorLogger';
+import { logError } from '@/utils/errorLogger';
 
 // xxChain Configuration
 export const XXCHAIN_CONFIG = {
@@ -111,12 +111,13 @@ export class XXWalletService {
         walletType: 'metamask',
       };
     } catch (error) {
+      logError({
+        type: 'wallet_connection_error',
+        message: 'Failed to connect MetaMask',
+        error,
+        context: { walletType: 'metamask', action: 'connect' },
+      });
       console.error('Failed to connect MetaMask:', error);
-      await ErrorLogger.logWalletError(
-        error instanceof Error ? error : new Error(String(error)),
-        'metamask',
-        { action: 'connect' }
-      );
       throw new Error('Failed to connect MetaMask. Please try again.');
     }
   }
@@ -160,12 +161,13 @@ export class XXWalletService {
         walletType: 'xx-wallet',
       };
     } catch (error) {
+      logError({
+        type: 'wallet_connection_error',
+        message: 'Failed to connect xx wallet',
+        error,
+        context: { walletType: 'xx-wallet', action: 'connect' },
+      });
       console.error('Failed to connect xx wallet:', error);
-      await ErrorLogger.logWalletError(
-        error instanceof Error ? error : new Error(String(error)),
-        'xx-wallet',
-        { action: 'connect' }
-      );
       throw new Error('Failed to connect xx wallet. Please try again.');
     }
   }
@@ -264,11 +266,13 @@ export class XXWalletService {
 
       return txHash;
     } catch (error) {
+      logError({
+        type: 'payment_error',
+        message: 'Subscription transaction failed',
+        error,
+        context: { action: 'subscribe', months, walletAddress },
+      });
       console.error('Subscription failed:', error);
-      await ErrorLogger.logPaymentError(
-        error instanceof Error ? error : new Error(String(error)),
-        { action: 'subscribe', months, walletAddress }
-      );
       throw new Error('Subscription transaction failed. Please try again.');
     }
   }

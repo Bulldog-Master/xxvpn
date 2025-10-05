@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { logError } from '@/utils/errorLogger';
 
 export interface XXNetworkConfig {
   ndf: string;

@@ -1,51 +1,53 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Shield, Zap, Lock, Network, CheckCircle2, ArrowLeft } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { Shield, Zap, Lock, Check, Rocket } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
 const betaSignupSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
-  referralSource: z.string().optional(),
+  email: z.string().email('Please enter a valid email address'),
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
 });
 
 export default function BetaSignup() {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     name: '',
     referralSource: '',
   });
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [interestedFeatures, setInterestedFeatures] = useState<string[]>([]);
 
   const features = [
-    { id: 'ultra-secure', label: 'Ultra-Secure Mode (Quantum-Resistant P2P)', icon: Shield },
-    { id: 'xx-payments', label: 'XX Token Payments', icon: Zap },
-    { id: 'dao-governance', label: 'DAO Governance', icon: Network },
-    { id: 'privacy-features', label: 'Advanced Privacy Features', icon: Lock },
+    {
+      icon: Shield,
+      title: 'Ultra-Secure Mode',
+      description: 'Quantum-resistant P2P encryption via xx network cMixx',
+    },
+    {
+      icon: Zap,
+      title: 'Ultra-Fast Mode',
+      description: 'Direct connections for maximum speed',
+    },
+    {
+      icon: Lock,
+      title: 'XX Token Payments',
+      description: 'Pay with cryptocurrency for true privacy',
+    },
   ];
-
-  const handleFeatureToggle = (featureId: string) => {
-    setSelectedFeatures(prev =>
-      prev.includes(featureId)
-        ? prev.filter(id => id !== featureId)
-        : [...prev, featureId]
-    );
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate form
+    // Validate input
     try {
       betaSignupSchema.parse(formData);
     } catch (error) {
@@ -62,33 +64,30 @@ export default function BetaSignup() {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from('beta_waitlist')
-        .insert({
-          email: formData.email.toLowerCase(),
-          name: formData.name,
-          referral_source: formData.referralSource || null,
-          interested_features: selectedFeatures.length > 0 ? selectedFeatures : null,
-        });
+      const { error } = await supabase.from('beta_waitlist').insert({
+        email: formData.email.toLowerCase().trim(),
+        name: formData.name.trim(),
+        referral_source: formData.referralSource.trim() || null,
+        interested_features: interestedFeatures.length > 0 ? interestedFeatures : null,
+      });
 
       if (error) {
-        if (error.code === '23505') { // Unique constraint violation
+        if (error.code === '23505') {
           toast({
             title: 'Already Registered',
-            description: 'This email is already on our waitlist!',
+            description: 'This email is already on the waitlist!',
             variant: 'destructive',
           });
         } else {
           throw error;
         }
-        return;
+      } else {
+        setIsSuccess(true);
+        toast({
+          title: 'Welcome to the Beta!',
+          description: "You're on the list. We'll email you when it's your turn.",
+        });
       }
-
-      setSubmitted(true);
-      toast({
-        title: 'Welcome to the Beta!',
-        description: "You're on the list! We'll send you an invite soon.",
-      });
     } catch (error) {
       console.error('Beta signup error:', error);
       toast({
@@ -101,31 +100,43 @@ export default function BetaSignup() {
     }
   };
 
-  if (submitted) {
+  const toggleFeature = (feature: string) => {
+    setInterestedFeatures((prev) =>
+      prev.includes(feature)
+        ? prev.filter((f) => f !== feature)
+        : [...prev, feature]
+    );
+  };
+
+  if (isSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-primary/5">
         <Card className="max-w-md w-full glass-effect border-primary/20">
           <CardHeader className="text-center">
-            <div className="mx-auto w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle2 className="w-8 h-8 text-success" />
+            <div className="mx-auto w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mb-4">
+              <Check className="w-8 h-8 text-success" />
             </div>
-            <CardTitle className="text-2xl">You're In! 🎉</CardTitle>
+            <CardTitle className="text-2xl">You're In!</CardTitle>
             <CardDescription>
-              Thanks for joining our beta waitlist. We'll send you an invite to {formData.email} soon.
+              Welcome to the future of quantum-secure VPN
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-              <h4 className="font-semibold mb-2">What's Next?</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>✓ Check your email for beta access (coming soon)</li>
-                <li>✓ Join our Discord community</li>
-                <li>✓ Get free XX tokens for early users</li>
-                <li>✓ Lifetime 20% discount on subscriptions</li>
+            <div className="p-4 bg-muted/50 rounded-lg">
+              <p className="text-sm text-center">
+                We'll send you an invite to <strong>{formData.email}</strong> when we're ready to onboard the next batch of beta testers.
+              </p>
+            </div>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p className="font-medium">What's Next?</p>
+              <ul className="space-y-1 ml-4">
+                <li>• We're onboarding in small batches</li>
+                <li>• Expect your invite in 1-2 weeks</li>
+                <li>• Get 30 days free + lifetime 20% discount</li>
               </ul>
             </div>
-            <Button onClick={() => navigate('/')} variant="outline" className="w-full">
-              <ArrowLeft className="w-4 h-4 mr-2" />
+            <Button onClick={() => navigate('/')} className="w-full">
+              <Rocket className="w-4 h-4 mr-2" />
               Back to Home
             </Button>
           </CardContent>
@@ -137,109 +148,100 @@ export default function BetaSignup() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-primary/5">
       <Card className="max-w-2xl w-full glass-effect border-primary/20">
-        <CardHeader>
-          <div className="flex items-center gap-2 mb-2">
-            <Shield className="w-6 h-6 text-primary" />
-            <span className="text-sm font-semibold text-primary">QUANTUM-RESISTANT VPN</span>
-          </div>
-          <CardTitle className="text-3xl">Join the Beta Waitlist</CardTitle>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl">Join the Beta</CardTitle>
           <CardDescription className="text-base">
-            Be among the first to experience the world's first quantum-resistant VPN powered by xx network's cMixx protocol.
+            Be among the first to experience quantum-resistant VPN technology
           </CardDescription>
         </CardHeader>
-        
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Personal Info */}
+            {/* Features Grid */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-muted/30 rounded-lg border border-border hover:border-primary/50 transition-colors cursor-pointer"
+                  onClick={() => toggleFeature(feature.title)}
+                >
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      checked={interestedFeatures.includes(feature.title)}
+                      onCheckedChange={() => toggleFeature(feature.title)}
+                    />
+                    <div>
+                      <feature.icon className="w-5 h-5 text-primary mb-2" />
+                      <h3 className="font-semibold text-sm mb-1">{feature.title}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Form Fields */}
             <div className="space-y-4">
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="name">Full Name *</Label>
                 <Input
                   id="name"
                   type="text"
                   placeholder="John Doe"
                   value={formData.name}
-                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   maxLength={100}
                 />
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="email">Email Address *</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="john@example.com"
                   value={formData.email}
-                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  maxLength={255}
                 />
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="referral">How did you hear about us?</Label>
                 <Input
                   id="referral"
                   type="text"
-                  placeholder="Twitter, Discord, Friend, etc."
+                  placeholder="Twitter, friend, etc."
                   value={formData.referralSource}
-                  onChange={(e) => setFormData(prev => ({ ...prev, referralSource: e.target.value }))}
-                  maxLength={200}
+                  onChange={(e) =>
+                    setFormData({ ...formData, referralSource: e.target.value })
+                  }
                 />
               </div>
             </div>
 
-            {/* Feature Interest */}
-            <div className="space-y-3">
-              <Label>What features interest you most?</Label>
-              <div className="grid gap-3">
-                {features.map(feature => (
-                  <div
-                    key={feature.id}
-                    className="flex items-center space-x-3 p-3 rounded-lg border border-border/50 hover:border-primary/50 transition-colors cursor-pointer"
-                    onClick={() => handleFeatureToggle(feature.id)}
-                  >
-                    <Checkbox
-                      id={feature.id}
-                      checked={selectedFeatures.includes(feature.id)}
-                      onCheckedChange={() => handleFeatureToggle(feature.id)}
-                    />
-                    <feature.icon className="w-4 h-4 text-primary" />
-                    <label
-                      htmlFor={feature.id}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-1"
-                    >
-                      {feature.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Beta Benefits */}
-            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-warning" />
-                Beta Benefits
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>✓ Free 30-day trial of Ultra-Secure mode</li>
-                <li>✓ 100 free XX tokens to get started</li>
-                <li>✓ Lifetime 20% discount on all plans</li>
+            {/* Beta Perks */}
+            <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <Rocket className="w-4 h-4" />
+                Beta Perks
+              </h3>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>✓ 30-day free trial</li>
+                <li>✓ Lifetime 20% discount</li>
                 <li>✓ Direct access to development team</li>
-                <li>✓ Vote on new features via DAO</li>
+                <li>✓ Influence product roadmap</li>
               </ul>
             </div>
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-              {isSubmitting ? 'Joining Waitlist...' : 'Join Beta Waitlist'}
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Joining...' : 'Join Beta Waitlist'}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">
-              By signing up, you agree to receive beta updates and early access invitations.
+              Limited to first 100 users • We respect your privacy
             </p>
           </form>
         </CardContent>

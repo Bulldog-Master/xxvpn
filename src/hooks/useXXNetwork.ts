@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { XXDKClient, NetworkHealth } from '@/services/xxNetworkService';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
-import { ErrorLogger } from '@/utils/errorLogger';
+import { logError } from '@/utils/errorLogger';
+
 
 interface XXNetworkState {
   client: XXDKClient | null;
@@ -56,10 +57,12 @@ export const useXXNetwork = () => {
         error: errorMessage,
       }));
 
-      await ErrorLogger.logWasmError(
-        error instanceof Error ? error : new Error(String(error)),
-        { action: 'initialize', userId: user?.id }
-      );
+      logError({
+        type: 'wasm_load_error',
+        message: 'Failed to initialize xx network client',
+        error,
+        context: { action: 'initialize', userId: user?.id },
+      });
 
       toast({
         title: "Initialization Failed",
@@ -99,10 +102,12 @@ export const useXXNetwork = () => {
         error: errorMessage,
       }));
 
-      await ErrorLogger.logNetworkError(
-        error instanceof Error ? error : new Error(String(error)),
-        { action: 'connect', userId: user?.id }
-      );
+      logError({
+        type: 'network_error',
+        message: 'Failed to connect to xx network',
+        error,
+        context: { action: 'connect', userId: user?.id },
+      });
 
       toast({
         title: "Connection Failed",

@@ -6,12 +6,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthProvider";
 import { ThemeProvider } from "next-themes";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
+import { setupGlobalErrorHandler } from "@/utils/errorLogger";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
 import BetaSignup from "./pages/BetaSignup";
 import './i18n';
+
+// Setup global error handler on app initialization
+setupGlobalErrorHandler();
 
 const queryClient = new QueryClient({
   defaultOptions: {
