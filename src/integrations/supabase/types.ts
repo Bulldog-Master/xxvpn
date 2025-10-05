@@ -208,6 +208,27 @@ export type Database = {
         }
         Relationships: []
       }
+      governance_settings: {
+        Row: {
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          setting_key: string
+          setting_value: Json
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          setting_key?: string
+          setting_value?: Json
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -281,6 +302,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      security_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string | null
+          details: Json | null
+          id: string
+          ip_address: unknown | null
+          severity: string
+          user_id: string | null
+        }
+        Insert: {
+          alert_type: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          severity: string
+          user_id?: string | null
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          severity?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       security_config: {
         Row: {
@@ -556,7 +607,41 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      proposal_votes_anonymized: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          proposal_id: string | null
+          support: string | null
+          voter: string | null
+          voting_power: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          proposal_id?: string | null
+          support?: string | null
+          voter?: never
+          voting_power?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          proposal_id?: string | null
+          support?: string | null
+          voter?: never
+          voting_power?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposal_votes_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "governance_proposals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -667,6 +752,18 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_user_devices_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          device_name: string
+          device_type: string
+          id: string
+          is_active: boolean
+          last_seen: string
+          operating_system: string
+        }[]
+      }
       get_user_subscription_admin: {
         Args: { target_user_id: string }
         Returns: {
@@ -707,6 +804,14 @@ export type Database = {
         Args: { _user_id: string }
         Returns: boolean
       }
+      run_security_checks: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          check_name: string
+          message: string
+          status: string
+        }[]
+      }
       safe_log_operation: {
         Args: { p_data?: Json; p_operation: string; p_table_name: string }
         Returns: undefined
@@ -714,6 +819,10 @@ export type Database = {
       sanitize_sensitive_data: {
         Args: { data: Json }
         Returns: Json
+      }
+      validate_subscribers_rls: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
     }
     Enums: {

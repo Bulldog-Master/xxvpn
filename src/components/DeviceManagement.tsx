@@ -29,12 +29,10 @@ type Device = {
   device_name: string;
   device_type: string;
   operating_system: string | null;
-  ip_address: unknown;
   last_seen: string;
   is_active: boolean;
   created_at: string;
-  updated_at: string;
-  user_id: string;
+  // Note: IP addresses, updated_at, and user_id are not returned by get_user_devices_safe() for security
 };
 
 const DeviceManagement = () => {
@@ -75,11 +73,9 @@ const DeviceManagement = () => {
 
     const loadDevices = async () => {
       try {
+        // Use safe function that excludes IP addresses
         const { data, error } = await supabase
-          .from('devices')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('last_seen', { ascending: false });
+          .rpc('get_user_devices_safe');
 
         if (error) throw error;
         
