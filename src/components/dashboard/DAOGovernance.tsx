@@ -9,7 +9,8 @@ import {
   Clock, 
   CheckCircle, 
   XCircle,
-  AlertCircle 
+  AlertCircle,
+  Plus
 } from 'lucide-react';
 import { useDAO } from '@/hooks/useDAO';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -18,6 +19,21 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+// Input validation schemas for DAO proposals
+const proposalSchema = z.object({
+  title: z.string()
+    .trim()
+    .min(5, { message: "Title must be at least 5 characters" })
+    .max(200, { message: "Title must be less than 200 characters" }),
+  description: z.string()
+    .trim()
+    .min(20, { message: "Description must be at least 20 characters" })
+    .max(2000, { message: "Description must be less than 2000 characters" }),
+  type: z.string().min(1, { message: "Proposal type is required" }),
+});
 
 export const DAOGovernance = () => {
   const { proposals, loading, createProposal, vote } = useDAO();
@@ -29,18 +45,24 @@ export const DAOGovernance = () => {
   });
 
   const handleCreateProposal = async () => {
-    if (!newProposal.title || !newProposal.description) return;
-
+    // Validate inputs using Zod
     try {
+      const validatedData = proposalSchema.parse(newProposal);
+      
       await createProposal(
-        newProposal.title,
-        newProposal.description,
-        newProposal.type
+        validatedData.title,
+        validatedData.description,
+        validatedData.type
       );
       setCreateDialogOpen(false);
       setNewProposal({ title: '', description: '', type: 'pricing' });
     } catch (error) {
-      console.error('Failed to create proposal:', error);
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        console.error('Failed to create proposal:', error);
+        toast.error('Failed to create proposal');
+      }
     }
   };
 
@@ -113,6 +135,7 @@ export const DAOGovernance = () => {
                       value={newProposal.title}
                       onChange={(e) => setNewProposal({ ...newProposal, title: e.target.value })}
                       placeholder="Proposal title"
+                      maxLength={200}
                     />
                   </div>
                   <div>
@@ -141,6 +164,7 @@ export const DAOGovernance = () => {
                       onChange={(e) => setNewProposal({ ...newProposal, description: e.target.value })}
                       placeholder="Detailed description of the proposal..."
                       rows={6}
+                      maxLength={2000}
                     />
                   </div>
                   <Button 
