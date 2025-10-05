@@ -29,14 +29,13 @@ export const useSubscription = () => {
     }
 
     try {
+      // Use safe function that excludes Stripe customer ID
       const { data, error } = await supabase
-        .from('subscribers')
-        .select('*')
-        .eq('user_id', user.id)
+        .rpc('get_user_subscription_safe')
         .maybeSingle();
 
       if (error && error.code !== 'PGRST116') {
-        console.error('Error checking subscription:', error);
+        console.error('Error checking subscription');
         setSubscriptionStatus(prev => ({ ...prev, loading: false }));
         return;
       }
@@ -71,7 +70,7 @@ export const useSubscription = () => {
         });
       }
     } catch (error) {
-      console.error('Error checking subscription:', error);
+      console.error('Error checking subscription');
       setSubscriptionStatus(prev => ({ ...prev, loading: false }));
     }
   };

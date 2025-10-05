@@ -556,7 +556,45 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      subscription_monitoring: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          is_trial: boolean | null
+          stripe_customer_id: string | null
+          subscribed: boolean | null
+          subscription_end: string | null
+          subscription_tier: string | null
+          trial_end: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          is_trial?: boolean | null
+          stripe_customer_id?: never
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          trial_end?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          is_trial?: boolean | null
+          stripe_customer_id?: never
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          trial_end?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -650,6 +688,16 @@ export type Database = {
           is_active: boolean
           last_seen: string
           operating_system: string
+        }[]
+      }
+      get_user_subscription_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          is_trial: boolean
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          trial_end: string
         }[]
       }
       has_role: {
