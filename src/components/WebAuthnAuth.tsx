@@ -5,6 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { Fingerprint, Smartphone, Shield, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
 
 interface WebAuthnAuthProps {
   onAuthenticate: (credential: any) => void;
@@ -27,12 +28,30 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
                         navigator.credentials.get);
     setIsSupported(supported);
 
-    // Check if user has existing credentials (simplified check)
+    // Check if user has existing credentials in database
     if (supported) {
-      const existingCredentials = localStorage.getItem('webauthn_credentials');
-      setHasCredentials(!!existingCredentials);
+      checkExistingCredentials();
     }
   }, []);
+
+  const checkExistingCredentials = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('webauthn_credentials')
+        .select('id')
+        .eq('user_id', user.id)
+        .limit(1);
+
+      if (!error && data && data.length > 0) {
+        setHasCredentials(true);
+      }
+    } catch (error) {
+      console.error('Error checking credentials:', error);
+    }
+  };
 
   const generateChallenge = () => {
     const array = new Uint8Array(32);
@@ -117,17 +136,27 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       }) as PublicKeyCredential;
 
       if (credential) {
-        // Store credential info in localStorage (in production, store on server)
-        const credentialData = {
-          id: credential.id,
-          rawId: arrayBufferToBase64(credential.rawId),
-          type: credential.type,
-          challenge: arrayBufferToBase64(challenge),
-          userId: arrayBufferToBase64(userId),
-          created: Date.now(),
-        };
+        // Store credential in database securely
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          throw new Error('User not authenticated');
+        }
 
-        localStorage.setItem('webauthn_credentials', JSON.stringify(credentialData));
+        const response = credential.response as AuthenticatorAttestationResponse;
+        const { error } = await supabase
+          .from('webauthn_credentials')
+          .insert({
+            user_id: user.id,
+            credential_id: credential.id,
+            public_key: arrayBufferToBase64(response.getPublicKey() || new ArrayBuffer(0)),
+            counter: 0,
+            device_name: navigator.userAgent.includes('Mobile') ? 'Mobile Device' : 'Desktop Device',
+          });
+
+        if (error) {
+          throw error;
+        }
+
         setHasCredentials(true);
 
         toast({
@@ -166,12 +195,24 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
 
     setIsAuthenticating(true);
     try {
-      const storedCredentials = localStorage.getItem('webauthn_credentials');
-      if (!storedCredentials) {
+      // Get credentials from database
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: credentials, error } = await supabase
+        .from('webauthn_credentials')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (error || !credentials || credentials.length === 0) {
         throw new Error('No stored credentials found');
       }
 
-      const credentialData = JSON.parse(storedCredentials);
+      const credentialData = credentials[0];
       const challenge = generateChallenge();
 
       // Get the effective domain for RP ID (same logic as registration)
@@ -192,12 +233,12 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
         challenge,
         allowCredentials: [{
-          id: base64ToArrayBuffer(credentialData.rawId),
+          id: Uint8Array.from(credentialData.credential_id, c => c.charCodeAt(0)),
           type: 'public-key',
         }],
-        userVerification: 'preferred', // Changed from 'required' to 'preferred'
+        userVerification: 'preferred',
         timeout: 60000,
-        rpId: rpId, // Add RP ID for consistency
+        rpId: rpId,
       };
 
       const assertion = await navigator.credentials.get({
@@ -205,7 +246,12 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
       }) as PublicKeyCredential;
 
       if (assertion) {
-        // In production, verify this on the server
+        // Update last_used_at timestamp
+        await supabase
+          .from('webauthn_credentials')
+          .update({ last_used_at: new Date().toISOString() })
+          .eq('id', credentialData.id);
+
         onAuthenticate({
           type: 'webauthn',
           credentialId: assertion.id,
@@ -230,13 +276,33 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
     }
   };
 
-  const clearCredentials = () => {
-    localStorage.removeItem('webauthn_credentials');
-    setHasCredentials(false);
-    toast({
-      title: t('auth.webauthn.cleared'),
-      description: t('auth.webauthn.clearedDescription'),
-    });
+  const clearCredentials = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('webauthn_credentials')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      setHasCredentials(false);
+      toast({
+        title: t('auth.webauthn.cleared'),
+        description: t('auth.webauthn.clearedDescription'),
+      });
+    } catch (error) {
+      console.error('Error clearing credentials:', error);
+      toast({
+        title: t('common.error'),
+        description: 'Failed to clear credentials',
+        variant: 'destructive',
+      });
+    }
   };
 
   if (!isSupported) {
