@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
+import { useUserSettings } from './useUserSettings';
 
 export interface SecuritySettings {
   killSwitchEnabled: boolean;
@@ -53,10 +54,11 @@ const MOCK_DNS_SERVERS = [
 ];
 
 export const useNetworkSecurity = () => {
-  const [settings, setSettings] = useState<SecuritySettings>(() => {
-    const saved = localStorage.getItem('vpn-security-settings');
-    return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS;
-  });
+  const { settings: savedSettings, saveSettings, loading } = useUserSettings<SecuritySettings>(
+    'network_security',
+    DEFAULT_SETTINGS
+  );
+  const [settings, setSettings] = useState<SecuritySettings>(DEFAULT_SETTINGS);
 
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus>({
     vpnConnected: false,
@@ -71,20 +73,27 @@ export const useNetworkSecurity = () => {
   const [isTestingDNS, setIsTestingDNS] = useState(false);
   const [dnsTestResults, setDnsTestResults] = useState<DNSTest[]>([]);
 
-  // Save settings to localStorage
+  // Load settings from database
   useEffect(() => {
-    localStorage.setItem('vpn-security-settings', JSON.stringify(settings));
-  }, [settings]);
+    if (!loading) {
+      setSettings(savedSettings);
+    }
+  }, [savedSettings, loading]);
+
+  // Save settings to database
+  useEffect(() => {
+    if (!loading && JSON.stringify(settings) !== JSON.stringify(savedSettings)) {
+      saveSettings(settings);
+    }
+  }, [settings, saveSettings, loading, savedSettings]);
 
   // Simulate network monitoring
   const checkNetworkStatus = useCallback(async () => {
-    // Simulate checking real IP vs VPN IP
     const mockRealIp = '203.0.113.' + Math.floor(Math.random() * 255);
     const mockVpnIp = settings.killSwitchEnabled ? '10.0.1.' + Math.floor(Math.random() * 255) : null;
     
-    // Simulate DNS leak detection
     const hasVpnConnection = mockVpnIp !== null;
-    const dnsLeaking = hasVpnConnection && Math.random() > 0.8; // 20% chance of leak simulation
+    const dnsLeaking = hasVpnConnection && Math.random() > 0.8;
     const ipv6Leaking = hasVpnConnection && !settings.ipv6LeakProtection && Math.random() > 0.7;
 
     setNetworkStatus({
@@ -97,7 +106,6 @@ export const useNetworkSecurity = () => {
       lastCheckTime: Date.now()
     });
 
-    // Alert on security issues
     if (dnsLeaking && settings.dnsLeakProtection) {
       toast.error('DNS leak detected! Enabling protection...');
     }
@@ -112,11 +120,9 @@ export const useNetworkSecurity = () => {
     setDnsTestResults([]);
 
     try {
-      // Simulate testing multiple DNS servers
       const results: DNSTest[] = [];
       
       for (const server of MOCK_DNS_SERVERS.slice(0, 4)) {
-        // Simulate response time and leak detection
         await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
         
         const responseTime = Math.floor(Math.random() * 100) + 10;
@@ -155,7 +161,6 @@ export const useNetworkSecurity = () => {
     setSettings(prev => ({ ...prev, emergencyDisconnect: true }));
     toast.warning('Kill switch activated - All internet traffic blocked');
     
-    // Auto-disable after 30 seconds (in real app, this would block until VPN reconnects)
     setTimeout(() => {
       setSettings(prev => ({ ...prev, emergencyDisconnect: false }));
       toast.info('Kill switch deactivated');
@@ -169,7 +174,6 @@ export const useNetworkSecurity = () => {
   ) => {
     setSettings(prev => ({ ...prev, [key]: value }));
     
-    // Show feedback for important changes
     if (key === 'killSwitchEnabled') {
       toast.info(value ? 'Kill switch enabled' : 'Kill switch disabled');
     } else if (key === 'dnsLeakProtection') {
@@ -186,7 +190,7 @@ export const useNetworkSecurity = () => {
   // Monitor network status
   useEffect(() => {
     checkNetworkStatus();
-    const interval = setInterval(checkNetworkStatus, 5000); // Check every 5 seconds
+    const interval = setInterval(checkNetworkStatus, 5000);
     return () => clearInterval(interval);
   }, [checkNetworkStatus]);
 

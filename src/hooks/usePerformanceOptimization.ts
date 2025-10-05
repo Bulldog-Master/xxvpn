@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
+import { useUserSettings } from './useUserSettings';
 
 interface PerformanceMetrics {
   latency: number;
@@ -61,6 +62,10 @@ const DEFAULT_METRICS: PerformanceMetrics = {
 };
 
 export const usePerformanceOptimization = () => {
+  const { settings: savedSettings, saveSettings, loading } = useUserSettings<OptimizationSettings>(
+    'performance_optimization',
+    DEFAULT_SETTINGS
+  );
   const [settings, setSettings] = useState<OptimizationSettings>(DEFAULT_SETTINGS);
   const [metrics, setMetrics] = useState<PerformanceMetrics>(DEFAULT_METRICS);
   const [optimizations, setOptimizations] = useState<PerformanceOptimization[]>([]);
@@ -68,18 +73,19 @@ export const usePerformanceOptimization = () => {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [performanceScore, setPerformanceScore] = useState(85);
 
-  // Load settings
+  // Load settings from database
   useEffect(() => {
-    const savedSettings = localStorage.getItem('performance_settings');
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+    if (!loading) {
+      setSettings(savedSettings);
     }
-  }, []);
+  }, [savedSettings, loading]);
 
-  // Save settings
+  // Save settings to database
   useEffect(() => {
-    localStorage.setItem('performance_settings', JSON.stringify(settings));
-  }, [settings]);
+    if (!loading && JSON.stringify(settings) !== JSON.stringify(savedSettings)) {
+      saveSettings(settings);
+    }
+  }, [settings, saveSettings, loading, savedSettings]);
 
   // Generate realistic metrics
   const generateMetrics = useCallback(() => {
@@ -90,7 +96,6 @@ export const usePerformanceOptimization = () => {
     const cpuUsage = 15 + Math.random() * 25;
     const memoryUsage = 30 + Math.random() * 40;
     
-    // Apply optimizations effect
     const latencyMultiplier = settings.intelligentRouting ? 0.85 : 1;
     const bandwidthMultiplier = settings.compressionOptimization ? 1.2 : 1;
     const jitterMultiplier = settings.bufferOptimization ? 0.7 : 1;
@@ -99,7 +104,6 @@ export const usePerformanceOptimization = () => {
     const optimizedBandwidth = baseBandwidth * bandwidthMultiplier;
     const optimizedJitter = jitter * jitterMultiplier;
     
-    // Determine network quality
     let networkQuality: 'excellent' | 'good' | 'fair' | 'poor' = 'excellent';
     if (optimizedLatency > 50 || packetLoss > 1 || optimizedJitter > 8) {
       networkQuality = 'poor';
@@ -153,7 +157,6 @@ export const usePerformanceOptimization = () => {
       }
     ];
 
-    // Apply intelligent routing effects
     if (settings.intelligentRouting) {
       routeData[0].latency = Math.round(routeData[0].latency * 0.9);
       routeData[1].latency = Math.round(routeData[1].latency * 0.85);
@@ -199,7 +202,6 @@ export const usePerformanceOptimization = () => {
 
     setOptimizations(prev => [newOptimization, ...prev.slice(0, 9)]);
     
-    // Update performance score
     const enabledCount = Object.values(settings).filter(Boolean).length;
     setPerformanceScore(Math.min(95, 70 + (enabledCount * 4) + Math.floor(Math.random() * 10)));
     

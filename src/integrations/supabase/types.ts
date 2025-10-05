@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_log_access_log: {
+        Row: {
+          access_type: string
+          accessed_at: string | null
+          admin_user_id: string
+          filters_applied: Json | null
+          id: string
+          ip_address: unknown | null
+          record_count: number | null
+        }
+        Insert: {
+          access_type: string
+          accessed_at?: string | null
+          admin_user_id: string
+          filters_applied?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          record_count?: number | null
+        }
+        Update: {
+          access_type?: string
+          accessed_at?: string | null
+          admin_user_id?: string
+          filters_applied?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          record_count?: number | null
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -238,6 +268,42 @@ export type Database = {
         }
         Relationships: []
       }
+      stripe_webhook_log: {
+        Row: {
+          error_message: string | null
+          event_id: string
+          event_type: string
+          id: string
+          ip_address: unknown | null
+          processed_at: string | null
+          processing_status: string
+          received_at: string | null
+          signature_verified: boolean
+        }
+        Insert: {
+          error_message?: string | null
+          event_id: string
+          event_type: string
+          id?: string
+          ip_address?: unknown | null
+          processed_at?: string | null
+          processing_status: string
+          received_at?: string | null
+          signature_verified: boolean
+        }
+        Update: {
+          error_message?: string | null
+          event_id?: string
+          event_type?: string
+          id?: string
+          ip_address?: unknown | null
+          processed_at?: string | null
+          processing_status?: string
+          received_at?: string | null
+          signature_verified?: boolean
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           created_at: string
@@ -320,6 +386,33 @@ export type Database = {
           created_at?: string | null
           encrypted_totp_secret?: string | null
           id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string | null
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          setting_key: string
+          setting_value: Json
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: Json
           updated_at?: string | null
           user_id?: string
         }
@@ -440,6 +533,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_old_webhook_logs: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -450,6 +547,10 @@ export type Database = {
       increment_vote_count: {
         Args: { p_amount: number; p_field: string; p_proposal_id: string }
         Returns: undefined
+      }
+      is_super_admin: {
+        Args: { _user_id: string }
+        Returns: boolean
       }
       sanitize_sensitive_data: {
         Args: { data: Json }

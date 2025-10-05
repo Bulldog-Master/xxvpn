@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Download, RefreshCw, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { useAuth } from '@/hooks/useAuth';
 
 interface AuditLog {
   id: string;
@@ -29,6 +30,7 @@ export const AuditLogDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [actionFilter, setActionFilter] = useState<string>('all');
   const [tableFilter, setTableFilter] = useState<string>('all');
+  const { user } = useAuth();
 
   const fetchLogs = async () => {
     try {
@@ -56,6 +58,16 @@ export const AuditLogDashboard = () => {
       }
 
       setLogs((data || []) as AuditLog[]);
+
+      // Log audit log access
+      if (user && data) {
+        await supabase.from('audit_log_access_log').insert({
+          admin_user_id: user.id,
+          access_type: 'view',
+          filters_applied: { action: actionFilter, table: tableFilter },
+          record_count: data.length
+        });
+      }
     } catch (error) {
       console.error('Error:', error);
       toast.error('Failed to load audit logs');
@@ -68,7 +80,7 @@ export const AuditLogDashboard = () => {
     fetchLogs();
   }, [actionFilter, tableFilter]);
 
-  const exportLogs = () => {
+  const exportLogs = async () => {
     const csvContent = [
       ['Timestamp', 'User ID', 'Action', 'Table', 'Record ID', 'IP Address'].join(','),
       ...filteredLogs.map(log => [
@@ -88,6 +100,16 @@ export const AuditLogDashboard = () => {
     a.download = `audit-logs-${format(new Date(), 'yyyy-MM-dd')}.csv`;
     a.click();
     toast.success('Audit logs exported successfully');
+
+    // Log export action
+    if (user) {
+      await supabase.from('audit_log_access_log').insert({
+        admin_user_id: user.id,
+        access_type: 'export',
+        filters_applied: { action: actionFilter, table: tableFilter },
+        record_count: filteredLogs.length
+      });
+    }
   };
 
   const filteredLogs = logs.filter(log => {

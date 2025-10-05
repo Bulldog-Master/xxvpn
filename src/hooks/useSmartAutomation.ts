@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
+import { useUserSettings } from './useUserSettings';
 
 interface AutomationSettings {
   aiServerSelection: boolean;
@@ -39,30 +40,34 @@ const DEFAULT_SETTINGS: AutomationSettings = {
 };
 
 export const useSmartAutomation = () => {
+  const { settings: savedSettings, saveSettings, loading } = useUserSettings<AutomationSettings>(
+    'smart_automation',
+    DEFAULT_SETTINGS
+  );
   const [settings, setSettings] = useState<AutomationSettings>(DEFAULT_SETTINGS);
   const [recommendations, setRecommendations] = useState<ServerRecommendation[]>([]);
   const [insights, setInsights] = useState<AutomationInsight[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [automationScore, setAutomationScore] = useState(85);
 
-  // Load settings from localStorage
+  // Load settings from database
   useEffect(() => {
-    const savedSettings = localStorage.getItem('smart_automation_settings');
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+    if (!loading) {
+      setSettings(savedSettings);
     }
-  }, []);
+  }, [savedSettings, loading]);
 
-  // Save settings to localStorage
+  // Save settings to database
   useEffect(() => {
-    localStorage.setItem('smart_automation_settings', JSON.stringify(settings));
-  }, [settings]);
+    if (!loading && JSON.stringify(settings) !== JSON.stringify(savedSettings)) {
+      saveSettings(settings);
+    }
+  }, [settings, saveSettings, loading, savedSettings]);
 
   // Generate AI server recommendations
   const generateServerRecommendations = useCallback(async () => {
     setIsAnalyzing(true);
     
-    // Simulate AI analysis with realistic data
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     const mockRecommendations: ServerRecommendation[] = [
@@ -97,7 +102,6 @@ export const useSmartAutomation = () => {
     
     setRecommendations(mockRecommendations);
     
-    // Add insight about recommendations
     const newInsight: AutomationInsight = {
       type: 'server_recommendation',
       title: 'AI Server Analysis Complete',
@@ -182,7 +186,6 @@ export const useSmartAutomation = () => {
       [key]: value
     }));
     
-    // Update automation score based on enabled features
     const newSettings = { ...settings, [key]: value };
     const enabledCount = Object.values(newSettings).filter(Boolean).length;
     setAutomationScore(Math.floor((enabledCount / 6) * 100));
@@ -205,7 +208,7 @@ export const useSmartAutomation = () => {
       if (settings.predictiveConnection && Math.random() > 0.9) {
         predictConnectionNeeds();
       }
-    }, 30000); // Check every 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [settings, generateServerRecommendations, optimizeBandwidth, suggestProtocolSwitch, predictConnectionNeeds]);
