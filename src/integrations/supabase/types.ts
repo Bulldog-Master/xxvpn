@@ -537,6 +537,25 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_vpn_session_ips: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      get_audit_logs_sanitized: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: string
+          new_values: Json
+          old_values: Json
+          record_id: string
+          table_name: string
+          user_agent: string
+          user_id: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
