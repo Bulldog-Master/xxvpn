@@ -71,10 +71,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in xx-network-health function:', error);
     
+    // Sanitize error message for production - don't expose internal details
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to check network health',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Failed to check network health. Please try again later.',
       }), 
       {
         status: 500,

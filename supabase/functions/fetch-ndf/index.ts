@@ -83,10 +83,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in fetch-ndf function:', error);
     
+    // Sanitize error message for production - don't expose internal network details
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to fetch Network Definition File',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Failed to fetch Network Definition File. Please try again later.',
       }), 
       {
         status: 500,

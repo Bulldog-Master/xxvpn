@@ -86,21 +86,67 @@ serve(async (req) => {
       );
 
     } else if (action === 'update-tier') {
+      // SECURITY: Only admins can update subscription tiers
+      // This prevents privilege escalation attacks
+      const { data: userRole, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .in('role', ['admin', 'super_admin'])
+        .maybeSingle();
+
+      if (roleError) {
+        console.error('Error checking user role:', roleError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to verify authorization' }),
+          { 
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
+
+      if (!userRole) {
+        console.warn(`Unauthorized tier update attempt by user ${user.id}`);
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized. Only administrators can update subscription tiers.' }),
+          { 
+            status: 403,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
+
       // Validate tier
       const validTiers = ['free', 'premium', 'enterprise'];
       if (!validTiers.includes(tier)) {
-        throw new Error('Invalid subscription tier');
+        return new Response(
+          JSON.stringify({ error: 'Invalid subscription tier' }),
+          { 
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
       }
 
-      // Update subscription tier (server-side only)
+      // Update subscription tier (server-side only, admin-authorized)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ subscription_tier: tier })
         .eq('user_id', user.id);
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        console.error('Error updating subscription tier:', profileError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to update subscription tier' }),
+          { 
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
 
-      console.log(`Subscription tier updated to ${tier} for user ${user.id}`);
+      console.log(`Subscription tier updated to ${tier} for user ${user.id} by admin ${userRole.role}`);
 
       return new Response(
         JSON.stringify({ 
@@ -117,8 +163,15 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in manage-subscription:', error);
+    // Sanitize error message for production
+    const errorMessage = error instanceof Error 
+      ? (error.message.includes('Trial already') || error.message.includes('Unauthorized') 
+          ? error.message 
+          : 'An error occurred processing your subscription request')
+      : 'An unexpected error occurred';
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { 
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }

@@ -99,8 +99,22 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in encrypt-totp-secret:', error);
+    
+    // Sanitize error messages for production
+    const safeErrors = [
+      'No authorization header',
+      'Unauthorized',
+      'Too many requests',
+      'TOTP_ENCRYPTION_KEY not configured',
+      'Invalid action',
+    ];
+    
+    const errorMessage = error instanceof Error && safeErrors.some(msg => error.message.includes(msg))
+      ? error.message
+      : 'An error occurred processing your request';
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { 
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
