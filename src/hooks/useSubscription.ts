@@ -31,31 +31,31 @@ export const useSubscription = () => {
     try {
       // Use safe function that excludes Stripe customer ID
       const { data, error } = await supabase
-        .rpc('get_user_subscription_safe')
-        .maybeSingle();
+        .rpc('get_user_subscription_safe');
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         console.error('Error checking subscription');
         setSubscriptionStatus(prev => ({ ...prev, loading: false }));
         return;
       }
 
-      if (data) {
+      if (data && data.length > 0) {
+        const subscription = data[0];
         const now = new Date();
-        const trialEnd = data.trial_end ? new Date(data.trial_end) : null;
-        const subscriptionEnd = data.subscription_end ? new Date(data.subscription_end) : null;
+        const trialEnd = subscription.trial_end ? new Date(subscription.trial_end) : null;
+        const subscriptionEnd = subscription.subscription_end ? new Date(subscription.subscription_end) : null;
         
         // Check if trial is still active
-        const isTrialActive = data.is_trial && trialEnd && now < trialEnd;
+        const isTrialActive = subscription.is_trial && trialEnd && now < trialEnd;
         
         // Check if subscription is still active
-        const isSubscriptionActive = data.subscribed && subscriptionEnd && now < subscriptionEnd;
+        const isSubscriptionActive = subscription.subscribed && subscriptionEnd && now < subscriptionEnd;
 
         setSubscriptionStatus({
           subscribed: isTrialActive || isSubscriptionActive,
-          subscription_tier: data.subscription_tier,
-          subscription_end: data.subscription_end,
-          trial_end: data.trial_end,
+          subscription_tier: subscription.subscription_tier,
+          subscription_end: subscription.subscription_end,
+          trial_end: subscription.trial_end,
           is_trial: isTrialActive,
           loading: false,
         });
@@ -94,8 +94,9 @@ export const useSubscription = () => {
       await checkSubscription();
       return { success: true, message: data.message };
     } catch (error) {
-      console.error('Error starting trial:', error);
-      return { success: false, error };
+      // Never log error details - might contain sensitive payment data
+      console.error('Trial start failed');
+      return { success: false, error: 'Failed to start trial. Please try again.' };
     }
   };
 
