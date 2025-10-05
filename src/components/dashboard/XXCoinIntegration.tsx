@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,13 +12,23 @@ import {
   Gift,
   ArrowUpRight,
   ArrowDownRight,
-  Wallet
+  Wallet,
+  RefreshCw
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { toast } from '@/hooks/use-toast';
+import { XXWalletService, WalletState } from '@/services/xxWalletService';
 
 export const XXCoinIntegration = () => {
   const { user } = useAuth();
-  const xxBalance = user?.xxCoinBalance || 0;
+  const [walletService] = useState(() => new XXWalletService());
+  const [walletState, setWalletState] = useState<WalletState>({
+    address: null,
+    connected: false,
+    chainId: null,
+    balance: null,
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   // Mock data for demonstration
   const monthlyEarnings = 12.5;
@@ -53,8 +64,200 @@ export const XXCoinIntegration = () => {
     },
   ];
 
+  useEffect(() => {
+    // Check if already connected
+    if (walletService.isMetaMaskInstalled()) {
+      const ethereum = (window as any).ethereum;
+      ethereum.on('accountsChanged', handleAccountsChanged);
+      ethereum.on('chainChanged', handleChainChanged);
+
+      return () => {
+        ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        ethereum.removeListener('chainChanged', handleChainChanged);
+      };
+    }
+  }, []);
+
+  const handleAccountsChanged = (accounts: string[]) => {
+    if (accounts.length === 0) {
+      setWalletState(walletService.disconnect());
+      toast({
+        title: "Wallet Disconnected",
+        description: "Please reconnect your wallet",
+      });
+    }
+  };
+
+  const handleChainChanged = () => {
+    window.location.reload();
+  };
+
+  const handleConnect = async () => {
+    if (!walletService.isMetaMaskInstalled()) {
+      toast({
+        title: "MetaMask Not Found",
+        description: "Please install MetaMask to continue",
+        variant: "destructive",
+      });
+      window.open('https://metamask.io/download/', '_blank');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const state = await walletService.connect();
+      setWalletState(state);
+      
+      toast({
+        title: "Wallet Connected",
+        description: `Connected to ${state.address?.slice(0, 6)}...${state.address?.slice(-4)}`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Connection Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRefresh = async () => {
+    if (!walletState.address) return;
+
+    setIsLoading(true);
+    try {
+      const balance = await walletService.getBalance(walletState.address);
+      setWalletState(prev => ({ ...prev, balance }));
+      
+      toast({
+        title: "Balance Updated",
+        description: `Current balance: ${balance} XX`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Refresh Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubscribe = async (months: number) => {
+    if (!walletState.address) {
+      toast({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const txHash = await walletService.subscribe(months, walletState.address);
+      
+      toast({
+        title: "Subscription Successful",
+        description: `Transaction: ${txHash.slice(0, 10)}...`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Subscription Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* XX Wallet Connection Card */}
+      <Card className="glass-effect border-primary/20">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Wallet className="w-6 h-6 text-primary" />
+            XX Network Wallet
+          </CardTitle>
+          <CardDescription>
+            Connect your MetaMask wallet to pay with XX tokens
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
+            <div>
+              <p className="text-sm text-muted-foreground">Wallet Address</p>
+              <p className="font-mono text-sm">
+                {walletState.connected 
+                  ? `${walletState.address?.slice(0, 6)}...${walletState.address?.slice(-4)}`
+                  : "Not connected"}
+              </p>
+            </div>
+            {!walletState.connected ? (
+              <Button onClick={handleConnect} size="sm" disabled={isLoading}>
+                <Wallet className="h-4 w-4 mr-2" />
+                {isLoading ? "Connecting..." : "Connect Wallet"}
+              </Button>
+            ) : (
+              <Button onClick={handleRefresh} size="sm" variant="outline" disabled={isLoading}>
+                <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              </Button>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
+            <div>
+              <p className="text-sm text-muted-foreground">Balance</p>
+              <p className="text-2xl font-bold">{walletState.balance || "0.00"} XX</p>
+            </div>
+            <Shield className="h-8 w-8 text-primary" />
+          </div>
+
+          {walletState.connected && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium">Subscribe with XX Tokens</p>
+              <div className="grid grid-cols-3 gap-2">
+                <Button 
+                  onClick={() => handleSubscribe(1)} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={isLoading}
+                >
+                  1 Month
+                  <br />
+                  <span className="text-xs">(5 XX)</span>
+                </Button>
+                <Button 
+                  onClick={() => handleSubscribe(6)} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={isLoading}
+                >
+                  6 Months
+                  <br />
+                  <span className="text-xs">(30 XX)</span>
+                </Button>
+                <Button 
+                  onClick={() => handleSubscribe(12)} 
+                  variant="outline" 
+                  size="sm"
+                  disabled={isLoading}
+                >
+                  12 Months
+                  <br />
+                  <span className="text-xs">(60 XX)</span>
+                </Button>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* XX Coin Balance Card */}
       <Card className="glass-effect border-primary/20">
         <CardHeader>
@@ -69,7 +272,7 @@ export const XXCoinIntegration = () => {
               </CardDescription>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold text-warning">{xxBalance.toFixed(2)}</div>
+              <div className="text-3xl font-bold text-warning">{(user?.xxCoinBalance || 0).toFixed(2)}</div>
               <div className="text-sm text-muted-foreground">XX Coins</div>
             </div>
           </div>
@@ -102,11 +305,6 @@ export const XXCoinIntegration = () => {
               Bandwidth paid with XX coins • ~0.02 XX per GB
             </p>
           </div>
-
-          <Button className="w-full" variant="outline">
-            <Wallet className="w-4 h-4 mr-2" />
-            Buy More XX Coins
-          </Button>
         </CardContent>
       </Card>
 
