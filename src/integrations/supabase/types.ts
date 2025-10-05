@@ -119,6 +119,13 @@ export type Database = {
             referencedRelation: "devices"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "device_access_audit_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "user_devices_secure"
+            referencedColumns: ["id"]
+          },
         ]
       }
       devices: {
@@ -570,6 +577,13 @@ export type Database = {
             referencedRelation: "devices"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "vpn_sessions_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "user_devices_secure"
+            referencedColumns: ["id"]
+          },
         ]
       }
       webauthn_credentials: {
@@ -642,6 +656,42 @@ export type Database = {
           },
         ]
       }
+      user_devices_secure: {
+        Row: {
+          created_at: string | null
+          device_name: string | null
+          device_type: string | null
+          id: string | null
+          is_active: boolean | null
+          last_seen: string | null
+          operating_system: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          device_name?: string | null
+          device_type?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          last_seen?: string | null
+          operating_system?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          device_name?: string | null
+          device_type?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          last_seen?: string | null
+          operating_system?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -705,6 +755,10 @@ export type Database = {
           user_agent: string
           user_id: string
         }[]
+      }
+      get_device_ip_admin: {
+        Args: { device_id: string }
+        Returns: string
       }
       get_governance_proposals_anonymized: {
         Args: Record<PropertyKey, never>
@@ -830,6 +884,10 @@ export type Database = {
       sanitize_sensitive_data: {
         Args: { data: Json }
         Returns: Json
+      }
+      validate_device_ip_protection: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
       validate_subscribers_rls: {
         Args: Record<PropertyKey, never>
