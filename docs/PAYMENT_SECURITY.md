@@ -58,6 +58,24 @@ The `manage-subscription` edge function:
 - Sanitizes error messages in production
 - Uses service role only for legitimate payment operations
 
+## Access Tiers
+
+### User Self-Service
+- **Function**: `get_user_subscription_safe()`
+- **Access Level**: Own data only
+- **Returns**: Subscription status without Stripe IDs
+
+### Admin Monitoring
+- **Function**: `get_subscription_monitoring(limit, offset)`
+- **Access Level**: Admins and super admins
+- **Returns**: All subscriptions with redacted Stripe IDs
+
+### Support Access (Logged)
+- **Function**: `get_user_subscription_admin(user_id)`
+- **Access Level**: Super admins only
+- **Returns**: Complete subscription including Stripe customer ID
+- **Important**: All access is logged to audit_logs
+
 ## Best Practices for Developers
 
 ### ✅ DO:
