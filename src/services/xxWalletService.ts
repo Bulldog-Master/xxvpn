@@ -316,6 +316,18 @@ export class XXWalletService {
     const subscriptionEnd = new Date();
     subscriptionEnd.setMonth(subscriptionEnd.getMonth() + months);
 
+    // First, link wallet address to user profile if not already linked
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({ wallet_address: walletAddress.toLowerCase() })
+      .eq('user_id', user.id);
+
+    if (profileError) {
+      console.error('Failed to link wallet address:', profileError);
+      // Don't throw - this is not critical for subscription
+    }
+
+    // Update subscription
     const { error } = await supabase
       .from('subscribers')
       .upsert({
