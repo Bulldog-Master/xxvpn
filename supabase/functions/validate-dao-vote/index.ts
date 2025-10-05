@@ -1,144 +1,152 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+};
 
-serve(async (req) => {
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const supabaseClient = createClient(
+    const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
-    )
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
 
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser()
+    // Get user from auth header
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Missing authorization header');
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
     
     if (userError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+      throw new Error('Unauthorized');
     }
 
-    const { proposalId, support } = await req.json()
+    const { proposalId, support } = await req.json();
 
+    // Validate inputs
     if (!proposalId || !support) {
-      return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+      throw new Error('Missing required fields: proposalId and support');
     }
 
-    // Validate support value
     if (!['for', 'against', 'abstain'].includes(support)) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid vote type' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+      throw new Error('Invalid support value. Must be: for, against, or abstain');
     }
 
-    // Get user's XX Coin balance from profile
-    const { data: profile, error: profileError } = await supabaseClient
-      .from('profiles')
-      .select('xx_coin_balance')
-      .eq('user_id', user.id)
-      .single()
+    console.log(`Vote request for proposal ${proposalId} by user ${user.id}`);
 
-    if (profileError || !profile) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to fetch user profile' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    // Check if proposal exists and is active
+    const { data: proposal, error: proposalError } = await supabase
+      .from('governance_proposals')
+      .select('id, status, end_time')
+      .eq('id', proposalId)
+      .single();
+
+    if (proposalError || !proposal) {
+      throw new Error('Proposal not found');
     }
 
-    const votingPower = Number(profile.xx_coin_balance || 0)
-
-    // Minimum balance requirement for voting
-    if (votingPower < 1) {
-      return new Response(
-        JSON.stringify({ error: 'Insufficient XX Coin balance to vote (minimum: 1 XX)' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    if (proposal.status !== 'active') {
+      throw new Error('Proposal is not active');
     }
 
-    // Check for duplicate votes
-    const { data: existingVote, error: voteCheckError } = await supabaseClient
+    if (new Date(proposal.end_time) < new Date()) {
+      throw new Error('Proposal voting period has ended');
+    }
+
+    // Check if user has already voted
+    const { data: existingVote } = await supabase
       .from('proposal_votes')
       .select('id')
       .eq('proposal_id', proposalId)
       .eq('voter', user.id)
-      .maybeSingle()
-
-    if (voteCheckError) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to check for duplicate votes' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+      .single();
 
     if (existingVote) {
-      return new Response(
-        JSON.stringify({ error: 'You have already voted on this proposal' }),
-        { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+      throw new Error('You have already voted on this proposal');
     }
 
-    // Insert vote
-    const { error: insertError } = await supabaseClient
+    // Get user's XX Coin balance from profile
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('xx_coin_balance')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profileError || !profile) {
+      throw new Error('User profile not found');
+    }
+
+    const votingPower = Number(profile.xx_coin_balance) || 0;
+
+    // Minimum balance required to vote
+    const MIN_BALANCE = 1;
+    if (votingPower < MIN_BALANCE) {
+      throw new Error(`Insufficient XX Coin balance. Minimum ${MIN_BALANCE} required to vote.`);
+    }
+
+    console.log(`User ${user.id} has voting power of ${votingPower} XX Coins`);
+
+    // Record the vote
+    const { error: voteError } = await supabase
       .from('proposal_votes')
       .insert({
         proposal_id: proposalId,
         voter: user.id,
         support,
         voting_power: votingPower,
-      })
+      });
 
-    if (insertError) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to record vote' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    if (voteError) {
+      console.error('Error recording vote:', voteError);
+      throw new Error('Failed to record vote');
     }
 
-    // Update proposal vote counts using the increment function
-    const { error: updateError } = await supabaseClient.rpc('increment_vote_count', {
+    // Update proposal vote counts using RPC function
+    const field = support === 'for' ? 'votes_for' : support === 'against' ? 'votes_against' : 'votes_abstain';
+    const { error: updateError } = await supabase.rpc('increment_vote_count', {
       p_proposal_id: proposalId,
-      p_field: support === 'for' ? 'votes_for' : support === 'against' ? 'votes_against' : 'votes_abstain',
-      p_amount: votingPower
-    })
+      p_field: field,
+      p_amount: votingPower,
+    });
 
     if (updateError) {
-      console.error('Error updating vote count:', updateError)
-      return new Response(
-        JSON.stringify({ error: 'Failed to update vote count' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+      console.error('Error updating vote count:', updateError);
+      throw new Error('Failed to update vote count');
     }
 
+    console.log(`Vote recorded successfully for proposal ${proposalId}`);
+
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         votingPower,
-        message: 'Vote recorded successfully' 
+        message: 'Vote recorded successfully',
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      }
+    );
   } catch (error) {
-    console.error('Error in validate-dao-vote:', error)
+    console.error('Error in validate-dao-vote:', error);
+    
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
+      JSON.stringify({
+        error: error.message || 'Internal server error',
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      }
+    );
   }
-})
+});

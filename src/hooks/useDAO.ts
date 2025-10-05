@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { createProposalSchema, voteSchema } from '@/schemas/daoSchemas';
 
 interface Proposal {
   id: string;
@@ -63,9 +62,6 @@ export const useDAO = () => {
     type: string
   ) => {
     try {
-      // Validate input
-      const validatedInput = createProposalSchema.parse({ title, description, type });
-
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
@@ -76,9 +72,9 @@ export const useDAO = () => {
       const { error } = await supabase
         .from('governance_proposals')
         .insert({
-          title: validatedInput.title,
-          description: validatedInput.description,
-          proposal_type: validatedInput.type,
+          title,
+          description,
+          proposal_type: type,
           proposer: user.id,
           quorum: 10000, // Default quorum
           end_time: endTime.toISOString(),
@@ -88,13 +84,9 @@ export const useDAO = () => {
 
       toast.success('Proposal created successfully');
       await fetchProposals();
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
-        const errorMessage = error.errors[0]?.message || 'Invalid input';
-        toast.error(errorMessage);
-      } else {
-        toast.error('Failed to create proposal');
-      }
+    } catch (error) {
+      console.error('Error creating proposal:', error);
+      toast.error('Failed to create proposal');
       throw error;
     }
   };
@@ -104,41 +96,25 @@ export const useDAO = () => {
     support: 'for' | 'against' | 'abstain'
   ) => {
     try {
-      // Validate input
-      const validatedInput = voteSchema.parse({ proposalId, support });
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('Not authenticated');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Call Edge Function to validate and record vote
-      const SUPABASE_URL = 'https://gmcfdipxjsbkxdfrjpok.supabase.co';
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/validate-dao-vote`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify(validatedInput),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('validate-dao-vote', {
+        body: {
+          proposalId,
+          support,
+        },
+      });
 
-      const result = await response.json();
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to record vote');
-      }
-
-      toast.success(`Vote recorded successfully (${result.votingPower} XX voting power)`);
+      toast.success(`Vote recorded with ${data.votingPower} XX Coins`);
       await fetchProposals();
     } catch (error: any) {
-      if (error.name === 'ZodError') {
-        const errorMessage = error.errors[0]?.message || 'Invalid input';
-        toast.error(errorMessage);
-      } else {
-        toast.error(error.message || 'Failed to record vote');
-      }
+      console.error('Error voting:', error);
+      toast.error(error.message || 'Failed to record vote');
       throw error;
     }
   };

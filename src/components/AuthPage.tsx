@@ -8,42 +8,36 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle, Fingerprint, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Mail, Globe, AlertCircle, CheckCircle, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import TwoFactorVerification from './TwoFactorVerification';
-import { signUpWithEmail, signInWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
 import { cleanupAuthState } from '@/utils/authHelpers';
-import { checkTwoFactorRequirement } from '@/services/twoFactorAuthService';
+import { z } from 'zod';
 
 type AuthMethod = 'magic-link' | 'google';
 
+// Input validation schemas
+const emailSchema = z.string().trim().email({ message: "Invalid email address" }).max(255, { message: "Email must be less than 255 characters" });
+const nameSchema = z.string().trim().max(100, { message: "Name must be less than 100 characters" }).optional();
+
 const AuthPage = () => {
-  const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, resetPassword, loading } = useAuth();
+  const { signInWithMagicLink, signInWithGoogle, resetPassword, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('magic-link');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showSigninPassword, setShowSigninPassword] = useState(false);
-  const [showTwoFactorVerification, setShowTwoFactorVerification] = useState(false);
-  const [pendingCredentials, setPendingCredentials] = useState<{email: string, password: string} | null>(null);
 
   const handleClearBrowserData = () => {
-    // Clear browser auth data
     cleanupAuthState();
-    // Also clear any Supabase sessions
     supabase.auth.signOut({ scope: 'global' }).then(() => {
       window.location.reload();
     });
@@ -68,7 +62,30 @@ const AuthPage = () => {
     },
   ];
 
+  const validateEmail = (email: string): boolean => {
+    try {
+      emailSchema.parse(email);
+      return true;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        setError(err.errors[0].message);
+      }
+      return false;
+    }
+  };
 
+  const validateName = (name: string): boolean => {
+    if (!name) return true; // Optional field
+    try {
+      nameSchema.parse(name);
+      return true;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        setError(err.errors[0].message);
+      }
+      return false;
+    }
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,6 +98,15 @@ const AuthPage = () => {
 
     try {
       if (selectedMethod === 'magic-link') {
+        if (!validateEmail(email)) {
+          setIsLoading(false);
+          return;
+        }
+        if (!validateName(fullName)) {
+          setIsLoading(false);
+          return;
+        }
+        
         await signInWithMagicLink(email);
         setMagicLinkSent(true);
         toast({
@@ -91,14 +117,6 @@ const AuthPage = () => {
         await signInWithGoogle();
       }
     } catch (error: any) {
-      console.error('Sign up error details:', {
-        message: error.message,
-        status: error.status,
-        statusCode: error.statusCode,
-        fullError: error
-      });
-      
-      // Handle specific Supabase error messages
       let errorMessage = 'Failed to create account';
       if (error.message?.includes('already registered') || 
           error.message?.includes('User already registered') ||
@@ -106,8 +124,6 @@ const AuthPage = () => {
         errorMessage = 'An account with this email already exists. Please sign in instead.';
       } else if (error.message?.includes('email')) {
         errorMessage = 'Invalid email address. Please check and try again.';
-      } else if (error.message?.includes('password')) {
-        errorMessage = 'Password must be at least 6 characters long.';
       } else if (error.message) {
         errorMessage = error.message;
       }
@@ -121,6 +137,10 @@ const AuthPage = () => {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resetEmail) return;
+
+    if (!validateEmail(resetEmail)) {
+      return;
+    }
 
     setIsLoading(true);
     setError('');
@@ -148,6 +168,10 @@ const AuthPage = () => {
       return;
     }
 
+    if (!validateEmail(email)) {
+      return;
+    }
+
     setIsLoading(true);
     setError('');
 
@@ -159,7 +183,6 @@ const AuthPage = () => {
         description: 'Check your email for the sign-in link.',
       });
     } catch (error: any) {
-      console.error('❌ Sign in error:', error);
       setError(error.message || 'Failed to sign in');
     } finally {
       setIsLoading(false);
@@ -173,7 +196,6 @@ const AuthPage = () => {
     try {
       await signInWithGoogle();
     } catch (error: any) {
-      console.error('Google auth error:', error);
       setError(error.message || 'Failed to sign in with Google');
     } finally {
       setIsLoading(false);
@@ -190,7 +212,6 @@ const AuthPage = () => {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 flex items-center justify-center p-4">
@@ -232,11 +253,6 @@ const AuthPage = () => {
                         {method.recommended && (
                           <Badge variant="secondary" className="text-xs">
                             Recommended
-                          </Badge>
-                        )}
-                        {!method.available && (
-                          <Badge variant="outline" className="text-xs">
-                            Coming Soon
                           </Badge>
                         )}
                       </div>
@@ -289,6 +305,7 @@ const AuthPage = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email"
                           required
+                          maxLength={255}
                         />
                       </div>
 
@@ -333,6 +350,7 @@ const AuthPage = () => {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="Enter your full name"
+                          maxLength={100}
                         />
                       </div>
 
@@ -345,6 +363,7 @@ const AuthPage = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email"
                           required
+                          maxLength={255}
                         />
                       </div>
 
@@ -419,31 +438,20 @@ const AuthPage = () => {
                 onChange={(e) => setResetEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
+                maxLength={255}
               />
             </div>
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowForgotPassword(false)}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isLoading || !resetEmail}
-                className="flex-1"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                ) : null}
-                Send Reset Link
-              </Button>
-            </div>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              ) : null}
+              Send Reset Link
+            </Button>
           </form>
         </DialogContent>
       </Dialog>
+
+      
     </div>
   );
 };
