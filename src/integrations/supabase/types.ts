@@ -556,45 +556,7 @@ export type Database = {
       }
     }
     Views: {
-      audit_logs_safe: {
-        Row: {
-          action: string | null
-          created_at: string | null
-          id: string | null
-          ip_address: string | null
-          new_values: Json | null
-          old_values: Json | null
-          record_id: string | null
-          table_name: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action?: string | null
-          created_at?: string | null
-          id?: string | null
-          ip_address?: never
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string | null
-          created_at?: string | null
-          id?: string | null
-          ip_address?: never
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -628,6 +590,21 @@ export type Database = {
       get_anonymized_proposer: {
         Args: { proposal_proposer: string }
         Returns: string
+      }
+      get_audit_logs_safe: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: string
+          new_values: Json
+          old_values: Json
+          record_id: string
+          table_name: string
+          user_agent: string
+          user_id: string
+        }[]
       }
       get_audit_logs_sanitized: {
         Args: Record<PropertyKey, never>
