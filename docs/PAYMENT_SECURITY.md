@@ -25,19 +25,34 @@ Every modification to subscription data is logged:
 
 **Important**: Stripe customer IDs are never included in audit logs.
 
-### 4. Safe Data Access
-The `get_user_subscription_safe()` function provides secure access to subscription status without exposing:
-- Stripe customer IDs
-- Internal record IDs
-- Metadata timestamps
+### 4. Secure Admin Access Functions
 
-### 5. Client-Side Protection
+**For Admin Monitoring** - `get_subscription_monitoring()`:
+- Requires admin or super_admin role
+- Returns subscription overview with Stripe IDs redacted as `[REDACTED]`
+- Supports pagination with limit/offset parameters
+
+**For Customer Support** - `get_user_subscription_admin()`:
+- Requires super_admin role only
+- Provides full access to Stripe customer IDs for support purposes
+- **Every access is logged** to audit_logs with `ADMIN_VIEW_STRIPE_ID` action
+- Use sparingly and only for legitimate customer support cases
+
+### 5. Safe Data Access
+**For Users** - `get_user_subscription_safe()`:
+- Returns subscription status without exposing:
+  - Stripe customer IDs
+  - Internal record IDs
+  - Metadata timestamps
+- Automatically enforces user can only see their own data
+
+### 6. Client-Side Protection
 The `useSubscription` hook:
 - Uses the safe RPC function instead of direct table queries
 - Never logs full error objects (which might contain sensitive data)
 - Only logs generic error messages
 
-### 6. Edge Function Security
+### 7. Edge Function Security
 The `manage-subscription` edge function:
 - Requires admin authorization for tier updates
 - Sanitizes error messages in production
@@ -46,7 +61,9 @@ The `manage-subscription` edge function:
 ## Best Practices for Developers
 
 ### ✅ DO:
-- Always use `get_user_subscription_safe()` for checking subscription status
+- Use `get_user_subscription_safe()` for user self-service
+- Use `get_subscription_monitoring()` for admin dashboards (Stripe IDs redacted)
+- Use `get_user_subscription_admin()` only for customer support (fully logged)
 - Log only generic error messages
 - Use the service role only in edge functions for payment operations
 - Test RLS policies regularly
@@ -62,8 +79,9 @@ The `manage-subscription` edge function:
 
 All access to subscription data is monitored via:
 1. Audit log triggers that record all modifications
-2. The `subscription_monitoring` view for admin oversight (with redacted Stripe IDs)
-3. Regular security scans
+2. `get_subscription_monitoring()` function for admin oversight (Stripe IDs redacted)
+3. Special audit log entries for `ADMIN_VIEW_STRIPE_ID` when super admins access Stripe data
+4. Regular security scans
 
 ## Emergency Response
 
@@ -80,8 +98,14 @@ To verify policies are working:
 -- As a regular user, this should only return your own data
 SELECT * FROM get_user_subscription_safe();
 
--- As a regular user, this should return 0 rows for other users
-SELECT * FROM subscribers WHERE user_id != auth.uid();
+-- As an admin, this should return all subscriptions with redacted Stripe IDs
+SELECT * FROM get_subscription_monitoring(50, 0);
+
+-- As a super admin, this logs the access and returns full details
+SELECT * FROM get_user_subscription_admin('user-uuid-here');
+
+-- Verify the super admin access was logged
+SELECT * FROM audit_logs WHERE action = 'ADMIN_VIEW_STRIPE_ID' ORDER BY created_at DESC LIMIT 5;
 ```
 
 ## Related Documentation
