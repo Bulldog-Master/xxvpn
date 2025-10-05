@@ -725,6 +725,17 @@ export type Database = {
           votes_for: number
         }[]
       }
+      get_proposal_votes_safe: {
+        Args: { p_proposal_id?: string }
+        Returns: {
+          created_at: string
+          id: string
+          proposal_id: string
+          support: string
+          voter: string
+          voting_power: number
+        }[]
+      }
       get_sanitized_device_info: {
         Args: { device_id: string }
         Returns: {
