@@ -13,11 +13,12 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Wallet,
-  RefreshCw
+  RefreshCw,
+  ExternalLink
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
-import { XXWalletService, WalletState } from '@/services/xxWalletService';
+import { XXWalletService, WalletState, WalletType } from '@/services/xxWalletService';
 
 export const XXCoinIntegration = () => {
   const { user } = useAuth();
@@ -27,8 +28,10 @@ export const XXCoinIntegration = () => {
     connected: false,
     chainId: null,
     balance: null,
+    walletType: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [availableWallets, setAvailableWallets] = useState<WalletType[]>([]);
 
   // Mock data for demonstration
   const monthlyEarnings = 12.5;
@@ -65,17 +68,35 @@ export const XXCoinIntegration = () => {
   ];
 
   useEffect(() => {
-    // Check if already connected
+    // Check available wallets
+    const wallets = walletService.getAvailableWallets();
+    setAvailableWallets(wallets);
+
+    // Set up listeners for both wallets
     if (walletService.isMetaMaskInstalled()) {
       const ethereum = (window as any).ethereum;
       ethereum.on('accountsChanged', handleAccountsChanged);
       ethereum.on('chainChanged', handleChainChanged);
+    }
 
-      return () => {
+    if (walletService.isXXWalletInstalled()) {
+      const xxwallet = (window as any).xxwallet;
+      xxwallet.on('accountsChanged', handleAccountsChanged);
+      xxwallet.on('chainChanged', handleChainChanged);
+    }
+
+    return () => {
+      if (walletService.isMetaMaskInstalled()) {
+        const ethereum = (window as any).ethereum;
         ethereum.removeListener('accountsChanged', handleAccountsChanged);
         ethereum.removeListener('chainChanged', handleChainChanged);
-      };
-    }
+      }
+      if (walletService.isXXWalletInstalled()) {
+        const xxwallet = (window as any).xxwallet;
+        xxwallet.removeListener('accountsChanged', handleAccountsChanged);
+        xxwallet.removeListener('chainChanged', handleChainChanged);
+      }
+    };
   }, []);
 
   const handleAccountsChanged = (accounts: string[]) => {
@@ -92,8 +113,8 @@ export const XXCoinIntegration = () => {
     window.location.reload();
   };
 
-  const handleConnect = async () => {
-    if (!walletService.isMetaMaskInstalled()) {
+  const handleConnect = async (walletType: WalletType) => {
+    if (walletType === 'metamask' && !walletService.isMetaMaskInstalled()) {
       toast({
         title: "MetaMask Not Found",
         description: "Please install MetaMask to continue",
@@ -103,14 +124,24 @@ export const XXCoinIntegration = () => {
       return;
     }
 
+    if (walletType === 'xx-wallet' && !walletService.isXXWalletInstalled()) {
+      toast({
+        title: "xx Wallet Not Found",
+        description: "Please install xx network wallet to continue",
+        variant: "destructive",
+      });
+      window.open('https://wallet.xx.network/', '_blank');
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const state = await walletService.connect();
+      const state = await walletService.connect(walletType);
       setWalletState(state);
       
       toast({
         title: "Wallet Connected",
-        description: `Connected to ${state.address?.slice(0, 6)}...${state.address?.slice(-4)}`,
+        description: `Connected via ${walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}`,
       });
     } catch (error: any) {
       toast({
@@ -189,26 +220,76 @@ export const XXCoinIntegration = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
-            <div>
-              <p className="text-sm text-muted-foreground">Wallet Address</p>
-              <p className="font-mono text-sm">
-                {walletState.connected 
-                  ? `${walletState.address?.slice(0, 6)}...${walletState.address?.slice(-4)}`
-                  : "Not connected"}
-              </p>
+          {!walletState.connected ? (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">Choose your wallet:</p>
+              <div className="grid gap-2">
+                {availableWallets.includes('xx-wallet') && (
+                  <Button 
+                    onClick={() => handleConnect('xx-wallet')} 
+                    variant="outline"
+                    className="w-full justify-start"
+                    disabled={isLoading}
+                  >
+                    <Shield className="h-4 w-4 mr-2" />
+                    <span className="flex-1 text-left">xx Network Wallet</span>
+                    <Badge variant="secondary" className="ml-2">Recommended</Badge>
+                  </Button>
+                )}
+                {availableWallets.includes('metamask') && (
+                  <Button 
+                    onClick={() => handleConnect('metamask')} 
+                    variant="outline"
+                    className="w-full justify-start"
+                    disabled={isLoading}
+                  >
+                    <Wallet className="h-4 w-4 mr-2" />
+                    <span className="flex-1 text-left">MetaMask</span>
+                  </Button>
+                )}
+                {availableWallets.length === 0 && (
+                  <div className="text-center py-4 space-y-2">
+                    <p className="text-sm text-muted-foreground">No wallet detected</p>
+                    <div className="flex gap-2 justify-center">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => window.open('https://wallet.xx.network/', '_blank')}
+                      >
+                        Get xx Wallet
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => window.open('https://metamask.io/download/', '_blank')}
+                      >
+                        Get MetaMask
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            {!walletState.connected ? (
-              <Button onClick={handleConnect} size="sm" disabled={isLoading}>
-                <Wallet className="h-4 w-4 mr-2" />
-                {isLoading ? "Connecting..." : "Connect Wallet"}
-              </Button>
-            ) : (
+          ) : (
+            <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-sm text-muted-foreground">Connected via</p>
+                  <Badge variant="outline">
+                    {walletState.walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}
+                  </Badge>
+                </div>
+                <p className="font-mono text-sm">
+                  {`${walletState.address?.slice(0, 6)}...${walletState.address?.slice(-4)}`}
+                </p>
+              </div>
               <Button onClick={handleRefresh} size="sm" variant="outline" disabled={isLoading}>
                 <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
               </Button>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
             <div>

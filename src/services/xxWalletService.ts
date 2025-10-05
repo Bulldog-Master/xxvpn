@@ -25,11 +25,14 @@ export const CONTRACT_CONFIG = {
   ],
 };
 
+export type WalletType = 'metamask' | 'xx-wallet';
+
 export interface WalletState {
   address: string | null;
   connected: boolean;
   chainId: string | null;
   balance: string | null;
+  walletType: WalletType | null;
 }
 
 export class XXWalletService {
@@ -44,9 +47,36 @@ export class XXWalletService {
   }
 
   /**
-   * Connect wallet
+   * Check if xx network wallet is installed
    */
-  async connect(): Promise<WalletState> {
+  isXXWalletInstalled(): boolean {
+    return typeof (window as any).xxwallet !== 'undefined';
+  }
+
+  /**
+   * Get available wallets
+   */
+  getAvailableWallets(): WalletType[] {
+    const wallets: WalletType[] = [];
+    if (this.isMetaMaskInstalled()) wallets.push('metamask');
+    if (this.isXXWalletInstalled()) wallets.push('xx-wallet');
+    return wallets;
+  }
+
+  /**
+   * Connect wallet (defaults to MetaMask, but will try xx wallet if specified)
+   */
+  async connect(walletType: WalletType = 'metamask'): Promise<WalletState> {
+    if (walletType === 'xx-wallet') {
+      return this.connectXXWallet();
+    }
+    return this.connectMetaMask();
+  }
+
+  /**
+   * Connect MetaMask wallet
+   */
+  private async connectMetaMask(): Promise<WalletState> {
     if (!this.isMetaMaskInstalled()) {
       throw new Error('MetaMask not installed. Please install MetaMask to continue.');
     }
@@ -74,10 +104,52 @@ export class XXWalletService {
         connected: true,
         chainId: XXCHAIN_CONFIG.chainId,
         balance,
+        walletType: 'metamask',
       };
     } catch (error) {
-      console.error('Failed to connect wallet:', error);
-      throw new Error('Failed to connect wallet. Please try again.');
+      console.error('Failed to connect MetaMask:', error);
+      throw new Error('Failed to connect MetaMask. Please try again.');
+    }
+  }
+
+  /**
+   * Connect xx network wallet
+   */
+  private async connectXXWallet(): Promise<WalletState> {
+    if (!this.isXXWalletInstalled()) {
+      throw new Error('xx network wallet not installed. Please install xx wallet to continue.');
+    }
+
+    const xxwallet = (window as any).xxwallet;
+
+    try {
+      // Request account access (xx wallet API)
+      const accounts = await xxwallet.request({ method: 'xx_requestAccounts' });
+      const address = accounts[0];
+
+      // Get current chain ID
+      const chainId = await xxwallet.request({ method: 'xx_chainId' });
+
+      // xx wallet is natively on xxChain, but verify
+      if (chainId !== XXCHAIN_CONFIG.chainId) {
+        // xx wallet should always be on xxChain, but just in case
+        console.warn('xx wallet on unexpected chain, switching...');
+        await this.switchToXXChain();
+      }
+
+      // Get balance
+      const balance = await this.getBalance(address);
+
+      return {
+        address,
+        connected: true,
+        chainId: XXCHAIN_CONFIG.chainId,
+        balance,
+        walletType: 'xx-wallet',
+      };
+    } catch (error) {
+      console.error('Failed to connect xx wallet:', error);
+      throw new Error('Failed to connect xx wallet. Please try again.');
     }
   }
 
@@ -297,6 +369,7 @@ export class XXWalletService {
       connected: false,
       chainId: null,
       balance: null,
+      walletType: null,
     };
   }
 }
