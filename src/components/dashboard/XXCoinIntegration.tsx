@@ -216,7 +216,7 @@ export const XXCoinIntegration = () => {
             XX Network Wallet
           </CardTitle>
           <CardDescription>
-            Connect your MetaMask wallet to pay with XX tokens
+            Connect your quantum-resistant wallet to pay with XX tokens
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -228,23 +228,39 @@ export const XXCoinIntegration = () => {
                   <Button 
                     onClick={() => handleConnect('xx-wallet')} 
                     variant="outline"
-                    className="w-full justify-start"
+                    className="w-full justify-start h-auto py-3"
                     disabled={isLoading}
                   >
-                    <Shield className="h-4 w-4 mr-2" />
-                    <span className="flex-1 text-left">xx Network Wallet</span>
-                    <Badge variant="secondary" className="ml-2">Recommended</Badge>
+                    <div className="flex items-start gap-3 w-full">
+                      <Shield className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                      <div className="flex-1 text-left">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">xx Network Wallet</span>
+                          <Badge variant="secondary" className="text-xs">Recommended</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Post-quantum secure • Future-proof encryption
+                        </p>
+                      </div>
+                    </div>
                   </Button>
                 )}
                 {availableWallets.includes('metamask') && (
                   <Button 
                     onClick={() => handleConnect('metamask')} 
                     variant="outline"
-                    className="w-full justify-start"
+                    className="w-full justify-start h-auto py-3"
                     disabled={isLoading}
                   >
-                    <Wallet className="h-4 w-4 mr-2" />
-                    <span className="flex-1 text-left">MetaMask</span>
+                    <div className="flex items-start gap-3 w-full">
+                      <Wallet className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 text-left">
+                        <span className="font-medium">MetaMask</span>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Standard EVM-compatible wallet
+                        </p>
+                      </div>
+                    </div>
                   </Button>
                 )}
                 {availableWallets.length === 0 && (
@@ -277,9 +293,22 @@ export const XXCoinIntegration = () => {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <p className="text-sm text-muted-foreground">Connected via</p>
-                  <Badge variant="outline">
-                    {walletState.walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}
+                  <Badge variant="outline" className="gap-1">
+                    {walletState.walletType === 'xx-wallet' ? (
+                      <>
+                        <Shield className="h-3 w-3" />
+                        xx Wallet
+                      </>
+                    ) : (
+                      'MetaMask'
+                    )}
                   </Badge>
+                  {walletState.walletType === 'xx-wallet' && (
+                    <Badge variant="secondary" className="text-xs gap-1">
+                      <Zap className="h-3 w-3" />
+                      Quantum-Secure
+                    </Badge>
+                  )}
                 </div>
                 <p className="font-mono text-sm">
                   {`${walletState.address?.slice(0, 6)}...${walletState.address?.slice(-4)}`}
