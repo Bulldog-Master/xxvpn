@@ -1,104 +1,56 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
 import { AuditLogDashboard } from '@/components/admin/AuditLogDashboard';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, Users, FileText } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useAdminCheck } from '@/hooks/useAdminCheck';
+import { Loader2, ShieldAlert } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export default function AdminDashboard() {
-  const { user } = useAuth();
+const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  const { isAdmin, loading } = useAdminCheck();
 
   useEffect(() => {
-    checkAdminStatus();
-  }, [user]);
-
-  const checkAdminStatus = async () => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .single();
-
-      if (error || !data) {
-        toast({
-          title: 'Access Denied',
-          description: 'You need admin privileges to access this page.',
-          variant: 'destructive',
-        });
-        navigate('/');
-        return;
-      }
-
-      setIsAdmin(true);
-    } catch (error) {
-      console.error('Error checking admin status:', error);
+    if (!loading && !isAdmin) {
       navigate('/');
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [isAdmin, loading, navigate]);
 
   if (loading) {
     return (
-      <div className="container mx-auto p-6">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-muted-foreground">Verifying admin access...</div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin" />
       </div>
     );
   }
 
   if (!isAdmin) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Alert variant="destructive" className="max-w-md">
+          <ShieldAlert className="h-4 w-4" />
+          <AlertTitle>Access Denied</AlertTitle>
+          <AlertDescription>
+            You do not have permission to access this page. Admin privileges required.
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Shield className="h-8 w-8" />
-          Admin Dashboard
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          System administration and security monitoring
-        </p>
+    <div className="min-h-screen bg-background p-4 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
+            Monitor and manage security events across your application
+          </p>
+        </div>
+
+        <AuditLogDashboard />
       </div>
-
-      <Tabs defaultValue="audit" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="audit" className="gap-2">
-            <FileText className="h-4 w-4" />
-            Audit Logs
-          </TabsTrigger>
-          <TabsTrigger value="users" className="gap-2">
-            <Users className="h-4 w-4" />
-            User Management
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="audit">
-          <AuditLogDashboard />
-        </TabsContent>
-
-        <TabsContent value="users">
-          <div className="text-center py-12 text-muted-foreground">
-            User management coming soon
-          </div>
-        </TabsContent>
-      </Tabs>
     </div>
   );
-}
+};
+
+export default AdminDashboard;
