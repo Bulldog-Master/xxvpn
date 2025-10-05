@@ -640,6 +640,10 @@ export type Database = {
         Args: { _user_id: string }
         Returns: boolean
       }
+      safe_log_operation: {
+        Args: { p_data?: Json; p_operation: string; p_table_name: string }
+        Returns: undefined
+      }
       sanitize_sensitive_data: {
         Args: { data: Json }
         Returns: Json
