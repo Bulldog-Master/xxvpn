@@ -247,6 +247,7 @@ export type Database = {
           totp_enabled: boolean | null
           updated_at: string
           user_id: string
+          wallet_address: string | null
           xx_coin_balance: number
         }
         Insert: {
@@ -259,6 +260,7 @@ export type Database = {
           totp_enabled?: boolean | null
           updated_at?: string
           user_id: string
+          wallet_address?: string | null
           xx_coin_balance?: number
         }
         Update: {
@@ -271,6 +273,7 @@ export type Database = {
           totp_enabled?: boolean | null
           updated_at?: string
           user_id?: string
+          wallet_address?: string | null
           xx_coin_balance?: number
         }
         Relationships: []
@@ -616,6 +619,39 @@ export type Database = {
           last_used_at?: string | null
           public_key?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      webhook_logs: {
+        Row: {
+          created_at: string
+          data: Json
+          error_message: string | null
+          event_type: string
+          id: string
+          status: string
+          user_id: string | null
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          error_message?: string | null
+          event_type: string
+          id?: string
+          status: string
+          user_id?: string | null
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          error_message?: string | null
+          event_type?: string
+          id?: string
+          status?: string
+          user_id?: string | null
+          wallet_address?: string
         }
         Relationships: []
       }

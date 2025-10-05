@@ -99,6 +99,9 @@ export class XXWalletService {
       // Get balance
       const balance = await this.getBalance(address);
 
+      // Save wallet address to user profile
+      await this.saveWalletToProfile(address);
+
       return {
         address,
         connected: true,
@@ -139,6 +142,9 @@ export class XXWalletService {
 
       // Get balance
       const balance = await this.getBalance(address);
+
+      // Save wallet address to user profile
+      await this.saveWalletToProfile(address);
 
       return {
         address,
@@ -354,6 +360,28 @@ export class XXWalletService {
     } catch (error) {
       console.error('Failed to check subscription:', error);
       return false;
+    }
+  }
+
+  /**
+   * Save wallet address to user profile
+   */
+  private async saveWalletToProfile(walletAddress: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      console.warn('No authenticated user, skipping wallet save');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({ wallet_address: walletAddress.toLowerCase() })
+      .eq('user_id', user.id);
+
+    if (error) {
+      console.error('Failed to save wallet address:', error);
+      // Don't throw - this is non-critical
     }
   }
 
