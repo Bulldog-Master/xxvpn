@@ -272,67 +272,71 @@ const VPNDashboard = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 overflow-x-auto">
-            {/* Referral Section */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer group">
-                  <CardContent className="flex items-center gap-3 p-3">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-primary" />
-                      <div className="text-xs">
-                        <div className="font-medium">{userReferrals} {t('dashboard.referrals.referrals')}</div>
-                        <div className="text-muted-foreground">{totalUsers.toLocaleString()} {t('dashboard.referrals.users')}</div>
-                      </div>
-                    </div>
-                    <ChevronDown className="w-3 h-3 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                  </CardContent>
-                </Card>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 p-4">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-sm mb-2">{t('dashboard.referrals.program')}</h4>
-                    <div className="grid grid-cols-2 gap-4 text-xs">
-                      <div>
-                        <div className="text-muted-foreground">{t('dashboard.referrals.yourReferrals')}</div>
-                        <div className="font-semibold text-lg">{userReferrals}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground">{t('dashboard.referrals.totalUsers')}</div>
-                        <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground text-xs mb-2">{t('dashboard.referrals.yourLink')}</div>
-                    <div className="flex items-center gap-2 p-2 bg-muted rounded border">
-                      <code className="text-xs flex-1 truncate">{userReferralLink}</code>
-                      <Button size="sm" variant="ghost" onClick={copyReferralLink} className="h-6 w-6 p-0">
-                        <Copy className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {t('dashboard.referrals.shareMessage')}
-                  </p>
-                </div>
-              </PopoverContent>
-            </Popover>
-
-            <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
-              <Coins className="w-4 h-4 text-warning" />
-              <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
-            </div>
-            
-            <Badge variant="outline" className="bg-card/50">
-              {t('dashboard.auto')}
-            </Badge>
-
-            <LanguageSelector />
-
-            {/* User Menu */}
+          <div className="flex items-center justify-between gap-3 overflow-x-auto">
             <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
+                <Coins className="w-4 h-4 text-warning" />
+                <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
+              </div>
+              
+              <Badge variant="outline" className="bg-card/50">
+                {t('dashboard.auto')}
+              </Badge>
+            </div>
+
+            {/* Right side: Referrals, User, Language */}
+            <div className="flex items-center gap-3">
+              {/* Referral Section */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:quantum-glow transition-all cursor-pointer group">
+                    <CardContent className="flex items-center gap-3 p-3">
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-primary" />
+                        <div className="text-xs">
+                          <div className="font-medium">{userReferrals} {t('dashboard.referrals.referrals')}</div>
+                          <div className="text-muted-foreground">{totalUsers.toLocaleString()} {t('dashboard.referrals.users')}</div>
+                        </div>
+                      </div>
+                      <ChevronDown className="w-3 h-3 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    </CardContent>
+                  </Card>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-sm mb-2">{t('dashboard.referrals.program')}</h4>
+                      <div className="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <div className="text-muted-foreground">{t('dashboard.referrals.yourReferrals')}</div>
+                          <div className="font-semibold text-lg">{userReferrals}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">{t('dashboard.referrals.totalUsers')}</div>
+                          <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-muted-foreground text-xs mb-2">{t('dashboard.referrals.yourLink')}</div>
+                      <div className="flex items-center gap-2 p-2 bg-muted rounded border">
+                        <code className="text-xs flex-1 truncate">{userReferralLink}</code>
+                        <Button size="sm" variant="ghost" onClick={copyReferralLink} className="h-6 w-6 p-0">
+                          <Copy className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {t('dashboard.referrals.shareMessage')}
+                    </p>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              {/* User and Language stacked vertically */}
+              <div className="flex flex-col gap-2">
+                {/* User Menu */}
+                <div className="flex items-center gap-3">
               {/* Clickable Avatar */}
               <div 
                 className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
@@ -415,6 +419,11 @@ const VPNDashboard = () => {
               </DropdownMenuContent>
                 </DropdownMenu>
               )}
+                </div>
+
+                {/* Language Selector */}
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         </div>
