@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_name: string
+          event_properties: Json | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_name: string
+          event_properties?: Json | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_name?: string
+          event_properties?: Json | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       audit_log_access_log: {
         Row: {
           access_type: string
@@ -806,6 +830,10 @@ export type Database = {
     }
     Functions: {
       cleanup_device_access_audit: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_old_analytics_events: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

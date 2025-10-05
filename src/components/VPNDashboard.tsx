@@ -76,6 +76,7 @@ import { XXNetworkStatus } from './XXNetworkStatus';
 import { XXNetworkInfoPanel } from './dashboard/XXNetworkInfoPanel';
 import { DAOGovernance } from './dashboard/DAOGovernance';
 import { XXCoinIntegration } from './dashboard/XXCoinIntegration';
+import { BetaCTA } from './BetaCTA';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -469,6 +470,9 @@ const VPNDashboard = () => {
 
         {/* Subscription Status */}
         <SubscriptionStatus onManageSubscription={() => setActiveTab('payments')} />
+
+        {/* Beta CTA */}
+        {!subscribed && <BetaCTA />}
 
             {/* xx Network Status + Connection History */}
             <div className="grid lg:grid-cols-2 gap-6">

@@ -31,6 +31,7 @@ export const trackEvent = async ({
   try {
     const { data: { user } } = await supabase.auth.getUser();
     
+    // @ts-ignore - Type will be available after types are regenerated
     await supabase.from('analytics_events').insert({
       user_id: user?.id || null,
       event_name: event,

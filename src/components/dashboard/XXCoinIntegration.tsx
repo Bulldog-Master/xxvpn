@@ -20,6 +20,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
 import { XXWalletService, WalletState, WalletType } from '@/services/xxWalletService';
 import { useWalletProfile } from '@/hooks/useWalletProfile';
+import { trackWalletConnection, trackPayment } from '@/utils/analytics';
 
 export const XXCoinIntegration = () => {
   const { user } = useAuth();
@@ -137,6 +138,10 @@ export const XXCoinIntegration = () => {
     }
 
     setIsLoading(true);
+    
+    // Track attempt
+    trackWalletConnection.attempt(walletType);
+    
     try {
       const state = await walletService.connect(walletType);
       setWalletState(state);
@@ -151,11 +156,19 @@ export const XXCoinIntegration = () => {
         }
       }
       
+      // Track success
+      if (state.address) {
+        trackWalletConnection.success(walletType, state.address);
+      }
+      
       toast({
         title: "Wallet Connected",
         description: `Connected via ${walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}`,
       });
     } catch (error: any) {
+      // Track failure
+      trackWalletConnection.failure(walletType, error.message);
+      
       toast({
         title: "Connection Failed",
         description: error.message,
@@ -199,15 +212,26 @@ export const XXCoinIntegration = () => {
       return;
     }
 
+    const amount = months * 5; // 5 XX per month
     setIsLoading(true);
+    
+    // Track attempt
+    trackPayment.attempt(months, amount);
+    
     try {
       const txHash = await walletService.subscribe(months, walletState.address);
+      
+      // Track success
+      trackPayment.success(months, amount, txHash);
       
       toast({
         title: "Subscription Successful",
         description: `Transaction: ${txHash.slice(0, 10)}...`,
       });
     } catch (error: any) {
+      // Track failure
+      trackPayment.failure(months, error.message);
+      
       toast({
         title: "Subscription Failed",
         description: error.message,
