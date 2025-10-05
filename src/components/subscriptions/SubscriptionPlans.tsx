@@ -38,6 +38,21 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
 
   const personalPlans: SubscriptionPlan[] = [
     {
+      id: 'personal-single',
+      name: 'Single Device',
+      duration: 'month',
+      price: 499, // $4.99 in cents
+      currency: 'USD',
+      trialDays: 7,
+      features: [
+        '1 device only',
+        'Unlimited bandwidth',
+        'All server locations',
+        'Advanced cMixx technology',
+        'Email support'
+      ]
+    },
+    {
       id: 'personal-basic',
       name: 'Personal',
       duration: 'month',

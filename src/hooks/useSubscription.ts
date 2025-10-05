@@ -104,12 +104,13 @@ export const useSubscription = () => {
     if (!subscriptionStatus.subscribed) return false;
     
     const tierHierarchy = {
-      'personal': 1,
-      'personal-pro': 2,
-      'personal-premium': 3,
-      'business': 4,
-      'business-plus': 5,
-      'enterprise': 6
+      'personal-single': 1,
+      'personal': 2,
+      'personal-pro': 3,
+      'personal-premium': 4,
+      'business': 5,
+      'business-plus': 6,
+      'enterprise': 7
     };
 
     const userTierLevel = tierHierarchy[subscriptionStatus.subscription_tier as keyof typeof tierHierarchy] || 0;
