@@ -44,7 +44,7 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
                 <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.noVPN')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
-                {t('dashboard.connectionModes.ultraFastDesc')}
+                Direct connection with no VPN encryption. Maximum speed for gaming and streaming.
               </p>
               <div className="flex items-center gap-2 text-xs">
                 <Zap className="w-3 h-3 text-warning" />
@@ -83,7 +83,7 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
                 <span className="text-xs text-muted-foreground">{t('dashboard.connectionModes.encryptedTunnel')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
-                {t('dashboard.connectionModes.secureDesc')}
+                Traditional VPN encryption with WireGuard/OpenVPN. Fast speeds with basic privacy. (Coming soon)
               </p>
               <div className="flex items-center gap-2 text-xs">
                 <Shield className="w-3 h-3 text-primary" />
@@ -122,7 +122,7 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
                 <span className="text-xs text-muted-foreground">XX Network</span>
               </div>
               <p className="text-xs text-muted-foreground">
-                {t('dashboard.connectionModes.metadataShredDesc')}
+                Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s.
               </p>
               <div className="flex items-center gap-2 text-xs">
                 <Eye className="w-3 h-3 text-primary" />
