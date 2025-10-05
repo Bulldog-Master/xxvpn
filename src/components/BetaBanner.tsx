@@ -31,6 +31,9 @@ export const BetaBanner = () => {
                 <Shield className="w-4 h-4 text-success" />
                 <span>Post-quantum encryption</span>
               </div>
+              <div className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors" onClick={() => navigate('/faq')}>
+                <span className="text-xs underline">Learn more in FAQ</span>
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-3">

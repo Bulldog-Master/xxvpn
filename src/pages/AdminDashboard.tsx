@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuditLogDashboard } from '@/components/admin/AuditLogDashboard';
+import { BetaMonitoring } from '@/components/admin/BetaMonitoring';
 import { useAdminCheck } from '@/hooks/useAdminCheck';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -43,11 +45,24 @@ const AdminDashboard = () => {
         <div>
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <p className="text-muted-foreground mt-2">
-            Monitor and manage security events across your application
+            Monitor beta signups, security events, and analytics
           </p>
         </div>
 
-        <AuditLogDashboard />
+        <Tabs defaultValue="beta" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="beta">Beta Monitoring</TabsTrigger>
+            <TabsTrigger value="audit">Audit Logs</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="beta" className="space-y-4">
+            <BetaMonitoring />
+          </TabsContent>
+          
+          <TabsContent value="audit" className="space-y-4">
+            <AuditLogDashboard />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
