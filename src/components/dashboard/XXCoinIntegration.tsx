@@ -19,9 +19,11 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
 import { XXWalletService, WalletState, WalletType } from '@/services/xxWalletService';
+import { useWalletProfile } from '@/hooks/useWalletProfile';
 
 export const XXCoinIntegration = () => {
   const { user } = useAuth();
+  const { savedWalletAddress, updateWalletAddress } = useWalletProfile();
   const [walletService] = useState(() => new XXWalletService());
   const [walletState, setWalletState] = useState<WalletState>({
     address: null,
@@ -139,6 +141,16 @@ export const XXCoinIntegration = () => {
       const state = await walletService.connect(walletType);
       setWalletState(state);
       
+      // Save wallet address to profile
+      if (state.address) {
+        try {
+          await updateWalletAddress(state.address);
+        } catch (error) {
+          console.error('Failed to save wallet address to profile:', error);
+          // Don't block connection if saving fails
+        }
+      }
+      
       toast({
         title: "Wallet Connected",
         description: `Connected via ${walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}`,
@@ -220,6 +232,15 @@ export const XXCoinIntegration = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {savedWalletAddress && !walletState.connected && (
+            <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg">
+              <p className="text-sm text-muted-foreground mb-1">Previously connected wallet</p>
+              <p className="font-mono text-xs">
+                {`${savedWalletAddress.slice(0, 6)}...${savedWalletAddress.slice(-4)}`}
+              </p>
+            </div>
+          )}
+          
           {!walletState.connected ? (
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">Choose your wallet:</p>
