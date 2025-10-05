@@ -26,15 +26,6 @@ const ResetPassword = () => {
     
     const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
     const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
-    const type = urlParams.get('type') || hashParams.get('type');
-    
-    console.log('Reset password URL analysis:', {
-      search: window.location.search,
-      hash: window.location.hash,
-      accessToken: !!accessToken,
-      refreshToken: !!refreshToken,
-      type
-    });
     
     if (!accessToken) {
       setError('Invalid reset link. Please request a new password reset.');

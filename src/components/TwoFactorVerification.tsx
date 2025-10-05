@@ -35,21 +35,11 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
     setError('');
     
     try {
-      console.log('🔐 Starting 2FA verification...');
-      console.log('📧 Email:', email);
-      console.log('🔑 Password provided:', !!password);
-      console.log('🔢 Code:', verificationCode);
-      
       if (!email || !password) {
         throw new Error('Missing credentials. Please sign in again.');
       }
       
-      // Use the proper 2FA service that handles the complete flow
-      console.log('📞 Calling verifyTwoFactorAndSignIn...');
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
-      
-      console.log('✅ 2FA verification completed successfully!');
-      console.log('🔄 About to call onSuccess()...');
       
       toast({
         title: 'Success',
@@ -58,11 +48,10 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       
       // Give a small delay to ensure the auth state is updated
       setTimeout(() => {
-        console.log('🔄 Calling onSuccess after delay...');
         onSuccess();
       }, 500);
     } catch (error: any) {
-      console.error('❌ 2FA verification error:', error);
+      console.error('2FA verification failed');
       
       let errorMessage = 'Failed to verify 2FA code. Please try again.';
       if (error.message?.includes('Invalid verification code')) {
