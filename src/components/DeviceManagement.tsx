@@ -18,19 +18,23 @@ import {
   Plus,
   Trash2,
   Circle,
-  AlertTriangle
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 type Device = {
   id: string;
   device_name: string;
-  device_type: 'desktop' | 'mobile' | 'tablet' | 'router' | 'tv' | 'other';
-  operating_system?: string;
-  ip_address?: string;
+  device_type: string;
+  operating_system: string | null;
+  ip_address: unknown;
   last_seen: string;
   is_active: boolean;
   created_at: string;
+  updated_at: string;
+  user_id: string;
 };
 
 const DeviceManagement = () => {
@@ -41,11 +45,11 @@ const DeviceManagement = () => {
   const [addDeviceOpen, setAddDeviceOpen] = useState(false);
   const [newDevice, setNewDevice] = useState({
     device_name: '',
-    device_type: 'desktop' as Device['device_type'],
+    device_type: 'desktop',
     operating_system: ''
   });
 
-  const deviceIcons = {
+  const deviceIcons: Record<string, typeof Monitor> = {
     desktop: Monitor,
     mobile: Smartphone,
     tablet: Tablet,
@@ -54,7 +58,7 @@ const DeviceManagement = () => {
     other: MoreHorizontal
   };
 
-  const deviceTypeLabels = {
+  const deviceTypeLabels: Record<string, string> = {
     desktop: t('devices.types.desktop'),
     mobile: t('devices.types.mobile'),
     tablet: t('devices.types.tablet'),
@@ -64,11 +68,47 @@ const DeviceManagement = () => {
   };
 
   useEffect(() => {
-    // Load user devices from backend
-    setLoading(false);
-  }, []);
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    const loadDevices = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('devices')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('last_seen', { ascending: false });
+
+        if (error) throw error;
+        
+        setDevices(data || []);
+      } catch (error) {
+        console.error('Error loading devices:', error);
+        toast({
+          title: t('devices.error'),
+          description: 'Failed to load devices',
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDevices();
+  }, [user, t]);
 
   const addDevice = async () => {
+    if (!user) {
+      toast({
+        title: t('devices.error'),
+        description: 'Please sign in to add devices',
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!newDevice.device_name.trim()) {
       toast({
         title: t('devices.toast.nameRequired'),
@@ -87,39 +127,77 @@ const DeviceManagement = () => {
       return;
     }
 
-    const newDeviceData: Device = {
-      id: crypto.randomUUID(),
-      device_name: newDevice.device_name,
-      device_type: newDevice.device_type,
-      operating_system: newDevice.operating_system || undefined,
-      ip_address: '192.168.1.' + Math.floor(Math.random() * 200 + 100),
-      last_seen: new Date().toISOString(),
-      is_active: true,
-      created_at: new Date().toISOString()
-    };
+    try {
+      const { data, error } = await supabase
+        .from('devices')
+        .insert({
+          user_id: user.id,
+          device_name: newDevice.device_name,
+          device_type: newDevice.device_type,
+          operating_system: newDevice.operating_system || null,
+          is_active: true,
+        })
+        .select()
+        .single();
 
-    setDevices(prev => [...prev, newDeviceData]);
+      if (error) {
+        if (error.message.includes('Device limit exceeded')) {
+          toast({
+            title: t('devices.toast.limitReached'),
+            description: t('devices.toast.limitReachedDesc'),
+            variant: "destructive"
+          });
+          return;
+        }
+        throw error;
+      }
 
-    toast({
-      title: t('devices.toast.added'),
-      description: t('devices.toast.addedDesc')
-    });
+      setDevices(prev => [...prev, data]);
 
-    setNewDevice({
-      device_name: '',
-      device_type: 'desktop',
-      operating_system: ''
-    });
-    setAddDeviceOpen(false);
+      toast({
+        title: t('devices.toast.added'),
+        description: t('devices.toast.addedDesc')
+      });
+
+      setNewDevice({
+        device_name: '',
+        device_type: 'desktop',
+        operating_system: ''
+      });
+      setAddDeviceOpen(false);
+    } catch (error) {
+      console.error('Error adding device:', error);
+      toast({
+        title: t('devices.error'),
+        description: 'Failed to add device',
+        variant: "destructive"
+      });
+    }
   };
 
-  const removeDevice = (deviceId: string, deviceName: string) => {
-    setDevices(prev => prev.filter(device => device.id !== deviceId));
+  const removeDevice = async (deviceId: string, deviceName: string) => {
+    try {
+      const { error } = await supabase
+        .from('devices')
+        .delete()
+        .eq('id', deviceId);
 
-    toast({
-      title: t('devices.toast.removed'),
-      description: t('devices.toast.removedDesc', { deviceName })
-    });
+      if (error) throw error;
+
+      setDevices(prev => prev.filter(device => device.id !== deviceId));
+
+      toast({
+        title: t('devices.toast.removed'),
+        description: t('devices.toast.removedDesc', { deviceName })
+      });
+    } catch (error) {
+      console.error('Error removing device:', error);
+      toast({
+        title: t('devices.error'),
+        description: 'Failed to remove device',
+        variant: "destructive"
+      });
+    }
   };
 
   const activeDevices = devices.filter(d => d.is_active);
@@ -127,16 +205,22 @@ const DeviceManagement = () => {
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">{t('devices.title')}</h2>
-        </div>
-        <Card>
-          <CardContent className="p-6">
-            <p className="text-muted-foreground">{t('common.loading')}</p>
-          </CardContent>
-        </Card>
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
       </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Card className="border-warning bg-warning/5">
+        <CardContent className="flex items-center gap-3 p-6">
+          <AlertTriangle className="w-5 h-5 text-warning" />
+          <p className="text-muted-foreground">
+            Please sign in to manage your devices.
+          </p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -178,7 +262,7 @@ const DeviceManagement = () => {
                 <Label htmlFor="device_type">{t('devices.form.deviceType')}</Label>
                 <Select 
                   value={newDevice.device_type} 
-                  onValueChange={(value: Device['device_type']) => setNewDevice(prev => ({ ...prev, device_type: value }))}
+                  onValueChange={(value) => setNewDevice(prev => ({ ...prev, device_type: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -254,7 +338,7 @@ const DeviceManagement = () => {
           </Card>
         ) : (
           devices.map((device) => {
-            const IconComponent = deviceIcons[device.device_type];
+            const IconComponent = deviceIcons[device.device_type] || MoreHorizontal;
             const lastSeen = new Date(device.last_seen);
             const isOnline = Date.now() - lastSeen.getTime() < 5 * 60 * 1000; // 5 minutes
 

@@ -214,6 +214,30 @@ export type Database = {
           },
         ]
       }
+      security_config: {
+        Row: {
+          config_key: string
+          config_value: Json
+          id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          config_key: string
+          config_value: Json
+          id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          config_key?: string
+          config_value?: Json
+          id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           created_at: string
@@ -404,6 +428,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_audit_logs: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_old_device_ips: {
         Args: Record<PropertyKey, never>
         Returns: undefined
