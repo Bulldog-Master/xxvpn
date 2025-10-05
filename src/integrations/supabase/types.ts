@@ -588,7 +588,7 @@ export type Database = {
         Returns: undefined
       }
       get_anonymized_proposer: {
-        Args: { proposer_id: string }
+        Args: { proposal_proposer: string }
         Returns: string
       }
       get_audit_logs_sanitized: {
