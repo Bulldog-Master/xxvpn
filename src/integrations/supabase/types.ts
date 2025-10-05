@@ -83,6 +83,44 @@ export type Database = {
         }
         Relationships: []
       }
+      device_access_audit: {
+        Row: {
+          access_time: string
+          access_type: string
+          device_id: string | null
+          id: string
+          ip_hash: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          access_time?: string
+          access_type: string
+          device_id?: string | null
+          id?: string
+          ip_hash: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          access_time?: string
+          access_type?: string
+          device_id?: string | null
+          id?: string
+          ip_hash?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "device_access_audit_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       devices: {
         Row: {
           created_at: string
@@ -240,6 +278,13 @@ export type Database = {
             columns: ["proposal_id"]
             isOneToOne: false
             referencedRelation: "governance_proposals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposal_votes_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "governance_proposals_public"
             referencedColumns: ["id"]
           },
         ]
@@ -518,10 +563,65 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      governance_proposals_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          end_time: string | null
+          execution_data: string | null
+          id: string | null
+          proposal_type: string | null
+          proposer: string | null
+          quorum: number | null
+          status: string | null
+          title: string | null
+          votes_abstain: number | null
+          votes_against: number | null
+          votes_for: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          execution_data?: string | null
+          id?: string | null
+          proposal_type?: string | null
+          proposer?: never
+          quorum?: number | null
+          status?: string | null
+          title?: string | null
+          votes_abstain?: number | null
+          votes_against?: number | null
+          votes_for?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          execution_data?: string | null
+          id?: string | null
+          proposal_type?: string | null
+          proposer?: never
+          quorum?: number | null
+          status?: string | null
+          title?: string | null
+          votes_abstain?: number | null
+          votes_against?: number | null
+          votes_for?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      cleanup_device_access_audit: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_old_audit_logs: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_old_device_data: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
