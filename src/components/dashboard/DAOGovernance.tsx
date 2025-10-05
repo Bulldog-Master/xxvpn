@@ -45,9 +45,8 @@ export const DAOGovernance = () => {
   };
 
   const handleVote = async (proposalId: string, support: 'for' | 'against' | 'abstain') => {
-    // In production, this would check user's DAO token balance
-    const votingPower = 1000; // Mock 1000 DAO tokens
-    await vote(proposalId, support, votingPower);
+    // Voting power is now validated server-side based on XX Coin balance
+    await vote(proposalId, support);
   };
 
   const getStatusBadge = (status: string) => {

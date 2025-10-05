@@ -11,15 +11,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, Mail, Key, Shield, Globe, AlertCircle, CheckCircle, Fingerprint, Eye, EyeOff } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
-import PassphraseAuth from './PassphraseAuth';
-import WebAuthnAuth from './WebAuthnAuth';
 import TwoFactorVerification from './TwoFactorVerification';
 import { signUpWithEmail, signInWithEmail } from '@/services/authService';
 import { supabase } from '@/integrations/supabase/client';
 import { cleanupAuthState } from '@/utils/authHelpers';
 import { checkTwoFactorRequirement } from '@/services/twoFactorAuthService';
 
-type AuthMethod = 'magic-link' | 'google' | 'passphrase' | 'passkey';
+type AuthMethod = 'magic-link' | 'google';
 
 const AuthPage = () => {
   const { signIn, signUp, signInWithMagicLink, signInWithGoogle, signInWithPassphrase, signInWithWebAuthn, resetPassword, loading } = useAuth();
@@ -68,60 +66,9 @@ const AuthPage = () => {
       available: true,
       recommended: false,
     },
-    {
-      id: 'passphrase' as const,
-      name: '24-Word Passphrase',
-      description: 'Advanced security with mnemonic phrase',
-      icon: Shield,
-      available: true,
-      recommended: false,
-    },
-    {
-      id: 'passkey' as const,
-      name: 'Passkeys/WebAuthn',
-      description: 'Biometric and hardware key authentication',
-      icon: Fingerprint,
-      available: true,
-      recommended: false,
-    },
   ];
 
 
-  const handlePassphraseAuth = async (passphrase: string) => {
-    setIsLoading(true);
-    setError('');
-    
-    try {
-      await signInWithPassphrase(passphrase);
-      toast({
-        title: 'Authenticated with passphrase',
-        description: 'Successfully authenticated using 24-word passphrase.',
-      });
-    } catch (error: any) {
-      console.error('❌ Passphrase auth error:', error);
-      setError(error.message || 'Failed to authenticate with passphrase');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleWebAuthnAuth = async (credential: any) => {
-    setIsLoading(true);
-    setError('');
-    
-    try {
-      await signInWithWebAuthn(credential);
-      toast({
-        title: 'WebAuthn authentication successful',
-        description: 'Successfully authenticated using biometric/hardware key.',
-      });
-    } catch (error: any) {
-      console.error('WebAuthn auth error:', error);
-      setError(error.message || 'Failed to authenticate with WebAuthn');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -303,17 +250,7 @@ const AuthPage = () => {
             </div>
           </div>
 
-          {selectedMethod === 'passphrase' ? (
-            <PassphraseAuth
-              onAuthenticate={handlePassphraseAuth}
-              isLoading={isLoading}
-            />
-          ) : selectedMethod === 'passkey' ? (
-            <WebAuthnAuth
-              onAuthenticate={handleWebAuthnAuth}
-              isLoading={isLoading}
-            />
-          ) : magicLinkSent ? (
+          {magicLinkSent ? (
             <Alert>
               <CheckCircle className="h-4 w-4" />
               <AlertDescription>
