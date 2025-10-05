@@ -556,7 +556,45 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      audit_logs_safe: {
+        Row: {
+          action: string | null
+          created_at: string | null
+          id: string | null
+          ip_address: string | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action?: string | null
+          created_at?: string | null
+          id?: string | null
+          ip_address?: never
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string | null
+          created_at?: string | null
+          id?: string | null
+          ip_address?: never
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -623,6 +661,18 @@ export type Database = {
           votes_abstain: number
           votes_against: number
           votes_for: number
+        }[]
+      }
+      get_sanitized_device_info: {
+        Args: { device_id: string }
+        Returns: {
+          device_name: string
+          device_type: string
+          id: string
+          ip_redacted: string
+          is_active: boolean
+          last_seen: string
+          operating_system: string
         }[]
       }
       has_role: {
