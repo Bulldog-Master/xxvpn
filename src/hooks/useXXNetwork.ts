@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { XXDKClient, NetworkHealth } from '@/services/xxNetworkService';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
+import { ErrorLogger } from '@/utils/errorLogger';
 
 interface XXNetworkState {
   client: XXDKClient | null;
@@ -55,6 +56,11 @@ export const useXXNetwork = () => {
         error: errorMessage,
       }));
 
+      await ErrorLogger.logWasmError(
+        error instanceof Error ? error : new Error(String(error)),
+        { action: 'initialize', userId: user?.id }
+      );
+
       toast({
         title: "Initialization Failed",
         description: errorMessage,
@@ -92,6 +98,11 @@ export const useXXNetwork = () => {
         ...prev,
         error: errorMessage,
       }));
+
+      await ErrorLogger.logNetworkError(
+        error instanceof Error ? error : new Error(String(error)),
+        { action: 'connect', userId: user?.id }
+      );
 
       toast({
         title: "Connection Failed",

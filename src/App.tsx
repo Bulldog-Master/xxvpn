@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
+import BetaSignup from "./pages/BetaSignup";
 import './i18n';
 
 const queryClient = new QueryClient({
@@ -37,6 +38,7 @@ const App = () => (
             >
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/beta" element={<BetaSignup />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { ErrorLogger } from '@/utils/errorLogger';
 
 // xxChain Configuration
 export const XXCHAIN_CONFIG = {
@@ -111,6 +112,11 @@ export class XXWalletService {
       };
     } catch (error) {
       console.error('Failed to connect MetaMask:', error);
+      await ErrorLogger.logWalletError(
+        error instanceof Error ? error : new Error(String(error)),
+        'metamask',
+        { action: 'connect' }
+      );
       throw new Error('Failed to connect MetaMask. Please try again.');
     }
   }
@@ -155,6 +161,11 @@ export class XXWalletService {
       };
     } catch (error) {
       console.error('Failed to connect xx wallet:', error);
+      await ErrorLogger.logWalletError(
+        error instanceof Error ? error : new Error(String(error)),
+        'xx-wallet',
+        { action: 'connect' }
+      );
       throw new Error('Failed to connect xx wallet. Please try again.');
     }
   }
@@ -254,6 +265,10 @@ export class XXWalletService {
       return txHash;
     } catch (error) {
       console.error('Subscription failed:', error);
+      await ErrorLogger.logPaymentError(
+        error instanceof Error ? error : new Error(String(error)),
+        { action: 'subscribe', months, walletAddress }
+      );
       throw new Error('Subscription transaction failed. Please try again.');
     }
   }

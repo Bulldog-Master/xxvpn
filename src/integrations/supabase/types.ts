@@ -83,6 +83,45 @@ export type Database = {
         }
         Relationships: []
       }
+      beta_waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          interested_features: string[] | null
+          invite_sent_at: string | null
+          name: string | null
+          notes: string | null
+          referral_source: string | null
+          signup_date: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          interested_features?: string[] | null
+          invite_sent_at?: string | null
+          name?: string | null
+          notes?: string | null
+          referral_source?: string | null
+          signup_date?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          interested_features?: string[] | null
+          invite_sent_at?: string | null
+          name?: string | null
+          notes?: string | null
+          referral_source?: string | null
+          signup_date?: string
+          status?: string
+        }
+        Relationships: []
+      }
       device_access_audit: {
         Row: {
           access_time: string
@@ -164,6 +203,42 @@ export type Database = {
           operating_system?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      error_logs: {
+        Row: {
+          context: Json | null
+          created_at: string
+          error_message: string
+          error_stack: string | null
+          error_type: string
+          id: string
+          url: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          context?: Json | null
+          created_at?: string
+          error_message: string
+          error_stack?: string | null
+          error_type: string
+          id?: string
+          url?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          context?: Json | null
+          created_at?: string
+          error_message?: string
+          error_stack?: string | null
+          error_type?: string
+          id?: string
+          url?: string | null
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -743,6 +818,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_old_device_ips: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_old_error_logs: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
