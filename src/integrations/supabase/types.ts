@@ -280,13 +280,6 @@ export type Database = {
             referencedRelation: "governance_proposals"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "proposal_votes_proposal_id_fkey"
-            columns: ["proposal_id"]
-            isOneToOne: false
-            referencedRelation: "governance_proposals_public"
-            referencedColumns: ["id"]
-          },
         ]
       }
       security_config: {
@@ -563,54 +556,7 @@ export type Database = {
       }
     }
     Views: {
-      governance_proposals_public: {
-        Row: {
-          created_at: string | null
-          description: string | null
-          end_time: string | null
-          execution_data: string | null
-          id: string | null
-          proposal_type: string | null
-          proposer: string | null
-          quorum: number | null
-          status: string | null
-          title: string | null
-          votes_abstain: number | null
-          votes_against: number | null
-          votes_for: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          end_time?: string | null
-          execution_data?: string | null
-          id?: string | null
-          proposal_type?: string | null
-          proposer?: never
-          quorum?: number | null
-          status?: string | null
-          title?: string | null
-          votes_abstain?: number | null
-          votes_against?: number | null
-          votes_for?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          end_time?: string | null
-          execution_data?: string | null
-          id?: string | null
-          proposal_type?: string | null
-          proposer?: never
-          quorum?: number | null
-          status?: string | null
-          title?: string | null
-          votes_abstain?: number | null
-          votes_against?: number | null
-          votes_for?: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       cleanup_device_access_audit: {
@@ -654,6 +600,25 @@ export type Database = {
           table_name: string
           user_agent: string
           user_id: string
+        }[]
+      }
+      get_governance_proposals_anonymized: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          description: string
+          end_time: string
+          execution_data: string
+          id: string
+          is_own_proposal: boolean
+          proposal_type: string
+          proposer_id: string
+          quorum: number
+          status: string
+          title: string
+          votes_abstain: number
+          votes_against: number
+          votes_for: number
         }[]
       }
       has_role: {
