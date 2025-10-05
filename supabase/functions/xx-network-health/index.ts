@@ -71,10 +71,14 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in xx-network-health function:', error);
     
-    // Sanitize error message for production - don't expose internal details
+    // Sanitize error messages for production
+    const isDev = Deno.env.get('ENVIRONMENT') === 'development';
+    const errorDetails = isDev && error instanceof Error ? error.message : undefined;
+    
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to check network health. Please try again later.',
+        error: 'Failed to check network health',
+        ...(errorDetails && { details: errorDetails }),
       }), 
       {
         status: 500,

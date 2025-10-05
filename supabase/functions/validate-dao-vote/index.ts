@@ -173,23 +173,11 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Error in validate-dao-vote:', error);
     
-    // Sanitize error messages for production - only expose safe error messages
-    const safeErrors = [
-      'Missing authorization header',
-      'Unauthorized',
-      'Too many vote requests',
-      'Missing required fields',
-      'Invalid support value',
-      'Proposal not found',
-      'Proposal is not active',
-      'Proposal voting period has ended',
-      'You have already voted on this proposal',
-      'Insufficient XX Coin balance',
-    ];
-    
-    const errorMessage = error instanceof Error && safeErrors.some(msg => error.message.includes(msg))
-      ? error.message
-      : 'An error occurred processing your vote';
+    // Sanitize error messages for production
+    const isDev = Deno.env.get('ENVIRONMENT') === 'development';
+    const errorMessage = isDev 
+      ? (error.message || 'Internal server error')
+      : 'Failed to process vote';
     
     return new Response(
       JSON.stringify({

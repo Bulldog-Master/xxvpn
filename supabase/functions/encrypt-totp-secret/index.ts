@@ -101,17 +101,10 @@ serve(async (req) => {
     console.error('Error in encrypt-totp-secret:', error);
     
     // Sanitize error messages for production
-    const safeErrors = [
-      'No authorization header',
-      'Unauthorized',
-      'Too many requests',
-      'TOTP_ENCRYPTION_KEY not configured',
-      'Invalid action',
-    ];
-    
-    const errorMessage = error instanceof Error && safeErrors.some(msg => error.message.includes(msg))
-      ? error.message
-      : 'An error occurred processing your request';
+    const isDev = Deno.env.get('ENVIRONMENT') === 'development';
+    const errorMessage = isDev 
+      ? error.message 
+      : 'Failed to process encryption request';
     
     return new Response(
       JSON.stringify({ error: errorMessage }),

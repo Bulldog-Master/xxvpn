@@ -83,10 +83,14 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in fetch-ndf function:', error);
     
-    // Sanitize error message for production - don't expose internal network details
+    // Sanitize error messages for production
+    const isDev = Deno.env.get('ENVIRONMENT') === 'development';
+    const errorDetails = isDev && error instanceof Error ? error.message : undefined;
+    
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to fetch Network Definition File. Please try again later.',
+        error: 'Failed to fetch Network Definition File',
+        ...(errorDetails && { details: errorDetails }),
       }), 
       {
         status: 500,

@@ -86,30 +86,18 @@ serve(async (req) => {
       );
 
     } else if (action === 'update-tier') {
-      // SECURITY: Only admins can update subscription tiers
-      // This prevents privilege escalation attacks
-      const { data: userRole, error: roleError } = await supabase
+      // SECURITY: Only admins can manually update subscription tiers
+      const { data: adminRole } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', user.id)
         .in('role', ['admin', 'super_admin'])
-        .maybeSingle();
+        .single();
 
-      if (roleError) {
-        console.error('Error checking user role:', roleError);
-        return new Response(
-          JSON.stringify({ error: 'Failed to verify authorization' }),
-          { 
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          }
-        );
-      }
-
-      if (!userRole) {
+      if (!adminRole) {
         console.warn(`Unauthorized tier update attempt by user ${user.id}`);
         return new Response(
-          JSON.stringify({ error: 'Unauthorized. Only administrators can update subscription tiers.' }),
+          JSON.stringify({ error: 'Unauthorized. Admin access required.' }),
           { 
             status: 403,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -120,33 +108,18 @@ serve(async (req) => {
       // Validate tier
       const validTiers = ['free', 'premium', 'enterprise'];
       if (!validTiers.includes(tier)) {
-        return new Response(
-          JSON.stringify({ error: 'Invalid subscription tier' }),
-          { 
-            status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          }
-        );
+        throw new Error('Invalid subscription tier');
       }
 
-      // Update subscription tier (server-side only, admin-authorized)
+      // Update subscription tier (server-side only)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ subscription_tier: tier })
         .eq('user_id', user.id);
 
-      if (profileError) {
-        console.error('Error updating subscription tier:', profileError);
-        return new Response(
-          JSON.stringify({ error: 'Failed to update subscription tier' }),
-          { 
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          }
-        );
-      }
+      if (profileError) throw profileError;
 
-      console.log(`Subscription tier updated to ${tier} for user ${user.id} by admin ${userRole.role}`);
+      console.log(`Subscription tier updated to ${tier} for user ${user.id} by admin ${user.id}`);
 
       return new Response(
         JSON.stringify({ 
@@ -163,12 +136,12 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in manage-subscription:', error);
-    // Sanitize error message for production
-    const errorMessage = error instanceof Error 
-      ? (error.message.includes('Trial already') || error.message.includes('Unauthorized') 
-          ? error.message 
-          : 'An error occurred processing your subscription request')
-      : 'An unexpected error occurred';
+    
+    // Sanitize error messages for production
+    const isDev = Deno.env.get('ENVIRONMENT') === 'development';
+    const errorMessage = isDev 
+      ? error.message 
+      : 'Failed to process subscription request';
     
     return new Response(
       JSON.stringify({ error: errorMessage }),
