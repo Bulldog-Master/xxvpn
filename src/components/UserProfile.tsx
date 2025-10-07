@@ -23,6 +23,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import TwoFactorSetup from './TwoFactorSetup';
+import { SecuritySettings } from './SecuritySettings';
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
@@ -145,8 +146,9 @@ const UserProfile = () => {
       </Card>
 
       <Tabs defaultValue="account" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="account">{t('profile.tabs.account')}</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="subscription">{t('profile.tabs.subscription')}</TabsTrigger>
           <TabsTrigger value="rewards">{t('profile.tabs.rewards')}</TabsTrigger>
           <TabsTrigger value="downloads">{t('profile.tabs.downloads')}</TabsTrigger>
@@ -231,6 +233,10 @@ const UserProfile = () => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="security" className="space-y-4">
+          <SecuritySettings />
         </TabsContent>
 
         <TabsContent value="subscription" className="space-y-4">

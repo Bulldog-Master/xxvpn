@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
 import BetaSignup from "./pages/BetaSignup";
 import FAQ from "./pages/FAQ";
+import DeveloperPortal from "./pages/DeveloperPortal";
 import './i18n';
 
 // Setup global error handler on app initialization
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/beta" element={<BetaSignup />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/developers" element={<DeveloperPortal />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

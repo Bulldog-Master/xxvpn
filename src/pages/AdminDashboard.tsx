@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuditLogDashboard } from '@/components/admin/AuditLogDashboard';
 import { BetaMonitoring } from '@/components/admin/BetaMonitoring';
 import { UserManagement } from '@/components/admin/UserManagement';
+import { SecurityDashboard } from '@/components/admin/SecurityDashboard';
 import { useAdminCheck } from '@/hooks/useAdminCheck';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -51,9 +52,10 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="beta" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="beta">Beta Monitoring</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
+            <TabsTrigger value="security">Security</TabsTrigger>
             <TabsTrigger value="audit">Audit Logs</TabsTrigger>
           </TabsList>
           
@@ -63,6 +65,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="users" className="space-y-4">
             <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="security" className="space-y-4">
+            <SecurityDashboard />
           </TabsContent>
           
           <TabsContent value="audit" className="space-y-4">
