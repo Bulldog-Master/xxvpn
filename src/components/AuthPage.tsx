@@ -8,8 +8,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Globe, AlertCircle, CheckCircle, Shield, Info } from 'lucide-react';
+import { Loader2, Mail, Globe, AlertCircle, CheckCircle, Shield, Info, Fingerprint } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import WebAuthnAuth from './WebAuthnAuth';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTranslation } from 'react-i18next';
@@ -18,14 +19,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { cleanupAuthState } from '@/utils/authHelpers';
 import { z } from 'zod';
 
-type AuthMethod = 'magic-link' | 'google';
+type AuthMethod = 'magic-link' | 'google' | 'passkey';
 
 // Input validation schemas
 const emailSchema = z.string().trim().email({ message: "Invalid email address" }).max(255, { message: "Email must be less than 255 characters" });
 const nameSchema = z.string().trim().max(100, { message: "Name must be less than 100 characters" }).optional();
 
 const AuthPage = () => {
-  const { signInWithMagicLink, signInWithGoogle, resetPassword, loading } = useAuth();
+  const { signInWithMagicLink, signInWithGoogle, signInWithWebAuthn, resetPassword, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -66,6 +67,16 @@ const AuthPage = () => {
       recommended: false,
       tooltip: 'Use your existing Google account. Syncs across all your Google-connected devices.',
       recovery: 'Recover through Google account recovery. Access from any device logged into your Google account.',
+    },
+    {
+      id: 'passkey' as const,
+      name: 'Passkey (WebAuthn)',
+      description: 'Biometric authentication (fingerprint, Face ID)',
+      icon: Fingerprint,
+      available: true,
+      recommended: false,
+      tooltip: 'Most secure option using biometric authentication. Passkeys sync via your platform (Apple Keychain, Google Password Manager).',
+      recovery: 'Passkeys sync across devices via iCloud (Apple) or Google Password Manager. IMPORTANT: Set up a backup authentication method (email/magic link) before relying on passkeys alone.',
     },
   ];
 
@@ -315,7 +326,20 @@ const AuthPage = () => {
 
               <TabsContent value="signin" className="space-y-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
-                  {selectedMethod === 'google' ? (
+                  {selectedMethod === 'passkey' ? (
+                    <div className="space-y-4">
+                      <Alert>
+                        <Info className="h-4 w-4" />
+                        <AlertDescription>
+                          Use your device's biometric authentication (fingerprint, Face ID, or security key) to sign in.
+                        </AlertDescription>
+                      </Alert>
+                      <WebAuthnAuth 
+                        onAuthenticate={signInWithWebAuthn}
+                        isLoading={isLoading}
+                      />
+                    </div>
+                  ) : selectedMethod === 'google' ? (
                     <Button
                       type="button"
                       onClick={handleGoogleAuth}
@@ -361,7 +385,26 @@ const AuthPage = () => {
 
               <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
-                  {selectedMethod === 'google' ? (
+                  {selectedMethod === 'passkey' ? (
+                    <div className="space-y-4">
+                      <Alert>
+                        <Info className="h-4 w-4" />
+                        <AlertDescription>
+                          Create a passkey using your device's biometric authentication. Your passkey will sync across your devices.
+                        </AlertDescription>
+                      </Alert>
+                      <WebAuthnAuth 
+                        onAuthenticate={signInWithWebAuthn}
+                        isLoading={isLoading}
+                      />
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          <strong>Important:</strong> After setting up your passkey, also register with Magic Link or Google as a backup recovery method!
+                        </AlertDescription>
+                      </Alert>
+                    </div>
+                  ) : selectedMethod === 'google' ? (
                     <Button
                       type="button"
                       onClick={handleGoogleAuth}
