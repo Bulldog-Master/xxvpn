@@ -77,6 +77,9 @@ import { XXNetworkInfoPanel } from './dashboard/XXNetworkInfoPanel';
 import { DAOGovernance } from './dashboard/DAOGovernance';
 import { XXCoinIntegration } from './dashboard/XXCoinIntegration';
 import { BetaCTA } from './BetaCTA';
+import { OnboardingTour } from './onboarding/OnboardingTour';
+import { OnboardingButton } from './onboarding/OnboardingButton';
+import { AnalyticsDashboard } from './analytics/AnalyticsDashboard';
 
 type VPNMode = 'ultra-fast' | 'secure' | 'ultra-secure' | 'off';
 type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';
@@ -248,6 +251,9 @@ const VPNDashboard = () => {
       
       {/* Main Content */}
       <div className="relative z-10 container mx-auto p-6 space-y-6">
+        {/* Onboarding Tour for New Users */}
+        <OnboardingTour />
+        
         {/* Offline Warning */}
         {!isOnline && (
           <Card className="bg-destructive/10 border-destructive/50">
@@ -423,8 +429,9 @@ const VPNDashboard = () => {
                     )}
                   </div>
 
-                  {/* Language Selector */}
-                  <div className="flex justify-end">
+                  {/* Help & Language */}
+                  <div className="flex items-center gap-2">
+                    <OnboardingButton />
                     <LanguageSelector />
                   </div>
                 </div>
@@ -438,6 +445,7 @@ const VPNDashboard = () => {
           <TabsList className="grid w-full grid-cols-12 bg-muted/50 overflow-x-auto">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
             <TabsTrigger value="automation">AI</TabsTrigger>
@@ -502,6 +510,10 @@ const VPNDashboard = () => {
               selectedServer={selectedServer}
               onServerSelect={setSelectedServer}
             />
+          </TabsContent>
+
+          <TabsContent value="analytics" className="space-y-6">
+            <AnalyticsDashboard />
           </TabsContent>
 
           <TabsContent value="network" className="space-y-6">
