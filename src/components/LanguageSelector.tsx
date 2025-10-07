@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Languages, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useTranslation } from 'react-i18next';
 import languagesData from '@/data/languages.json';
+
+// RTL languages
+const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
 
 interface Language {
   code: string;
@@ -18,10 +21,21 @@ const LanguageSelector = () => {
     languagesData.languages.find(lang => lang.code === i18n.language) || languagesData.languages[0]
   );
 
+  // Set initial direction on mount
+  useEffect(() => {
+    const isRTL = RTL_LANGUAGES.includes(i18n.language);
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+
   const handleLanguageChange = (language: Language) => {
     setSelectedLanguage(language);
     i18n.changeLanguage(language.code);
     
+    // Update document direction for RTL languages
+    const isRTL = RTL_LANGUAGES.includes(language.code);
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = language.code;
   };
 
   return (
