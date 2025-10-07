@@ -294,7 +294,7 @@ const VPNDashboard = () => {
 
             {/* Right side: Referrals, User, Language */}
             <div className="flex items-center gap-3">
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-3">
                 {/* Referral Section */}
                 <Popover>
                   <PopoverTrigger asChild>
@@ -342,10 +342,6 @@ const VPNDashboard = () => {
                   </PopoverContent>
                 </Popover>
 
-                {/* User and Language stacked vertically */}
-                <div className="flex flex-col gap-2">
-                  {/* User Menu */}
-                  <div className="flex items-center gap-3">
               {/* Clickable Avatar */}
               <div 
                 className="relative w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:opacity-80 transition-opacity group"
@@ -428,14 +424,9 @@ const VPNDashboard = () => {
               </DropdownMenuContent>
                       </DropdownMenu>
                     )}
-                  </div>
 
-                  {/* Help & Language */}
-                  <div className="flex items-center gap-2">
-                    <OnboardingButton />
-                    <LanguageSelector />
-                  </div>
-                </div>
+              <OnboardingButton />
+              <LanguageSelector />
               </div>
             </div>
           </div>
