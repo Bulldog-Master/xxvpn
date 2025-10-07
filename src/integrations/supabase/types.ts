@@ -839,6 +839,21 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_beta_waitlist_safe: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+          interested_features: string[]
+          invite_sent_at: string
+          name: string
+          notes: string
+          referral_source: string
+          signup_date: string
+          status: string
+        }[]
+      }
       get_device_ip_admin: {
         Args: { device_id: string }
         Returns: string
