@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "close": "Zamknij",
+    "confirm": "Potwierdź"
+  },
+  "auth": {
+    "signIn": "Zaloguj się",
+    "signUp": "Zarejestruj się",
+    "signOut": "Wyloguj",
+    "email": "E-mail",
+    "password": "Hasło",
+    "forgotPassword": "Zapomniałeś hasła?",
+    "resetPassword": "Zresetuj hasło",
+    "welcome": "Witaj ponownie"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "tabs": {
+      "main": "Główne",
+      "servers": "Serwery",
+      "analytics": "Analityka",
+      "network": "Sieć",
+      "apps": "Aplikacje",
+      "devices": "Urządzenia",
+      "payments": "Płatności",
+      "settings": "Ustawienia"
+    }
+  },
+  "vpn": {
+    "connect": "Połącz",
+    "disconnect": "Rozłącz",
+    "connected": "Połączono",
+    "disconnected": "Rozłączono",
+    "connecting": "Łączenie...",
+    "selectServer": "Wybierz serwer",
+    "bandwidth": "Przepustowość",
+    "latency": "Opóźnienie"
+  },
+  "profile": {
+    "title": "Profil",
+    "anonymousUser": "Anonimowy użytkownik",
+    "subscription": {
+      "title": "Subskrypcja",
+      "upgradeToPremium": "Przejdź na Premium",
+      "premiumPlan": "Plan Premium",
+      "fullAccess": "Pełny dostęp do wszystkich funkcji",
+      "upgradeDescription": "Uaktualnij dla nieograniczonego dostępu"
+    }
+  }
+}

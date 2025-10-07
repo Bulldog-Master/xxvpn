@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "close": "Đóng",
+    "confirm": "Xác nhận"
+  },
+  "auth": {
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "forgotPassword": "Quên mật khẩu?",
+    "resetPassword": "Đặt lại mật khẩu",
+    "welcome": "Chào mừng trở lại"
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "tabs": {
+      "main": "Chính",
+      "servers": "Máy chủ",
+      "analytics": "Phân tích",
+      "network": "Mạng",
+      "apps": "Ứng dụng",
+      "devices": "Thiết bị",
+      "payments": "Thanh toán",
+      "settings": "Cài đặt"
+    }
+  },
+  "vpn": {
+    "connect": "Kết nối",
+    "disconnect": "Ngắt kết nối",
+    "connected": "Đã kết nối",
+    "disconnected": "Đã ngắt kết nối",
+    "connecting": "Đang kết nối...",
+    "selectServer": "Chọn máy chủ",
+    "bandwidth": "Băng thông",
+    "latency": "Độ trễ"
+  },
+  "profile": {
+    "title": "Hồ sơ",
+    "anonymousUser": "Người dùng ẩn danh",
+    "subscription": {
+      "title": "Đăng ký",
+      "upgradeToPremium": "Nâng cấp lên Premium",
+      "premiumPlan": "Gói Premium",
+      "fullAccess": "Truy cập đầy đủ tất cả tính năng",
+      "upgradeDescription": "Nâng cấp để truy cập không giới hạn"
+    }
+  }
+}

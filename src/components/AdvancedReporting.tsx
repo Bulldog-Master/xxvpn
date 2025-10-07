@@ -1,0 +1,468 @@
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Switch } from '@/components/ui/switch';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import {
+  Download,
+  Calendar as CalendarIcon,
+  FileText,
+  TrendingUp,
+  Activity,
+  BarChart3,
+  Clock,
+  Mail,
+  CheckCircle,
+} from 'lucide-react';
+
+interface Report {
+  id: string;
+  name: string;
+  type: 'bandwidth' | 'sessions' | 'security' | 'custom';
+  schedule: 'daily' | 'weekly' | 'monthly' | 'none';
+  lastGenerated: string;
+  enabled: boolean;
+}
+
+export const AdvancedReporting = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [reports, setReports] = useState<Report[]>([]);
+  const [dateRange, setDateRange] = useState<{ from: Date; to: Date }>({
+    from: new Date(new Date().setDate(new Date().getDate() - 30)),
+    to: new Date(),
+  });
+  const [reportType, setReportType] = useState<string>('bandwidth');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    loadScheduledReports();
+  }, []);
+
+  const loadScheduledReports = async () => {
+    // Mock scheduled reports - in production, load from database
+    setReports([
+      {
+        id: '1',
+        name: 'Weekly Bandwidth Report',
+        type: 'bandwidth',
+        schedule: 'weekly',
+        lastGenerated: new Date().toISOString(),
+        enabled: true,
+      },
+      {
+        id: '2',
+        name: 'Monthly Security Summary',
+        type: 'security',
+        schedule: 'monthly',
+        lastGenerated: new Date().toISOString(),
+        enabled: true,
+      },
+    ]);
+  };
+
+  const generateCSV = (data: any[], filename: string) => {
+    if (!data || data.length === 0) {
+      toast({
+        title: 'No Data',
+        description: 'No data available for export',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Get headers from first object
+    const headers = Object.keys(data[0]);
+    
+    // Create CSV content
+    const csvContent = [
+      headers.join(','),
+      ...data.map(row => 
+        headers.map(header => {
+          const value = row[header];
+          // Escape values that contain commas or quotes
+          if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+            return `"${value.replace(/"/g, '""')}"`;
+          }
+          return value;
+        }).join(',')
+      )
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${filename}_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    URL.revokeObjectURL(url);
+  };
+
+  const exportBandwidthReport = async () => {
+    setLoading(true);
+    try {
+      const { data: sessions, error } = await supabase
+        .from('vpn_sessions')
+        .select('*')
+        .eq('user_id', user?.id)
+        .gte('connected_at', dateRange.from.toISOString())
+        .lte('connected_at', dateRange.to.toISOString())
+        .order('connected_at', { ascending: false });
+
+      if (error) throw error;
+
+      const reportData = (sessions || []).map(session => ({
+        Date: format(new Date(session.connected_at), 'yyyy-MM-dd HH:mm'),
+        Server: session.server_name,
+        Location: session.server_location,
+        Duration: session.duration_seconds ? `${Math.floor(session.duration_seconds / 60)} min` : 'N/A',
+        'Data Sent': session.bytes_sent ? `${(session.bytes_sent / 1024 / 1024).toFixed(2)} MB` : '0 MB',
+        'Data Received': session.bytes_received ? `${(session.bytes_received / 1024 / 1024).toFixed(2)} MB` : '0 MB',
+        Status: session.status,
+      }));
+
+      generateCSV(reportData, 'bandwidth_report');
+
+      toast({
+        title: 'Export Complete',
+        description: 'Bandwidth report downloaded successfully',
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast({
+        title: 'Export Failed',
+        description: 'Failed to generate report',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const exportSecurityReport = async () => {
+    setLoading(true);
+    try {
+      const { data: auditLogs, error } = await supabase
+        .from('audit_logs')
+        .select('*')
+        .eq('user_id', user?.id)
+        .gte('created_at', dateRange.from.toISOString())
+        .lte('created_at', dateRange.to.toISOString())
+        .order('created_at', { ascending: false })
+        .limit(1000);
+
+      if (error) throw error;
+
+      const reportData = (auditLogs || []).map(log => ({
+        Timestamp: format(new Date(log.created_at), 'yyyy-MM-dd HH:mm:ss'),
+        Action: log.action.replace(/_/g, ' '),
+        Table: log.table_name,
+        'User Agent': log.user_agent || 'N/A',
+      }));
+
+      generateCSV(reportData, 'security_report');
+
+      toast({
+        title: 'Export Complete',
+        description: 'Security report downloaded successfully',
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast({
+        title: 'Export Failed',
+        description: 'Failed to generate report',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const exportSessionReport = async () => {
+    setLoading(true);
+    try {
+      const { data: sessions, error } = await supabase
+        .from('vpn_sessions')
+        .select('*')
+        .eq('user_id', user?.id)
+        .gte('connected_at', dateRange.from.toISOString())
+        .lte('connected_at', dateRange.to.toISOString())
+        .order('connected_at', { ascending: false });
+
+      if (error) throw error;
+
+      const reportData = (sessions || []).map(session => ({
+        'Session ID': session.id.substring(0, 8),
+        'Connected At': format(new Date(session.connected_at), 'yyyy-MM-dd HH:mm'),
+        'Disconnected At': session.disconnected_at ? format(new Date(session.disconnected_at), 'yyyy-MM-dd HH:mm') : 'Active',
+        Server: session.server_name,
+        Location: session.server_location,
+        Device: session.device_name,
+        Status: session.status,
+      }));
+
+      generateCSV(reportData, 'session_report');
+
+      toast({
+        title: 'Export Complete',
+        description: 'Session report downloaded successfully',
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast({
+        title: 'Export Failed',
+        description: 'Failed to generate report',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleExport = () => {
+    switch (reportType) {
+      case 'bandwidth':
+        exportBandwidthReport();
+        break;
+      case 'security':
+        exportSecurityReport();
+        break;
+      case 'sessions':
+        exportSessionReport();
+        break;
+      default:
+        exportBandwidthReport();
+    }
+  };
+
+  const toggleReportSchedule = (reportId: string, enabled: boolean) => {
+    setReports(prev =>
+      prev.map(r => (r.id === reportId ? { ...r, enabled } : r))
+    );
+    
+    toast({
+      title: enabled ? 'Report Enabled' : 'Report Disabled',
+      description: enabled ? 'You will receive scheduled reports via email' : 'Scheduled reports paused',
+    });
+  };
+
+  return (
+    <div className="space-y-6 max-w-6xl mx-auto p-4">
+      <div>
+        <h2 className="text-2xl font-bold flex items-center gap-2">
+          <BarChart3 className="w-6 h-6 text-primary" />
+          Advanced Reporting
+        </h2>
+        <p className="text-muted-foreground mt-1">
+          Export detailed reports and schedule automated insights
+        </p>
+      </div>
+
+      <Tabs defaultValue="export" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="export">Export Reports</TabsTrigger>
+          <TabsTrigger value="scheduled">Scheduled Reports</TabsTrigger>
+          <TabsTrigger value="custom">Custom Dashboards</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="export" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="w-5 h-5" />
+                Export Data
+              </CardTitle>
+              <CardDescription>
+                Generate and download CSV reports for analysis
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Report Type</Label>
+                  <Select value={reportType} onValueChange={setReportType}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="bandwidth">Bandwidth Usage</SelectItem>
+                      <SelectItem value="sessions">Session History</SelectItem>
+                      <SelectItem value="security">Security Events</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Date Range</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-start">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateRange.from}
+                        onSelect={(date) => date && setDateRange({ ...dateRange, from: date })}
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
+              <Alert>
+                <FileText className="w-4 h-4" />
+                <AlertDescription>
+                  Reports are exported in CSV format and can be opened in Excel, Google Sheets, or any spreadsheet application.
+                </AlertDescription>
+              </Alert>
+
+              <Button onClick={handleExport} disabled={loading} className="w-full">
+                {loading ? (
+                  <>
+                    <Activity className="w-4 h-4 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 mr-2" />
+                    Export Report
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="scheduled" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Clock className="w-5 h-5" />
+                Scheduled Reports
+              </CardTitle>
+              <CardDescription>
+                Receive automated reports via email on a regular schedule
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {reports.map((report) => (
+                <div
+                  key={report.id}
+                  className="flex items-center justify-between p-4 border rounded-lg"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-medium">{report.name}</h4>
+                      <Badge variant="outline">{report.schedule}</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Last generated: {format(new Date(report.lastGenerated), 'PPp')}
+                    </p>
+                  </div>
+                  <Switch
+                    checked={report.enabled}
+                    onCheckedChange={(checked) => toggleReportSchedule(report.id, checked)}
+                  />
+                </div>
+              ))}
+
+              <Alert>
+                <Mail className="w-4 h-4" />
+                <AlertDescription>
+                  Scheduled reports will be sent to your registered email address
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="custom" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                Custom Dashboards
+              </CardTitle>
+              <CardDescription>
+                Create personalized dashboards with your most important metrics
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert>
+                <CheckCircle className="w-4 h-4" />
+                <AlertDescription>
+                  Custom dashboards allow you to track specific metrics and KPIs that matter most to your usage patterns.
+                </AlertDescription>
+              </Alert>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-medium mb-2">Bandwidth Monitor</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Track real-time and historical bandwidth usage
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Create Dashboard
+                  </Button>
+                </div>
+
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-medium mb-2">Security Overview</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Monitor security events and threat alerts
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Create Dashboard
+                  </Button>
+                </div>
+
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-medium mb-2">Performance Metrics</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Track connection speed and latency
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Create Dashboard
+                  </Button>
+                </div>
+
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-medium mb-2">Usage Analytics</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Analyze usage patterns and trends
+                  </p>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Create Dashboard
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};

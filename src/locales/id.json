@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "close": "Tutup",
+    "confirm": "Konfirmasi"
+  },
+  "auth": {
+    "signIn": "Masuk",
+    "signUp": "Daftar",
+    "signOut": "Keluar",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "forgotPassword": "Lupa kata sandi?",
+    "resetPassword": "Reset kata sandi",
+    "welcome": "Selamat datang kembali"
+  },
+  "dashboard": {
+    "title": "Dasbor",
+    "tabs": {
+      "main": "Utama",
+      "servers": "Server",
+      "analytics": "Analitik",
+      "network": "Jaringan",
+      "apps": "Aplikasi",
+      "devices": "Perangkat",
+      "payments": "Pembayaran",
+      "settings": "Pengaturan"
+    }
+  },
+  "vpn": {
+    "connect": "Hubungkan",
+    "disconnect": "Putuskan",
+    "connected": "Terhubung",
+    "disconnected": "Terputus",
+    "connecting": "Menghubungkan...",
+    "selectServer": "Pilih server",
+    "bandwidth": "Bandwidth",
+    "latency": "Latensi"
+  },
+  "profile": {
+    "title": "Profil",
+    "anonymousUser": "Pengguna anonim",
+    "subscription": {
+      "title": "Langganan",
+      "upgradeToPremium": "Tingkatkan ke Premium",
+      "premiumPlan": "Paket Premium",
+      "fullAccess": "Akses penuh ke semua fitur",
+      "upgradeDescription": "Tingkatkan untuk akses tak terbatas"
+    }
+  }
+}

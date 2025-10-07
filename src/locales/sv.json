@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Laddar...",
+    "error": "Fel",
+    "success": "Framgång",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete": "Radera",
+    "edit": "Redigera",
+    "close": "Stäng",
+    "confirm": "Bekräfta"
+  },
+  "auth": {
+    "signIn": "Logga in",
+    "signUp": "Registrera",
+    "signOut": "Logga ut",
+    "email": "E-post",
+    "password": "Lösenord",
+    "forgotPassword": "Glömt lösenord?",
+    "resetPassword": "Återställ lösenord",
+    "welcome": "Välkommen tillbaka"
+  },
+  "dashboard": {
+    "title": "Instrumentpanel",
+    "tabs": {
+      "main": "Huvudmeny",
+      "servers": "Servrar",
+      "analytics": "Analys",
+      "network": "Nätverk",
+      "apps": "Appar",
+      "devices": "Enheter",
+      "payments": "Betalningar",
+      "settings": "Inställningar"
+    }
+  },
+  "vpn": {
+    "connect": "Anslut",
+    "disconnect": "Koppla från",
+    "connected": "Ansluten",
+    "disconnected": "Frånkopplad",
+    "connecting": "Ansluter...",
+    "selectServer": "Välj server",
+    "bandwidth": "Bandbredd",
+    "latency": "Fördröjning"
+  },
+  "profile": {
+    "title": "Profil",
+    "anonymousUser": "Anonym användare",
+    "subscription": {
+      "title": "Prenumeration",
+      "upgradeToPremium": "Uppgradera till Premium",
+      "premiumPlan": "Premium-plan",
+      "fullAccess": "Full åtkomst till alla funktioner",
+      "upgradeDescription": "Uppgradera för obegränsad åtkomst"
+    }
+  }
+}

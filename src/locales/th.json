@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "กำลังโหลด...",
+    "error": "ข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "close": "ปิด",
+    "confirm": "ยืนยัน"
+  },
+  "auth": {
+    "signIn": "เข้าสู่ระบบ",
+    "signUp": "สมัครสมาชิก",
+    "signOut": "ออกจากระบบ",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "forgotPassword": "ลืมรหัสผ่าน?",
+    "resetPassword": "รีเซ็ตรหัสผ่าน",
+    "welcome": "ยินดีต้อนรับกลับ"
+  },
+  "dashboard": {
+    "title": "แดชบอร์ด",
+    "tabs": {
+      "main": "หน้าหลัก",
+      "servers": "เซิร์ฟเวอร์",
+      "analytics": "การวิเคราะห์",
+      "network": "เครือข่าย",
+      "apps": "แอป",
+      "devices": "อุปกรณ์",
+      "payments": "การชำระเงิน",
+      "settings": "การตั้งค่า"
+    }
+  },
+  "vpn": {
+    "connect": "เชื่อมต่อ",
+    "disconnect": "ตัดการเชื่อมต่อ",
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ตัดการเชื่อมต่อแล้ว",
+    "connecting": "กำลังเชื่อมต่อ...",
+    "selectServer": "เลือกเซิร์ฟเวอร์",
+    "bandwidth": "แบนด์วิดท์",
+    "latency": "ความหน่วง"
+  },
+  "profile": {
+    "title": "โปรไฟล์",
+    "anonymousUser": "ผู้ใช้ไม่ระบุชื่อ",
+    "subscription": {
+      "title": "การสมัครสมาชิก",
+      "upgradeToPremium": "อัปเกรดเป็นพรีเมียม",
+      "premiumPlan": "แผนพรีเมียม",
+      "fullAccess": "เข้าถึงคุณสมบัติทั้งหมด",
+      "upgradeDescription": "อัปเกรดเพื่อการเข้าถึงไม่จำกัด"
+    }
+  }
+}

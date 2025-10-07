@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "close": "Sluiten",
+    "confirm": "Bevestigen"
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signUp": "Registreren",
+    "signOut": "Uitloggen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "resetPassword": "Wachtwoord resetten",
+    "welcome": "Welkom terug"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "tabs": {
+      "main": "Hoofdmenu",
+      "servers": "Servers",
+      "analytics": "Analyses",
+      "network": "Netwerk",
+      "apps": "Apps",
+      "devices": "Apparaten",
+      "payments": "Betalingen",
+      "settings": "Instellingen"
+    }
+  },
+  "vpn": {
+    "connect": "Verbinden",
+    "disconnect": "Verbinding verbreken",
+    "connected": "Verbonden",
+    "disconnected": "Niet verbonden",
+    "connecting": "Verbinden...",
+    "selectServer": "Selecteer server",
+    "bandwidth": "Bandbreedte",
+    "latency": "Latentie"
+  },
+  "profile": {
+    "title": "Profiel",
+    "anonymousUser": "Anonieme gebruiker",
+    "subscription": {
+      "title": "Abonnement",
+      "upgradeToPremium": "Upgrade naar Premium",
+      "premiumPlan": "Premium Abonnement",
+      "fullAccess": "Volledige toegang tot alle functies",
+      "upgradeDescription": "Upgrade voor onbeperkte toegang"
+    }
+  }
+}

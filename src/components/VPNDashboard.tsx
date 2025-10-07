@@ -78,6 +78,7 @@ import { DAOGovernance } from './dashboard/DAOGovernance';
 import { XXCoinIntegration } from './dashboard/XXCoinIntegration';
 import { BetaCTA } from './BetaCTA';
 import { OnboardingTour } from './onboarding/OnboardingTour';
+import { AdvancedReporting } from './AdvancedReporting';
 import { OnboardingButton } from './onboarding/OnboardingButton';
 import { AnalyticsDashboard } from './analytics/AnalyticsDashboard';
 
@@ -446,6 +447,7 @@ const VPNDashboard = () => {
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="reports">Reports</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
             <TabsTrigger value="automation">AI</TabsTrigger>
@@ -514,6 +516,10 @@ const VPNDashboard = () => {
 
           <TabsContent value="analytics" className="space-y-6">
             <AnalyticsDashboard />
+          </TabsContent>
+
+          <TabsContent value="reports" className="space-y-6">
+            <AdvancedReporting />
           </TabsContent>
 
           <TabsContent value="network" className="space-y-6">

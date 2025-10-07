@@ -83,6 +83,42 @@
       "name": "Turkish",
       "nativeName": "Türkçe",
       "flag": "🇹🇷"
+    },
+    {
+      "code": "nl",
+      "name": "Dutch",
+      "nativeName": "Nederlands",
+      "flag": "🇳🇱"
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "nativeName": "Polski",
+      "flag": "🇵🇱"
+    },
+    {
+      "code": "sv",
+      "name": "Swedish",
+      "nativeName": "Svenska",
+      "flag": "🇸🇪"
+    },
+    {
+      "code": "vi",
+      "name": "Vietnamese",
+      "nativeName": "Tiếng Việt",
+      "flag": "🇻🇳"
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "nativeName": "ไทย",
+      "flag": "🇹🇭"
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "nativeName": "Bahasa Indonesia",
+      "flag": "🇮🇩"
     }
   ]
 }
