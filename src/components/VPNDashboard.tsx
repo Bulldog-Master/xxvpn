@@ -293,7 +293,7 @@ const VPNDashboard = () => {
             </div>
 
             {/* Right side: Referrals, User, Language */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-end gap-2">
               <div className="flex items-center gap-3">
                 {/* Referral Section */}
                 <Popover>
@@ -424,9 +424,12 @@ const VPNDashboard = () => {
               </DropdownMenuContent>
                       </DropdownMenu>
                     )}
-
-              <OnboardingButton />
-              <LanguageSelector />
+              </div>
+              
+              {/* Tour & Language - Second Row */}
+              <div className="flex items-center gap-2">
+                <OnboardingButton />
+                <LanguageSelector />
               </div>
             </div>
           </div>
