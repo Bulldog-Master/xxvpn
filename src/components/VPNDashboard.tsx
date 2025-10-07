@@ -474,17 +474,27 @@ const VPNDashboard = () => {
         {/* Beta CTA */}
         {!subscribed && <BetaCTA />}
 
-            {/* xx Network Status + Connection History */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              <XXNetworkStatus />
-              <RealTimeStatus />
+            {/* xx Network Integration Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                <h2 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
+                  xx Network Integration
+                </h2>
+              </div>
+
+              {/* xx Network Status + Real-Time Status */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                <XXNetworkStatus />
+                <RealTimeStatus />
+              </div>
+
+              {/* Connection History */}
+              <ConnectionHistory />
+
+              {/* xx Network Info */}
+              <XXNetworkInfoPanel />
             </div>
-
-            {/* Connection History */}
-            <ConnectionHistory />
-
-            {/* xx Network Info */}
-            <XXNetworkInfoPanel />
           </TabsContent>
 
           <TabsContent value="servers" className="space-y-4">
