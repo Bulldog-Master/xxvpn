@@ -1,0 +1,7 @@
+# WASM Files
+
+Place the following files in this directory after building:
+- xxdk.wasm
+- wasm_exec.js
+
+See docs/WASM_BUILD_INSTRUCTIONS.md for build instructions.

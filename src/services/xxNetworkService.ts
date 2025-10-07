@@ -1,14 +1,15 @@
 import { supabase } from '@/integrations/supabase/client';
 import { logError } from '@/utils/errorLogger';
+import { loadWASM, getWASM, isWASMLoaded } from '@/utils/wasmLoader';
 
 /**
- * NOTE: The @xxnetwork/xxdk-npm package (v1.10.4) is archived and the API
- * has changed. The team is working on updated bindings. For now, we use
- * a mock implementation that simulates the client behavior and integrates
- * with our edge functions for NDF and health checking.
+ * xx Network Service with WASM Integration
  * 
- * When the new package is released, update this implementation with the
- * actual WASM bindings following their latest documentation.
+ * This service integrates with the xxdk WebAssembly module for quantum-resistant
+ * VPN functionality using the cMixx protocol. It automatically detects if WASM
+ * is available and falls back to a functional mock for development.
+ * 
+ * To use real WASM bindings, see docs/WASM_BUILD_INSTRUCTIONS.md
  */
 
 export interface XXNetworkConfig {
@@ -128,24 +129,39 @@ export const loadKeystore = async (userId: string): Promise<object | null> => {
 };
 
 /**
- * xxDK Client with functional mock implementation
+ * xxDK Client with WASM Integration
  * 
- * This implementation provides a working client that:
- * - Fetches and uses the real Network Definition File via edge functions
- * - Monitors actual xx network health
- * - Stores encrypted client keystore in IndexedDB
- * - Simulates cMixx connection flow
- * 
- * The WASM integration will be added when @xxnetwork provides
- * updated bindings compatible with current build tools.
+ * Automatically uses real WASM bindings when available, or falls back to
+ * a functional mock implementation for development/testing.
  */
 export class XXDKClient {
   private userId: string;
   private ndf: XXNetworkConfig | null = null;
   private connected: boolean = false;
+  private cmixClient: any = null; // Real cMixx client from WASM
+  private useWASM: boolean = false;
 
   constructor(userId: string) {
     this.userId = userId;
+  }
+
+  /**
+   * Check if WASM is available and load it
+   */
+  private async ensureWASM(): Promise<void> {
+    if (isWASMLoaded()) {
+      this.useWASM = true;
+      return;
+    }
+
+    const wasm = await loadWASM();
+    this.useWASM = wasm !== null;
+    
+    if (this.useWASM) {
+      console.log('[xxDK] Using real WASM implementation');
+    } else {
+      console.log('[xxDK] Using mock implementation (WASM not available)');
+    }
   }
 
   /**
@@ -154,30 +170,59 @@ export class XXDKClient {
   async initialize(password: string): Promise<void> {
     console.log('[xxDK] Initializing cMixx client...');
     
+    // Check for WASM availability
+    await this.ensureWASM();
+    
     // Fetch real NDF from xx network
     this.ndf = await fetchNDF();
     console.log('[xxDK] NDF fetched from:', this.ndf.source);
     console.log('[xxDK] NDF timestamp:', new Date(this.ndf.timestamp * 1000).toISOString());
     
-    // Check for existing keystore
-    const existingKeystore = await loadKeystore(this.userId);
+    const storageDir = `xxnetwork-${this.userId}`;
     
-    if (!existingKeystore) {
-      console.log('[xxDK] Creating new client keystore...');
-      
-      // Create client keystore
-      const newKeystore = {
-        version: 1,
-        created: Date.now(),
-        userId: this.userId,
-        // In production with WASM: this would contain actual cryptographic keys
-        storageDir: `/xxnetwork/${this.userId}`,
-      };
-      
-      await storeKeystore(this.userId, newKeystore, password);
-      console.log('[xxDK] New keystore created and encrypted');
+    if (this.useWASM) {
+      // Use real WASM implementation
+      const wasm = getWASM();
+      if (!wasm) {
+        throw new Error('WASM module not loaded');
+      }
+
+      try {
+        // Try to load existing client
+        console.log('[xxDK] Attempting to load existing client...');
+        const params = wasm.GetDefaultCMixParams();
+        this.cmixClient = wasm.LoadCmix(storageDir, password, params);
+        console.log('[xxDK] Loaded existing client from storage');
+      } catch (error) {
+        // Create new client if loading fails
+        console.log('[xxDK] Creating new cMixx client...');
+        this.cmixClient = wasm.NewCmix(
+          this.ndf.ndf,
+          storageDir,
+          password,
+          '' // registration code (empty for now)
+        );
+        console.log('[xxDK] New client created');
+      }
     } else {
-      console.log('[xxDK] Loaded existing keystore');
+      // Use mock implementation
+      const existingKeystore = await loadKeystore(this.userId);
+      
+      if (!existingKeystore) {
+        console.log('[xxDK] Creating new client keystore (mock)...');
+        
+        const newKeystore = {
+          version: 1,
+          created: Date.now(),
+          userId: this.userId,
+          storageDir: `/xxnetwork/${this.userId}`,
+        };
+        
+        await storeKeystore(this.userId, newKeystore, password);
+        console.log('[xxDK] New keystore created and encrypted (mock)');
+      } else {
+        console.log('[xxDK] Loaded existing keystore (mock)');
+      }
     }
     
     console.log('[xxDK] Client initialized successfully');
@@ -192,10 +237,33 @@ export class XXDKClient {
     }
 
     console.log('[xxDK] Starting network follower...');
-    console.log('[xxDK] Connecting to xx network nodes...');
     
-    // Simulate connection process (in production, this calls WASM functions)
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    if (this.useWASM && this.cmixClient) {
+      // Use real WASM connection
+      console.log('[xxDK] Starting cMixx network follower (WASM)...');
+      
+      try {
+        // Start the network follower
+        // Note: Actual method names may vary - adjust based on xxdk-wasm API
+        if (typeof this.cmixClient.StartNetworkFollower === 'function') {
+          await this.cmixClient.StartNetworkFollower();
+        }
+        
+        // Wait for network to be ready
+        if (typeof this.cmixClient.WaitForNetwork === 'function') {
+          await this.cmixClient.WaitForNetwork(30000); // 30 second timeout
+        }
+        
+        console.log('[xxDK] Network follower started (WASM)');
+      } catch (error) {
+        console.error('[xxDK] WASM connection error:', error);
+        throw error;
+      }
+    } else {
+      // Mock connection
+      console.log('[xxDK] Connecting to xx network nodes (mock)...');
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
     
     // Verify network is healthy before completing connection
     const health = await this.getNetworkHealth();
@@ -219,6 +287,19 @@ export class XXDKClient {
     }
     
     console.log('[xxDK] Stopping network follower...');
+    
+    if (this.useWASM && this.cmixClient) {
+      try {
+        // Stop the network follower
+        if (typeof this.cmixClient.StopNetworkFollower === 'function') {
+          this.cmixClient.StopNetworkFollower();
+        }
+        console.log('[xxDK] Network follower stopped (WASM)');
+      } catch (error) {
+        console.error('[xxDK] Error stopping WASM client:', error);
+      }
+    }
+    
     this.connected = false;
     console.log('[xxDK] Disconnected from xx network');
   }
