@@ -20,8 +20,8 @@ let wasmLoading: Promise<WASMModule | null> | null = null;
  */
 async function checkWASMAvailability(): Promise<boolean> {
   try {
-    const wasmResponse = await fetch('/xxdk.wasm', { method: 'HEAD' });
-    const jsResponse = await fetch('/wasm_exec.js', { method: 'HEAD' });
+    const wasmResponse = await fetch('/xxdk-wasm/xxdk.wasm', { method: 'HEAD' });
+    const jsResponse = await fetch('/xxdk-wasm/wasm_exec.js', { method: 'HEAD' });
     return wasmResponse.ok && jsResponse.ok;
   } catch {
     return false;
@@ -34,7 +34,7 @@ async function checkWASMAvailability(): Promise<boolean> {
 async function loadGoWASM(): Promise<void> {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = '/wasm_exec.js';
+    script.src = '/xxdk-wasm/wasm_exec.js';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('Failed to load wasm_exec.js'));
     document.head.appendChild(script);
@@ -72,7 +72,7 @@ export async function loadWASM(): Promise<WASMModule | null> {
       await loadGoWASM();
 
       console.log('[xxDK WASM] Fetching xxdk.wasm module...');
-      const response = await fetch('/xxdk.wasm');
+      const response = await fetch('/xxdk-wasm/xxdk.wasm');
       const wasmBytes = await response.arrayBuffer();
 
       console.log('[xxDK WASM] Instantiating WebAssembly module...');

@@ -1,7 +1,14 @@
-# WASM Files
+# xxdk WASM Setup
 
-Place the following files in this directory after building:
-- xxdk.wasm
-- wasm_exec.js
+To enable real xx network WASM integration:
 
-See docs/WASM_BUILD_INSTRUCTIONS.md for build instructions.
+1. Create a symbolic link to the npm package:
+   ```bash
+   cd public
+   ln -s ../node_modules/xxdk-wasm xxdk-wasm
+   cd ..
+   ```
+
+2. The app will automatically detect and load the WASM files
+
+See docs/WASM_BUILD_INSTRUCTIONS.md for alternative setup methods.
