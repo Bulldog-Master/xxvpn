@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Shield, Lock, Zap } from 'lucide-react';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 interface SubscriptionGateProps {
   children: ReactNode;
@@ -16,14 +17,15 @@ interface SubscriptionGateProps {
 const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: SubscriptionGateProps) => {
   const { user } = useAuth();
   const { subscribed, hasAccess, subscription_tier, is_trial, trial_end, subscription_end } = useSubscription();
+  const { t } = useTranslation();
 
   const tierNames = {
-    'personal': 'Personal',
-    'personal-pro': 'Personal Pro', 
-    'personal-premium': 'Personal Premium',
-    'business': 'Business',
-    'business-plus': 'Business+',
-    'enterprise': 'Enterprise'
+    'personal': t('subscription.tiers.personal'),
+    'personal-pro': t('subscription.tiers.personalPro'), 
+    'personal-premium': t('subscription.tiers.personalPremium'),
+    'business': t('subscription.tiers.business'),
+    'business-plus': t('subscription.tiers.businessPlus'),
+    'enterprise': t('subscription.tiers.enterprise')
   };
 
   const getFeatureIcon = () => {
@@ -50,13 +52,13 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             {getFeatureIcon()}
-            <CardTitle className="text-lg">{feature} VPN Mode</CardTitle>
+            <CardTitle className="text-lg">{feature} {t('subscription.vpnMode')}</CardTitle>
           </div>
-          <p className="text-muted-foreground">Sign in to access premium VPN features</p>
+          <p className="text-muted-foreground">{t('subscription.signInRequired')}</p>
         </CardHeader>
         <CardContent className="text-center">
           <Button variant="outline" onClick={onUpgrade}>
-            Sign In to Continue
+            {t('subscription.signInToContinue')}
           </Button>
         </CardContent>
       </Card>
@@ -69,14 +71,14 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {getFeatureIcon()}
-            <span className="font-medium">{feature} Mode</span>
+            <span className="font-medium">{feature} {t('subscription.mode')}</span>
             <Badge variant="secondary" className="bg-green-100 text-green-800">
-              {is_trial ? 'Trial Active' : 'Subscribed'}
+              {is_trial ? t('subscription.trialActive') : t('subscription.subscribed')}
             </Badge>
           </div>
           {is_trial && trial_end && (
             <Badge variant="outline" className="text-xs">
-              Trial ends {formatDate(trial_end)}
+              {t('subscription.trialEnds')} {formatDate(trial_end)}
             </Badge>
           )}
         </div>
@@ -90,24 +92,24 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
       <CardHeader className="text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           {getFeatureIcon()}
-          <CardTitle className="text-lg">{feature} VPN Mode</CardTitle>
+          <CardTitle className="text-lg">{feature} {t('subscription.vpnMode')}</CardTitle>
           <Lock className="w-4 h-4 text-muted-foreground" />
         </div>
         <p className="text-muted-foreground">
-          Requires {tierNames[requiredTier as keyof typeof tierNames] || requiredTier} plan or higher
+          {t('subscription.requiresTier', { tier: tierNames[requiredTier as keyof typeof tierNames] || requiredTier })}
         </p>
         {subscription_tier && subscribed && (
           <p className="text-sm text-muted-foreground">
-            Current plan: {tierNames[subscription_tier as keyof typeof tierNames]}
+            {t('subscription.currentPlan')}: {tierNames[subscription_tier as keyof typeof tierNames]}
           </p>
         )}
       </CardHeader>
       <CardContent className="text-center space-y-3">
         <div className="text-sm text-muted-foreground">
-          Start your 7-day free trial to unlock this feature
+          {t('subscription.freeTrialOffer')}
         </div>
         <Button variant="default" onClick={onUpgrade}>
-          Upgrade Plan
+          {t('subscription.upgradePlan')}
         </Button>
       </CardContent>
     </Card>

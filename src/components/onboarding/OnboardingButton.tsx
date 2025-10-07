@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
@@ -71,6 +72,7 @@ const onboardingSteps: OnboardingStep[] = [
 ];
 
 export const OnboardingButton = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -110,7 +112,7 @@ export const OnboardingButton = () => {
         className="gap-2"
       >
         <HelpCircle className="w-4 h-4" />
-        Tour
+        {t('tour')}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

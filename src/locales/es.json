@@ -345,12 +345,60 @@
        "vpn": "Túnel VPN", 
         "vpnSubtitle": "Protocolo VPN",
         "vpnDescription": "Seguridad y velocidad equilibradas. Elusión DPI para transmisión y navegación.",
-       "mixnet": "Mixnet",
-       "mixnetSubtitle": "XX Network cMixx", 
-       "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
-       "directDesc": "Sin VPN - Más rápido",
-       "vpnDesc": "VPN - Equilibrado",
-       "mixnetDesc": "Mixnet - Más seguro"
-     }
-   }
- }
+        "mixnet": "Mixnet",
+        "mixnetSubtitle": "XX Network cMixx", 
+        "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
+        "directDesc": "Sin VPN - Más rápido",
+        "vpnDesc": "VPN - Equilibrado",
+        "mixnetDesc": "Mixnet - Más seguro"
+      }
+    }
+  },
+  "subscription": {
+    "required": "Subscription Required",
+    "requiredDesc": "Start your free trial to connect to VPN servers",
+    "noActive": "No Active Subscription",
+    "noActiveDesc": "Start your 7-day free trial to unlock all VPN modes and premium features",
+    "viewPlans": "View Plans",
+    "upgradePlan": "Upgrade Plan",
+    "freeTrialOffer": "Start your 7-day free trial to unlock this feature",
+    "trialActive": "Trial Active",
+    "subscribed": "Subscribed",
+    "trialEnds": "Trial ends",
+    "subscriptionEnds": "Subscription ends",
+    "freeTrialActive": "Free Trial Active",
+    "subscriptionActive": "Subscription Active",
+    "trial": "Trial",
+    "subscription": "Subscription",
+    "endsOn": "ends on",
+    "daysRemaining": "{{count}} day remaining",
+    "daysRemaining_plural": "{{count}} days remaining",
+    "expiresToday": "Expires today",
+    "trialEndingSoon": "Your trial is ending soon. Subscribe to continue enjoying all features.",
+    "subscribeNow": "Subscribe Now",
+    "manageSubscription": "Manage Subscription",
+    "loadingStatus": "Loading subscription status...",
+    "tiers": {
+      "personal": "Personal",
+      "personalPro": "Personal Pro",
+      "personalPremium": "Personal Premium",
+      "business": "Business",
+      "businessPlus": "Business+",
+      "enterprise": "Enterprise"
+    },
+    "requiresTier": "Requires {{tier}} plan or higher",
+    "currentPlan": "Current plan",
+    "signInRequired": "Sign in to access premium VPN features",
+    "signInToContinue": "Sign In to Continue",
+    "mode": "Mode",
+    "vpnMode": "VPN Mode"
+  },
+  "vpnModes": {
+    "ultraFast": {
+      "directConnection": "Direct connection with no VPN encryption. Maximum speed for gaming and streaming.",
+      "comingSoon": "Traditional VPN encryption with WireGuard/OpenVPN. Fast speeds with basic privacy. (Coming soon)",
+      "quantumResistant": "Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s."
+    }
+  },
+  "tour": "Tour"
+}

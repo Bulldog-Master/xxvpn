@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Crown, Clock, CheckCircle } from 'lucide-react';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useTranslation } from 'react-i18next';
 
 interface SubscriptionStatusProps {
   onManageSubscription?: () => void;
@@ -17,6 +18,7 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
     subscription_end, 
     loading 
   } = useSubscription();
+  const { t } = useTranslation();
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return '';
@@ -33,19 +35,19 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
   };
 
   const tierNames = {
-    'personal': 'Personal',
-    'personal-pro': 'Personal Pro',
-    'personal-premium': 'Personal Premium',
-    'business': 'Business',
-    'business-plus': 'Business+',
-    'enterprise': 'Enterprise'
+    'personal': t('subscription.tiers.personal'),
+    'personal-pro': t('subscription.tiers.personalPro'),
+    'personal-premium': t('subscription.tiers.personalPremium'),
+    'business': t('subscription.tiers.business'),
+    'business-plus': t('subscription.tiers.businessPlus'),
+    'enterprise': t('subscription.tiers.enterprise')
   };
 
   if (loading) {
     return (
       <Card className="bg-card/80 backdrop-blur-sm border-border">
         <CardContent className="flex items-center justify-center p-6">
-          <div className="text-sm text-muted-foreground">Loading subscription status...</div>
+          <div className="text-sm text-muted-foreground">{t('subscription.loadingStatus')}</div>
         </CardContent>
       </Card>
     );
@@ -57,15 +59,15 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
         <CardHeader className="text-center pb-3">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Crown className="w-5 h-5 text-muted-foreground" />
-            <CardTitle className="text-lg">No Active Subscription</CardTitle>
+            <CardTitle className="text-lg">{t('subscription.noActive')}</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="text-center space-y-3">
           <p className="text-sm text-muted-foreground">
-            Start your 7-day free trial to unlock all VPN modes and premium features
+            {t('subscription.noActiveDesc')}
           </p>
           <Button onClick={onManageSubscription} className="w-full">
-            View Plans
+            {t('subscription.viewPlans')}
           </Button>
         </CardContent>
       </Card>
@@ -86,7 +88,7 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
             <CheckCircle className="w-5 h-5 text-success" />
           )}
           <CardTitle className="text-lg">
-            {is_trial ? 'Free Trial Active' : 'Subscription Active'}
+            {is_trial ? t('subscription.freeTrialActive') : t('subscription.subscriptionActive')}
           </CardTitle>
         </div>
         <Badge 
@@ -99,13 +101,13 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
       <CardContent className="text-center space-y-3">
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground">
-            {is_trial ? 'Trial' : 'Subscription'} ends on {formatDate(endDate)}
+            {is_trial ? t('subscription.trial') : t('subscription.subscription')} {t('subscription.endsOn')} {formatDate(endDate)}
           </p>
           <p className="text-sm font-medium">
             {daysRemaining > 0 ? (
-              `${daysRemaining} day${daysRemaining === 1 ? '' : 's'} remaining`
+              t('subscription.daysRemaining', { count: daysRemaining })
             ) : (
-              'Expires today'
+              t('subscription.expiresToday')
             )}
           </p>
         </div>
@@ -113,7 +115,7 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
         {is_trial && daysRemaining <= 3 && (
           <div className="p-3 bg-warning/10 rounded-lg border border-warning/20">
             <p className="text-xs text-warning">
-              Your trial is ending soon. Subscribe to continue enjoying all features.
+              {t('subscription.trialEndingSoon')}
             </p>
           </div>
         )}
@@ -123,7 +125,7 @@ const SubscriptionStatus = ({ onManageSubscription }: SubscriptionStatusProps) =
           onClick={onManageSubscription}
           className="w-full"
         >
-          {is_trial ? 'Subscribe Now' : 'Manage Subscription'}
+          {is_trial ? t('subscription.subscribeNow') : t('subscription.manageSubscription')}
         </Button>
       </CardContent>
     </Card>
