@@ -55,6 +55,7 @@ const AuthPage = () => {
       icon: Mail,
       available: true,
       recommended: true,
+      signInOnly: false,
       tooltip: 'Secure email-based login. No password needed. Can be accessed from any device with email access.',
       recovery: 'Access your email from any device to recover your account.',
     },
@@ -65,16 +66,18 @@ const AuthPage = () => {
       icon: Globe,
       available: true,
       recommended: false,
+      signInOnly: false,
       tooltip: 'Use your existing Google account. Syncs across all your Google-connected devices.',
       recovery: 'Recover through Google account recovery. Access from any device logged into your Google account.',
     },
     {
       id: 'passkey' as const,
       name: 'Passkey (WebAuthn)',
-      description: 'Biometric authentication (fingerprint, Face ID)',
+      description: 'Biometric authentication - Sign In Only',
       icon: Fingerprint,
       available: true,
       recommended: false,
+      signInOnly: true,
       tooltip: 'Most secure option using biometric authentication. Passkeys sync via your platform (Apple Keychain, Google Password Manager). Only available for existing accounts - sign in only.',
       recovery: 'Passkeys sync across devices via iCloud (Apple) or Google Password Manager. IMPORTANT: Set up a backup authentication method (email/magic link) from Security Settings after creating your account.',
     },
@@ -280,11 +283,16 @@ const AuthPage = () => {
                         <div className="flex items-center gap-3">
                           <method.icon className="w-5 h-5 text-muted-foreground" />
                           <div className="flex-1">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap">
                               <span className="font-medium text-sm">{method.name}</span>
                               {method.recommended && (
                                 <Badge variant="secondary" className="text-xs">
                                   Recommended
+                                </Badge>
+                              )}
+                              {method.signInOnly && (
+                                <Badge variant="outline" className="text-xs border-yellow-500 text-yellow-600 dark:text-yellow-400">
+                                  Sign In Only
                                 </Badge>
                               )}
                             </div>
