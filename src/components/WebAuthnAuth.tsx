@@ -255,7 +255,7 @@ export const WebAuthnAuth: React.FC<WebAuthnAuthProps> = ({ onAuthenticate, isLo
         onAuthenticate({
           type: 'webauthn',
           credentialId: assertion.id,
-          challenge: arrayBufferToBase64(challenge),
+          challenge: arrayBufferToBase64(challenge.buffer),
           timestamp: Date.now(),
         });
 
