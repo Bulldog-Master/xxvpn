@@ -5,6 +5,7 @@ import { Clock, MapPin, Monitor, Wifi, WifiOff } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface VPNSession {
   id: string;
@@ -21,6 +22,7 @@ interface VPNSession {
 }
 
 export const ConnectionHistory: React.FC = () => {
+  const { t } = useTranslation();
   const [sessions, setSessions] = useState<VPNSession[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -118,7 +120,7 @@ export const ConnectionHistory: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5" />
-            Connection History
+            {t('connectionHistory.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -139,15 +141,15 @@ export const ConnectionHistory: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5" />
-          Connection History
+          {t('connectionHistory.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {sessions.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Wifi className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>No connection history yet</p>
-            <p className="text-sm">Your VPN sessions will appear here</p>
+            <p>{t('connectionHistory.noHistory')}</p>
+            <p className="text-sm">{t('connectionHistory.sessionsAppear')}</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -185,18 +187,18 @@ export const ConnectionHistory: React.FC = () => {
                         {session.device_name}
                       </div>
                       <div>
-                        Duration: {formatDuration(session.duration_seconds)}
+                        {t('connectionHistory.duration')}: {formatDuration(session.duration_seconds)}
                       </div>
                       {session.connection_quality && (
                         <div className={getQualityColor(session.connection_quality)}>
-                          Quality: {session.connection_quality}
+                          {t('connectionHistory.quality')}: {session.connection_quality}
                         </div>
                       )}
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>
-                        Started: {formatDistanceToNow(new Date(session.connected_at), { addSuffix: true })}
+                        {t('connectionHistory.started')}: {formatDistanceToNow(new Date(session.connected_at), { addSuffix: true })}
                       </span>
                       {session.bytes_sent !== null && session.bytes_received !== null && (
                         <span>

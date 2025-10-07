@@ -473,5 +473,43 @@
     "notConnected": "غير متصل",
     "clickToConnect": "انقر للاتصال لبدء جلسة VPN",
     "connectToVPN": "اتصل بـ VPN"
+  },
+  "connectionHistory": {
+    "title": "سجل الاتصالات",
+    "noHistory": "لا يوجد سجل اتصالات بعد",
+    "sessionsAppear": "ستظهر جلسات VPN الخاصة بك هنا",
+    "duration": "المدة",
+    "quality": "الجودة",
+    "started": "بدأ"
+  },
+  "xxNetworkTechnology": {
+    "title": "تكنولوجيا شبكة xx",
+    "description": "منصة خصوصية ثورية مقاومة للحوسبة الكمية",
+    "cMixxProtocol": "بروتوكول cMixx",
+    "quantumResistant": "مقاوم للكم",
+    "quantumResistantDesc": "تشفير ما بعد الكم يحمي من هجمات الكمبيوتر الكمي المستقبلية",
+    "metadataShredding": "تدمير البيانات الوصفية",
+    "metadataShreddinDesc": "يدمر بروتوكول cMixx البيانات الوصفية - ماذا ومتى وأين وكيف تتواصل",
+    "decentralizedMixnet": "شبكة مختلطة لامركزية",
+    "decentralizedMixnetDesc": "شبكة P2P من العقد توجه حركة المرور عبر قفزات متعددة للخصوصية",
+    "trueP2P": "P2P حقيقي",
+    "trueP2PDesc": "اتصال مباشر من المتصفح إلى الشبكة المختلطة - لا يرى أي خادم خلفي حركة المرور الخاصة بك",
+    "webAssembly": "WebAssembly",
+    "webAssemblyDesc": "عميل cMixx الكامل يعمل في متصفحك باستخدام كود Go مترجم",
+    "daoGoverned": "يحكمها DAO",
+    "daoGovernedDesc": "شبكة مملوكة للمجتمع مع حوكمة لامركزية عبر xxChain",
+    "implementationStatus": "حالة التنفيذ",
+    "phase1Foundation": "المرحلة 1: الأساس ✓",
+    "edgeFunctions": "وظائف الحافة",
+    "ndfRetrieval": "استرجاع NDF ومراقبة الصحة",
+    "clientInterface": "واجهة العميل",
+    "mockWasm": "WASM وهمي جاهز لـ xxdk الحقيقي",
+    "keystore": "مخزن المفاتيح",
+    "encryptedStorage": "تخزين محلي مشفر في IndexedDB",
+    "wasmModule": "وحدة WASM",
+    "needsBuild": "يحتاج إلى بناء من مستودع xxdk-wasm",
+    "daoContracts": "عقود DAO",
+    "plannedPhase3": "مخطط للمرحلة 3",
+    "learnMore": "تعلم المزيد:"
   }
 }

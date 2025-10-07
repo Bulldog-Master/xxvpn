@@ -1,43 +1,46 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Shield, Zap, Lock, Network, Cpu, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const XXNetworkInfoPanel = () => {
+  const { t } = useTranslation();
+  
   const features = [
     {
       icon: Shield,
-      title: 'Quantum-Resistant',
-      description: 'Post-quantum cryptography protects against future quantum computer attacks',
+      title: t('xxNetworkTechnology.quantumResistant'),
+      description: t('xxNetworkTechnology.quantumResistantDesc'),
       color: 'text-primary',
     },
     {
       icon: Lock,
-      title: 'Metadata Shredding',
-      description: 'cMixx protocol destroys metadata - what, when, where, and how you communicate',
+      title: t('xxNetworkTechnology.metadataShredding'),
+      description: t('xxNetworkTechnology.metadataShreddinDesc'),
       color: 'text-success',
     },
     {
       icon: Network,
-      title: 'Decentralized Mixnet',
-      description: 'P2P network of nodes routes traffic through multiple hops for privacy',
+      title: t('xxNetworkTechnology.decentralizedMixnet'),
+      description: t('xxNetworkTechnology.decentralizedMixnetDesc'),
       color: 'text-secondary',
     },
     {
       icon: Zap,
-      title: 'True P2P',
-      description: 'Direct browser-to-mixnet connection - no backend sees your traffic',
+      title: t('xxNetworkTechnology.trueP2P'),
+      description: t('xxNetworkTechnology.trueP2PDesc'),
       color: 'text-warning',
     },
     {
       icon: Cpu,
-      title: 'WebAssembly',
-      description: 'Full cMixx client runs in your browser using compiled Go code',
+      title: t('xxNetworkTechnology.webAssembly'),
+      description: t('xxNetworkTechnology.webAssemblyDesc'),
       color: 'text-accent',
     },
     {
       icon: Globe,
-      title: 'DAO Governed',
-      description: 'Community-owned network with decentralized governance via xxChain',
+      title: t('xxNetworkTechnology.daoGoverned'),
+      description: t('xxNetworkTechnology.daoGovernedDesc'),
       color: 'text-primary',
     },
   ];
@@ -47,13 +50,13 @@ export const XXNetworkInfoPanel = () => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle>xx Network Technology</CardTitle>
+            <CardTitle>{t('xxNetworkTechnology.title')}</CardTitle>
             <CardDescription>
-              Revolutionary quantum-resistant privacy platform
+              {t('xxNetworkTechnology.description')}
             </CardDescription>
           </div>
           <Badge className="bg-primary/20 text-primary border-primary/30">
-            cMixx Protocol
+            {t('xxNetworkTechnology.cMixxProtocol')}
           </Badge>
         </div>
       </CardHeader>
@@ -82,42 +85,42 @@ export const XXNetworkInfoPanel = () => {
 
         <div className="pt-4 border-t space-y-3">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Implementation Status</span>
+            <span className="text-muted-foreground">{t('xxNetworkTechnology.implementationStatus')}</span>
             <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
-              Phase 1: Foundation ✓
+              {t('xxNetworkTechnology.phase1Foundation')}
             </Badge>
           </div>
           
           <div className="bg-muted/50 rounded-md p-3 space-y-2">
             <div className="flex items-center gap-2 text-xs">
               <div className="w-2 h-2 rounded-full bg-success" />
-              <span className="font-medium">Edge Functions</span>
-              <span className="text-muted-foreground">- NDF retrieval & health monitoring</span>
+              <span className="font-medium">{t('xxNetworkTechnology.edgeFunctions')}</span>
+              <span className="text-muted-foreground">- {t('xxNetworkTechnology.ndfRetrieval')}</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <div className="w-2 h-2 rounded-full bg-success" />
-              <span className="font-medium">Client Interface</span>
-              <span className="text-muted-foreground">- Mock WASM ready for real xxdk</span>
+              <span className="font-medium">{t('xxNetworkTechnology.clientInterface')}</span>
+              <span className="text-muted-foreground">- {t('xxNetworkTechnology.mockWasm')}</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <div className="w-2 h-2 rounded-full bg-success" />
-              <span className="font-medium">Keystore</span>
-              <span className="text-muted-foreground">- Encrypted local storage in IndexedDB</span>
+              <span className="font-medium">{t('xxNetworkTechnology.keystore')}</span>
+              <span className="text-muted-foreground">- {t('xxNetworkTechnology.encryptedStorage')}</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <div className="w-2 h-2 rounded-full bg-warning" />
-              <span className="font-medium">WASM Module</span>
-              <span className="text-muted-foreground">- Needs build from xxdk-wasm repo</span>
+              <span className="font-medium">{t('xxNetworkTechnology.wasmModule')}</span>
+              <span className="text-muted-foreground">- {t('xxNetworkTechnology.needsBuild')}</span>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <div className="w-2 h-2 rounded-full bg-muted-foreground" />
-              <span className="font-medium">DAO Contracts</span>
-              <span className="text-muted-foreground">- Planned for Phase 3</span>
+              <span className="font-medium">{t('xxNetworkTechnology.daoContracts')}</span>
+              <span className="text-muted-foreground">- {t('xxNetworkTechnology.plannedPhase3')}</span>
             </div>
           </div>
 
           <div className="text-xs text-muted-foreground text-center pt-2">
-            Learn more: <a href="https://xx.network" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">xx.network</a>
+            {t('xxNetworkTechnology.learnMore')} <a href="https://xx.network" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">xx.network</a>
           </div>
         </div>
       </CardContent>

@@ -165,37 +165,36 @@ export const XXNetworkStatus = () => {
                   {initializing ? (
                     <>
                       <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                      Initializing...
+                      {t('xxNetwork.initializingBtn')}
                     </>
                   ) : (
                     <>
                       <Lock className="w-4 h-4 mr-2" />
-                      Initialize cMixx Client
+                      {t('xxNetwork.initializeCMixxClient')}
                     </>
                   )}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Initialize xx Network Client</DialogTitle>
+                  <DialogTitle>{t('xxNetwork.initializeXXNetwork')}</DialogTitle>
                   <DialogDescription>
-                    Create your encrypted keystore for quantum-resistant P2P connections.
-                    This password encrypts your cryptographic keys locally.
+                    {t('xxNetwork.initializeDescription')}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
                   <div>
-                    <Label htmlFor="password">Keystore Password</Label>
+                    <Label htmlFor="password">{t('xxNetwork.keystorePassword')}</Label>
                     <Input
                       id="password"
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter a strong password"
+                      placeholder={t('xxNetwork.enterStrongPassword')}
                       onKeyDown={(e) => e.key === 'Enter' && handleInitialize()}
                     />
                     <p className="text-xs text-muted-foreground mt-1">
-                      This password never leaves your device and cannot be recovered.
+                      {t('xxNetwork.passwordWarning')}
                     </p>
                   </div>
                   <Button 
@@ -203,7 +202,7 @@ export const XXNetworkStatus = () => {
                     onClick={handleInitialize}
                     disabled={!password || initializing}
                   >
-                    Initialize Client
+                    {t('xxNetwork.initializeClient')}
                   </Button>
                 </div>
               </DialogContent>
@@ -219,12 +218,12 @@ export const XXNetworkStatus = () => {
               {isConnecting ? (
                 <>
                   <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                  Connecting...
+                  {t('xxNetwork.connecting')}
                 </>
               ) : (
                 <>
                   <Zap className="w-4 h-4 mr-2" />
-                  Connect to xx Network
+                  {t('xxNetwork.connectToXXNetwork')}
                 </>
               )}
             </Button>
@@ -236,7 +235,7 @@ export const XXNetworkStatus = () => {
               className="w-full" 
               onClick={handleDisconnect}
             >
-              Disconnect
+              {t('xxNetwork.disconnect')}
             </Button>
           )}
         </div>
@@ -249,7 +248,7 @@ export const XXNetworkStatus = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Server className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Network Node Uptime</span>
+                  <span className="font-medium">{t('xxNetwork.networkNodeUptime')}</span>
                 </div>
                 <span className="text-2xl font-bold text-primary">{nodeUptime}%</span>
               </div>
@@ -262,19 +261,19 @@ export const XXNetworkStatus = () => {
             {/* Metrics Grid - Enhanced */}
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
-                <div className="text-sm text-muted-foreground mb-2">Total Nodes</div>
+                <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.totalNodes')}</div>
                 <div className="text-2xl font-bold">{networkHealth.totalNodes}</div>
               </div>
               <div className="p-4 rounded-lg bg-success/10 border border-success/30 hover:border-success/50 transition-colors">
-                <div className="text-sm text-muted-foreground mb-2">Active Nodes</div>
+                <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.activeNodes')}</div>
                 <div className="text-2xl font-bold text-success">{networkHealth.activeNodes}</div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
-                <div className="text-sm text-muted-foreground mb-2">Avg Latency</div>
+                <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.avgLatency')}</div>
                 <div className="text-2xl font-bold">{networkHealth.averageLatency}<span className="text-sm font-normal">ms</span></div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
-                <div className="text-sm text-muted-foreground mb-2">Last Round</div>
+                <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.lastRound')}</div>
                 <div className="text-sm font-semibold">
                   {new Date(networkHealth.lastRoundCompleted).toLocaleTimeString()}
                 </div>
@@ -288,7 +287,7 @@ export const XXNetworkStatus = () => {
               onClick={refreshHealth}
             >
               <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh Network Health
+              {t('xxNetwork.refreshNetworkHealth')}
             </Button>
           </>
         )}
@@ -304,20 +303,20 @@ export const XXNetworkStatus = () => {
         <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 border border-primary/20">
           <div className="flex items-center gap-2 mb-2">
             <Activity className="w-4 h-4 text-primary" />
-            <span className="font-semibold text-sm">cMixx Protocol Active</span>
+            <span className="font-semibold text-sm">{t('xxNetwork.cMixxProtocolActive')}</span>
           </div>
           <div className="space-y-1 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-success" />
-              <span>Quantum-resistant encryption</span>
+              <span>{t('xxNetwork.quantumResistantEncryption')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-success" />
-              <span>Metadata shredding protection</span>
+              <span>{t('xxNetwork.metadataShredding')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-success" />
-              <span>Decentralized mixnet routing</span>
+              <span>{t('xxNetwork.decentralizedMixnet')}</span>
             </div>
           </div>
         </div>
