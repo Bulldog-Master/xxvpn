@@ -165,8 +165,8 @@ const VPNDashboard = () => {
     const requiredTier = mode === 'ultra-secure' ? 'business' : 'personal';
     if (!hasAccess(requiredTier)) {
       toast({
-        title: "Subscription Required",
-        description: `${mode.charAt(0).toUpperCase() + mode.slice(1)} mode requires a subscription. Start your free trial to access this feature.`,
+        title: t('subscription.required'),
+        description: t('subscription.requiredDesc'),
         variant: "destructive",
       });
       setActiveTab('payments');
@@ -440,11 +440,11 @@ const VPNDashboard = () => {
           <TabsList className="grid w-full grid-cols-12 bg-muted/50 overflow-x-auto">
             <TabsTrigger value="dashboard">{t('dashboard.tabs.main')}</TabsTrigger>
             <TabsTrigger value="servers">{t('dashboard.tabs.servers')}</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="reports">Reports</TabsTrigger>
+            <TabsTrigger value="analytics">{t('dashboard.tabs.analytics')}</TabsTrigger>
+            <TabsTrigger value="reports">{t('dashboard.tabs.reports')}</TabsTrigger>
             <TabsTrigger value="network">{t('dashboard.tabs.network')}</TabsTrigger>
             <TabsTrigger value="apps">{t('dashboard.tabs.apps')}</TabsTrigger>
-            <TabsTrigger value="automation">AI</TabsTrigger>
+            <TabsTrigger value="automation">{t('dashboard.tabs.automation')}</TabsTrigger>
             <TabsTrigger value="performance">Performance</TabsTrigger>
             <TabsTrigger value="xxcoin">XX Coin</TabsTrigger>
             <TabsTrigger value="governance">DAO</TabsTrigger>

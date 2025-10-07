@@ -51,14 +51,14 @@ export const ConnectionStatusCard = ({ connectionStatus, vpnMode, user, subscrib
           )}
         </div>
         <CardTitle className={`text-2xl transition-colors duration-300 ${statusColors[connectionStatus]}`}>
-          {!user || !subscribed ? 'Subscription Required' : statusText[connectionStatus]}
+          {!user || !subscribed ? t('subscription.required') : statusText[connectionStatus]}
         </CardTitle>
         <CardDescription className="space-y-2">
           <div>
             {!user ? (
-              'Sign in to access VPN features'
+              t('subscription.signInRequired')
             ) : !subscribed ? (
-              'Start your free trial to connect to VPN servers'
+              t('subscription.requiredDesc')
             ) : (
               <>
                 {connectionStatus === 'connected' && vpnMode === 'ultra-fast' && 

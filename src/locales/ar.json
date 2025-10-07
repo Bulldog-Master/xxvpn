@@ -40,9 +40,12 @@
     },
     "tabs": {
       "main": "الرئيسية",
-      "servers": "الخوادم", 
+      "servers": "الخوادم",
+      "analytics": "التحليلات",
+      "reports": "التقارير",
       "network": "الشبكة",
       "apps": "التطبيقات",
+      "automation": "الذكاء الاصطناعي",
       "devices": "الأجهزة",
       "payments": "المدفوعات",
       "settings": "الإعدادات",
