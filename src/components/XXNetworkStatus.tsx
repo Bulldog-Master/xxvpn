@@ -8,8 +8,10 @@ import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from 'react-i18next';
 
 export const XXNetworkStatus = () => {
+  const { t } = useTranslation();
   const { 
     connected, 
     initializing, 
@@ -64,18 +66,18 @@ export const XXNetworkStatus = () => {
   };
 
   const getStatusBadge = () => {
-    if (!connected) return <Badge variant="outline">Disconnected</Badge>;
-    if (!networkHealth) return <Badge variant="outline">Checking...</Badge>;
+    if (!connected) return <Badge variant="outline">{t('xxNetwork.disconnected')}</Badge>;
+    if (!networkHealth) return <Badge variant="outline">{t('xxNetwork.checking')}</Badge>;
     
     switch (networkHealth.status) {
       case 'healthy':
-        return <Badge className="bg-success/20 text-success border-success/30">Healthy</Badge>;
+        return <Badge className="bg-success/20 text-success border-success/30">{t('xxNetwork.healthy')}</Badge>;
       case 'degraded':
-        return <Badge className="bg-warning/20 text-warning border-warning/30">Degraded</Badge>;
+        return <Badge className="bg-warning/20 text-warning border-warning/30">{t('xxNetwork.degraded')}</Badge>;
       case 'offline':
-        return <Badge variant="destructive">Offline</Badge>;
+        return <Badge variant="destructive">{t('xxNetwork.offline')}</Badge>;
       default:
-        return <Badge variant="outline">Unknown</Badge>;
+        return <Badge variant="outline">{t('xxNetwork.unknown')}</Badge>;
     }
   };
 
@@ -111,9 +113,9 @@ export const XXNetworkStatus = () => {
               {getStatusIcon()}
             </div>
             <div>
-              <CardTitle className="text-2xl mb-1">xx Network</CardTitle>
+              <CardTitle className="text-2xl mb-1">{t('xxNetwork.title')}</CardTitle>
               <CardDescription className="text-base">
-                Quantum-resistant mixnet
+                {t('xxNetwork.quantumResistantMixnet')}
               </CardDescription>
             </div>
           </div>
@@ -135,17 +137,17 @@ export const XXNetworkStatus = () => {
               )}
               <div>
                 <div className="font-semibold text-lg">
-                  {connected ? 'Connected to cMixx' : 'Not Connected'}
+                  {connected ? t('xxNetwork.connectedToCMixx') : t('xxNetwork.notConnected')}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  {connected ? 'Secure quantum-resistant tunnel active' : 'Ready to connect'}
+                  {connected ? t('xxNetwork.secureQuantumTunnel') : t('xxNetwork.readyToConnect')}
                 </div>
               </div>
             </div>
             {connected && (
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                <span className="text-xs font-medium text-success">LIVE</span>
+                <span className="text-xs font-medium text-success">{t('xxNetwork.live')}</span>
               </div>
             )}
           </div>

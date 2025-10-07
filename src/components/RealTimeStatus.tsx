@@ -6,6 +6,7 @@ import { Wifi, WifiOff, Activity, Clock, Download, Upload } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useVPNSession } from '@/hooks/useVPNSession';
+import { useTranslation } from 'react-i18next';
 
 interface ActiveSession {
   id: string;
@@ -19,6 +20,7 @@ interface ActiveSession {
 }
 
 export const RealTimeStatus: React.FC = () => {
+  const { t } = useTranslation();
   const [activeSession, setActiveSession] = useState<ActiveSession | null>(null);
   const [connectionTime, setConnectionTime] = useState<string>('00:00:00');
   const { user } = useAuth();
@@ -143,7 +145,7 @@ export const RealTimeStatus: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5" />
-          Real-time Status
+          {t('realTimeStatus.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -157,14 +159,14 @@ export const RealTimeStatus: React.FC = () => {
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Connected</h3>
+                  <h3 className="font-semibold text-lg">{t('realTimeStatus.connected')}</h3>
                   <p className="text-sm text-muted-foreground">
                     {activeSession.server_name} - {activeSession.server_location}
                   </p>
                 </div>
               </div>
               <Badge variant="secondary" className="bg-green-500 text-white">
-                Active
+                {t('realTimeStatus.active')}
               </Badge>
             </div>
 
@@ -179,14 +181,14 @@ export const RealTimeStatus: React.FC = () => {
               <div className="flex items-center gap-2 p-3 border rounded-lg">
                 <Upload className="h-4 w-4 text-blue-600" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Uploaded</p>
+                  <p className="text-xs text-muted-foreground">{t('realTimeStatus.uploaded')}</p>
                   <p className="font-semibold">{formatBytes(activeSession.bytes_sent)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 p-3 border rounded-lg">
                 <Download className="h-4 w-4 text-green-600" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Downloaded</p>
+                  <p className="text-xs text-muted-foreground">{t('realTimeStatus.downloaded')}</p>
                   <p className="font-semibold">{formatBytes(activeSession.bytes_received)}</p>
                 </div>
               </div>
@@ -195,7 +197,7 @@ export const RealTimeStatus: React.FC = () => {
             {/* Connection Quality */}
             {activeSession.connection_quality && (
               <div className="flex items-center justify-between p-3 border rounded-lg">
-                <span className="text-sm font-medium">Connection Quality</span>
+                <span className="text-sm font-medium">{t('realTimeStatus.connectionQuality')}</span>
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${getQualityColor(activeSession.connection_quality)}`} />
                   <span className="text-sm capitalize">{activeSession.connection_quality}</span>
@@ -210,7 +212,7 @@ export const RealTimeStatus: React.FC = () => {
               className="w-full"
             >
               <WifiOff className="h-4 w-4 mr-2" />
-              Disconnect
+              {t('realTimeStatus.disconnect')}
             </Button>
           </div>
         ) : (
@@ -221,9 +223,9 @@ export const RealTimeStatus: React.FC = () => {
                 <WifiOff className="h-12 w-12 text-muted-foreground" />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-lg">Not Connected</h3>
+                <h3 className="font-semibold text-lg">{t('realTimeStatus.notConnected')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Click connect to start a VPN session
+                  {t('realTimeStatus.clickToConnect')}
                 </p>
               </div>
             </div>
@@ -235,7 +237,7 @@ export const RealTimeStatus: React.FC = () => {
               size="lg"
             >
               <Wifi className="h-4 w-4 mr-2" />
-              Connect to VPN
+              {t('realTimeStatus.connectToVPN')}
             </Button>
           </div>
         )}

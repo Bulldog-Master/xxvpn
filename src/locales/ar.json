@@ -416,5 +416,62 @@
       "quantumResistant": "شبكة P2P مقاومة للكم باستخدام بروتوكول cMixx من شبكة xx. تدمير البيانات الوصفية عبر 850+ عقدة لامركزية. التأخير: ~2-3 ثانية."
     }
   },
-  "tour": "جولة"
+  "tour": "جولة",
+  "beta": {
+    "joinTitle": "انضم للنسخة التجريبية",
+    "joinDescription": "كن من بين أول 100 مستخدم لتجربة VPN المقاوم للحوسبة الكمية",
+    "postQuantumSecure": "آمن ما بعد الكم",
+    "30DaysFree": "30 يوماً مجاناً",
+    "20PercentDiscount": "خصم 20% مدى الحياة",
+    "joinWaitlist": "انضم إلى قائمة الانتظار",
+    "limitedOffer": "محدود لأول 100 مستخدم • ينتهي قريباً"
+  },
+  "xxNetwork": {
+    "title": "شبكة xx",
+    "quantumResistantMixnet": "شبكة مختلطة مقاومة للكم",
+    "disconnected": "غير متصل",
+    "checking": "جاري الفحص...",
+    "healthy": "سليم",
+    "degraded": "متدهور",
+    "offline": "غير متصل",
+    "unknown": "غير معروف",
+    "connectedToCMixx": "متصل بـ cMixx",
+    "notConnected": "غير متصل",
+    "secureQuantumTunnel": "نفق كمي آمن نشط",
+    "readyToConnect": "جاهز للاتصال",
+    "live": "مباشر",
+    "initializingBtn": "جاري التهيئة...",
+    "initializeCMixxClient": "تهيئة عميل cMixx",
+    "initializeXXNetwork": "تهيئة عميل شبكة xx",
+    "initializeDescription": "أنشئ مخزن مفاتيحك المشفر لاتصالات P2P المقاومة للكم. تقوم كلمة المرور هذه بتشفير مفاتيحك التشفيرية محلياً.",
+    "keystorePassword": "كلمة مرور المخزن",
+    "enterStrongPassword": "أدخل كلمة مرور قوية",
+    "passwordWarning": "كلمة المرور هذه لا تغادر جهازك ولا يمكن استردادها.",
+    "initializeClient": "تهيئة العميل",
+    "connecting": "جاري الاتصال...",
+    "connectToXXNetwork": "اتصل بشبكة xx",
+    "disconnect": "قطع الاتصال",
+    "networkNodeUptime": "وقت تشغيل عقد الشبكة",
+    "totalNodes": "إجمالي العقد",
+    "activeNodes": "العقد النشطة",
+    "avgLatency": "متوسط التأخير",
+    "lastRound": "آخر جولة",
+    "refreshNetworkHealth": "تحديث صحة الشبكة",
+    "cMixxProtocolActive": "بروتوكول cMixx نشط",
+    "quantumResistantEncryption": "تشفير مقاوم للكم",
+    "metadataShredding": "حماية تدمير البيانات الوصفية",
+    "decentralizedMixnet": "توجيه شبكة مختلطة لامركزية"
+  },
+  "realTimeStatus": {
+    "title": "الحالة في الوقت الفعلي",
+    "connected": "متصل",
+    "active": "نشط",
+    "uploaded": "تم الرفع",
+    "downloaded": "تم التنزيل",
+    "connectionQuality": "جودة الاتصال",
+    "disconnect": "قطع الاتصال",
+    "notConnected": "غير متصل",
+    "clickToConnect": "انقر للاتصال لبدء جلسة VPN",
+    "connectToVPN": "اتصل بـ VPN"
+  }
 }

@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Rocket, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const BetaCTA = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Card className="glass-effect border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
@@ -14,9 +16,9 @@ export const BetaCTA = () => {
             <Rocket className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <CardTitle className="text-xl">Join the Beta</CardTitle>
+            <CardTitle className="text-xl">{t('beta.joinTitle')}</CardTitle>
             <CardDescription>
-              Be among the first 100 users to try quantum-resistant VPN
+              {t('beta.joinDescription')}
             </CardDescription>
           </div>
         </div>
@@ -25,15 +27,15 @@ export const BetaCTA = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="p-3 bg-background/50 rounded-lg">
             <Shield className="w-5 h-5 text-primary mb-1" />
-            <p className="text-xs font-medium">Post-Quantum Secure</p>
+            <p className="text-xs font-medium">{t('beta.postQuantumSecure')}</p>
           </div>
           <div className="p-3 bg-background/50 rounded-lg">
             <Zap className="w-5 h-5 text-warning mb-1" />
-            <p className="text-xs font-medium">30 Days Free</p>
+            <p className="text-xs font-medium">{t('beta.30DaysFree')}</p>
           </div>
           <div className="p-3 bg-background/50 rounded-lg">
             <Rocket className="w-5 h-5 text-success mb-1" />
-            <p className="text-xs font-medium">20% Lifetime Discount</p>
+            <p className="text-xs font-medium">{t('beta.20PercentDiscount')}</p>
           </div>
         </div>
         
@@ -43,11 +45,11 @@ export const BetaCTA = () => {
           size="lg"
         >
           <Rocket className="w-4 h-4 mr-2" />
-          Join Beta Waitlist
+          {t('beta.joinWaitlist')}
         </Button>
         
         <p className="text-xs text-center text-muted-foreground">
-          Limited to 100 early adopters • Closes soon
+          {t('beta.limitedOffer')}
         </p>
       </CardContent>
     </Card>
