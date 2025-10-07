@@ -281,7 +281,7 @@ const AuthPage = () => {
               </TabsList>
 
               <TabsContent value="signin" className="space-y-4">
-                <div className="space-y-4">
+                <form onSubmit={handleSignIn} className="space-y-4">
                   {selectedMethod === 'google' ? (
                     <Button
                       type="button"
@@ -311,7 +311,7 @@ const AuthPage = () => {
 
                       <div className="space-y-2">
                         <Button
-                          onClick={handleSignIn}
+                          type="submit"
                           disabled={isLoading || !email}
                           className="w-full"
                         >
@@ -323,7 +323,7 @@ const AuthPage = () => {
                       </div>
                     </>
                   )}
-                </div>
+                </form>
               </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
