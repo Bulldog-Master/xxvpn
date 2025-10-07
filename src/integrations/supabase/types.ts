@@ -766,41 +766,7 @@ export type Database = {
       }
     }
     Views: {
-      proposal_votes_anonymized: {
-        Row: {
-          created_at: string | null
-          id: string | null
-          proposal_id: string | null
-          support: string | null
-          voter: string | null
-          voting_power: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          proposal_id?: string | null
-          support?: string | null
-          voter?: never
-          voting_power?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          proposal_id?: string | null
-          support?: string | null
-          voter?: never
-          voting_power?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "proposal_votes_proposal_id_fkey"
-            columns: ["proposal_id"]
-            isOneToOne: false
-            referencedRelation: "governance_proposals"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
       cleanup_device_access_audit: {
