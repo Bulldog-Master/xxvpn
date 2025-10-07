@@ -343,17 +343,16 @@
        "directSubtitle": "Sin protección VPN",
        "directDescription": "Ideal para juegos y aplicaciones sensibles a la latencia. Sin sobrecarga de protección.",
        "vpn": "Túnel VPN", 
-        "vpnSubtitle": "Protocolo VPN",
-        "vpnDescription": "Seguridad y velocidad equilibradas. Elusión DPI para transmisión y navegación.",
-        "mixnet": "Mixnet",
-        "mixnetSubtitle": "XX Network cMixx", 
-        "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
-        "directDesc": "Sin VPN - Más rápido",
-        "vpnDesc": "VPN - Equilibrado",
-        "mixnetDesc": "Mixnet - Más seguro"
-      }
-    }
-  },
+       "vpnSubtitle": "Protocolo VPN",
+       "vpnDescription": "Seguridad y velocidad equilibradas. Elusión DPI para transmisión y navegación.",
+       "mixnet": "Mixnet",
+       "mixnetSubtitle": "XX Network cMixx", 
+       "mixnetDescription": "Máximo anonimato con protección de metadatos. Perfecto para criptomonedas y mensajería.",
+       "directDesc": "Sin VPN - Más rápido",
+       "vpnDesc": "VPN - Equilibrado",
+       "mixnetDesc": "Mixnet - Más seguro"
+     }
+   },
   "subscription": {
     "required": "Subscription Required",
     "requiredDesc": "Start your free trial to connect to VPN servers",
