@@ -75,8 +75,8 @@ const AuthPage = () => {
       icon: Fingerprint,
       available: true,
       recommended: false,
-      tooltip: 'Most secure option using biometric authentication. Passkeys sync via your platform (Apple Keychain, Google Password Manager).',
-      recovery: 'Passkeys sync across devices via iCloud (Apple) or Google Password Manager. IMPORTANT: Set up a backup authentication method (email/magic link) before relying on passkeys alone.',
+      tooltip: 'Most secure option using biometric authentication. Passkeys sync via your platform (Apple Keychain, Google Password Manager). Only available for existing accounts - sign in only.',
+      recovery: 'Passkeys sync across devices via iCloud (Apple) or Google Password Manager. IMPORTANT: Set up a backup authentication method (email/magic link) from Security Settings after creating your account.',
     },
   ];
 
@@ -387,22 +387,19 @@ const AuthPage = () => {
                 <form onSubmit={handleSignUp} className="space-y-4">
                   {selectedMethod === 'passkey' ? (
                     <div className="space-y-4">
-                      <Alert>
-                        <Info className="h-4 w-4" />
-                        <AlertDescription>
-                          Create a passkey using your device's biometric authentication. Your passkey will sync across your devices.
-                        </AlertDescription>
-                      </Alert>
-                      <WebAuthnAuth 
-                        onAuthenticate={signInWithWebAuthn}
-                        isLoading={isLoading}
-                      />
                       <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
                         <AlertDescription>
-                          <strong>Important:</strong> After setting up your passkey, also register with Magic Link or Google as a backup recovery method!
+                          <strong>Passkeys cannot be used for signup.</strong> Please sign up with Magic Link or Google first, then add a passkey from your Security Settings after creating your account.
                         </AlertDescription>
                       </Alert>
+                      <Button
+                        type="button"
+                        onClick={() => setSelectedMethod('magic-link')}
+                        className="w-full"
+                      >
+                        Use Magic Link Instead
+                      </Button>
                     </div>
                   ) : selectedMethod === 'google' ? (
                     <Button
