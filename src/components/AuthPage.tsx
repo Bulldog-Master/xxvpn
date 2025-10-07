@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ const emailSchema = z.string().trim().email({ message: "Invalid email address" }
 const nameSchema = z.string().trim().max(100, { message: "Name must be less than 100 characters" }).optional();
 
 const AuthPage = () => {
-  const { signInWithMagicLink, signInWithGoogle, signInWithWebAuthn, resetPassword, loading } = useAuth();
+  const { user, signInWithMagicLink, signInWithGoogle, signInWithWebAuthn, resetPassword, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,6 +39,13 @@ const AuthPage = () => {
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+
+  // Redirect authenticated users to dashboard
+  useEffect(() => {
+    if (user && !loading) {
+      navigate('/', { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const handleClearBrowserData = () => {
     cleanupAuthState();
