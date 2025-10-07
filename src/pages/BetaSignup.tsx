@@ -64,6 +64,20 @@ export default function BetaSignup() {
     setIsSubmitting(true);
 
     try {
+      // Validate and check rate limit
+      const { error: validationError } = await supabase.rpc('validate_beta_signup', {
+        p_email: formData.email.toLowerCase().trim(),
+      });
+
+      if (validationError) {
+        toast({
+          title: 'Rate Limit Exceeded',
+          description: 'Too many signup attempts. Please try again later.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       const { error } = await supabase.from('beta_waitlist').insert({
         email: formData.email.toLowerCase().trim(),
         name: formData.name.trim(),

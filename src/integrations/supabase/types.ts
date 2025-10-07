@@ -107,6 +107,30 @@ export type Database = {
         }
         Relationships: []
       }
+      beta_signup_rate_limit: {
+        Row: {
+          email_hash: string
+          first_attempt: string | null
+          id: string
+          last_attempt: string | null
+          signup_count: number | null
+        }
+        Insert: {
+          email_hash: string
+          first_attempt?: string | null
+          id?: string
+          last_attempt?: string | null
+          signup_count?: number | null
+        }
+        Update: {
+          email_hash?: string
+          first_attempt?: string | null
+          id?: string
+          last_attempt?: string | null
+          signup_count?: number | null
+        }
+        Relationships: []
+      }
       beta_waitlist: {
         Row: {
           created_at: string
@@ -977,6 +1001,10 @@ export type Database = {
       sanitize_sensitive_data: {
         Args: { data: Json }
         Returns: Json
+      }
+      validate_beta_signup: {
+        Args: { p_email: string }
+        Returns: boolean
       }
       validate_device_ip_protection: {
         Args: Record<PropertyKey, never>
