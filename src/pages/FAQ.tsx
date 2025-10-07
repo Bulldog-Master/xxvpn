@@ -3,13 +3,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, Zap, Lock, HelpCircle, ArrowRight, ExternalLink } from 'lucide-react';
+import { Shield, Zap, Lock, HelpCircle, ArrowRight, ExternalLink, Key } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function FAQ() {
   const navigate = useNavigate();
 
   const faqs = [
+    {
+      category: 'Authentication & Account Recovery',
+      icon: Key,
+      questions: [
+        {
+          q: 'What authentication methods are available?',
+          a: 'We offer multiple methods: (1) Magic Link - secure email-based login with no password needed, (2) Google OAuth - sign in with your Google account, (3) Passkeys/WebAuthn - biometric authentication (fingerprint, face ID) for supported devices. Each has different recovery options.',
+        },
+        {
+          q: 'What happens if my device crashes or I lose access?',
+          a: 'Recovery depends on your authentication method: Magic Link & Google OAuth can be accessed from any device. Passkeys sync via your platform (Apple Keychain, Google Password Manager) - they\'re available on all your synced devices. CRITICAL: Always set up a backup authentication method (email/password) before relying solely on passkeys.',
+        },
+        {
+          q: 'How do I recover my account if I only use passkeys?',
+          a: 'If you only have passkeys: (1) Check other devices synced to the same account (iPhone, iPad, Mac for Apple; Android devices for Google), (2) Your passkeys are automatically backed up via iCloud Keychain or Google Password Manager. If you have no backup method and no synced devices, account recovery may not be possible - this is why we recommend setting up multiple authentication methods.',
+        },
+        {
+          q: 'What\'s the most secure authentication setup?',
+          a: 'Best practice: Use Magic Link or Google OAuth as your primary method, then add passkeys for convenience on your main device. This gives you both security and recovery options. Never rely on a single authentication method.',
+        },
+        {
+          q: 'Are passkeys safer than passwords?',
+          a: 'Yes! Passkeys use biometric authentication and are phishing-resistant. They can\'t be guessed, stolen, or reused. However, ensure you have a backup method in case you lose all synced devices.',
+        },
+      ],
+    },
     {
       category: 'Getting Started',
       icon: Zap,

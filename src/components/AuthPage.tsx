@@ -8,8 +8,10 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Globe, AlertCircle, CheckCircle, Shield } from 'lucide-react';
+import { Loader2, Mail, Globe, AlertCircle, CheckCircle, Shield, Info } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTranslation } from 'react-i18next';
 import TwoFactorVerification from './TwoFactorVerification';
 import { supabase } from '@/integrations/supabase/client';
@@ -26,6 +28,7 @@ const AuthPage = () => {
   const { signInWithMagicLink, signInWithGoogle, resetPassword, loading } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<AuthMethod>('magic-link');
@@ -51,6 +54,8 @@ const AuthPage = () => {
       icon: Mail,
       available: true,
       recommended: true,
+      tooltip: 'Secure email-based login. No password needed. Can be accessed from any device with email access.',
+      recovery: 'Access your email from any device to recover your account.',
     },
     {
       id: 'google' as const,
@@ -59,6 +64,8 @@ const AuthPage = () => {
       icon: Globe,
       available: true,
       recommended: false,
+      tooltip: 'Use your existing Google account. Syncs across all your Google-connected devices.',
+      recovery: 'Recover through Google account recovery. Access from any device logged into your Google account.',
     },
   ];
 
@@ -228,43 +235,69 @@ const AuthPage = () => {
 
         <CardContent className="space-y-6">
           {/* Auth Method Selector */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Authentication Method</Label>
-            <div className="grid gap-2">
-              {authMethods.map((method) => (
-                <button
-                  key={method.id}
-                  type="button"
-                  onClick={() => method.available && setSelectedMethod(method.id)}
-                  disabled={!method.available}
-                  className={`p-3 rounded-lg border-2 transition-all text-left ${
-                    selectedMethod === method.id
-                      ? 'border-primary bg-primary/5'
-                      : method.available
-                      ? 'border-border hover:border-primary/50 hover:bg-muted/50'
-                      : 'border-border/50 opacity-50 cursor-not-allowed'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <method.icon className="w-5 h-5 text-muted-foreground" />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-sm">{method.name}</span>
-                        {method.recommended && (
-                          <Badge variant="secondary" className="text-xs">
-                            Recommended
-                          </Badge>
-                        )}
+          <TooltipProvider>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-medium">Authentication Method</Label>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-auto p-1" onClick={() => navigate('/faq')}>
+                      <Info className="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs">Learn more about authentication methods and account recovery in our FAQ</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+              <div className="grid gap-2">
+                {authMethods.map((method) => (
+                  <Tooltip key={method.id}>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() => method.available && setSelectedMethod(method.id)}
+                        disabled={!method.available}
+                        className={`p-3 rounded-lg border-2 transition-all text-left ${
+                          selectedMethod === method.id
+                            ? 'border-primary bg-primary/5'
+                            : method.available
+                            ? 'border-border hover:border-primary/50 hover:bg-muted/50'
+                            : 'border-border/50 opacity-50 cursor-not-allowed'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <method.icon className="w-5 h-5 text-muted-foreground" />
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium text-sm">{method.name}</span>
+                              {method.recommended && (
+                                <Badge variant="secondary" className="text-xs">
+                                  Recommended
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {method.description}
+                            </p>
+                          </div>
+                          <Info className="w-4 h-4 text-muted-foreground/50" />
+                        </div>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="left" className="max-w-xs">
+                      <div className="space-y-2">
+                        <p className="font-medium">{method.tooltip}</p>
+                        <p className="text-xs text-muted-foreground">
+                          <strong>Recovery:</strong> {method.recovery}
+                        </p>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {method.description}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              ))}
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
             </div>
-          </div>
+          </TooltipProvider>
 
           {magicLinkSent ? (
             <Alert>
