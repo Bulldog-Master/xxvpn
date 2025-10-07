@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Shield, Activity, Server, Zap, RefreshCw, Lock } from 'lucide-react';
+import { Shield, Activity, Server, Zap, RefreshCw, Lock, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 import { useXXNetwork } from '@/hooks/useXXNetwork';
 import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -83,30 +83,78 @@ export const XXNetworkStatus = () => {
     ? Math.round((networkHealth.activeNodes / networkHealth.totalNodes) * 100)
     : 0;
 
+  const getStatusIcon = () => {
+    if (!networkHealth) return <Shield className="w-8 h-8 text-muted-foreground" />;
+    
+    switch (networkHealth.status) {
+      case 'healthy':
+        return <CheckCircle2 className="w-8 h-8 text-success animate-pulse" />;
+      case 'degraded':
+        return <AlertCircle className="w-8 h-8 text-warning animate-pulse" />;
+      case 'offline':
+        return <XCircle className="w-8 h-8 text-destructive" />;
+      default:
+        return <Shield className="w-8 h-8 text-muted-foreground" />;
+    }
+  };
+
   return (
-    <Card className="glass-effect">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield className={`w-5 h-5 ${getStatusColor()}`} />
-            <CardTitle>xx Network Status</CardTitle>
+    <Card className="glass-effect border-primary/20 overflow-hidden relative">
+      {/* Gradient overlay for visual appeal */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+      
+      <CardHeader className="relative">
+        {/* Prominent Status Display */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+              {getStatusIcon()}
+            </div>
+            <div>
+              <CardTitle className="text-2xl mb-1">xx Network</CardTitle>
+              <CardDescription className="text-base">
+                Quantum-resistant mixnet
+              </CardDescription>
+            </div>
           </div>
           {getStatusBadge()}
         </div>
-        <CardDescription>
-          Quantum-resistant decentralized mixnet
-        </CardDescription>
+
+        {/* Large Connection Status Banner */}
+        <div className={`p-4 rounded-lg border-2 transition-all ${
+          connected 
+            ? 'bg-success/10 border-success/30' 
+            : 'bg-muted/50 border-border'
+        }`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {connected ? (
+                <Zap className="w-5 h-5 text-success" />
+              ) : (
+                <Zap className="w-5 h-5 text-muted-foreground" />
+              )}
+              <div>
+                <div className="font-semibold text-lg">
+                  {connected ? 'Connected to cMixx' : 'Not Connected'}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {connected ? 'Secure quantum-resistant tunnel active' : 'Ready to connect'}
+                </div>
+              </div>
+            </div>
+            {connected && (
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                <span className="text-xs font-medium text-success">LIVE</span>
+              </div>
+            )}
+          </div>
+        </div>
       </CardHeader>
       
-      <CardContent className="space-y-4">
-        {/* Connection Status */}
+      <CardContent className="space-y-4 relative">
+        {/* Connection Controls */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Connection</span>
-            <span className={connected ? 'text-success' : 'text-muted-foreground'}>
-              {connected ? 'Connected' : 'Disconnected'}
-            </span>
-          </div>
           
           {!client && (
             <Dialog open={showInitDialog} onOpenChange={setShowInitDialog}>
@@ -194,46 +242,51 @@ export const XXNetworkStatus = () => {
         {/* Network Health Metrics */}
         {networkHealth && (
           <>
+            {/* Enhanced Node Uptime Display */}
             <div className="space-y-3 pt-2 border-t">
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Server className="w-4 h-4 text-muted-foreground" />
-                  <span>Node Uptime</span>
+                  <Server className="w-5 h-5 text-primary" />
+                  <span className="font-medium">Network Node Uptime</span>
                 </div>
-                <span className="font-medium">{nodeUptime}%</span>
+                <span className="text-2xl font-bold text-primary">{nodeUptime}%</span>
               </div>
-              <Progress value={nodeUptime} className="h-2" />
+              <div className="relative">
+                <Progress value={nodeUptime} className="h-3" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full pointer-events-none" style={{ width: `${nodeUptime}%` }} />
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <div className="text-muted-foreground mb-1">Total Nodes</div>
-                <div className="font-semibold">{networkHealth.totalNodes}</div>
+            {/* Metrics Grid - Enhanced */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
+                <div className="text-sm text-muted-foreground mb-2">Total Nodes</div>
+                <div className="text-2xl font-bold">{networkHealth.totalNodes}</div>
               </div>
-              <div>
-                <div className="text-muted-foreground mb-1">Active Nodes</div>
-                <div className="font-semibold text-success">{networkHealth.activeNodes}</div>
+              <div className="p-4 rounded-lg bg-success/10 border border-success/30 hover:border-success/50 transition-colors">
+                <div className="text-sm text-muted-foreground mb-2">Active Nodes</div>
+                <div className="text-2xl font-bold text-success">{networkHealth.activeNodes}</div>
               </div>
-              <div>
-                <div className="text-muted-foreground mb-1">Avg Latency</div>
-                <div className="font-semibold">{networkHealth.averageLatency}ms</div>
+              <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
+                <div className="text-sm text-muted-foreground mb-2">Avg Latency</div>
+                <div className="text-2xl font-bold">{networkHealth.averageLatency}<span className="text-sm font-normal">ms</span></div>
               </div>
-              <div>
-                <div className="text-muted-foreground mb-1">Last Round</div>
-                <div className="font-semibold text-xs">
+              <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
+                <div className="text-sm text-muted-foreground mb-2">Last Round</div>
+                <div className="text-sm font-semibold">
                   {new Date(networkHealth.lastRoundCompleted).toLocaleTimeString()}
                 </div>
               </div>
             </div>
 
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              className="w-full"
+              className="w-full hover:bg-primary/10 hover:border-primary/50"
               onClick={refreshHealth}
             >
-              <RefreshCw className="w-3 h-3 mr-2" />
-              Refresh Health
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh Network Health
             </Button>
           </>
         )}
@@ -245,15 +298,26 @@ export const XXNetworkStatus = () => {
           </div>
         )}
 
-        {/* Info Badge */}
-        <div className="bg-muted/50 rounded-md p-3 space-y-1">
-          <div className="flex items-center gap-2 text-xs font-medium">
-            <Activity className="w-3 h-3" />
-            <span>cMixx Technology</span>
+        {/* Enhanced Info Badge */}
+        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 border border-primary/20">
+          <div className="flex items-center gap-2 mb-2">
+            <Activity className="w-4 h-4 text-primary" />
+            <span className="font-semibold text-sm">cMixx Protocol Active</span>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Quantum-resistant encryption • Metadata shredding • P2P mixnet routing
-          </p>
+          <div className="space-y-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-success" />
+              <span>Quantum-resistant encryption</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-success" />
+              <span>Metadata shredding protection</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-success" />
+              <span>Decentralized mixnet routing</span>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>
