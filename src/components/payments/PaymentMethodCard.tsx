@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ApplePayButton from './ApplePayButton';
 import GooglePayButton from './GooglePayButton';
-import { CreditCard, Smartphone } from 'lucide-react';
+import { CardPaymentDialog } from './CardPaymentDialog';
+import { PayPalPaymentDialog } from './PayPalPaymentDialog';
+import { CryptoPaymentModal } from '../subscriptions/CryptoPaymentModal';
+import { CreditCard } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface PaymentMethodCardProps {
@@ -16,6 +20,9 @@ interface PaymentMethodCardProps {
 
 const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
   const { t } = useTranslation();
+  const [cardDialogOpen, setCardDialogOpen] = useState(false);
+  const [paypalDialogOpen, setPaypalDialogOpen] = useState(false);
+  const [cryptoModalOpen, setCryptoModalOpen] = useState(false);
 
   const handlePaymentSuccess = (result: any) => {
     console.log('Payment successful:', result);
@@ -89,14 +96,24 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
 
           {/* Traditional Payment Methods */}
           <div className="space-y-3">
-            <Button variant="outline" className="w-full" size="lg">
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              size="lg"
+              onClick={() => setCardDialogOpen(true)}
+            >
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
                 Pay with Card
               </div>
             </Button>
 
-            <Button variant="outline" className="w-full" size="lg">
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              size="lg"
+              onClick={() => setPaypalDialogOpen(true)}
+            >
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
                   P
@@ -105,7 +122,12 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
               </div>
             </Button>
 
-            <Button variant="outline" className="w-full" size="lg">
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              size="lg"
+              onClick={() => setCryptoModalOpen(true)}
+            >
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 text-primary">
                   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -124,6 +146,33 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
           <p>Cancel anytime during trial • No charge until trial ends</p>
         </div>
       </CardContent>
+
+      {/* Payment Dialogs */}
+      <CardPaymentDialog
+        open={cardDialogOpen}
+        onOpenChange={setCardDialogOpen}
+        amount={selectedPlan.price}
+        currency={selectedPlan.currency}
+        planName={selectedPlan.name}
+      />
+
+      <PayPalPaymentDialog
+        open={paypalDialogOpen}
+        onOpenChange={setPaypalDialogOpen}
+        amount={selectedPlan.price}
+        currency={selectedPlan.currency}
+        planName={selectedPlan.name}
+      />
+
+      <CryptoPaymentModal
+        open={cryptoModalOpen}
+        onOpenChange={setCryptoModalOpen}
+        plan={{
+          name: selectedPlan.name,
+          price: selectedPlan.price / 100,
+          interval: selectedPlan.duration
+        }}
+      />
     </Card>
   );
 };

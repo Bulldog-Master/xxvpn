@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuditLogDashboard } from '@/components/admin/AuditLogDashboard';
 import { BetaMonitoring } from '@/components/admin/BetaMonitoring';
+import { UserManagement } from '@/components/admin/UserManagement';
 import { useAdminCheck } from '@/hooks/useAdminCheck';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -50,13 +51,18 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="beta" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="beta">Beta Monitoring</TabsTrigger>
+            <TabsTrigger value="users">User Management</TabsTrigger>
             <TabsTrigger value="audit">Audit Logs</TabsTrigger>
           </TabsList>
           
           <TabsContent value="beta" className="space-y-4">
             <BetaMonitoring />
+          </TabsContent>
+
+          <TabsContent value="users" className="space-y-4">
+            <UserManagement />
           </TabsContent>
           
           <TabsContent value="audit" className="space-y-4">
