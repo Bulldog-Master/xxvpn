@@ -82,10 +82,23 @@ export default function BetaSignup() {
           throw error;
         }
       } else {
+        // Send confirmation email
+        try {
+          await supabase.functions.invoke('send-beta-confirmation', {
+            body: {
+              name: formData.name.trim(),
+              email: formData.email.toLowerCase().trim(),
+            },
+          });
+        } catch (emailError) {
+          console.error('Failed to send confirmation email:', emailError);
+          // Don't block signup if email fails
+        }
+
         setIsSuccess(true);
         toast({
           title: 'Welcome to the Beta!',
-          description: "You're on the list. We'll email you when it's your turn.",
+          description: "You're on the list. Check your email for confirmation!",
         });
       }
     } catch (error) {
