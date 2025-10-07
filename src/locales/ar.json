@@ -407,7 +407,10 @@
     "signInRequired": "سجل الدخول للوصول إلى ميزات VPN المميزة",
     "signInToContinue": "سجل الدخول للمتابعة",
     "mode": "وضع",
-    "vpnMode": "وضع VPN"
+    "vpnMode": "وضع VPN",
+    "ultraFastMode": "وضع VPN فائق السرعة",
+    "secureMode": "وضع VPN الآمن",
+    "ultraSecureMode": "وضع VPN فائق الأمان"
   },
   "vpnModes": {
     "ultraFast": {

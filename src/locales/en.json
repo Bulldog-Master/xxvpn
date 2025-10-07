@@ -437,7 +437,10 @@
     "signInRequired": "Sign in to access premium VPN features",
     "signInToContinue": "Sign In to Continue",
     "mode": "Mode",
-    "vpnMode": "VPN Mode"
+    "vpnMode": "VPN Mode",
+    "ultraFastMode": "Ultra-Fast VPN Mode",
+    "secureMode": "Secure VPN Mode",
+    "ultraSecureMode": "Ultra-Secure VPN Mode"
   },
   "vpnModes": {
     "ultraFast": {

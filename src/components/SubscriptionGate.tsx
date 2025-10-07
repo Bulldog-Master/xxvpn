@@ -41,6 +41,19 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
     }
   };
 
+  const getFeatureName = () => {
+    switch (feature.toLowerCase()) {
+      case 'ultra-fast':
+        return t('subscription.ultraFastMode');
+      case 'secure':
+        return t('subscription.secureMode');
+      case 'ultra-secure':
+        return t('subscription.ultraSecureMode');
+      default:
+        return `${feature} ${t('subscription.vpnMode')}`;
+    }
+  };
+
   const formatDate = (dateString: string | null) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleDateString();
@@ -52,7 +65,7 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             {getFeatureIcon()}
-            <CardTitle className="text-lg">{feature} {t('subscription.vpnMode')}</CardTitle>
+            <CardTitle className="text-lg">{getFeatureName()}</CardTitle>
           </div>
           <p className="text-muted-foreground">{t('subscription.signInRequired')}</p>
         </CardHeader>
@@ -71,7 +84,7 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {getFeatureIcon()}
-            <span className="font-medium">{feature} {t('subscription.mode')}</span>
+            <span className="font-medium">{getFeatureName()}</span>
             <Badge variant="secondary" className="bg-green-100 text-green-800">
               {is_trial ? t('subscription.trialActive') : t('subscription.subscribed')}
             </Badge>
@@ -92,7 +105,7 @@ const SubscriptionGate = ({ children, requiredTier, feature, onUpgrade }: Subscr
       <CardHeader className="text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           {getFeatureIcon()}
-          <CardTitle className="text-lg">{feature} {t('subscription.vpnMode')}</CardTitle>
+          <CardTitle className="text-lg">{getFeatureName()}</CardTitle>
           <Lock className="w-4 h-4 text-muted-foreground" />
         </div>
         <p className="text-muted-foreground">
