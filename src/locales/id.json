@@ -53,5 +53,132 @@
       "fullAccess": "Akses penuh ke semua fitur",
       "upgradeDescription": "Tingkatkan untuk akses tak terbatas"
     }
+  },
+  "subscription": {
+    "required": "Langganan Diperlukan",
+    "requiredDesc": "Mulai uji coba gratis untuk terhubung ke server VPN",
+    "noActive": "Tidak Ada Langganan Aktif",
+    "noActiveDesc": "Mulai uji coba gratis 7 hari untuk membuka semua mode VPN dan fitur premium",
+    "viewPlans": "Lihat Paket",
+    "upgradePlan": "Tingkatkan Paket",
+    "freeTrialOffer": "Mulai uji coba gratis 7 hari untuk membuka fitur ini",
+    "trialActive": "Uji Coba Aktif",
+    "subscribed": "Berlangganan",
+    "trialEnds": "Uji coba berakhir",
+    "subscriptionEnds": "Langganan berakhir",
+    "freeTrialActive": "Uji Coba Gratis Aktif",
+    "subscriptionActive": "Langganan Aktif",
+    "trial": "Uji Coba",
+    "subscription": "Langganan",
+    "endsOn": "berakhir pada",
+    "daysRemaining": "{{count}} hari tersisa",
+    "daysRemaining_plural": "{{count}} hari tersisa",
+    "expiresToday": "Berakhir hari ini",
+    "trialEndingSoon": "Uji coba Anda akan segera berakhir. Berlangganan untuk terus menikmati semua fitur.",
+    "subscribeNow": "Berlangganan Sekarang",
+    "manageSubscription": "Kelola Langganan",
+    "loadingStatus": "Memuat status langganan...",
+    "tiers": {
+      "personal": "Personal",
+      "personalPro": "Personal Pro",
+      "personalPremium": "Personal Premium",
+      "business": "Bisnis",
+      "businessPlus": "Bisnis+",
+      "enterprise": "Enterprise"
+    },
+    "requiresTier": "Memerlukan paket {{tier}} atau lebih tinggi",
+    "currentPlan": "Paket saat ini",
+    "signInRequired": "Masuk untuk mengakses fitur VPN premium",
+    "signInToContinue": "Masuk untuk Melanjutkan",
+    "mode": "Mode",
+    "vpnMode": "Mode VPN"
+  },
+  "vpnModes": {
+    "ultraFast": {
+      "directConnection": "Koneksi langsung tanpa enkripsi VPN. Kecepatan maksimum untuk gaming dan streaming.",
+      "comingSoon": "Enkripsi VPN tradisional dengan WireGuard/OpenVPN. Kecepatan cepat dengan privasi dasar. (Segera hadir)",
+      "quantumResistant": "Mixnet P2P tahan kuantum menggunakan protokol cMixx jaringan xx. Menghancurkan metadata melalui 850+ node terdesentralisasi. Latensi: ~2-3s."
+    }
+  },
+  "tour": "Tur",
+  "xxCoin": {
+    "wallet": {
+      "title": "Dompet XX Network",
+      "description": "Hubungkan dompet tahan kuantum Anda untuk membayar dengan token XX",
+      "previouslyConnected": "Dompet yang sebelumnya terhubung",
+      "chooseWallet": "Pilih dompet Anda:",
+      "xxWallet": "Dompet xx Network",
+      "recommended": "Direkomendasikan",
+      "postQuantum": "Keamanan pasca-kuantum • Enkripsi masa depan",
+      "metamask": "MetaMask",
+      "standardWallet": "Dompet standar kompatibel EVM",
+      "noWalletDetected": "Tidak ada dompet terdeteksi",
+      "getXXWallet": "Dapatkan dompet xx",
+      "getMetaMask": "Dapatkan MetaMask",
+      "connectedVia": "Terhubung melalui",
+      "quantumSecure": "Keamanan Kuantum",
+      "balance": "Saldo",
+      "subscribeWithTokens": "Berlangganan dengan Token XX",
+      "monthsCount": "{{count}} Bulan",
+      "monthsCount_plural": "{{count}} Bulan"
+    },
+    "balance": {
+      "title": "Saldo XX Coin",
+      "description": "Digunakan untuk membayar bandwidth dan layanan xx Network",
+      "coins": "XX Coins",
+      "thisMonthEarned": "Diperoleh Bulan Ini",
+      "thisMonthSpent": "Dibelanjakan Bulan Ini",
+      "networkUsage": "Penggunaan Jaringan Bulan Ini",
+      "bandwidthPaid": "Bandwidth dibayar dengan XX coins • ~0.02 XX per GB"
+    },
+    "earning": {
+      "title": "Cara Mendapatkan XX Coins",
+      "description": "Berbagai cara untuk mendapatkan XX coins untuk penggunaan VPN gratis",
+      "referrals": {
+        "title": "Referensi",
+        "amount": "+5 XX per pengguna",
+        "description": "Undang teman untuk mendapatkan XX coins"
+      },
+      "dailyLogin": {
+        "title": "Login Harian",
+        "amount": "+1 XX",
+        "description": "Login setiap hari untuk mendapatkan hadiah"
+      },
+      "staking": {
+        "title": "Hadiah Staking",
+        "amount": "+10% APY",
+        "description": "Staking token DAO untuk mendapatkan XX"
+      }
+    },
+    "transactions": {
+      "title": "Aktivitas Terkini",
+      "description": "Riwayat transaksi XX coin Anda",
+      "viewAll": "Lihat Semua Transaksi",
+      "earn": "Diperoleh",
+      "spend": "Dibelanjakan",
+      "referralBonus": "Bonus referensi",
+      "vpnBandwidth": "Bandwidth VPN ({{amount}}GB)",
+      "monthlyStaking": "Hadiah staking bulanan",
+      "premiumFeature": "Akses fitur premium",
+      "dailyLoginBonus": "Bonus login harian"
+    },
+    "toast": {
+      "walletDisconnected": "Dompet Terputus",
+      "reconnectWallet": "Silakan hubungkan kembali dompet Anda",
+      "metamaskNotFound": "MetaMask Tidak Ditemukan",
+      "installMetamask": "Silakan instal MetaMask untuk melanjutkan",
+      "xxWalletNotFound": "Dompet xx Tidak Ditemukan",
+      "installXXWallet": "Silakan instal dompet jaringan xx untuk melanjutkan",
+      "walletConnected": "Dompet Terhubung",
+      "connectionFailed": "Koneksi Gagal",
+      "balanceUpdated": "Saldo Diperbarui",
+      "currentBalance": "Saldo saat ini: {{balance}} XX",
+      "refreshFailed": "Penyegaran Gagal",
+      "walletNotConnected": "Dompet Tidak Terhubung",
+      "connectWalletFirst": "Silakan hubungkan dompet Anda terlebih dahulu",
+      "subscriptionSuccessful": "Langganan Berhasil",
+      "transaction": "Transaksi: {{hash}}",
+      "subscriptionFailed": "Langganan Gagal"
+    }
   }
 }

@@ -394,10 +394,90 @@
   },
   "vpnModes": {
     "ultraFast": {
-      "directConnection": "Direct connection with no VPN encryption. Maximum speed for gaming and streaming.",
-      "comingSoon": "Traditional VPN encryption with WireGuard/OpenVPN. Fast speeds with basic privacy. (Coming soon)",
-      "quantumResistant": "Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s."
+      "directConnection": "Conexión directa sin encriptación VPN. Velocidad máxima para juegos y transmisión.",
+      "comingSoon": "Encriptación VPN tradicional con WireGuard/OpenVPN. Velocidades rápidas con privacidad básica. (Próximamente)",
+      "quantumResistant": "Mixnet P2P resistente a cuánticos usando el protocolo cMixx de xx network. Destruye metadatos a través de más de 850 nodos descentralizados. Latencia: ~2-3s."
     }
   },
-  "tour": "Tour"
+  "tour": "Tour",
+  "xxCoin": {
+    "wallet": {
+      "title": "Billetera XX Network",
+      "description": "Conecta tu billetera resistente a cuánticos para pagar con tokens XX",
+      "previouslyConnected": "Billetera previamente conectada",
+      "chooseWallet": "Elige tu billetera:",
+      "xxWallet": "Billetera xx Network",
+      "recommended": "Recomendada",
+      "postQuantum": "Seguridad post-cuántica • Encriptación a prueba de futuro",
+      "metamask": "MetaMask",
+      "standardWallet": "Billetera estándar compatible con EVM",
+      "noWalletDetected": "No se detectó billetera",
+      "getXXWallet": "Obtener billetera xx",
+      "getMetaMask": "Obtener MetaMask",
+      "connectedVia": "Conectado vía",
+      "quantumSecure": "Seguridad Cuántica",
+      "balance": "Saldo",
+      "subscribeWithTokens": "Suscribirse con Tokens XX",
+      "monthsCount": "{{count}} Mes",
+      "monthsCount_plural": "{{count}} Meses"
+    },
+    "balance": {
+      "title": "Saldo XX Coin",
+      "description": "Usado para pagar por ancho de banda y servicios de xx Network",
+      "coins": "XX Coins",
+      "thisMonthEarned": "Ganado Este Mes",
+      "thisMonthSpent": "Gastado Este Mes",
+      "networkUsage": "Uso de Red Este Mes",
+      "bandwidthPaid": "Ancho de banda pagado con XX coins • ~0.02 XX por GB"
+    },
+    "earning": {
+      "title": "Cómo Ganar XX Coins",
+      "description": "Múltiples formas de ganar XX coins para uso gratuito de VPN",
+      "referrals": {
+        "title": "Referencias",
+        "amount": "+5 XX por usuario",
+        "description": "Invita amigos para ganar XX coins"
+      },
+      "dailyLogin": {
+        "title": "Inicio de Sesión Diario",
+        "amount": "+1 XX",
+        "description": "Inicia sesión diariamente para ganar recompensas"
+      },
+      "staking": {
+        "title": "Recompensas de Staking",
+        "amount": "+10% APY",
+        "description": "Haz staking de tokens DAO para ganar XX"
+      }
+    },
+    "transactions": {
+      "title": "Actividad Reciente",
+      "description": "Tu historial de transacciones de XX coin",
+      "viewAll": "Ver Todas las Transacciones",
+      "earn": "Ganado",
+      "spend": "Gastado",
+      "referralBonus": "Bono por referencia",
+      "vpnBandwidth": "Ancho de banda VPN ({{amount}}GB)",
+      "monthlyStaking": "Recompensa mensual de staking",
+      "premiumFeature": "Acceso a función premium",
+      "dailyLoginBonus": "Bono de inicio de sesión diario"
+    },
+    "toast": {
+      "walletDisconnected": "Billetera Desconectada",
+      "reconnectWallet": "Por favor reconecta tu billetera",
+      "metamaskNotFound": "MetaMask No Encontrado",
+      "installMetamask": "Por favor instala MetaMask para continuar",
+      "xxWalletNotFound": "Billetera xx No Encontrada",
+      "installXXWallet": "Por favor instala la billetera xx network para continuar",
+      "walletConnected": "Billetera Conectada",
+      "connectionFailed": "Conexión Fallida",
+      "balanceUpdated": "Saldo Actualizado",
+      "currentBalance": "Saldo actual: {{balance}} XX",
+      "refreshFailed": "Actualización Fallida",
+      "walletNotConnected": "Billetera No Conectada",
+      "connectWalletFirst": "Por favor conecta tu billetera primero",
+      "subscriptionSuccessful": "Suscripción Exitosa",
+      "transaction": "Transacción: {{hash}}",
+      "subscriptionFailed": "Suscripción Fallida"
+    }
+  }
 }

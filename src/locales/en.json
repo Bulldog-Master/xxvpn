@@ -446,5 +446,85 @@
       "quantumResistant": "Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s."
     }
   },
-  "tour": "Tour"
+  "tour": "Tour",
+  "xxCoin": {
+    "wallet": {
+      "title": "XX Network Wallet",
+      "description": "Connect your quantum-resistant wallet to pay with XX tokens",
+      "previouslyConnected": "Previously connected wallet",
+      "chooseWallet": "Choose your wallet:",
+      "xxWallet": "xx Network Wallet",
+      "recommended": "Recommended",
+      "postQuantum": "Post-quantum secure • Future-proof encryption",
+      "metamask": "MetaMask",
+      "standardWallet": "Standard EVM-compatible wallet",
+      "noWalletDetected": "No wallet detected",
+      "getXXWallet": "Get xx Wallet",
+      "getMetaMask": "Get MetaMask",
+      "connectedVia": "Connected via",
+      "quantumSecure": "Quantum-Secure",
+      "balance": "Balance",
+      "subscribeWithTokens": "Subscribe with XX Tokens",
+      "monthsCount": "{{count}} Month",
+      "monthsCount_plural": "{{count}} Months"
+    },
+    "balance": {
+      "title": "XX Coin Balance",
+      "description": "Used to pay for xx Network bandwidth and services",
+      "coins": "XX Coins",
+      "thisMonthEarned": "This Month Earned",
+      "thisMonthSpent": "This Month Spent",
+      "networkUsage": "Network Usage This Month",
+      "bandwidthPaid": "Bandwidth paid with XX coins • ~0.02 XX per GB"
+    },
+    "earning": {
+      "title": "How to Earn XX Coins",
+      "description": "Multiple ways to earn XX coins for free VPN usage",
+      "referrals": {
+        "title": "Referrals",
+        "amount": "+5 XX per user",
+        "description": "Invite friends to earn XX coins"
+      },
+      "dailyLogin": {
+        "title": "Daily Login",
+        "amount": "+1 XX",
+        "description": "Log in daily to earn rewards"
+      },
+      "staking": {
+        "title": "Staking Rewards",
+        "amount": "+10% APY",
+        "description": "Stake DAO tokens to earn XX"
+      }
+    },
+    "transactions": {
+      "title": "Recent Activity",
+      "description": "Your XX coin transaction history",
+      "viewAll": "View All Transactions",
+      "earn": "Earned",
+      "spend": "Spent",
+      "referralBonus": "Referral bonus",
+      "vpnBandwidth": "VPN bandwidth ({{amount}}GB)",
+      "monthlyStaking": "Monthly staking reward",
+      "premiumFeature": "Premium feature access",
+      "dailyLoginBonus": "Daily login bonus"
+    },
+    "toast": {
+      "walletDisconnected": "Wallet Disconnected",
+      "reconnectWallet": "Please reconnect your wallet",
+      "metamaskNotFound": "MetaMask Not Found",
+      "installMetamask": "Please install MetaMask to continue",
+      "xxWalletNotFound": "xx Wallet Not Found",
+      "installXXWallet": "Please install xx network wallet to continue",
+      "walletConnected": "Wallet Connected",
+      "connectionFailed": "Connection Failed",
+      "balanceUpdated": "Balance Updated",
+      "currentBalance": "Current balance: {{balance}} XX",
+      "refreshFailed": "Refresh Failed",
+      "walletNotConnected": "Wallet Not Connected",
+      "connectWalletFirst": "Please connect your wallet first",
+      "subscriptionSuccessful": "Subscription Successful",
+      "transaction": "Transaction: {{hash}}",
+      "subscriptionFailed": "Subscription Failed"
+    }
+  }
 }

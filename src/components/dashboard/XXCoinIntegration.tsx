@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,6 +24,7 @@ import { useWalletProfile } from '@/hooks/useWalletProfile';
 import { trackWalletConnection, trackPayment } from '@/utils/analytics';
 
 export const XXCoinIntegration = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { savedWalletAddress, updateWalletAddress } = useWalletProfile();
   const [walletService] = useState(() => new XXWalletService());
@@ -52,21 +54,21 @@ export const XXCoinIntegration = () => {
   const earningMethods = [
     { 
       icon: Users, 
-      title: 'Referrals', 
-      amount: '+5 XX per user',
-      description: 'Invite friends to earn XX coins'
+      title: t('xxCoin.earning.referrals.title'),
+      amount: t('xxCoin.earning.referrals.amount'),
+      description: t('xxCoin.earning.referrals.description')
     },
     { 
       icon: Gift, 
-      title: 'Daily Login', 
-      amount: '+1 XX',
-      description: 'Log in daily to earn rewards'
+      title: t('xxCoin.earning.dailyLogin.title'),
+      amount: t('xxCoin.earning.dailyLogin.amount'),
+      description: t('xxCoin.earning.dailyLogin.description')
     },
     { 
       icon: Shield, 
-      title: 'Staking Rewards', 
-      amount: '+10% APY',
-      description: 'Stake DAO tokens to earn XX'
+      title: t('xxCoin.earning.staking.title'),
+      amount: t('xxCoin.earning.staking.amount'),
+      description: t('xxCoin.earning.staking.description')
     },
   ];
 
@@ -106,8 +108,8 @@ export const XXCoinIntegration = () => {
     if (accounts.length === 0) {
       setWalletState(walletService.disconnect());
       toast({
-        title: "Wallet Disconnected",
-        description: "Please reconnect your wallet",
+        title: t('xxCoin.toast.walletDisconnected'),
+        description: t('xxCoin.toast.reconnectWallet'),
       });
     }
   };
@@ -119,8 +121,8 @@ export const XXCoinIntegration = () => {
   const handleConnect = async (walletType: WalletType) => {
     if (walletType === 'metamask' && !walletService.isMetaMaskInstalled()) {
       toast({
-        title: "MetaMask Not Found",
-        description: "Please install MetaMask to continue",
+        title: t('xxCoin.toast.metamaskNotFound'),
+        description: t('xxCoin.toast.installMetamask'),
         variant: "destructive",
       });
       window.open('https://metamask.io/download/', '_blank');
@@ -129,8 +131,8 @@ export const XXCoinIntegration = () => {
 
     if (walletType === 'xx-wallet' && !walletService.isXXWalletInstalled()) {
       toast({
-        title: "xx Wallet Not Found",
-        description: "Please install xx network wallet to continue",
+        title: t('xxCoin.toast.xxWalletNotFound'),
+        description: t('xxCoin.toast.installXXWallet'),
         variant: "destructive",
       });
       window.open('https://wallet.xx.network/', '_blank');
@@ -162,15 +164,15 @@ export const XXCoinIntegration = () => {
       }
       
       toast({
-        title: "Wallet Connected",
-        description: `Connected via ${walletType === 'xx-wallet' ? 'xx Wallet' : 'MetaMask'}`,
+        title: t('xxCoin.toast.walletConnected'),
+        description: `${t('xxCoin.wallet.connectedVia')} ${walletType === 'xx-wallet' ? t('xxCoin.wallet.xxWallet') : t('xxCoin.wallet.metamask')}`,
       });
     } catch (error: any) {
       // Track failure
       trackWalletConnection.failure(walletType, error.message);
       
       toast({
-        title: "Connection Failed",
+        title: t('xxCoin.toast.connectionFailed'),
         description: error.message,
         variant: "destructive",
       });
@@ -188,12 +190,12 @@ export const XXCoinIntegration = () => {
       setWalletState(prev => ({ ...prev, balance }));
       
       toast({
-        title: "Balance Updated",
-        description: `Current balance: ${balance} XX`,
+        title: t('xxCoin.toast.balanceUpdated'),
+        description: t('xxCoin.toast.currentBalance', { balance }),
       });
     } catch (error: any) {
       toast({
-        title: "Refresh Failed",
+        title: t('xxCoin.toast.refreshFailed'),
         description: error.message,
         variant: "destructive",
       });
@@ -205,8 +207,8 @@ export const XXCoinIntegration = () => {
   const handleSubscribe = async (months: number) => {
     if (!walletState.address) {
       toast({
-        title: "Wallet Not Connected",
-        description: "Please connect your wallet first",
+        title: t('xxCoin.toast.walletNotConnected'),
+        description: t('xxCoin.toast.connectWalletFirst'),
         variant: "destructive",
       });
       return;
@@ -225,15 +227,15 @@ export const XXCoinIntegration = () => {
       trackPayment.success(months, amount, txHash);
       
       toast({
-        title: "Subscription Successful",
-        description: `Transaction: ${txHash.slice(0, 10)}...`,
+        title: t('xxCoin.toast.subscriptionSuccessful'),
+        description: t('xxCoin.toast.transaction', { hash: `${txHash.slice(0, 10)}...` }),
       });
     } catch (error: any) {
       // Track failure
       trackPayment.failure(months, error.message);
       
       toast({
-        title: "Subscription Failed",
+        title: t('xxCoin.toast.subscriptionFailed'),
         description: error.message,
         variant: "destructive",
       });
@@ -249,16 +251,16 @@ export const XXCoinIntegration = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wallet className="w-6 h-6 text-primary" />
-            XX Network Wallet
+            {t('xxCoin.wallet.title')}
           </CardTitle>
           <CardDescription>
-            Connect your quantum-resistant wallet to pay with XX tokens
+            {t('xxCoin.wallet.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {savedWalletAddress && !walletState.connected && (
             <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg">
-              <p className="text-sm text-muted-foreground mb-1">Previously connected wallet</p>
+              <p className="text-sm text-muted-foreground mb-1">{t('xxCoin.wallet.previouslyConnected')}</p>
               <p className="font-mono text-xs">
                 {`${savedWalletAddress.slice(0, 6)}...${savedWalletAddress.slice(-4)}`}
               </p>
@@ -267,7 +269,7 @@ export const XXCoinIntegration = () => {
           
           {!walletState.connected ? (
             <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">Choose your wallet:</p>
+              <p className="text-sm text-muted-foreground">{t('xxCoin.wallet.chooseWallet')}</p>
               <div className="grid gap-2">
                 {availableWallets.includes('xx-wallet') && (
                   <Button 
@@ -280,11 +282,11 @@ export const XXCoinIntegration = () => {
                       <Shield className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
                       <div className="flex-1 text-left">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium">xx Network Wallet</span>
-                          <Badge variant="secondary" className="text-xs">Recommended</Badge>
+                          <span className="font-medium">{t('xxCoin.wallet.xxWallet')}</span>
+                          <Badge variant="secondary" className="text-xs">{t('xxCoin.wallet.recommended')}</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground mt-1">
-                          Post-quantum secure • Future-proof encryption
+                          {t('xxCoin.wallet.postQuantum')}
                         </p>
                       </div>
                     </div>
@@ -300,9 +302,9 @@ export const XXCoinIntegration = () => {
                     <div className="flex items-start gap-3 w-full">
                       <Wallet className="h-5 w-5 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 text-left">
-                        <span className="font-medium">MetaMask</span>
+                        <span className="font-medium">{t('xxCoin.wallet.metamask')}</span>
                         <p className="text-xs text-muted-foreground mt-1">
-                          Standard EVM-compatible wallet
+                          {t('xxCoin.wallet.standardWallet')}
                         </p>
                       </div>
                     </div>
@@ -310,14 +312,14 @@ export const XXCoinIntegration = () => {
                 )}
                 {availableWallets.length === 0 && (
                   <div className="text-center py-4 space-y-2">
-                    <p className="text-sm text-muted-foreground">No wallet detected</p>
+                    <p className="text-sm text-muted-foreground">{t('xxCoin.wallet.noWalletDetected')}</p>
                     <div className="flex gap-2 justify-center">
                       <Button 
                         variant="outline" 
                         size="sm"
                         onClick={() => window.open('https://wallet.xx.network/', '_blank')}
                       >
-                        Get xx Wallet
+                        {t('xxCoin.wallet.getXXWallet')}
                         <ExternalLink className="h-3 w-3 ml-1" />
                       </Button>
                       <Button 
@@ -325,7 +327,7 @@ export const XXCoinIntegration = () => {
                         size="sm"
                         onClick={() => window.open('https://metamask.io/download/', '_blank')}
                       >
-                        Get MetaMask
+                        {t('xxCoin.wallet.getMetaMask')}
                         <ExternalLink className="h-3 w-3 ml-1" />
                       </Button>
                     </div>
@@ -337,21 +339,21 @@ export const XXCoinIntegration = () => {
             <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <p className="text-sm text-muted-foreground">Connected via</p>
+                  <p className="text-sm text-muted-foreground">{t('xxCoin.wallet.connectedVia')}</p>
                   <Badge variant="outline" className="gap-1">
                     {walletState.walletType === 'xx-wallet' ? (
                       <>
                         <Shield className="h-3 w-3" />
-                        xx Wallet
+                        {t('xxCoin.wallet.xxWallet')}
                       </>
                     ) : (
-                      'MetaMask'
+                      t('xxCoin.wallet.metamask')
                     )}
                   </Badge>
                   {walletState.walletType === 'xx-wallet' && (
                     <Badge variant="secondary" className="text-xs gap-1">
                       <Zap className="h-3 w-3" />
-                      Quantum-Secure
+                      {t('xxCoin.wallet.quantumSecure')}
                     </Badge>
                   )}
                 </div>
@@ -367,7 +369,7 @@ export const XXCoinIntegration = () => {
 
           <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
             <div>
-              <p className="text-sm text-muted-foreground">Balance</p>
+              <p className="text-sm text-muted-foreground">{t('xxCoin.wallet.balance')}</p>
               <p className="text-2xl font-bold">{walletState.balance || "0.00"} XX</p>
             </div>
             <Shield className="h-8 w-8 text-primary" />
@@ -375,7 +377,7 @@ export const XXCoinIntegration = () => {
 
           {walletState.connected && (
             <div className="space-y-2">
-              <p className="text-sm font-medium">Subscribe with XX Tokens</p>
+              <p className="text-sm font-medium">{t('xxCoin.wallet.subscribeWithTokens')}</p>
               <div className="grid grid-cols-3 gap-2">
                 <Button 
                   onClick={() => handleSubscribe(1)} 
@@ -420,15 +422,15 @@ export const XXCoinIntegration = () => {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Coins className="w-6 h-6 text-warning" />
-                XX Coin Balance
+                {t('xxCoin.balance.title')}
               </CardTitle>
               <CardDescription>
-                Used to pay for xx Network bandwidth and services
+                {t('xxCoin.balance.description')}
               </CardDescription>
             </div>
             <div className="text-right">
               <div className="text-3xl font-bold text-warning">{(user?.xxCoinBalance || 0).toFixed(2)}</div>
-              <div className="text-sm text-muted-foreground">XX Coins</div>
+              <div className="text-sm text-muted-foreground">{t('xxCoin.balance.coins')}</div>
             </div>
           </div>
         </CardHeader>
@@ -437,14 +439,14 @@ export const XXCoinIntegration = () => {
             <div className="bg-success/10 border border-success/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <ArrowUpRight className="w-4 h-4 text-success" />
-                <span className="text-sm font-medium text-success">This Month Earned</span>
+                <span className="text-sm font-medium text-success">{t('xxCoin.balance.thisMonthEarned')}</span>
               </div>
               <div className="text-2xl font-semibold">+{monthlyEarnings} XX</div>
             </div>
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <ArrowDownRight className="w-4 h-4 text-destructive" />
-                <span className="text-sm font-medium text-destructive">This Month Spent</span>
+                <span className="text-sm font-medium text-destructive">{t('xxCoin.balance.thisMonthSpent')}</span>
               </div>
               <div className="text-2xl font-semibold">-{monthlySpending} XX</div>
             </div>
@@ -452,12 +454,12 @@ export const XXCoinIntegration = () => {
 
           <div className="bg-muted/50 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-muted-foreground">Network Usage This Month</span>
+              <span className="text-sm text-muted-foreground">{t('xxCoin.balance.networkUsage')}</span>
               <span className="text-sm font-medium">{networkUsage} GB / 500 GB</span>
             </div>
             <Progress value={(networkUsage / 500) * 100} className="h-2" />
             <p className="text-xs text-muted-foreground mt-2">
-              Bandwidth paid with XX coins • ~0.02 XX per GB
+              {t('xxCoin.balance.bandwidthPaid')}
             </p>
           </div>
         </CardContent>
@@ -468,10 +470,10 @@ export const XXCoinIntegration = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-success" />
-            How to Earn XX Coins
+            {t('xxCoin.earning.title')}
           </CardTitle>
           <CardDescription>
-            Multiple ways to earn XX coins for free VPN usage
+            {t('xxCoin.earning.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>

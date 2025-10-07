@@ -18,6 +18,13 @@ import hiTranslations from '../locales/hi.json';
 import trTranslations from '../locales/tr.json';
 import daTranslations from '../locales/da.json';
 
+import idTranslations from '../locales/id.json';
+import nlTranslations from '../locales/nl.json';
+import plTranslations from '../locales/pl.json';
+import svTranslations from '../locales/sv.json';
+import thTranslations from '../locales/th.json';
+import viTranslations from '../locales/vi.json';
+
 const resources = {
   en: { translation: enTranslations },
   es: { translation: esTranslations },
@@ -33,6 +40,12 @@ const resources = {
   hi: { translation: hiTranslations },
   tr: { translation: trTranslations },
   da: { translation: daTranslations },
+  id: { translation: idTranslations },
+  nl: { translation: nlTranslations },
+  pl: { translation: plTranslations },
+  sv: { translation: svTranslations },
+  th: { translation: thTranslations },
+  vi: { translation: viTranslations },
 };
 
 i18n
