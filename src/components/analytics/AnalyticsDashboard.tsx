@@ -327,8 +327,8 @@ export const AnalyticsDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card className="glass-effect">
               <CardHeader>
-                <CardTitle>Total Bandwidth Distribution</CardTitle>
-                <CardDescription>Download vs Upload ratio</CardDescription>
+                <CardTitle>{t('analytics.totalBandwidthDistribution')}</CardTitle>
+                <CardDescription>{t('analytics.downloadVsUpload')}</CardDescription>
               </CardHeader>
               <CardContent>
                 {stats.totalDownload > 0 || stats.totalUpload > 0 ? (
@@ -336,8 +336,8 @@ export const AnalyticsDashboard = () => {
                     <PieChart>
                       <Pie
                         data={[
-                          { name: 'Download', value: stats.totalDownload },
-                          { name: 'Upload', value: stats.totalUpload },
+                          { name: t('analytics.download'), value: stats.totalDownload },
+                          { name: t('analytics.upload'), value: stats.totalUpload },
                         ]}
                         cx="50%"
                         cy="50%"
@@ -355,7 +355,7 @@ export const AnalyticsDashboard = () => {
                   </ResponsiveContainer>
                 ) : (
                   <div className="flex items-center justify-center h-64 text-muted-foreground">
-                    No data available
+                    {t('analytics.noDataAvailable')}
                   </div>
                 )}
               </CardContent>
@@ -363,8 +363,8 @@ export const AnalyticsDashboard = () => {
 
             <Card className="glass-effect">
               <CardHeader>
-                <CardTitle>Daily Average</CardTitle>
-                <CardDescription>Average bandwidth per day</CardDescription>
+                <CardTitle>{t('analytics.dailyAverage')}</CardTitle>
+                <CardDescription>{t('analytics.averageBandwidthPerDay')}</CardDescription>
               </CardHeader>
               <CardContent>
                 {bandwidthData.length > 0 ? (
@@ -379,7 +379,7 @@ export const AnalyticsDashboard = () => {
                   </ResponsiveContainer>
                 ) : (
                   <div className="flex items-center justify-center h-64 text-muted-foreground">
-                    No data available
+                    {t('analytics.noDataAvailable')}
                   </div>
                 )}
               </CardContent>

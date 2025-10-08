@@ -456,7 +456,14 @@
     "performance": "الأداء",
     "bandwidthOverTime": "استخدام النطاق الترددي بمرور الوقت",
     "downloadUploadData": "بيانات التنزيل والرفع خلال الفترة",
-    "noBandwidthData": "لا توجد بيانات نطاق ترددي متاحة لهذه الفترة"
+    "noBandwidthData": "لا توجد بيانات نطاق ترددي متاحة لهذه الفترة",
+    "download": "التحميل",
+    "upload": "الرفع",
+    "totalBandwidthDistribution": "إجمالي توزيع النطاق الترددي",
+    "downloadVsUpload": "نسبة التحميل إلى الرفع",
+    "dailyAverage": "المتوسط اليومي",
+    "averageBandwidthPerDay": "متوسط عرض النطاق الترددي يوميًا",
+    "noDataAvailable": "لا توجد بيانات متاحة"
   },
   "reporting": {
     "title": "التقارير المتقدمة",
