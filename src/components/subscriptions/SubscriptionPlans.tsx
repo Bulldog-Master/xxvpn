@@ -159,8 +159,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const handleStartTrial = async (plan: SubscriptionPlan) => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please sign in to start your free trial.",
+        title: t('subscriptionPlans.authRequired'),
+        description: t('subscriptionPlans.signInToStart'),
         variant: "destructive",
       });
       return;
@@ -168,8 +168,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
 
     if (subscribed && subscription_tier === plan.id) {
       toast({
-        title: "Already Subscribed",
-        description: `You already have an active ${is_trial ? 'trial' : 'subscription'} for this plan.`,
+        title: t('subscriptionPlans.alreadySubscribed'),
+        description: t('subscriptionPlans.alreadyHaveActive', { type: is_trial ? t('subscriptionPlans.trial') : t('subscriptionPlans.subscription') }),
       });
       return;
     }
@@ -178,8 +178,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
       const result = await startTrial(plan.id);
       if (result.success) {
         toast({
-          title: "Trial Started!",
-          description: `Your 7-day free trial for ${plan.name} has started. Enjoy full access to all VPN tiers!`,
+          title: t('subscriptionPlans.trialStarted'),
+          description: t('subscriptionPlans.trialStartedDesc', { name: plan.name }),
         });
         onPlanSelect(plan);
       } else {
@@ -188,20 +188,20 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
     } catch (error) {
       console.error('Error starting trial:', error);
       toast({
-        title: "Error",
-        description: "Failed to start trial. Please try again.",
+        title: t('subscriptionPlans.error'),
+        description: t('subscriptionPlans.failedToStart'),
         variant: "destructive",
       });
     }
   };
 
   const getButtonText = (plan: SubscriptionPlan) => {
-    if (loading) return 'Loading...';
+    if (loading) return t('subscriptionPlans.loading');
     if (subscription_tier === plan.id && subscribed) {
-      return is_trial ? 'Active Trial' : 'Active Plan';
+      return is_trial ? t('subscriptionPlans.activeTrial') : t('subscriptionPlans.activePlan');
     }
-    if (selectedPlan?.id === plan.id) return 'Selected';
-    return 'Start Free Trial';
+    if (selectedPlan?.id === plan.id) return t('subscriptionPlans.selected');
+    return t('subscriptionPlans.startFreeTrial');
   };
 
   const isCurrentPlan = (plan: SubscriptionPlan) => {
@@ -223,7 +223,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
           {plan.popular && (
             <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
               <Crown className="w-3 h-3 mr-1" />
-              Most Popular
+              {t('subscriptionPlans.mostPopular')}
             </Badge>
           )}
 
@@ -232,7 +232,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
                 ${getMonthlyPrice(plan).toFixed(2)}
-                <span className="text-sm text-muted-foreground font-normal">/month</span>
+                <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
               </div>
               {plan.originalPrice && (
                 <div className="text-sm text-muted-foreground">
@@ -243,7 +243,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
                 </div>
               )}
               <div className="text-sm text-muted-foreground">
-                Billed ${(plan.price / 100).toFixed(2)} every {plan.duration}
+                {t('subscriptionPlans.billed', { price: (plan.price / 100).toFixed(2), duration: plan.duration })}
               </div>
             </div>
           </CardHeader>

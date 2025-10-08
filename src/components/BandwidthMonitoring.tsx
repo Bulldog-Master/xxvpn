@@ -20,6 +20,7 @@ import {
   Globe
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface BandwidthData {
   time: string;
@@ -86,6 +87,7 @@ const mockSpeedTests: SpeedTestResult[] = [
 ];
 
 export const BandwidthMonitoring: React.FC = () => {
+  const { t } = useTranslation();
   const [bandwidthData, setBandwidthData] = useState<BandwidthData[]>(generateMockData());
   const [isMonitoring, setIsMonitoring] = useState(true);
   const [isSpeedTesting, setIsSpeedTesting] = useState(false);
@@ -170,16 +172,16 @@ export const BandwidthMonitoring: React.FC = () => {
     setIsSpeedTesting(false);
 
     toast({
-      title: "Speed Test Complete",
-      description: `Download: ${newResult.downloadSpeed.toFixed(1)} Mbps, Upload: ${newResult.uploadSpeed.toFixed(1)} Mbps`
+      title: t('bandwidth.complete'),
+      description: `${t('bandwidth.download')}: ${newResult.downloadSpeed.toFixed(1)} ${t('bandwidth.mbps')}, ${t('bandwidth.upload')}: ${newResult.uploadSpeed.toFixed(1)} ${t('bandwidth.mbps')}`
     });
   };
 
   const toggleMonitoring = () => {
     setIsMonitoring(!isMonitoring);
     toast({
-      title: isMonitoring ? "Monitoring Paused" : "Monitoring Started",
-      description: isMonitoring ? "Real-time bandwidth monitoring has been paused" : "Real-time bandwidth monitoring has been started"
+      title: isMonitoring ? t('bandwidth.pause') : t('bandwidth.resume'),
+      description: isMonitoring ? t('bandwidth.pause') + " " + t('bandwidth.monitoring') : t('bandwidth.resume') + " " + t('bandwidth.monitoring')
     });
   };
 
