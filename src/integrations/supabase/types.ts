@@ -766,15 +766,7 @@ export type Database = {
       }
     }
     Views: {
-      security_status_summary: {
-        Row: {
-          enforcement_method: string | null
-          implementation: string | null
-          security_feature: string | null
-          status: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       anonymize_old_vpn_sessions: {
@@ -914,6 +906,15 @@ export type Database = {
           is_active: boolean
           last_seen: string
           operating_system: string
+        }[]
+      }
+      get_security_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          enforcement_method: string
+          implementation: string
+          security_feature: string
+          status: string
         }[]
       }
       get_subscription_monitoring: {
