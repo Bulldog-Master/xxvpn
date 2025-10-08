@@ -1141,11 +1141,11 @@
     "customDNSServers": "خوادم DNS المخصصة",
     "active": "نشط",
     "dnsLeak": {
-      "title": "حماية تسرب DNS",
+      "title": "حماية من تسرب DNS",
       "description": "يمنع استعلامات DNS من التجاوز لاتصال الشبكة الخاصة الافتراضية الخاص بك"
     },
     "ipv6Leak": {
-      "title": "حماية تسرب IPv6",
+      "title": "حماية من تسرب IPv6",
       "description": "يحظر حركة مرور IPv6 لمنع تجاوز الشبكة الخاصة الافتراضية"
     },
     "dnsLeakDetected": "تم اكتشاف تسرب DNS!",
