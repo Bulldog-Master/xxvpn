@@ -387,10 +387,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Users className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm font-medium">Total Users</span>
+                      <span className="text-sm font-medium">{t('serverStats.totalUsers')}</span>
                     </div>
                     <div className="text-2xl font-bold">12,910</div>
-                    <div className="text-xs text-muted-foreground">Online now</div>
+                    <div className="text-xs text-muted-foreground">{t('common.onlineNow')}</div>
                   </CardContent>
                 </Card>
                 
@@ -398,10 +398,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Server className="h-4 w-4 text-green-500" />
-                      <span className="text-sm font-medium">Active Servers</span>
+                      <span className="text-sm font-medium">{t('serverStats.activeServers')}</span>
                     </div>
                     <div className="text-2xl font-bold">{vpnServers.length}</div>
-                    <div className="text-xs text-muted-foreground">Worldwide</div>
+                    <div className="text-xs text-muted-foreground">{t('common.worldwide')}</div>
                   </CardContent>
                 </Card>
 
@@ -409,12 +409,12 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Activity className="h-4 w-4 text-purple-500" />
-                      <span className="text-sm font-medium">Avg Load</span>
+                      <span className="text-sm font-medium">{t('serverStats.avgLoad')}</span>
                     </div>
                     <div className="text-2xl font-bold">
                       {Math.round(vpnServers.reduce((acc, s) => acc + s.load, 0) / vpnServers.length)}%
                     </div>
-                    <div className="text-xs text-muted-foreground">Across all servers</div>
+                    <div className="text-xs text-muted-foreground">{t('common.acrossAllServers')}</div>
                   </CardContent>
                 </Card>
 
@@ -422,12 +422,12 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Zap className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-medium">Premium Servers</span>
+                      <span className="text-sm font-medium">{t('serverStats.premiumServers')}</span>
                     </div>
                     <div className="text-2xl font-bold">
                       {vpnServers.filter(s => s.premium).length}
                     </div>
-                    <div className="text-xs text-muted-foreground">High-speed access</div>
+                    <div className="text-xs text-muted-foreground">{t('common.highSpeedAccess')}</div>
                   </CardContent>
                 </Card>
               </div>

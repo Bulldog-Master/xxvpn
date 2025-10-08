@@ -162,7 +162,11 @@
     "currencySymbol": "$",
     "vpn": "في بي إن",
     "xx": "إكس إكس",
-    "gbps": "جيجابت/ث"
+    "gbps": "جيجابت/ث",
+    "worldwide": "في جميع أنحاء العالم",
+    "onlineNow": "متصل الآن",
+    "acrossAllServers": "عبر جميع الخوادم",
+    "highSpeedAccess": "وصول عالي السرعة"
   },
   "payments": {
     "title": "المدفوعات",
@@ -1257,5 +1261,115 @@
     "France": "فرنسا",
     "Paris": "باريس"
   },
-  "reliable": "موثوق"
+  "reliable": "موثوق",
+  "serverMap": {
+    "regions": {
+      "northAmerica": "أمريكا الشمالية",
+      "southAmerica": "أمريكا الجنوبية", 
+      "europe": "أوروبا",
+      "asia": "آسيا",
+      "australia": "أستراليا"
+    },
+    "globalNetworkActivity": "نشاط الشبكة العالمية",
+    "activeUsers": "المستخدمون النشطون",
+    "serverLoad": "حمل الخادم",
+    "latency": "التأخير",
+    "bandwidth": "عرض النطاق"
+  },
+  "serverStats": {
+    "totalUsers": "إجمالي المستخدمين",
+    "activeServers": "الخوادم النشطة",
+    "avgLoad": "متوسط الحمل",
+    "premiumServers": "الخوادم المتميزة",
+    "loadDistribution": "توزيع الحمل",
+    "serverTypes": "أنواع الخوادم",
+    "noSpeedTestResults": "لا توجد نتائج اختبار السرعة",
+    "ofTotalTraffic": "من إجمالي حركة المرور",
+    "ofTotalServers": "من إجمالي الخوادم"
+  },
+  "userPreferences": {
+    "preferences": "التفضيلات",
+    "defaultVpnMode": "وضع في بي إن الافتراضي",
+    "choosePreferredMode": "اختر وضع الاتصال المفضل لديك",
+    "autoConnect": "الاتصال التلقائي",
+    "autoConnectDesc": "الاتصال تلقائياً عند بدء التطبيق",
+    "networkNotifications": "إشعارات الشبكة",
+    "networkNotificationsDesc": "احصل على إشعارات حول تغييرات حالة الشبكة",
+    "modes": {
+      "ultraFast": "فائق السرعة",
+      "secure": "آمن",
+      "ultraSecure": "فائق الأمان",
+      "auto": "تلقائي"
+    }
+  },
+  "subscriptionInfo": {
+    "subscriptionPlan": "خطة الاشتراك",
+    "freePlan": "الخطة المجانية",
+    "limitedFeatures": "ميزات محدودة",
+    "monthlyData": "{{amount}} جيجابايت من البيانات الشهرية",
+    "serverLocations": "{{count}} مواقع خوادم",
+    "gamingModeOnly": "وضع الألعاب فقط",
+    "unlimitedData": "بيانات غير محدودة",
+    "allServerLocations": "جميع مواقع الخوادم",
+    "gamingPrivacyModes": "أوضاع الألعاب والخصوصية",
+    "xxNetworkIntegration": "تكامل شبكة إكس إكس",
+    "crossPlatformSupport": "الدعم متعدد المنصات",
+    "manageSubscription": "إدارة الاشتراك"
+  },
+  "rewards": {
+    "xxCoinRewards": "مكافآت عملة إكس إكس",
+    "earnByContributing": "اكسب رموز إكس إكس من خلال المساهمة في أمان الشبكة",
+    "currentBalance": "الرصيد الحالي",
+    "earningOpportunities": "فرص الكسب",
+    "dailyConnection": "الاتصال اليومي",
+    "dailyConnectionDesc": "اتصل يومياً لمدة ٣٠+ دقيقة",
+    "nodeContribution": "مساهمة العقدة",
+    "nodeContributionDesc": "شارك النطاق الترددي للشبكة المختلطة",
+    "privacyModeUsage": "استخدام وضع الخصوصية",
+    "privacyModeUsageDesc": "استخدم الحماية ذات ٥ قفزات",
+    "perDay": "/يوم",
+    "perSession": "/جلسة"
+  },
+  "support": {
+    "customerSupport": "دعم العملاء",
+    "needHelp": "تحتاج مساعدة؟ أرسل لنا رسالة وسنرد عليك خلال ٢٤ ساعة.",
+    "describeIssue": "صف مشكلتك أو سؤالك..."
+  },
+  "admin": {
+    "userManagement": "إدارة المستخدمين",
+    "searchByNameOrId": "البحث بالاسم أو معرف المستخدم...",
+    "betaMonitoring": {
+      "loadingData": "جاري تحميل بيانات مراقبة النسخة التجريبية...",
+      "activeUsers": "المستخدمون النشطون",
+      "currentlyConnected": "متصل حالياً",
+      "totalSignups": "إجمالي التسجيلات",
+      "betaWaitlist": "قائمة انتظار النسخة التجريبية",
+      "responseTime": "وقت الاستجابة",
+      "avgApiLatency": "متوسط تأخير واجهة برمجة التطبيقات",
+      "conversionRate": "معدل التحويل",
+      "betaAcceptance": "قبول النسخة التجريبية",
+      "dailyActiveUsers": "المستخدمون النشطون يومياً",
+      "weeklyActiveUsers": "المستخدمون النشطون أسبوعياً",
+      "monthlyActiveUsers": "المستخدمون النشطون شهرياً",
+      "activeConnections": "الاتصالات النشطة",
+      "apiResponseQuality": "جودة استجابة واجهة برمجة التطبيقات"
+    }
+  },
+  "comingSoon": {
+    "excitingFeatures": "ميزات مثيرة قريباً",
+    "developingFeatures": "نحن نطور ميزات جديدة رائعة لتحسين تجربتك في xxVPN. ترقب!",
+    "plannedFeatures": "الميزات المخططة:",
+    "wantEarlyAccess": "هل تريد الوصول المبكر؟",
+    "joinBeta": "انضم إلى برنامجنا التجريبي للحصول على الميزات الجديدة أولاً"
+  },
+  "auth": {
+    "authenticationMethod": "طريقة المصادقة",
+    "learnMoreFaq": "تعرف على المزيد حول طرق المصادقة واسترداد الحساب في الأسئلة الشائعة",
+    "enterYourEmail": "أدخل بريدك الإلكتروني",
+    "enter6DigitCode": "أدخل الرمز المكون من ٦ أرقام",
+    "enterFullName": "أدخل اسمك الكامل"
+  },
+  "daoGovernance": {
+    "quorumProgress": "تقدم النصاب القانوني"
+  }
 }

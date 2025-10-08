@@ -178,13 +178,13 @@ const UserProfile = () => {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-medium">Preferences</h4>
+                <h4 className="font-medium">{t('userPreferences.preferences')}</h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium">Default VPN Mode</h5>
+                      <h5 className="font-medium">{t('userPreferences.defaultVpnMode')}</h5>
                       <p className="text-sm text-muted-foreground">
-                        Choose your preferred connection mode
+                        {t('userPreferences.choosePreferredMode')}
                       </p>
                     </div>
                     <Select defaultValue="secure">
@@ -192,19 +192,19 @@ const UserProfile = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="ultra-fast">Ultra-Fast</SelectItem>
-                        <SelectItem value="secure">Secure</SelectItem>
-                        <SelectItem value="ultra-secure">Ultra-Secure</SelectItem>
-                        <SelectItem value="auto">Auto</SelectItem>
+                        <SelectItem value="ultra-fast">{t('userPreferences.modes.ultraFast')}</SelectItem>
+                        <SelectItem value="secure">{t('userPreferences.modes.secure')}</SelectItem>
+                        <SelectItem value="ultra-secure">{t('userPreferences.modes.ultraSecure')}</SelectItem>
+                        <SelectItem value="auto">{t('userPreferences.modes.auto')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium">Auto-Connect</h5>
+                      <h5 className="font-medium">{t('userPreferences.autoConnect')}</h5>
                       <p className="text-sm text-muted-foreground">
-                        Connect automatically when app starts
+                        {t('userPreferences.autoConnectDesc')}
                       </p>
                     </div>
                     <Switch />
@@ -212,9 +212,9 @@ const UserProfile = () => {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium">Network Notifications</h5>
+                      <h5 className="font-medium">{t('userPreferences.networkNotifications')}</h5>
                       <p className="text-sm text-muted-foreground">
-                        Get notified about network status changes
+                        {t('userPreferences.networkNotificationsDesc')}
                       </p>
                     </div>
                     <Switch defaultChecked />
@@ -244,7 +244,7 @@ const UserProfile = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Crown className="w-5 h-5 text-warning" />
-                Subscription Plan
+                {t('subscriptionInfo.subscriptionPlan')}
               </CardTitle>
               <CardDescription>
                 {t('profile.subscription.upgradeDescription')}
@@ -255,12 +255,12 @@ const UserProfile = () => {
                 {user?.subscriptionTier === 'free' ? (
                   <div className="space-y-4">
                     <div className="p-4 border rounded-lg bg-muted/20">
-                      <h4 className="font-medium">Free Plan</h4>
-                      <p className="text-sm text-muted-foreground">Limited features</p>
+                      <h4 className="font-medium">{t('subscriptionInfo.freePlan')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('subscriptionInfo.limitedFeatures')}</p>
                       <ul className="text-sm mt-2 space-y-1">
-                        <li>• 1 GB monthly data</li>
-                        <li>• 3 server locations</li>
-                        <li>• Gaming mode only</li>
+                        <li>• {t('subscriptionInfo.monthlyData', { amount: 1 })}</li>
+                        <li>• {t('subscriptionInfo.serverLocations', { count: 3 })}</li>
+                        <li>• {t('subscriptionInfo.gamingModeOnly')}</li>
                       </ul>
                     </div>
                     <Button className="w-full gradient-primary">
@@ -273,15 +273,15 @@ const UserProfile = () => {
                       <h4 className="font-medium text-primary">{t('profile.subscription.premiumPlan')}</h4>
                       <p className="text-sm text-muted-foreground">{t('profile.subscription.fullAccess')}</p>
                       <ul className="text-sm mt-2 space-y-1">
-                        <li>• Unlimited data</li>
-                        <li>• All server locations</li>
-                        <li>• Gaming & Privacy modes</li>
-                        <li>• XX Network integration</li>
-                        <li>• Cross-platform support</li>
+                        <li>• {t('subscriptionInfo.unlimitedData')}</li>
+                        <li>• {t('subscriptionInfo.allServerLocations')}</li>
+                        <li>• {t('subscriptionInfo.gamingPrivacyModes')}</li>
+                        <li>• {t('subscriptionInfo.xxNetworkIntegration')}</li>
+                        <li>• {t('subscriptionInfo.crossPlatformSupport')}</li>
                       </ul>
                     </div>
                     <Button variant="outline" className="w-full">
-                      Manage Subscription
+                      {t('subscriptionInfo.manageSubscription')}
                     </Button>
                   </div>
                 )}
@@ -295,46 +295,46 @@ const UserProfile = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Coins className="w-5 h-5 text-warning" />
-                XX Coin Rewards
+                {t('rewards.xxCoinRewards')}
               </CardTitle>
               <CardDescription>
-                Earn XX tokens by contributing to network security
+                {t('rewards.earnByContributing')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="text-center p-6 border rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10">
                   <div className="text-3xl font-bold text-primary">
-                    {user?.xxCoinBalance?.toFixed(2) || '0.00'} XX
+                    {user?.xxCoinBalance?.toFixed(2) || '0.00'} {t('common.xx')}
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Current balance
+                    {t('rewards.currentBalance')}
                   </p>
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="font-medium">Earning Opportunities</h4>
+                  <h4 className="font-medium">{t('rewards.earningOpportunities')}</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center p-3 border rounded-lg">
                       <div>
-                        <h5 className="font-medium">Daily Connection</h5>
-                        <p className="text-sm text-muted-foreground">Connect daily for 30+ minutes</p>
+                        <h5 className="font-medium">{t('rewards.dailyConnection')}</h5>
+                        <p className="text-sm text-muted-foreground">{t('rewards.dailyConnectionDesc')}</p>
                       </div>
-                      <Badge variant="outline">+5 XX</Badge>
+                      <Badge variant="outline">+5 {t('common.xx')}</Badge>
                     </div>
                     <div className="flex justify-between items-center p-3 border rounded-lg">
                       <div>
-                        <h5 className="font-medium">Node Contribution</h5>
-                        <p className="text-sm text-muted-foreground">Share bandwidth for mixnet</p>
+                        <h5 className="font-medium">{t('rewards.nodeContribution')}</h5>
+                        <p className="text-sm text-muted-foreground">{t('rewards.nodeContributionDesc')}</p>
                       </div>
-                      <Badge variant="outline">+20 XX/day</Badge>
+                      <Badge variant="outline">+20 {t('common.xx')}{t('rewards.perDay')}</Badge>
                     </div>
                     <div className="flex justify-between items-center p-3 border rounded-lg">
                       <div>
-                        <h5 className="font-medium">Privacy Mode Usage</h5>
-                        <p className="text-sm text-muted-foreground">Use 5-hop protection</p>
+                        <h5 className="font-medium">{t('rewards.privacyModeUsage')}</h5>
+                        <p className="text-sm text-muted-foreground">{t('rewards.privacyModeUsageDesc')}</p>
                       </div>
-                      <Badge variant="outline">+2 XX/session</Badge>
+                      <Badge variant="outline">+2 {t('common.xx')}{t('rewards.perSession')}</Badge>
                     </div>
                   </div>
                 </div>

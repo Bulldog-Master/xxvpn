@@ -218,27 +218,27 @@ export const ServerActivityMap: React.FC = () => {
                 {/* Regional Percentage Labels */}
                 <div className="absolute top-8 left-16 text-white font-bold text-xl">
                   22%
-                  <div className="text-xs font-normal opacity-80">NORTH AMERICA</div>
+                  <div className="text-xs font-normal opacity-80">{t('serverMap.regions.northAmerica').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute top-6 left-1/2 text-white font-bold text-xl">
                   42%
-                  <div className="text-xs font-normal opacity-80">EUROPE</div>
+                  <div className="text-xs font-normal opacity-80">{t('serverMap.regions.europe').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute top-8 right-16 text-white font-bold text-xl">
                   28%
-                  <div className="text-xs font-normal opacity-80">ASIA</div>
+                  <div className="text-xs font-normal opacity-80">{t('serverMap.regions.asia').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute bottom-16 right-12 text-white font-bold text-lg">
                   5%
-                  <div className="text-xs font-normal opacity-80">AUSTRALIA</div>
+                  <div className="text-xs font-normal opacity-80">{t('serverMap.regions.australia').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute bottom-12 left-20 text-white font-bold text-lg">
                   3%
-                  <div className="text-xs font-normal opacity-80">SOUTH AMERICA</div>
+                  <div className="text-xs font-normal opacity-80">{t('serverMap.regions.southAmerica').toUpperCase()}</div>
                 </div>
 
                 {/* Animated Server Nodes */}
@@ -278,19 +278,19 @@ export const ServerActivityMap: React.FC = () => {
                           
                           <div className="grid grid-cols-2 gap-3 text-sm">
                             <div className="bg-white/10 rounded p-2">
-                              <div className="opacity-70">Active Users</div>
+                              <div className="opacity-70">{t('serverMap.activeUsers')}</div>
                               <div className="font-bold text-lg text-blue-400">{server.users.toLocaleString()}</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
-                              <div className="opacity-70">Server Load</div>
+                              <div className="opacity-70">{t('serverMap.serverLoad')}</div>
                               <div className={`font-bold text-lg ${getLoadColor(server.load)}`}>{server.load}%</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
-                              <div className="opacity-70">Latency</div>
+                              <div className="opacity-70">{t('serverMap.latency')}</div>
                               <div className="font-bold text-lg text-green-400">{server.ping}ms</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
-                              <div className="opacity-70">Bandwidth</div>
+                              <div className="opacity-70">{t('serverMap.bandwidth')}</div>
                               <div className="font-bold text-lg text-purple-400">{server.bandwidth}</div>
                             </div>
                           </div>
@@ -302,7 +302,7 @@ export const ServerActivityMap: React.FC = () => {
 
                 {/* Title Overlay */}
                 <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                  <h2 className="text-white text-2xl font-bold tracking-wide">GLOBAL NETWORK ACTIVITY</h2>
+                  <h2 className="text-white text-2xl font-bold tracking-wide">{t('serverMap.globalNetworkActivity').toUpperCase()}</h2>
                 </div>
               </div>
             </CardContent>
