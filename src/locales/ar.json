@@ -126,11 +126,11 @@
     },
     "protocol": {
       "title": "إعدادات البروتوكول",
-      "description": "تكوين تفضيلات بروتوكول VPN الخاص بك",
+      "description": "تكوين تفضيلات بروتوكول في بي إن الخاص بك",
       "autoSelection": "الاختيار التلقائي للبروتوكول",
       "autoSelectionDesc": "اختر تلقائياً أفضل بروتوكول بناءً على ظروف الشبكة",
       "killSwitch": "مفتاح الإيقاف",
-      "killSwitchDesc": "حظر الإنترنت إذا انقطع اتصال VPN",
+      "killSwitchDesc": "حظر الإنترنت إذا انقطع اتصال في بي إن",
       "autoConnect": "الاتصال التلقائي",
       "autoConnectDesc": "الاتصال تلقائياً عند بدء تشغيل التطبيق"
     },
@@ -370,16 +370,16 @@
     },
     "tunnels": {
       "direct": "مباشر",
-      "directSubtitle": "بدون حماية VPN",
+      "directSubtitle": "بدون حماية في بي إن",
       "directDescription": "مثالي للألعاب والتطبيقات الحساسة للتأخير. بدون عبء الحماية.",
-      "vpn": "نفق VPN", 
-      "vpnSubtitle": "بروتوكول VPN",
+      "vpn": "نفق في بي إن", 
+      "vpnSubtitle": "بروتوكول في بي إن",
       "vpnDescription": "أمان وسرعة متوازنة. تجاوز DPI للبث والتصفح.",
       "mixnet": "شبكة مختلطة",
       "mixnetSubtitle": "XX Network cMixx", 
       "mixnetDescription": "أقصى درجات إخفاء الهوية مع حماية البيانات الوصفية. مثالي للعملات المشفرة والمراسلة.",
-      "directDesc": "بدون VPN - أسرع",
-      "vpnDesc": "VPN - متوازن",
+      "directDesc": "بدون في بي إن - أسرع",
+      "vpnDesc": "في بي إن - متوازن",
        "mixnetDesc": "شبكة مختلطة - أكثر أماناً"
      },
      "appNames": {
@@ -389,10 +389,10 @@
   },
   "subscription": {
     "required": "اشتراك مطلوب",
-    "signInRequired": "يرجى تسجيل الدخول للوصول إلى ميزات VPN",
+    "signInRequired": "يرجى تسجيل الدخول للوصول إلى ميزات في بي إن",
     "requiredDesc": "ابدأ تجربتك المجانية للاتصال بخوادم xxVPN",
     "noActive": "لا يوجد اشتراك نشط",
-    "noActiveDesc": "ابدأ تجربتك المجانية لمدة 7 أيام لفتح جميع أوضاع VPN والميزات المميزة",
+    "noActiveDesc": "ابدأ تجربتك المجانية لمدة 7 أيام لفتح جميع أوضاع في بي إن والميزات المميزة",
     "viewPlans": "عرض الخطط",
     "upgradePlan": "ترقية الخطة",
     "freeTrialOffer": "ابدأ تجربتك المجانية لمدة 7 أيام لفتح هذه الميزة",
@@ -422,13 +422,13 @@
     },
     "requiresTier": "يتطلب خطة {{tier}} أو أعلى",
     "currentPlan": "الخطة الحالية",
-    "signInRequired": "سجل الدخول للوصول إلى ميزات VPN المميزة",
+    "signInRequired": "سجل الدخول للوصول إلى ميزات في بي إن المميزة",
     "signInToContinue": "سجل الدخول للمتابعة",
     "mode": "وضع",
-    "vpnMode": "وضع VPN",
-    "ultraFastMode": "وضع VPN فائق السرعة",
-    "secureMode": "وضع VPN الآمن",
-    "ultraSecureMode": "وضع VPN فائق الأمان"
+    "vpnMode": "وضع في بي إن",
+    "ultraFastMode": "وضع في بي إن فائق السرعة",
+    "secureMode": "وضع في بي إن الآمن",
+    "ultraSecureMode": "وضع في بي إن فائق الأمان"
   },
   "serverSelection": {
     "title": "اختيار الخادم",
@@ -454,7 +454,7 @@
   },
   "analytics": {
     "title": "التحليلات",
-    "subtitle": "تتبع استخدام VPN والأداء",
+    "subtitle": "تتبع استخدام في بي إن والأداء",
     "last24Hours": "آخر 24 ساعة",
     "last7Days": "آخر 7 أيام",
     "last30Days": "آخر 30 يومًا",
@@ -514,7 +514,7 @@
     "networkSecurityStatus": "حالة أمان الشبكة",
     "connectionStatus": "حالة الاتصال",
     "yourIp": "عنوان IP الخاص بك:",
-    "vpnIp": "عنوان IP لـ VPN:",
+    "vpnIp": "عنوان IP لـ في بي إن:",
     "protected": "محمي",
     "emergencyDisconnect": "قطع الاتصال الطارئ",
     "testDnsLeaks": "اختبار تسرب DNS",
@@ -527,8 +527,8 @@
   },
   "vpnModes": {
     "ultraFast": {
-      "directConnection": "اتصال مباشر بدون تشفير VPN. أقصى سرعة للألعاب والبث.",
-      "comingSoon": "تشفير VPN التقليدي مع WireGuard/OpenVPN. سرعات سريعة مع خصوصية أساسية. (قريباً)",
+      "directConnection": "اتصال مباشر بدون تشفير في بي إن. أقصى سرعة للألعاب والبث.",
+      "comingSoon": "تشفير في بي إن التقليدي مع WireGuard/OpenVPN. سرعات سريعة مع خصوصية أساسية. (قريباً)",
       "quantumResistant": "شبكة P2P مقاومة للكم باستخدام بروتوكول cMixx من شبكة xx. تدمير البيانات الوصفية عبر 850+ عقدة لامركزية. التأخير: ~2-3 ثانية."
     }
   },
@@ -736,7 +736,7 @@
     }
   },
   "dao": {
-    "title": "خدمة VPN DAO",
+    "title": "خدمة في بي إن DAO",
     "description": "حوكمة المجتمع لقرارات خدمة xxVPN والخزانة",
     "createProposal": "إنشاء مقترح",
     "noProposals": "لا توجد مقترحات نشطة",
@@ -747,7 +747,7 @@
     "title2": "العنوان",
     "type": "النوع",
     "submitProposal": "إرسال المقترح",
-    "createServiceProposal": "إنشاء مقترح خدمة VPN",
+    "createServiceProposal": "إنشاء مقترح خدمة في بي إن",
     "proposeChanges": "اقترح تغييرات على خدمة xxVPN. يصوت المجتمع برموز DAO.",
     "proposalTitlePlaceholder": "عنوان المقترح",
     "detailedDescription": "وصف تفصيلي للمقترح...",
@@ -871,7 +871,7 @@
     "trial": "تجربة",
     "subscription": "اشتراك",
     "trialStarted": "بدأت التجربة!",
-    "trialStartedDesc": "بدأت تجربتك المجانية لمدة 7 أيام لـ {{name}}. استمتع بالوصول الكامل لجميع مستويات VPN!",
+    "trialStartedDesc": "بدأت تجربتك المجانية لمدة 7 أيام لـ {{name}}. استمتع بالوصول الكامل لجميع مستويات في بي إن!",
     "error": "خطأ",
     "failedToStart": "فشل بدء التجربة. يرجى المحاولة مرة أخرى.",
     "loading": "جاري التحميل...",
@@ -1043,7 +1043,7 @@
   "connectionHistory": {
     "title": "سجل الاتصال",
     "noHistory": "لا يوجد سجل اتصال",
-    "sessionsAppear": "ستظهر جلسات VPN الخاصة بك هنا",
+    "sessionsAppear": "ستظهر جلسات في بي إن الخاصة بك هنا",
     "duration": "المدة",
     "quality": "الجودة",
     "started": "بدأت"
@@ -1070,14 +1070,14 @@
   },
   "killSwitch": {
     "title": "مفتاح القفل",
-    "description": "يحظر جميع حركة مرور الإنترنت إذا انقطع اتصال VPN",
+    "description": "يحظر جميع حركة مرور الإنترنت إذا انقطع اتصال في بي إن",
     "killSwitchActive": "مفتاح القفل نشط",
     "unprotected": "غير محمي",
-    "blockAllTraffic": "مفتاح القفل نشط. جميع حركة مرور الإنترنت محظورة حتى يُعاد الاتصال بـ VPN.",
+    "blockAllTraffic": "مفتاح القفل نشط. جميع حركة مرور الإنترنت محظورة حتى يُعاد الاتصال بـ في بي إن.",
     "testing": "جاري الاختبار...",
     "coreProtection": "الحماية الأساسية",
     "autoConnect": "الاتصال التلقائي",
-    "autoConnectDesc": "الاتصال تلقائيًا بـ VPN عند بدء التشغيل",
+    "autoConnectDesc": "الاتصال تلقائيًا بـ في بي إن عند بدء التشغيل",
     "dnsConfiguration": "تكوين DNS",
     "currentDNSServers": "خوادم DNS الحالية",
     "customDNSServers": "خوادم DNS المخصصة",
@@ -1093,7 +1093,7 @@
   },
   "splitTunneling": {
     "title": "النفق المقسم",
-    "description": "اختر التطبيقات التي تستخدم الشبكة الخاصة الافتراضية"
+    "description": "اختر التطبيقات التي تستخدم في بي إن"
   },
   "security": {
     "title": "ميزات الأمان النشطة",
