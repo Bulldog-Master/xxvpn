@@ -343,7 +343,7 @@ export const AnalyticsDashboard = () => {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={(entry) => `${entry.name}: ${entry.value} GB`}
+                        label={(entry) => `${entry.name}: ${formatNumber(entry.value, i18n.language, 2)} ${t('units.gb')}`}
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
@@ -391,8 +391,8 @@ export const AnalyticsDashboard = () => {
         <TabsContent value="servers">
           <Card className="glass-effect">
             <CardHeader>
-              <CardTitle>Top 5 Servers by Usage</CardTitle>
-              <CardDescription>Most frequently used servers</CardDescription>
+              <CardTitle>{t('analytics.topServers')}</CardTitle>
+              <CardDescription>{t('analytics.mostUsedServers')}</CardDescription>
             </CardHeader>
             <CardContent>
               {connectionData.length > 0 ? (
@@ -415,7 +415,7 @@ export const AnalyticsDashboard = () => {
                           <div>
                             <div className="font-medium">{server.server}</div>
                             <div className="text-sm text-muted-foreground">
-                              {server.duration} min • {server.bandwidth} GB
+                              {formatNumber(server.duration, i18n.language)} {t('time.min')} • {formatNumber(server.bandwidth, i18n.language, 2)} {t('units.gb')}
                             </div>
                           </div>
                         </div>
@@ -423,7 +423,7 @@ export const AnalyticsDashboard = () => {
                           server.quality === 'Excellent' ? 'text-success' :
                           server.quality === 'Good' ? 'text-blue-500' : 'text-warning'
                         }`}>
-                          {server.quality}
+                          {t(`quality.${server.quality.toLowerCase()}`)}
                         </div>
                       </div>
                     ))}

@@ -463,7 +463,15 @@
     "downloadVsUpload": "نسبة التحميل إلى الرفع",
     "dailyAverage": "المتوسط اليومي",
     "averageBandwidthPerDay": "متوسط عرض النطاق الترددي يوميًا",
-    "noDataAvailable": "لا توجد بيانات متاحة"
+    "noDataAvailable": "لا توجد بيانات متاحة",
+    "topServers": "أفضل 5 خوادم حسب الاستخدام",
+    "mostUsedServers": "الخوادم الأكثر استخدامًا"
+  },
+  "quality": {
+    "excellent": "ممتاز",
+    "good": "جيد",
+    "fair": "مقبول",
+    "poor": "ضعيف"
   },
   "reporting": {
     "title": "التقارير المتقدمة",
@@ -903,6 +911,12 @@
     "mb": "ميجابايت",
     "gb": "جيجابايت",
     "tb": "تيرابايت"
+  },
+  "time": {
+    "min": "دقيقة",
+    "sec": "ثانية",
+    "hour": "ساعة",
+    "day": "يوم"
   },
   "timeUnits": {
     "second": "ثانية",
