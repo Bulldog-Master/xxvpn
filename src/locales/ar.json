@@ -97,11 +97,14 @@
     }
   },
   "auth": {
-    "title": "مرحباً بك في الشبكة الخاصة الافتراضية",
+    "welcome": "مرحباً بك",
+    "title": "مرحباً بك في xxVPN",
     "subtitle": "حماية آمنة وخاصة ومقاومة للحوسبة الكمية",
     "signIn": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "enterFullName": "أدخل اسمك الكامل",
     "password": "كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور",
     "forgotPassword": "نسيت كلمة المرور؟",
@@ -310,11 +313,12 @@
     }
   },
   "profile": {
+    "title": "الملف الشخصي",
     "signedOut": "تم تسجيل الخروج",
-    "signedOutDesc": "تم تسجيل الخروج بنجاح.",
-    "signOutError": "فشل تسجيل الخروج. حاول مرة أخرى.",
+    "signedOutDesc": "تم تسجيل الخروج بنجاح",
+    "signOutError": "فشل تسجيل الخروج",
     "updated": "تم تحديث الملف الشخصي",
-    "updatedDesc": "تم تحديث ملفك الشخصي بنجاح.",
+    "updatedDesc": "تم تحديث ملفك الشخصي بنجاح",
     "anonymousUser": "مستخدم مجهول",
     "signOut": "تسجيل الخروج",
     "subscription": {
@@ -328,8 +332,9 @@
     },
     "tabs": {
       "account": "الحساب",
+      "security": "الأمان",
       "subscription": "الاشتراك",
-      "rewards": "مكافآت XX",
+      "rewards": "مكافآت إكس إكس",
       "downloads": "التحميلات"
     }
   },
@@ -377,7 +382,8 @@
   },
   "subscription": {
     "required": "اشتراك مطلوب",
-    "requiredDesc": "ابدأ تجربتك المجانية للاتصال بخوادم VPN",
+    "signInRequired": "يرجى تسجيل الدخول للوصول إلى ميزات VPN",
+    "requiredDesc": "ابدأ تجربتك المجانية للاتصال بخوادم xxVPN",
     "noActive": "لا يوجد اشتراك نشط",
     "noActiveDesc": "ابدأ تجربتك المجانية لمدة 7 أيام لفتح جميع أوضاع VPN والميزات المميزة",
     "viewPlans": "عرض الخطط",
@@ -1152,6 +1158,35 @@
   },
   "tooltips": {
     "quickConnectSecure": "اتصال سريع بالوضع الآمن"
+  },
+  "loadLevel": {
+    "low": "منخفض",
+    "medium": "متوسط",
+    "high": "عالٍ"
+  },
+  "serverLocations": {
+    "United States": "الولايات المتحدة",
+    "New York": "نيويورك",
+    "Los Angeles": "لوس أنجلوس",
+    "United Kingdom": "المملكة المتحدة",
+    "London": "لندن",
+    "Germany": "ألمانيا",
+    "Berlin": "برلين",
+    "Japan": "اليابان",
+    "Tokyo": "طوكيو",
+    "Singapore": "سنغافورة",
+    "Canada": "كندا",
+    "Toronto": "تورونتو",
+    "Australia": "أستراليا",
+    "Sydney": "سيدني",
+    "Netherlands": "هولندا",
+    "Amsterdam": "أمستردام",
+    "Sweden": "السويد",
+    "Stockholm": "ستوكهولم",
+    "Switzerland": "سويسرا",
+    "Zurich": "زيورخ",
+    "France": "فرنسا",
+    "Paris": "باريس"
   },
   "common": {
     "gbps": "جيجابت/ث"
