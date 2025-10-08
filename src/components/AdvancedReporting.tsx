@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { toArabicNumerals } from '@/utils/numberFormat';
 import {
   Download,
   Calendar as CalendarIcon,
@@ -322,7 +323,13 @@ export const AdvancedReporting = () => {
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {format(dateRange.from, 'MMM dd', { locale: getDateLocale() })} - {format(dateRange.to, 'MMM dd, yyyy', { locale: getDateLocale() })}
+                        {(() => {
+                          const fromFormatted = format(dateRange.from, 'MMM dd', { locale: getDateLocale() });
+                          const toFormatted = format(dateRange.to, 'MMM dd, yyyy', { locale: getDateLocale() });
+                          return i18n.language === 'ar' 
+                            ? `${toArabicNumerals(fromFormatted)} - ${toArabicNumerals(toFormatted)}`
+                            : `${fromFormatted} - ${toFormatted}`;
+                        })()}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
