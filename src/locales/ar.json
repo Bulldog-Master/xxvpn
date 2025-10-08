@@ -98,7 +98,7 @@
   },
   "auth": {
     "welcome": "مرحباً بك",
-    "title": "مرحباً بك في xxVPN",
+    "title": "مرحباً بك في إكس إكس في بي إن",
     "subtitle": "حماية آمنة وخاصة ومقاومة للحوسبة الكمية",
     "signIn": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
@@ -355,7 +355,7 @@
     "applicationRoutingDesc": "تكوين كيفية اتصال كل تطبيق بالإنترنت",
     "scanForApps": "البحث عن تطبيقات جديدة",
     "crossPlatformSupport": "الدعم متعدد المنصات",
-    "crossPlatformDesc": "xxVPN متاح على جميع أجهزتك",
+    "crossPlatformDesc": "إكس إكس في بي إن متاح على جميع أجهزتك",
     "categories": {
       "gaming": "الألعاب",
       "streaming": "البث",
@@ -391,7 +391,7 @@
   "subscription": {
     "required": "اشتراك مطلوب",
     "signInRequired": "يرجى تسجيل الدخول للوصول إلى ميزات في بي إن",
-    "requiredDesc": "ابدأ تجربتك المجانية للاتصال بخوادم xxVPN",
+    "requiredDesc": "ابدأ تجربتك المجانية للاتصال بخوادم إكس إكس في بي إن",
     "noActive": "لا يوجد اشتراك نشط",
     "noActiveDesc": "ابدأ تجربتك المجانية لمدة 7 أيام لفتح جميع أوضاع في بي إن والميزات المميزة",
     "viewPlans": "عرض الخطط",
@@ -738,7 +738,7 @@
   },
   "dao": {
     "title": "خدمة في بي إن DAO",
-    "description": "حوكمة المجتمع لقرارات خدمة xxVPN والخزانة",
+    "description": "حوكمة المجتمع لقرارات خدمة إكس إكس في بي إن والخزانة",
     "createProposal": "إنشاء مقترح",
     "noProposals": "لا توجد مقترحات نشطة",
     "beFirst": "كن أول من ينشئ مقترح حوكمة للمجتمع",
@@ -749,7 +749,7 @@
     "type": "النوع",
     "submitProposal": "إرسال المقترح",
     "createServiceProposal": "إنشاء مقترح خدمة في بي إن",
-    "proposeChanges": "اقترح تغييرات على خدمة xxVPN. يصوت المجتمع برموز DAO.",
+    "proposeChanges": "اقترح تغييرات على خدمة إكس إكس في بي إن. يصوت المجتمع برموز DAO.",
     "proposalTitlePlaceholder": "عنوان المقترح",
     "detailedDescription": "وصف تفصيلي للمقترح...",
     "loadingGovernance": "جاري تحميل بيانات الحوكمة...",
@@ -1366,7 +1366,7 @@
   },
   "comingSoon": {
     "excitingFeatures": "ميزات مثيرة قريباً",
-    "developingFeatures": "نحن نطور ميزات جديدة رائعة لتحسين تجربتك في xxVPN. ترقب!",
+    "developingFeatures": "نحن نطور ميزات جديدة رائعة لتحسين تجربتك في إكس إكس في بي إن. ترقب!",
     "plannedFeatures": "الميزات المخططة:",
     "wantEarlyAccess": "هل تريد الوصول المبكر؟",
     "joinBeta": "انضم إلى برنامجنا التجريبي للحصول على الميزات الجديدة أولاً"
