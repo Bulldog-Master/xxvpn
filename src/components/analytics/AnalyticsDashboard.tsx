@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { formatNumber } from '@/utils/numberFormat';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -54,7 +55,7 @@ type TimeRange = '24h' | '7d' | '30d' | '90d';
 const COLORS = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444'];
 
 export const AnalyticsDashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const [timeRange, setTimeRange] = useState<TimeRange>('7d');
   const [bandwidthData, setBandwidthData] = useState<BandwidthData[]>([]);
@@ -226,7 +227,7 @@ export const AnalyticsDashboard = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <Download className="w-5 h-5 text-primary" />
-              <div className="text-2xl font-bold">{stats.totalDownload} GB</div>
+              <div className="text-2xl font-bold">{formatNumber(stats.totalDownload, i18n.language, 2)} {t('units.gb')}</div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">{getTimeRangeLabel()}</p>
           </CardContent>
@@ -239,7 +240,7 @@ export const AnalyticsDashboard = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <Upload className="w-5 h-5 text-success" />
-              <div className="text-2xl font-bold">{stats.totalUpload} GB</div>
+              <div className="text-2xl font-bold">{formatNumber(stats.totalUpload, i18n.language, 2)} {t('units.gb')}</div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">{getTimeRangeLabel()}</p>
           </CardContent>
@@ -252,7 +253,7 @@ export const AnalyticsDashboard = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5 text-blue-500" />
-              <div className="text-2xl font-bold">{stats.totalDuration} min</div>
+              <div className="text-2xl font-bold">{formatNumber(stats.totalDuration, i18n.language)} {t('time.min')}</div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">{getTimeRangeLabel()}</p>
           </CardContent>
@@ -265,7 +266,7 @@ export const AnalyticsDashboard = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-orange-500" />
-              <div className="text-2xl font-bold">{stats.avgSpeed} GB/s</div>
+              <div className="text-2xl font-bold">{formatNumber(stats.avgSpeed, i18n.language, 2)} {t('units.gb')}/s</div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">{t('analytics.perSession')}</p>
           </CardContent>
@@ -278,7 +279,7 @@ export const AnalyticsDashboard = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-purple-500" />
-              <div className="text-2xl font-bold">{stats.sessionsCount}</div>
+              <div className="text-2xl font-bold">{formatNumber(stats.sessionsCount, i18n.language)}</div>
             </div>
             <p className="text-xs text-muted-foreground mt-1">{getTimeRangeLabel()}</p>
           </CardContent>
