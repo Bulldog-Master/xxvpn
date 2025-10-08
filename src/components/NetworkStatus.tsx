@@ -107,17 +107,17 @@ const NetworkStatus = () => {
                   <div>
                     <div className="font-medium">{node.location}</div>
                     <div className="text-sm text-muted-foreground">
-                      {t('network.hop')} {index + 1}
+                      {t('network.hop')} {formatNumber(index + 1, i18n.language)}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <div className="text-sm font-medium">{node.latency}ms</div>
+                    <div className="text-sm font-medium">{formatNumber(node.latency, i18n.language)}ms</div>
                     <div className="text-xs text-muted-foreground">{t('network.latency')}</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-medium">{node.load}%</div>
+                    <div className="text-sm font-medium">{formatNumber(node.load, i18n.language)}%</div>
                     <div className="text-xs text-muted-foreground">{t('network.load')}</div>
                   </div>
                   <Badge variant={node.status === 'active' ? 'default' : 'secondary'}>
