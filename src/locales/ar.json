@@ -524,7 +524,15 @@
     "protection": "الحماية",
     "dnsSettings": "إعدادات DNS",
     "advanced": "متقدم",
-    "coreProtection": "الحماية الأساسية"
+    "coreProtection": "الحماية الأساسية",
+    "dnsLeak": {
+      "title": "حماية تسرب DNS",
+      "description": "يمنع استعلامات DNS من تجاوز اتصال في بي إن الخاص بك"
+    },
+    "ipv6Leak": {
+      "title": "حماية تسرب IPv6",
+      "description": "يحظر حركة مرور IPv6 لمنع تجاوز في بي إن"
+    }
   },
   "vpnModes": {
     "ultraFast": {
