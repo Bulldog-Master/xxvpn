@@ -45,11 +45,11 @@ export const XXCoinIntegration = () => {
   const networkUsage = 450; // GB
 
   const recentTransactions = [
-    { type: 'earn', amount: 2.5, description: 'Referral bonus', date: '2 hours ago' },
-    { type: 'spend', amount: -1.2, description: 'VPN bandwidth (50GB)', date: '5 hours ago' },
-    { type: 'earn', amount: 5.0, description: 'Monthly staking reward', date: '1 day ago' },
-    { type: 'spend', amount: -3.5, description: 'Premium feature access', date: '2 days ago' },
-    { type: 'earn', amount: 1.0, description: 'Daily login bonus', date: '2 days ago' },
+    { type: 'earn', amount: 2.5, description: t('xxCoin.transactions.referralBonus'), date: t('xxCoin.transactions.hoursAgo', { hours: 2 }) },
+    { type: 'spend', amount: -1.2, description: t('xxCoin.transactions.vpnBandwidth', { gb: 50 }), date: t('xxCoin.transactions.hoursAgo', { hours: 5 }) },
+    { type: 'earn', amount: 5.0, description: t('xxCoin.transactions.monthlyStaking'), date: t('xxCoin.transactions.daysAgo', { days: 1 }) },
+    { type: 'spend', amount: -3.5, description: t('xxCoin.transactions.premiumFeature'), date: t('xxCoin.transactions.daysAgo', { days: 2 }) },
+    { type: 'earn', amount: 1.0, description: t('xxCoin.transactions.dailyBonus'), date: t('xxCoin.transactions.daysAgo', { days: 2 }) },
   ];
 
   const earningMethods = [
@@ -386,9 +386,9 @@ export const XXCoinIntegration = () => {
                   size="sm"
                   disabled={isLoading}
                 >
-                  1 Month
+                  {t('xxCoin.wallet.oneMonth')}
                   <br />
-                  <span className="text-xs">(5 XX)</span>
+                  <span className="text-xs">({formatNumber(5, i18n.language)} XX)</span>
                 </Button>
                 <Button 
                   onClick={() => handleSubscribe(6)} 
@@ -396,9 +396,9 @@ export const XXCoinIntegration = () => {
                   size="sm"
                   disabled={isLoading}
                 >
-                  6 Months
+                  {t('xxCoin.wallet.sixMonths')}
                   <br />
-                  <span className="text-xs">(30 XX)</span>
+                  <span className="text-xs">({formatNumber(30, i18n.language)} XX)</span>
                 </Button>
                 <Button 
                   onClick={() => handleSubscribe(12)} 
@@ -406,9 +406,9 @@ export const XXCoinIntegration = () => {
                   size="sm"
                   disabled={isLoading}
                 >
-                  12 Months
+                  {t('xxCoin.wallet.twelveMonths')}
                   <br />
-                  <span className="text-xs">(60 XX)</span>
+                  <span className="text-xs">({formatNumber(60, i18n.language)} XX)</span>
                 </Button>
               </div>
             </div>
@@ -505,9 +505,9 @@ export const XXCoinIntegration = () => {
       {/* Recent Transactions */}
       <Card className="glass-effect">
         <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
+          <CardTitle>{t('xxCoin.transactions.title')}</CardTitle>
           <CardDescription>
-            Your XX coin earning and spending history
+            {t('xxCoin.transactions.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -551,11 +551,9 @@ export const XXCoinIntegration = () => {
           <div className="flex items-start gap-3">
             <Zap className="w-5 h-5 text-primary mt-0.5" />
             <div className="space-y-2">
-              <h4 className="font-semibold">About XX Coins</h4>
+              <h4 className="font-semibold">{t('xxCoin.about.title')}</h4>
               <p className="text-sm text-muted-foreground">
-                XX Coins are the utility token of the xx Network. They're used to pay for bandwidth 
-                and network services. You earn XX coins through referrals, staking, and participation. 
-                The more you engage with the ecosystem, the more free VPN service you get!
+                {t('xxCoin.about.description')}
               </p>
             </div>
           </div>

@@ -1293,6 +1293,90 @@
     "bandwidthPaid": "تم دفع النطاق بعملات XX - {{amount}} XX لكل جيجابايت",
     "howToEarnXXCoins": "كيفية كسب عملات XX"
   },
+  "xxCoin": {
+    "wallet": {
+      "title": "محفظة عملة XX",
+      "description": "قم بتوصيل محفظتك لإدارة رموز XX",
+      "previouslyConnected": "تم الاتصال سابقاً",
+      "chooseWallet": "اختر محفظتك:",
+      "xxWallet": "محفظة XX",
+      "metamask": "MetaMask",
+      "recommended": "موصى به",
+      "postQuantum": "بروتوكول أمان ما بعد الكم",
+      "standardWallet": "محفظة إيثريوم قياسية",
+      "noWalletDetected": "لم يتم الكشف عن محفظة",
+      "getXXWallet": "احصل على محفظة XX",
+      "getMetaMask": "احصل على MetaMask",
+      "connectedVia": "متصل عبر",
+      "quantumSecure": "آمن كمي",
+      "balance": "الرصيد",
+      "subscribeWithTokens": "اشترك باستخدام الرموز",
+      "oneMonth": "شهر واحد",
+      "sixMonths": "٦ أشهر",
+      "twelveMonths": "١٢ شهراً"
+    },
+    "balance": {
+      "title": "رصيد عملة XX",
+      "description": "اكسب واستخدم رموز XX لخدمات في بي إن",
+      "coins": "عملات",
+      "thisMonthEarned": "المكتسب هذا الشهر",
+      "thisMonthSpent": "المُنفَق هذا الشهر",
+      "networkUsage": "استخدام الشبكة هذا الشهر",
+      "bandwidthPaid": "النطاق مدفوع بعملات XX - -٠.٠٢ XX لكل جيجابايت"
+    },
+    "earning": {
+      "title": "كيفية كسب عملات XX",
+      "description": "طرق متعددة لكسب عملات XX مقابل استخدام في بي إن مجاني",
+      "referrals": {
+        "title": "الإحالات",
+        "amount": "+٥ XX لكل مستخدم",
+        "description": "ادعُ الأصدقاء لكسب عملات XX"
+      },
+      "dailyLogin": {
+        "title": "تسجيل الدخول اليومي",
+        "amount": "+١ XX",
+        "description": "سجل الدخول يومياً لكسب المكافآت"
+      },
+      "staking": {
+        "title": "مكافآت الرهن",
+        "amount": "+١٠٪ APY",
+        "description": "راهن برموز DAO لكسب XX"
+      }
+    },
+    "transactions": {
+      "title": "المعاملات الأخيرة",
+      "description": "سجل كسب وإنفاق عملات XX الخاصة بك",
+      "referralBonus": "مكافأة الإحالة",
+      "vpnBandwidth": "نطاق في بي إن ({{gb}}جيجابايت)",
+      "monthlyStaking": "مكافأة الرهن الشهرية",
+      "premiumFeature": "الوصول إلى الميزات المتميزة",
+      "dailyBonus": "مكافأة تسجيل الدخول اليومي",
+      "hoursAgo": "منذ {{hours}} ساعة",
+      "daysAgo": "منذ {{days}} يوم"
+    },
+    "about": {
+      "title": "حول عملات XX",
+      "description": "عملات XX هي رمز الخدمة الخاص بشبكة XX. تُستخدم للدفع مقابل النطاق وخدمات الشبكة. تكسب عملات XX من خلال الإحالات والرهن والمشاركة. كلما تفاعلت أكثر مع النظام البيئي، حصلت على المزيد من خدمة في بي إن المجانية!"
+    },
+    "toast": {
+      "walletDisconnected": "تم قطع اتصال المحفظة",
+      "reconnectWallet": "يرجى إعادة الاتصال بمحفظتك",
+      "metamaskNotFound": "لم يتم العثور على MetaMask",
+      "installMetamask": "يرجى تثبيت امتداد MetaMask",
+      "xxWalletNotFound": "لم يتم العثور على محفظة XX",
+      "installXXWallet": "يرجى تثبيت محفظة XX",
+      "walletConnected": "تم توصيل المحفظة",
+      "connectionFailed": "فشل الاتصال",
+      "balanceUpdated": "تم تحديث الرصيد",
+      "currentBalance": "الرصيد الحالي: {{balance}} XX",
+      "refreshFailed": "فشل التحديث",
+      "walletNotConnected": "المحفظة غير متصلة",
+      "connectWalletFirst": "يرجى توصيل محفظتك أولاً",
+      "subscriptionSuccessful": "الاشتراك ناجح",
+      "transaction": "المعاملة: {{hash}}",
+      "subscriptionFailed": "فشل الاشتراك"
+    }
+  },
   "loadLevel": {
     "low": "منخفض",
     "medium": "متوسط",
