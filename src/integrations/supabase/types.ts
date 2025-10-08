@@ -769,6 +769,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cancel_own_subscription: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_device_access_audit: {
         Args: Record<PropertyKey, never>
         Returns: undefined
