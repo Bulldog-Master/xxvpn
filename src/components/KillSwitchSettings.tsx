@@ -75,9 +75,9 @@ export const KillSwitchSettings: React.FC = () => {
   };
 
   const getConnectionStatusText = () => {
-    if (settings.emergencyDisconnect) return 'Kill Switch Active';
+    if (settings.emergencyDisconnect) return t('killSwitch.killSwitchActive');
     if (networkStatus.vpnConnected) return t('security.protected');
-    return 'Unprotected';
+    return t('killSwitch.unprotected');
   };
 
   return (
@@ -121,9 +121,9 @@ export const KillSwitchSettings: React.FC = () => {
                 <Alert variant="destructive">
                   <AlertTriangle className="h-4 w-4" />
                   <AlertDescription>
-                    {networkStatus.dnsLeaking && 'DNS leak detected. '}
-                    {networkStatus.ipv6Leaking && 'IPv6 leak detected. '}
-                    Check your protection settings.
+                    {networkStatus.dnsLeaking && t('killSwitch.dnsLeakDetected')}
+                    {networkStatus.ipv6Leaking && t('killSwitch.ipv6LeakDetected')}
+                    {t('killSwitch.checkSettings')}
                   </AlertDescription>
                 </Alert>
               )}
@@ -132,7 +132,7 @@ export const KillSwitchSettings: React.FC = () => {
                 <Alert variant="destructive">
                   <ShieldAlert className="h-4 w-4" />
                   <AlertDescription>
-                    Kill switch is active. All internet traffic is blocked until VPN reconnects.
+                    {t('killSwitch.blockAllTraffic')}
                   </AlertDescription>
                 </Alert>
               )}
@@ -161,7 +161,7 @@ export const KillSwitchSettings: React.FC = () => {
               ) : (
                 <Eye className="h-4 w-4 mr-2" />
               )}
-              {isTestingDNS ? 'Testing...' : t('security.testDnsLeaks')}
+              {isTestingDNS ? t('killSwitch.testing') : t('security.testDnsLeaks')}
             </Button>
 
             <Button
@@ -196,16 +196,16 @@ export const KillSwitchSettings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="h-5 w-5" />
-                {t('security.coreProtection')}
+                {t('killSwitch.coreProtection')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Kill Switch */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">Kill Switch</h3>
+                  <h3 className="font-semibold">{t('killSwitch.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Blocks all internet traffic if VPN connection drops
+                    {t('killSwitch.description')}
                   </p>
                 </div>
                 <Switch
@@ -217,9 +217,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* DNS Leak Protection */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">DNS Leak Protection</h3>
+                  <h3 className="font-semibold">{t('security.dnsLeak.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Prevents DNS queries from leaking outside the VPN tunnel
+                    {t('security.dnsLeak.description')}
                   </p>
                 </div>
                 <Switch
@@ -231,9 +231,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* IPv6 Leak Protection */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">IPv6 Leak Protection</h3>
+                  <h3 className="font-semibold">{t('security.ipv6Leak.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Blocks IPv6 traffic to prevent IP address leaks
+                    {t('security.ipv6Leak.description')}
                   </p>
                 </div>
                 <Switch
@@ -245,9 +245,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* Auto Connect */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">Auto Connect</h3>
+                  <h3 className="font-semibold">{t('killSwitch.autoConnect')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Automatically connect VPN on startup
+                    {t('killSwitch.autoConnectDesc')}
                   </p>
                 </div>
                 <Switch
@@ -264,18 +264,18 @@ export const KillSwitchSettings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Server className="h-5 w-5" />
-                DNS Configuration
+                {t('killSwitch.dnsConfiguration')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Current DNS Servers */}
               <div>
-                <h3 className="font-semibold mb-3">Current DNS Servers</h3>
+                <h3 className="font-semibold mb-3">{t('killSwitch.currentDNSServers')}</h3>
                 <div className="space-y-2">
                   {networkStatus.dnsServers.map((server, index) => (
                     <div key={index} className="flex items-center justify-between p-2 border rounded">
                       <span className="font-mono text-sm">{server}</span>
-                      <Badge variant="outline">Active</Badge>
+                      <Badge variant="outline">{t('killSwitch.active')}</Badge>
                     </div>
                   ))}
                 </div>
@@ -283,7 +283,7 @@ export const KillSwitchSettings: React.FC = () => {
 
               {/* Custom DNS Servers */}
               <div>
-                <h3 className="font-semibold mb-3">Custom DNS Servers</h3>
+                <h3 className="font-semibold mb-3">{t('killSwitch.customDNSServers')}</h3>
                 <div className="space-y-2">
                   {settings.customDnsServers.map((server, index) => (
                     <div key={index} className="flex items-center justify-between p-2 border rounded">
@@ -315,7 +315,7 @@ export const KillSwitchSettings: React.FC = () => {
               {/* DNS Leak Test Results */}
               {dnsTestResults.length > 0 && (
                 <div>
-                  <h3 className="font-semibold mb-3">DNS Leak Test Results</h3>
+                  <h3 className="font-semibold mb-3">{t('killSwitch.dnsLeakTestResults')}</h3>
                   <div className="space-y-2">
                     {dnsTestResults.map((result, index) => (
                       <div key={index} className="flex items-center justify-between p-3 border rounded">
@@ -331,12 +331,12 @@ export const KillSwitchSettings: React.FC = () => {
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm">{result.responseTime}ms</div>
+                          <div className="text-sm">{result.responseTime}{t('units.ms')}</div>
                           <Badge 
                             variant={result.leaked ? "destructive" : "default"}
                             className="text-xs"
                           >
-                            {result.leaked ? 'Leaked' : 'Secure'}
+                            {result.leaked ? t('killSwitch.leaked') : t('killSwitch.secure')}
                           </Badge>
                         </div>
                       </div>
@@ -353,16 +353,16 @@ export const KillSwitchSettings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Settings className="h-5 w-5" />
-                Advanced Security
+                {t('killSwitch.advancedSecurity')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Block Ads */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">Block Ads & Trackers</h3>
+                  <h3 className="font-semibold">{t('killSwitch.blockAdsTrackers')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Filter malicious ads and tracking scripts
+                    {t('killSwitch.blockAdsDesc')}
                   </p>
                 </div>
                 <Switch
@@ -374,9 +374,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* Block Malware */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">Malware Protection</h3>
+                  <h3 className="font-semibold">{t('killSwitch.malwareProtection')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Block access to known malicious websites
+                    {t('killSwitch.malwareProtectionDesc')}
                   </p>
                 </div>
                 <Switch
@@ -388,9 +388,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* Allow LAN Traffic */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">Allow LAN Traffic</h3>
+                  <h3 className="font-semibold">{t('killSwitch.allowLANTraffic')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Permit local network access (printers, file sharing)
+                    {t('killSwitch.allowLANDesc')}
                   </p>
                 </div>
                 <Switch
@@ -406,7 +406,7 @@ export const KillSwitchSettings: React.FC = () => {
                   variant="outline"
                   className="w-full"
                 >
-                  Reset to Defaults
+                  {t('killSwitch.resetToDefaults')}
                 </Button>
               </div>
             </CardContent>

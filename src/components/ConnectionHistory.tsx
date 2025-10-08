@@ -74,14 +74,14 @@ export const ConnectionHistory: React.FC = () => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     if (hours > 0) {
-      return `${hours}h ${minutes}m`;
+      return `${hours}${t('timeUnits.h')} ${minutes}${t('timeUnits.m')}`;
     }
-    return `${minutes}m`;
+    return `${minutes}${t('timeUnits.m')}`;
   };
 
   const formatBytes = (bytes: number | null) => {
-    if (!bytes) return '0 B';
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    if (!bytes) return `0 ${t('units.b')}`;
+    const sizes = [t('units.b'), t('units.kb'), t('units.mb'), t('units.gb')];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
   };
