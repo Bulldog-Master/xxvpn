@@ -221,9 +221,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* DNS Leak Protection */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">{t('security.dnsLeak.title')}</h3>
+                  <h3 className="font-semibold">{t('killSwitch.dnsLeak.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {t('security.dnsLeak.description')}
+                    {t('killSwitch.dnsLeak.description')}
                   </p>
                 </div>
                 <Switch
@@ -235,9 +235,9 @@ export const KillSwitchSettings: React.FC = () => {
               {/* IPv6 Leak Protection */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">{t('security.ipv6Leak.title')}</h3>
+                  <h3 className="font-semibold">{t('killSwitch.ipv6Leak.title')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {t('security.ipv6Leak.description')}
+                    {t('killSwitch.ipv6Leak.description')}
                   </p>
                 </div>
                 <Switch
