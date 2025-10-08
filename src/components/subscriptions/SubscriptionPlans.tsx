@@ -39,63 +39,63 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const personalPlans: SubscriptionPlan[] = [
     {
       id: 'personal-single',
-      name: 'Single Device',
+      name: t('plans.singleDevice'),
       duration: 'month',
       price: 499, // $4.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        '1 device only',
-        'Unlimited bandwidth',
-        'All server locations',
-        'Advanced cMixx technology',
-        'Email support'
+        t('planFeatures.oneDeviceOnly'),
+        t('planFeatures.unlimitedBandwidth'),
+        t('planFeatures.allServerLocations'),
+        t('planFeatures.advancedCmixxTech'),
+        t('planFeatures.emailSupport')
       ]
     },
     {
       id: 'personal-basic',
-      name: 'Personal',
+      name: t('plans.personal'),
       duration: 'month',
       price: 999, // $9.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        'Up to 5 devices',
-        'Unlimited bandwidth',
-        'All server locations',
-        'Advanced cMixx technology',
-        'Basic support'
+        t('planFeatures.upTo5Devices'),
+        t('planFeatures.unlimitedBandwidth'),
+        t('planFeatures.allServerLocations'),
+        t('planFeatures.advancedCmixxTech'),
+        t('planFeatures.basicSupport')
       ]
     },
     {
       id: 'personal-pro',
-      name: 'Personal Pro',
+      name: t('plans.personalPro'),
       duration: 'month',
       price: 1299, // $12.99 in cents
       currency: 'USD',
       popular: true,
       trialDays: 7,
       features: [
-        'Up to 10 devices',
-        'Everything in Personal',
-        'Gaming & Privacy modes',
-        'Priority support',
-        'Cross-platform support'
+        t('planFeatures.upTo10Devices'),
+        t('planFeatures.everythingInPersonal'),
+        t('planFeatures.gamingPrivacyModes'),
+        t('planFeatures.prioritySupport'),
+        t('planFeatures.crossPlatformSupport')
       ]
     },
     {
       id: 'personal-premium',
-      name: 'Personal Premium',
+      name: t('plans.personalPremium'),
       duration: 'month',
       price: 1999, // $19.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        'Up to 15 devices',
-        'Everything in Personal Pro',
-        'Advanced security features',
-        'Custom configurations',
-        'Premium support'
+        t('planFeatures.upTo15Devices'),
+        t('planFeatures.everythingInPersonalPro'),
+        t('planFeatures.advancedSecurityFeatures'),
+        t('planFeatures.customConfigurations'),
+        t('planFeatures.premiumSupport')
       ]
     }
   ];
@@ -103,51 +103,51 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const businessPlans: SubscriptionPlan[] = [
     {
       id: 'business',
-      name: 'Business',
+      name: t('plans.business'),
       duration: 'month',
       price: 2999, // $29.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        '11-25 devices',
-        'Team management dashboard',
-        'Centralized billing',
-        'Priority customer support',
-        'Advanced security features'
+        t('planFeatures.devices11to25'),
+        t('planFeatures.teamManagementDashboard'),
+        t('planFeatures.centralizedBilling'),
+        t('planFeatures.priorityCustomerSupport'),
+        t('planFeatures.advancedSecurityFeatures')
       ]
     },
     {
       id: 'business-plus',
-      name: 'Business +',
+      name: t('plans.businessPlus'),
       duration: 'month',
       price: 5999, // $59.99 in cents
       currency: 'USD',
       popular: true,
       trialDays: 7,
       features: [
-        '26-100 devices',
-        'Everything in Business',
-        'Dedicated account manager',
-        'Custom configuration options',
-        'Advanced analytics',
-        'SLA guarantee'
+        t('planFeatures.devices26to100'),
+        t('planFeatures.everythingInBusiness'),
+        t('planFeatures.dedicatedAccountManager'),
+        t('planFeatures.customConfigOptions'),
+        t('planFeatures.advancedAnalytics'),
+        t('planFeatures.slaGuarantee')
       ]
     },
     {
       id: 'enterprise',
-      name: 'Enterprise',
+      name: t('plans.enterprise'),
       duration: 'month',
       price: 9999, // $99.99 in cents
       currency: 'USD',
       trialDays: 7,
       features: [
-        '101+ devices',
-        'Everything in Business +',
-        'Custom deployment options',
-        'White-label solutions',
-        'On-premise integration',
-        '24/7 premium support',
-        'Custom SLA'
+        t('planFeatures.devices101plus'),
+        t('planFeatures.everythingInBusinessPlus'),
+        t('planFeatures.customDeploymentOptions'),
+        t('planFeatures.whiteLabelSolutions'),
+        t('planFeatures.onPremiseIntegration'),
+        t('planFeatures.premiumSupport247'),
+        t('planFeatures.customSLA')
       ]
     }
   ];
@@ -251,7 +251,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
           <CardContent className="space-y-4">
             <div className="text-center">
               <Badge variant="outline" className="text-xs">
-                {plan.trialDays}-day free trial
+                {t('subscriptionPlans.dayFreeTrialBadge', { days: plan.trialDays })}
               </Badge>
             </div>
 
@@ -290,7 +290,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
                   }}
                 >
                   <Coins className="w-4 h-4 mr-2" />
-                  Pay with Crypto
+                  {t('subscriptionPlans.payWithCrypto')}
                 </Button>
               )}
             </div>
@@ -303,16 +303,16 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold">Choose Your Plan</h2>
+        <h2 className="text-2xl font-bold">{t('subscriptionPlans.chooseYourPlan')}</h2>
         <p className="text-muted-foreground">
-          Start with a <span className="text-primary font-medium">7-day free trial</span> on any plan
+          {t('subscriptionPlans.startWithFreeTrial')} <span className="text-primary font-medium">{t('subscriptionPlans.dayFreeTrial')}</span> {t('subscriptionPlans.onAnyPlan')}
         </p>
       </div>
 
       <Tabs defaultValue="personal" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="personal">Personal</TabsTrigger>
-          <TabsTrigger value="business">Business</TabsTrigger>
+          <TabsTrigger value="personal">{t('subscriptionPlans.personal')}</TabsTrigger>
+          <TabsTrigger value="business">{t('subscriptionPlans.business')}</TabsTrigger>
         </TabsList>
         
         <TabsContent value="personal" className="space-y-4">
@@ -325,7 +325,7 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
       </Tabs>
 
       <div className="text-center text-sm text-muted-foreground">
-        <p>All plans include a 7-day free trial. Cancel anytime during the trial period without charge.</p>
+        <p>{t('subscriptionPlans.allPlansInclude')}</p>
       </div>
 
       {selectedCryptoPlan && (
