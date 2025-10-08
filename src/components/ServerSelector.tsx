@@ -14,6 +14,7 @@ import {
   MapPin,
   Wifi
 } from 'lucide-react';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface Server {
   id: string;
@@ -27,7 +28,7 @@ interface Server {
 }
 
 const ServerSelector = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedServer, setSelectedServer] = useState<string>('us-nyc-01');
   const [servers] = useState<Server[]>([
@@ -110,7 +111,7 @@ const ServerSelector = () => {
             <Globe className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{servers.length}</div>
+            <div className="text-2xl font-bold">{formatNumber(servers.length, i18n.language)}</div>
             <p className="text-xs text-muted-foreground">
               {t('servers.stats.acrossCountries')}
             </p>
@@ -123,7 +124,7 @@ const ServerSelector = () => {
             <Wifi className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">42%</div>
+            <div className="text-2xl font-bold text-success">{formatNumber(42, i18n.language)}{t('units.percent')}</div>
             <p className="text-xs text-muted-foreground">
               {t('servers.stats.optimalPerformance')}
             </p>
@@ -137,7 +138,7 @@ const ServerSelector = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-primary">
-              {servers.find(s => s.id === selectedServer)?.latency || 0}ms
+              {formatNumber(servers.find(s => s.id === selectedServer)?.latency || 0, i18n.language)}{t('units.ms')}
             </div>
             <p className="text-xs text-muted-foreground">
               {t('servers.stats.toSelectedServer')}
@@ -195,13 +196,13 @@ const ServerSelector = () => {
                       <div className="flex items-center gap-4">
                         <div className="text-right">
                           <div className={`text-sm font-medium ${getLatencyColor(server.latency)}`}>
-                            {server.latency}ms
+                            {formatNumber(server.latency, i18n.language)}{t('units.ms')}
                           </div>
                           <div className="text-xs text-muted-foreground">{t('servers.list.latency')}</div>
                         </div>
                         <div className="text-right">
                           <div className={`text-sm font-medium ${getLoadColor(server.load)}`}>
-                            {server.load}%
+                            {formatNumber(server.load, i18n.language)}{t('units.percent')}
                           </div>
                           <div className="text-xs text-muted-foreground">{t('servers.list.load')}</div>
                         </div>
@@ -258,13 +259,13 @@ const ServerSelector = () => {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className={`text-sm font-medium ${getLatencyColor(server.latency)}`}>
-                        {server.latency}ms
+                        {formatNumber(server.latency, i18n.language)}{t('units.ms')}
                       </div>
                       <div className="text-xs text-muted-foreground">{t('servers.list.latency')}</div>
                     </div>
                     <div className="text-right">
                       <div className={`text-sm font-medium ${getLoadColor(server.load)}`}>
-                        {server.load}%
+                        {formatNumber(server.load, i18n.language)}{t('units.percent')}
                       </div>
                       <div className="text-xs text-muted-foreground">{t('servers.list.load')}</div>
                     </div>

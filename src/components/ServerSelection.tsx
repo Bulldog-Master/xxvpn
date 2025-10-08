@@ -26,6 +26,7 @@ import { vpnServers, VPNServer, getAllRegions, getServersByRegion, getLoadColor,
 import { useServerTesting } from '@/hooks/useServerTesting';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { formatNumber, formatSpeed } from '@/utils/numberFormat';
 
 interface ServerSelectionProps {
   selectedServer: string;
@@ -36,7 +37,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
   selectedServer,
   onServerSelect
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [showOnlyPremium, setShowOnlyPremium] = useState(false);
@@ -118,7 +119,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <div className="flex items-center gap-2">
                     <Progress value={server.load} className="w-16 h-2" />
                     <span className={getLoadColor(server.load)}>
-                      {server.load}% ({t(`loadLevel.${getLoadLevel(server.load)}`)})
+                      {formatNumber(server.load, i18n.language)}{t('units.percent')} ({t(`loadLevel.${getLoadLevel(server.load)}`)})
                     </span>
                   </div>
                 </div>
@@ -134,7 +135,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       </div>
                     ) : (
                       <span className={getPingColor(ping)}>
-                        {ping ? `${ping}ms (${getPingLabel(ping)})` : t('serverSelection.notTested')}
+                        {ping ? `${formatNumber(ping, i18n.language)}${t('units.ms')} (${getPingLabel(ping)})` : t('serverSelection.notTested')}
                       </span>
                     )}
                   </div>
@@ -143,7 +144,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                 {/* Max Speed */}
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">{t('serverSelection.speed')}:</span>
-                  <span className="font-medium">{server.maxSpeed}</span>
+                  <span className="font-medium">{formatSpeed(server.maxSpeed, i18n.language, t)}</span>
                 </div>
               </div>
             </div>

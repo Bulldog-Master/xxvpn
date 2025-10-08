@@ -940,5 +940,11 @@
     "low": "Low",
     "medium": "Medium",
     "high": "High"
+  },
+  "units": {
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms",
+    "percent": "%"
   }
 }
