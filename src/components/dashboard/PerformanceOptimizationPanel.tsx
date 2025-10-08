@@ -20,8 +20,10 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import { useTranslation } from 'react-i18next';
 
 const PerformanceOptimizationPanel: React.FC = () => {
+  const { t } = useTranslation();
   const {
     settings,
     metrics,
@@ -66,7 +68,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
               </Badge>
             </div>
             <div className="space-y-2">
-              <div className="text-sm font-medium">Performance Score</div>
+              <div className="text-sm font-medium">{t('performance.score')}</div>
               <Progress value={performanceScore} className="h-2" />
             </div>
           </CardContent>
@@ -76,7 +78,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-4 w-4 text-blue-500" />
-              <span className="text-xs text-muted-foreground">Latency</span>
+              <span className="text-xs text-muted-foreground">{t('performance.latency')}</span>
             </div>
             <div className="text-2xl font-bold">{metrics.latency}ms</div>
             <div className={`text-xs ${getQualityColor(metrics.networkQuality)}`}>
@@ -89,7 +91,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <Wifi className="h-4 w-4 text-green-500" />
-              <span className="text-xs text-muted-foreground">Bandwidth</span>
+              <span className="text-xs text-muted-foreground">{t('performance.bandwidth')}</span>
             </div>
             <div className="text-2xl font-bold">{metrics.bandwidth}</div>
             <div className="text-xs text-muted-foreground">Mbps</div>
@@ -100,7 +102,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4 text-orange-500" />
-              <span className="text-xs text-muted-foreground">Throughput</span>
+              <span className="text-xs text-muted-foreground">{t('performance.throughput')}</span>
             </div>
             <div className="text-2xl font-bold">{metrics.throughput}</div>
             <div className="text-xs text-muted-foreground">Mbps</div>
@@ -114,21 +116,21 @@ const PerformanceOptimizationPanel: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Activity className="h-5 w-5 text-primary" />
-              <CardTitle>Real-time Network Metrics</CardTitle>
+              <CardTitle>{t('performance.realTimeMetrics')}</CardTitle>
             </div>
             <Badge variant={getQualityBadgeVariant(metrics.networkQuality)}>
               {metrics.networkQuality.toUpperCase()}
             </Badge>
           </div>
           <CardDescription>
-            Live performance monitoring and analysis
+            {t('performance.liveMonitoring')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Jitter</span>
+                <span className="text-sm text-muted-foreground">{t('performance.jitter')}</span>
                 <span className="text-sm font-medium">{metrics.jitter}ms</span>
               </div>
               <Progress value={(10 - metrics.jitter) * 10} className="h-2" />
@@ -136,7 +138,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Packet Loss</span>
+                <span className="text-sm text-muted-foreground">{t('performance.packetLoss')}</span>
                 <span className="text-sm font-medium">{metrics.packetLoss}%</span>
               </div>
               <Progress value={Math.max(0, 100 - metrics.packetLoss * 50)} className="h-2" />
@@ -144,7 +146,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">CPU Usage</span>
+                <span className="text-sm text-muted-foreground">{t('performance.cpuUsage')}</span>
                 <span className="text-sm font-medium">{metrics.cpuUsage}%</span>
               </div>
               <Progress value={metrics.cpuUsage} className="h-2" />
@@ -152,7 +154,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Memory</span>
+                <span className="text-sm text-muted-foreground">{t('performance.memory')}</span>
                 <span className="text-sm font-medium">{metrics.memoryUsage}%</span>
               </div>
               <Progress value={metrics.memoryUsage} className="h-2" />
@@ -167,7 +169,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
-              <CardTitle>Performance Optimization</CardTitle>
+              <CardTitle>{t('performance.optimization.title')}</CardTitle>
             </div>
             <Button 
               onClick={runOptimization}
@@ -179,20 +181,20 @@ const PerformanceOptimizationPanel: React.FC = () => {
               ) : (
                 <TrendingUp className="h-4 w-4 mr-2" />
               )}
-              {isOptimizing ? 'Optimizing...' : 'Optimize Now'}
+              {isOptimizing ? t('performance.optimization.optimizing') : t('performance.optimization.optimizeNow')}
             </Button>
           </div>
           <CardDescription>
-            Configure intelligent performance optimizations
+            {t('performance.optimization.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Adaptive Quality</div>
+                <div className="font-medium">{t('performance.optimization.adaptiveQuality')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Automatically adjust quality based on network conditions
+                  {t('performance.optimization.adaptiveQualityDesc')}
                 </div>
               </div>
               <Switch
@@ -205,9 +207,9 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Intelligent Routing</div>
+                <div className="font-medium">{t('performance.optimization.intelligentRouting')}</div>
                 <div className="text-sm text-muted-foreground">
-                  AI-powered path optimization for minimal latency
+                  {t('performance.optimization.intelligentRoutingDesc')}
                 </div>
               </div>
               <Switch
@@ -220,9 +222,9 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Compression Optimization</div>
+                <div className="font-medium">{t('performance.optimization.compression')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Smart data compression for improved throughput
+                  {t('performance.optimization.compressionDesc')}
                 </div>
               </div>
               <Switch
@@ -235,9 +237,9 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Buffer Optimization</div>
+                <div className="font-medium">{t('performance.optimization.buffer')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Dynamic buffer sizing for consistent performance
+                  {t('performance.optimization.bufferDesc')}
                 </div>
               </div>
               <Switch
@@ -250,9 +252,9 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Priority Traffic Shaping</div>
+                <div className="font-medium">{t('performance.optimization.priorityTraffic')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Prioritize critical traffic for better user experience
+                  {t('performance.optimization.priorityTrafficDesc')}
                 </div>
               </div>
               <Switch
@@ -265,9 +267,9 @@ const PerformanceOptimizationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Dynamic Protocol Switching</div>
+                <div className="font-medium">{t('performance.optimization.dynamicProtocol')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Automatically switch protocols based on performance
+                  {t('performance.optimization.dynamicProtocolDesc')}
                 </div>
               </div>
               <Switch
@@ -284,10 +286,10 @@ const PerformanceOptimizationPanel: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Route className="h-5 w-5 text-primary" />
-            <CardTitle>Network Routes</CardTitle>
+            <CardTitle>{t('performance.routes.title')}</CardTitle>
           </div>
           <CardDescription>
-            Available network paths and their performance characteristics
+            {t('performance.routes.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -307,7 +309,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
                     {route.recommended && (
                       <Badge variant="default" className="text-xs">
                         <CheckCircle className="h-3 w-3 mr-1" />
-                        Recommended
+                        {t('performance.routes.recommended')}
                       </Badge>
                     )}
                     <Badge 
@@ -325,15 +327,15 @@ const PerformanceOptimizationPanel: React.FC = () => {
                 
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-muted-foreground">Hops: </span>
+                    <span className="text-muted-foreground">{t('performance.routes.hops')}: </span>
                     <span className="font-medium">{route.hops}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Latency: </span>
+                    <span className="text-muted-foreground">{t('performance.latency')}: </span>
                     <span className="font-medium">{route.latency}ms</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Reliability: </span>
+                    <span className="text-muted-foreground">{t('performance.routes.reliability')}: </span>
                     <span className="font-medium">{route.reliability}%</span>
                   </div>
                 </div>
@@ -348,18 +350,18 @@ const PerformanceOptimizationPanel: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            <CardTitle>Recent Optimizations</CardTitle>
+            <CardTitle>{t('performance.recentOptimizations')}</CardTitle>
           </div>
           <CardDescription>
-            Performance improvements and system optimizations
+            {t('performance.recentOptimizationsDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {optimizations.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>No optimizations recorded yet</p>
-              <p className="text-sm">Run optimization to see improvements</p>
+              <p>{t('performance.noOptimizations')}</p>
+              <p className="text-sm">{t('performance.runToSeeImprovements')}</p>
             </div>
           ) : (
             <div className="space-y-3">

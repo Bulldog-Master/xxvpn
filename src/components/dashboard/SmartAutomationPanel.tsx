@@ -30,27 +30,27 @@ const SmartAutomationPanel: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Brain className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg">AI Automation Score</CardTitle>
+              <CardTitle className="text-lg">{t('smartAutomation.score')}</CardTitle>
             </div>
             <Badge variant="secondary" className="text-primary font-semibold">
               {automationScore}%
             </Badge>
           </div>
           <CardDescription>
-            AI-powered optimization performance
+            {t('smartAutomation.scoreDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Progress value={automationScore} className="h-3 mb-4" />
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Active Features:</span>
+              <span className="text-muted-foreground">{t('smartAutomation.activeFeatures')}:</span>
               <span className="font-medium">
                 {Object.values(settings).filter(Boolean).length}/6
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Optimizations Today:</span>
+              <span className="text-muted-foreground">{t('smartAutomation.optimizationsToday')}:</span>
               <span className="font-medium text-primary">+23%</span>
             </div>
           </div>
@@ -62,19 +62,19 @@ const SmartAutomationPanel: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-primary" />
-            Smart Features
+            {t('smartAutomation.smartFeatures')}
           </CardTitle>
           <CardDescription>
-            Configure AI-powered automation settings
+            {t('smartAutomation.smartFeaturesDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">AI Server Selection</div>
+                <div className="font-medium">{t('smartAutomation.features.aiServerSelection')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Automatically choose optimal servers based on usage patterns
+                  {t('smartAutomation.features.aiServerSelectionDesc')}
                 </div>
               </div>
               <Switch
@@ -87,9 +87,9 @@ const SmartAutomationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Smart Kill Switch</div>
+                <div className="font-medium">{t('smartAutomation.features.smartKillSwitch')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Adapts to network conditions for intelligent protection
+                  {t('smartAutomation.features.smartKillSwitchDesc')}
                 </div>
               </div>
               <Switch
@@ -102,9 +102,9 @@ const SmartAutomationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Adaptive Protocol</div>
+                <div className="font-medium">{t('smartAutomation.features.adaptiveProtocol')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Automatically switch protocols for optimal performance
+                  {t('smartAutomation.features.adaptiveProtocolDesc')}
                 </div>
               </div>
               <Switch
@@ -117,9 +117,9 @@ const SmartAutomationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Bandwidth Optimization</div>
+                <div className="font-medium">{t('smartAutomation.features.bandwidthOptimization')}</div>
                 <div className="text-sm text-muted-foreground">
-                  AI-driven traffic management for maximum speeds
+                  {t('smartAutomation.features.bandwidthOptimizationDesc')}
                 </div>
               </div>
               <Switch
@@ -132,9 +132,9 @@ const SmartAutomationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Predictive Connection</div>
+                <div className="font-medium">{t('smartAutomation.features.predictiveConnection')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Predict and prepare for your connection needs
+                  {t('smartAutomation.features.predictiveConnectionDesc')}
                 </div>
               </div>
               <Switch
@@ -147,9 +147,9 @@ const SmartAutomationPanel: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <div className="font-medium">Smart DNS Routing</div>
+                <div className="font-medium">{t('smartAutomation.features.smartDNSRouting')}</div>
                 <div className="text-sm text-muted-foreground">
-                  Optimize DNS routes based on application requirements
+                  {t('smartAutomation.features.smartDNSRoutingDesc')}
                 </div>
               </div>
               <Switch
@@ -168,7 +168,7 @@ const SmartAutomationPanel: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                <CardTitle>AI Server Recommendations</CardTitle>
+                <CardTitle>{t('smartAutomation.recommendations.title')}</CardTitle>
               </div>
               <Button 
                 variant="outline" 
@@ -182,11 +182,11 @@ const SmartAutomationPanel: React.FC = () => {
                 ) : (
                   <Brain className="h-4 w-4 mr-2" />
                 )}
-                {isAnalyzing ? 'Analyzing...' : 'Refresh'}
+                {isAnalyzing ? t('smartAutomation.recommendations.analyzing') : t('smartAutomation.recommendations.refresh')}
               </Button>
             </div>
             <CardDescription>
-              Optimized server selection based on your usage patterns
+              {t('smartAutomation.recommendations.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -225,7 +225,7 @@ const SmartAutomationPanel: React.FC = () => {
                       </span>
                     </div>
                     <Button size="sm" variant="outline" className="hover-scale">
-                      Connect
+                      {t('dashboard.connect')}
                     </Button>
                   </div>
                 </div>
@@ -240,29 +240,29 @@ const SmartAutomationPanel: React.FC = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-primary" />
-              <CardTitle>Automation Insights</CardTitle>
-            </div>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={optimizeBandwidth}
-              className="hover-lift"
-            >
-              <Brain className="h-4 w-4 mr-2" />
-              Optimize Now
-            </Button>
+                <Shield className="h-5 w-5 text-primary" />
+                <CardTitle>{t('smartAutomation.insights.title')}</CardTitle>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={optimizeBandwidth}
+                className="hover-lift"
+              >
+                <Brain className="h-4 w-4 mr-2" />
+                {t('smartAutomation.insights.optimizeNow')}
+              </Button>
           </div>
-          <CardDescription>
-            Recent AI-powered optimizations and recommendations
-          </CardDescription>
+            <CardDescription>
+              {t('smartAutomation.insights.description')}
+            </CardDescription>
         </CardHeader>
         <CardContent>
           {insights.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <Brain className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>AI is analyzing your patterns...</p>
-              <p className="text-sm">Insights will appear as optimizations are discovered</p>
+              <p>{t('smartAutomation.insights.analyzing')}</p>
+              <p className="text-sm">{t('smartAutomation.insights.willAppear')}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -285,7 +285,7 @@ const SmartAutomationPanel: React.FC = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-medium text-sm">{insight.title}</h4>
                       {insight.applied && (
-                        <Badge variant="secondary" className="text-xs">Applied</Badge>
+                        <Badge variant="secondary" className="text-xs">{t('smartAutomation.insights.applied')}</Badge>
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground">{insight.description}</p>
