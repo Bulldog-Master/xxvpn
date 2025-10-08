@@ -271,8 +271,8 @@ export const ServerActivityMap: React.FC = () => {
                           <div className="flex items-center gap-3 mb-3">
                             <span className="text-2xl">{server.flag}</span>
                             <div>
-                              <div className="font-bold text-lg">{server.city}</div>
-                              <div className="text-sm opacity-80">{server.country} • {server.region}</div>
+                              <div className="font-bold text-lg">{t(`serverLocations.${server.city}`)}</div>
+                              <div className="text-sm opacity-80">{t(`serverLocations.${server.country}`)} • {server.region}</div>
                             </div>
                           </div>
                           
@@ -361,7 +361,7 @@ export const ServerActivityMap: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <span className="text-xl">{server.flag}</span>
                         <div>
-                          <div className="font-medium">{server.city}, {server.country}</div>
+                          <div className="font-medium">{t(`serverLocations.${server.city}`)}, {t(`serverLocations.${server.country}`)}</div>
                           <div className="text-sm text-muted-foreground">{server.region}</div>
                         </div>
                       </div>

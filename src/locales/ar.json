@@ -1246,6 +1246,7 @@
     "London": "لندن",
     "Germany": "ألمانيا",
     "Berlin": "برلين",
+    "Frankfurt": "فرانكفورت",
     "Japan": "اليابان",
     "Tokyo": "طوكيو",
     "Singapore": "سنغافورة",
@@ -1260,7 +1261,14 @@
     "Switzerland": "سويسرا",
     "Zurich": "زيورخ",
     "France": "فرنسا",
-    "Paris": "باريس"
+    "Paris": "باريس",
+    "Hong Kong": "هونغ كونغ",
+    "Brazil": "البرازيل",
+    "São Paulo": "ساو باولو",
+    "South Africa": "جنوب أفريقيا",
+    "Cape Town": "كيب تاون",
+    "United Arab Emirates": "الإمارات العربية المتحدة",
+    "Dubai": "دبي"
   },
   "reliable": "موثوق",
   "serverMap": {
