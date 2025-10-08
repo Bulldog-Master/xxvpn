@@ -793,5 +793,42 @@
     "activeTrial": "تجربة نشطة",
     "activePlan": "خطة نشطة",
     "selected": "محدد"
+  },
+  "serverLocations": {
+    "United States": "الولايات المتحدة",
+    "Canada": "كندا",
+    "United Kingdom": "المملكة المتحدة",
+    "Germany": "ألمانيا",
+    "Switzerland": "سويسرا",
+    "France": "فرنسا",
+    "Netherlands": "هولندا",
+    "Japan": "اليابان",
+    "Singapore": "سنغافورة",
+    "Australia": "أستراليا",
+    "Hong Kong": "هونج كونج",
+    "Brazil": "البرازيل",
+    "South Africa": "جنوب أفريقيا",
+    "United Arab Emirates": "الإمارات العربية المتحدة",
+    "Sweden": "السويد",
+    "New York": "نيويورك",
+    "Los Angeles": "لوس أنجلوس",
+    "Toronto": "تورونتو",
+    "London": "لندن",
+    "Frankfurt": "فرانكفورت",
+    "Zurich": "زيوريخ",
+    "Paris": "باريس",
+    "Amsterdam": "أمستردام",
+    "Tokyo": "طوكيو",
+    "Sydney": "سيدني",
+    "Berlin": "برلين",
+    "Stockholm": "ستوكهولم",
+    "São Paulo": "ساو باولو",
+    "Cape Town": "كيب تاون",
+    "Dubai": "دبي"
+  },
+  "loadLevel": {
+    "low": "منخفض",
+    "medium": "متوسط",
+    "high": "عالي"
   }
 }

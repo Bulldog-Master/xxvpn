@@ -903,5 +903,42 @@
     "activeTrial": "Active Trial",
     "activePlan": "Active Plan",
     "selected": "Selected"
+  },
+  "serverLocations": {
+    "United States": "United States",
+    "Canada": "Canada",
+    "United Kingdom": "United Kingdom",
+    "Germany": "Germany",
+    "Switzerland": "Switzerland",
+    "France": "France",
+    "Netherlands": "Netherlands",
+    "Japan": "Japan",
+    "Singapore": "Singapore",
+    "Australia": "Australia",
+    "Hong Kong": "Hong Kong",
+    "Brazil": "Brazil",
+    "South Africa": "South Africa",
+    "United Arab Emirates": "United Arab Emirates",
+    "Sweden": "Sweden",
+    "New York": "New York",
+    "Los Angeles": "Los Angeles",
+    "Toronto": "Toronto",
+    "London": "London",
+    "Frankfurt": "Frankfurt",
+    "Zurich": "Zurich",
+    "Paris": "Paris",
+    "Amsterdam": "Amsterdam",
+    "Tokyo": "Tokyo",
+    "Sydney": "Sydney",
+    "Berlin": "Berlin",
+    "Stockholm": "Stockholm",
+    "São Paulo": "São Paulo",
+    "Cape Town": "Cape Town",
+    "Dubai": "Dubai"
+  },
+  "loadLevel": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
   }
 }

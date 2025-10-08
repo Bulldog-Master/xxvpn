@@ -275,7 +275,7 @@ export const getLoadColor = (load: number) => {
 };
 
 export const getLoadLevel = (load: number) => {
-  if (load < 30) return 'Low';
-  if (load < 70) return 'Medium';
-  return 'High';
+  if (load < 30) return 'low';
+  if (load < 70) return 'medium';
+  return 'high';
 };

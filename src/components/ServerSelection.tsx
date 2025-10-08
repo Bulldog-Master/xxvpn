@@ -100,8 +100,8 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl">{server.flag}</span>
                 <div>
-                  <h3 className="font-semibold">{server.name}</h3>
-                  <p className="text-sm text-muted-foreground">{server.country}</p>
+                  <h3 className="font-semibold">{t(`serverLocations.${server.name}`)}</h3>
+                  <p className="text-sm text-muted-foreground">{t(`serverLocations.${server.country}`)}</p>
                 </div>
                 {server.premium && (
                   <Crown className="h-4 w-4 text-warning" />
@@ -118,7 +118,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <div className="flex items-center gap-2">
                     <Progress value={server.load} className="w-16 h-2" />
                     <span className={getLoadColor(server.load)}>
-                      {server.load}% ({getLoadLevel(server.load)})
+                      {server.load}% ({t(`loadLevel.${getLoadLevel(server.load)}`)})
                     </span>
                   </div>
                 </div>

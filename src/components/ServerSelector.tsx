@@ -59,6 +59,12 @@ const ServerSelector = () => {
     return 'text-destructive';
   };
 
+  const getLoadLevel = (load: number) => {
+    if (load < 30) return t('loadLevel.low');
+    if (load < 70) return t('loadLevel.medium');
+    return t('loadLevel.high');
+  };
+
   const getLatencyColor = (latency: number) => {
     if (latency < 50) return 'text-success';
     if (latency < 100) return 'text-warning';
@@ -172,7 +178,7 @@ const ServerSelector = () => {
                         <span className="text-2xl">{server.flag}</span>
                         <div>
                           <div className="font-medium flex items-center gap-2">
-                            {server.city}, {server.country}
+                            {t(`serverLocations.${server.city}`)}, {t(`serverLocations.${server.country}`)}
                             {server.premium && (
                               <Badge variant="secondary" className="text-xs">
                                 <Shield className="w-3 h-3 mr-1" />
@@ -235,7 +241,7 @@ const ServerSelector = () => {
                     <span className="text-2xl">{server.flag}</span>
                     <div>
                       <div className="font-medium flex items-center gap-2">
-                        {server.city}, {server.country}
+                        {t(`serverLocations.${server.city}`)}, {t(`serverLocations.${server.country}`)}
                         {server.premium && (
                           <Badge variant="secondary" className="text-xs">
                             <Shield className="w-3 h-3 mr-1" />
