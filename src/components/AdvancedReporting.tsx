@@ -15,6 +15,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { ar } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import {
   Download,
@@ -38,7 +39,7 @@ interface Report {
 }
 
 export const AdvancedReporting = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [reports, setReports] = useState<Report[]>([]);
@@ -48,6 +49,8 @@ export const AdvancedReporting = () => {
   });
   const [reportType, setReportType] = useState<string>('bandwidth');
   const [loading, setLoading] = useState(false);
+
+  const getDateLocale = () => i18n.language === 'ar' ? ar : undefined;
 
   useEffect(() => {
     loadScheduledReports();
@@ -319,7 +322,7 @@ export const AdvancedReporting = () => {
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                        {format(dateRange.from, 'MMM dd', { locale: getDateLocale() })} - {format(dateRange.to, 'MMM dd, yyyy', { locale: getDateLocale() })}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
