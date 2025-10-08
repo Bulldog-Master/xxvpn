@@ -306,7 +306,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium">{route.name}</span>
+                    <span className="font-medium">{t(`performance.routes.${route.id}`)}</span>
                     {route.recommended && (
                       <Badge variant="default" className="text-xs">
                         <CheckCircle className="h-3 w-3 mr-1" />
@@ -318,26 +318,26 @@ const PerformanceOptimizationPanel: React.FC = () => {
                                route.congestion === 'medium' ? 'outline' : 'destructive'}
                       className="text-xs"
                     >
-                      {route.congestion} congestion
+                      {t(`performance.routes.congestion.${route.congestion}`)}
                     </Badge>
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {route.reliability}% reliable
+                    {formatNumber(route.reliability, i18n.language)}% {t('performance.routes.reliable')}
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
                     <span className="text-muted-foreground">{t('performance.routes.hops')}: </span>
-                    <span className="font-medium">{route.hops}</span>
+                    <span className="font-medium">{formatNumber(route.hops, i18n.language)}</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground">{t('performance.latency')}: </span>
-                    <span className="font-medium">{route.latency}ms</span>
+                    <span className="font-medium">{formatNumber(route.latency, i18n.language)}ms</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground">{t('performance.routes.reliability')}: </span>
-                    <span className="font-medium">{route.reliability}%</span>
+                    <span className="font-medium">{formatNumber(route.reliability, i18n.language)}%</span>
                   </div>
                 </div>
               </div>

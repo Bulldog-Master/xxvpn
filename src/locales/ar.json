@@ -750,7 +750,16 @@
       "description": "المسارات الشبكية المتاحة وخصائص أدائها",
       "recommended": "موصى به",
       "hops": "القفزات",
-      "reliability": "الموثوقية"
+      "reliability": "الموثوقية",
+      "reliable": "موثوق",
+      "route-1": "المسار المباشر",
+      "route-2": "المسار المحسّن",
+      "route-3": "المسار الاحتياطي",
+      "congestion": {
+        "low": "ازدحام منخفض",
+        "medium": "ازدحام متوسط",
+        "high": "ازدحام مرتفع"
+      }
     },
     "recentOptimizations": "التحسينات الأخيرة",
     "recentOptimizationsDesc": "تحسينات الأداء وتحسينات النظام",
