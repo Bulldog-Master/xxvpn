@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import {
@@ -37,6 +38,7 @@ interface Report {
 }
 
 export const AdvancedReporting = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [reports, setReports] = useState<Report[]>([]);
@@ -270,18 +272,18 @@ export const AdvancedReporting = () => {
       <div>
         <h2 className="text-2xl font-bold flex items-center gap-2">
           <BarChart3 className="w-6 h-6 text-primary" />
-          Advanced Reporting
+          {t('reporting.title')}
         </h2>
         <p className="text-muted-foreground mt-1">
-          Export detailed reports and schedule automated insights
+          {t('reporting.subtitle')}
         </p>
       </div>
 
       <Tabs defaultValue="export" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="export">Export Reports</TabsTrigger>
-          <TabsTrigger value="scheduled">Scheduled Reports</TabsTrigger>
-          <TabsTrigger value="custom">Custom Dashboards</TabsTrigger>
+          <TabsTrigger value="export">{t('reporting.exportReports')}</TabsTrigger>
+          <TabsTrigger value="scheduled">{t('reporting.scheduledReports')}</TabsTrigger>
+          <TabsTrigger value="custom">{t('reporting.customDashboards')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="export" className="space-y-4">
@@ -289,22 +291,22 @@ export const AdvancedReporting = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Download className="w-5 h-5" />
-                Export Data
+                {t('reporting.exportData')}
               </CardTitle>
               <CardDescription>
-                Generate and download CSV reports for analysis
+                {t('reporting.generateReports')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Report Type</Label>
+                  <Label>{t('reporting.reportType')}</Label>
                   <Select value={reportType} onValueChange={setReportType}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="bandwidth">Bandwidth Usage</SelectItem>
+                      <SelectItem value="bandwidth">{t('reporting.bandwidthUsage')}</SelectItem>
                       <SelectItem value="sessions">Session History</SelectItem>
                       <SelectItem value="security">Security Events</SelectItem>
                     </SelectContent>
@@ -312,7 +314,7 @@ export const AdvancedReporting = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Date Range</Label>
+                  <Label>{t('reporting.dateRange')}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start">
@@ -335,7 +337,7 @@ export const AdvancedReporting = () => {
               <Alert>
                 <FileText className="w-4 h-4" />
                 <AlertDescription>
-                  Reports are exported in CSV format and can be opened in Excel, Google Sheets, or any spreadsheet application.
+                  {t('reporting.csvInfo')}
                 </AlertDescription>
               </Alert>
 
@@ -348,7 +350,7 @@ export const AdvancedReporting = () => {
                 ) : (
                   <>
                     <Download className="w-4 h-4 mr-2" />
-                    Export Report
+                    {t('reporting.exportReport')}
                   </>
                 )}
               </Button>

@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 interface BandwidthData {
   date: string;
@@ -53,6 +54,7 @@ type TimeRange = '24h' | '7d' | '30d' | '90d';
 const COLORS = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444'];
 
 export const AnalyticsDashboard = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [timeRange, setTimeRange] = useState<TimeRange>('7d');
   const [bandwidthData, setBandwidthData] = useState<BandwidthData[]>([]);
@@ -180,11 +182,11 @@ export const AnalyticsDashboard = () => {
 
   const getTimeRangeLabel = () => {
     switch (timeRange) {
-      case '24h': return 'Last 24 Hours';
-      case '7d': return 'Last 7 Days';
-      case '30d': return 'Last 30 Days';
-      case '90d': return 'Last 90 Days';
-      default: return 'Last 7 Days';
+      case '24h': return t('analytics.last24Hours');
+      case '7d': return t('analytics.last7Days');
+      case '30d': return t('analytics.last30Days');
+      case '90d': return t('analytics.last90Days');
+      default: return t('analytics.last7Days');
     }
   };
 
@@ -193,8 +195,8 @@ export const AnalyticsDashboard = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Analytics</h2>
-          <p className="text-muted-foreground">Track your VPN usage and performance</p>
+          <h2 className="text-3xl font-bold">{t('analytics.title')}</h2>
+          <p className="text-muted-foreground">{t('analytics.subtitle')}</p>
         </div>
         <div className="flex items-center gap-3">
           <Select value={timeRange} onValueChange={(value: TimeRange) => setTimeRange(value)}>
@@ -203,10 +205,10 @@ export const AnalyticsDashboard = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="24h">Last 24 Hours</SelectItem>
-              <SelectItem value="7d">Last 7 Days</SelectItem>
-              <SelectItem value="30d">Last 30 Days</SelectItem>
-              <SelectItem value="90d">Last 90 Days</SelectItem>
+              <SelectItem value="24h">{t('analytics.last24Hours')}</SelectItem>
+              <SelectItem value="7d">{t('analytics.last7Days')}</SelectItem>
+              <SelectItem value="30d">{t('analytics.last30Days')}</SelectItem>
+              <SelectItem value="90d">{t('analytics.last90Days')}</SelectItem>
             </SelectContent>
           </Select>
           <Button variant="outline" size="sm" onClick={fetchAnalytics} disabled={loading}>
@@ -219,7 +221,7 @@ export const AnalyticsDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <Card className="glass-effect">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Download</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">{t('analytics.totalDownload')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -232,7 +234,7 @@ export const AnalyticsDashboard = () => {
 
         <Card className="glass-effect">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Upload</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">{t('analytics.totalUpload')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -245,7 +247,7 @@ export const AnalyticsDashboard = () => {
 
         <Card className="glass-effect">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Time</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">{t('analytics.totalTime')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -258,20 +260,20 @@ export const AnalyticsDashboard = () => {
 
         <Card className="glass-effect">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Avg Speed</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">{t('analytics.avgSpeed')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-orange-500" />
               <div className="text-2xl font-bold">{stats.avgSpeed} GB/s</div>
             </div>
-            <p className="text-xs text-muted-foreground mt-1">Per session</p>
+            <p className="text-xs text-muted-foreground mt-1">{t('analytics.perSession')}</p>
           </CardContent>
         </Card>
 
         <Card className="glass-effect">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">{t('analytics.sessions')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -286,17 +288,17 @@ export const AnalyticsDashboard = () => {
       {/* Charts */}
       <Tabs defaultValue="bandwidth" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="bandwidth">Bandwidth Usage</TabsTrigger>
-          <TabsTrigger value="servers">Server Usage</TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="bandwidth">{t('analytics.bandwidthUsage')}</TabsTrigger>
+          <TabsTrigger value="servers">{t('analytics.serverUsage')}</TabsTrigger>
+          <TabsTrigger value="performance">{t('analytics.performance')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="bandwidth" className="space-y-6">
           {/* Bandwidth Over Time */}
           <Card className="glass-effect">
             <CardHeader>
-              <CardTitle>Bandwidth Usage Over Time</CardTitle>
-              <CardDescription>Download and upload data throughout the period</CardDescription>
+              <CardTitle>{t('analytics.bandwidthOverTime')}</CardTitle>
+              <CardDescription>{t('analytics.downloadUploadData')}</CardDescription>
             </CardHeader>
             <CardContent>
               {bandwidthData.length > 0 ? (
@@ -315,7 +317,7 @@ export const AnalyticsDashboard = () => {
                 </ResponsiveContainer>
               ) : (
                 <div className="flex items-center justify-center h-64 text-muted-foreground">
-                  No bandwidth data available for this period
+                  {t('analytics.noBandwidthData')}
                 </div>
               )}
             </CardContent>

@@ -25,6 +25,7 @@ import {
 import { vpnServers, VPNServer, getAllRegions, getServersByRegion, getLoadColor, getLoadLevel } from '@/data/vpnServers';
 import { useServerTesting } from '@/hooks/useServerTesting';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 interface ServerSelectionProps {
   selectedServer: string;
@@ -35,6 +36,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
   selectedServer,
   onServerSelect
 }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [showOnlyPremium, setShowOnlyPremium] = useState(false);
@@ -72,10 +74,10 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
   };
 
   const getPingLabel = (ping: number | null) => {
-    if (ping === null) return 'Not tested';
-    if (ping < 50) return 'Excellent';
-    if (ping < 100) return 'Good';
-    return 'Poor';
+    if (ping === null) return t('serverSelection.notTested');
+    if (ping < 50) return t('serverSelection.excellent');
+    if (ping < 100) return t('serverSelection.good');
+    return t('serverSelection.poor');
   };
 
   const ServerCard: React.FC<{ server: VPNServer }> = ({ server }) => {
@@ -112,7 +114,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               <div className="space-y-2">
                 {/* Server Load */}
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Load:</span>
+                  <span className="text-muted-foreground">{t('serverSelection.load')}:</span>
                   <div className="flex items-center gap-2">
                     <Progress value={server.load} className="w-16 h-2" />
                     <span className={getLoadColor(server.load)}>
@@ -123,16 +125,16 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
 
                 {/* Ping */}
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Ping:</span>
+                  <span className="text-muted-foreground">{t('serverSelection.ping')}:</span>
                   <div className="flex items-center gap-2">
                     {isTesting ? (
                       <div className="flex items-center gap-1">
                         <RotateCw className="h-3 w-3 animate-spin" />
-                        <span>Testing...</span>
+                        <span>{t('serverSelection.testing')}</span>
                       </div>
                     ) : (
                       <span className={getPingColor(ping)}>
-                        {ping ? `${ping}ms (${getPingLabel(ping)})` : 'Not tested'}
+                        {ping ? `${ping}ms (${getPingLabel(ping)})` : t('serverSelection.notTested')}
                       </span>
                     )}
                   </div>
@@ -140,7 +142,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
 
                 {/* Max Speed */}
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Speed:</span>
+                  <span className="text-muted-foreground">{t('serverSelection.speed')}:</span>
                   <span className="font-medium">{server.maxSpeed}</span>
                 </div>
               </div>
@@ -161,7 +163,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               
               {isSelected && (
                 <Badge variant="default" className="text-xs">
-                  Connected
+                  {t('serverSelection.connected')}
                 </Badge>
               )}
             </div>
@@ -287,18 +289,18 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
         
         {/* Legend */}
         <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm rounded-lg p-3 space-y-1">
-          <div className="text-xs font-medium mb-2">Connection Quality</div>
+          <div className="text-xs font-medium mb-2">{t('serverSelection.connectionQuality')}</div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span>Excellent (&lt;50ms)</span>
+            <span>{t('serverSelection.excellent')} (&lt;50ms)</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-yellow-500" />
-            <span>Good (50-100ms)</span>
+            <span>{t('serverSelection.good')} (50-100ms)</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-red-500" />
-            <span>Poor (&gt;100ms)</span>
+            <span>{t('serverSelection.poor')} (&gt;100ms)</span>
           </div>
         </div>
       </div>
@@ -313,7 +315,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            Server Selection
+            {t('serverSelection.title')}
           </CardTitle>
           <div className="flex gap-2">
             <Button
@@ -323,11 +325,11 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               disabled={vpnServers.some(s => isTestingServer(s.id))}
             >
               <Activity className="h-4 w-4 mr-2" />
-              Test All
+              {t('serverSelection.testAll')}
             </Button>
             {hasResults && (
               <Button size="sm" variant="ghost" onClick={clearResults}>
-                Clear Results
+                {t('serverSelection.clearResults')}
               </Button>
             )}
           </div>
@@ -336,9 +338,9 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="list">List View</TabsTrigger>
-            <TabsTrigger value="recommended">Recommended</TabsTrigger>
-            <TabsTrigger value="stats">Statistics</TabsTrigger>
+            <TabsTrigger value="list">{t('serverSelection.listView')}</TabsTrigger>
+            <TabsTrigger value="recommended">{t('serverSelection.recommended')}</TabsTrigger>
+            <TabsTrigger value="stats">{t('serverSelection.statistics')}</TabsTrigger>
           </TabsList>
 
           {/* Filters */}
@@ -347,7 +349,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search servers..."
+                  placeholder={t('serverSelection.searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -360,7 +362,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               onChange={(e) => setSelectedRegion(e.target.value)}
               className="px-3 py-2 border rounded-md bg-background"
             >
-              <option value="all">All Regions</option>
+              <option value="all">{t('serverSelection.allRegions')}</option>
               {regions.map(region => (
                 <option key={region} value={region}>{region}</option>
               ))}
@@ -372,7 +374,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               onClick={() => setShowOnlyPremium(!showOnlyPremium)}
             >
               <Crown className="h-4 w-4 mr-2" />
-              Premium Only
+              {t('serverSelection.premiumOnly')}
             </Button>
           </div>
 

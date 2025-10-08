@@ -30,8 +30,10 @@ import {
 import { useNetworkSecurity } from '@/hooks/useNetworkSecurity';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 export const KillSwitchSettings: React.FC = () => {
+  const { t } = useTranslation();
   const {
     settings,
     networkStatus,
@@ -74,7 +76,7 @@ export const KillSwitchSettings: React.FC = () => {
 
   const getConnectionStatusText = () => {
     if (settings.emergencyDisconnect) return 'Kill Switch Active';
-    if (networkStatus.vpnConnected) return 'Protected';
+    if (networkStatus.vpnConnected) return t('security.protected');
     return 'Unprotected';
   };
 
@@ -85,7 +87,7 @@ export const KillSwitchSettings: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {getConnectionStatusIcon()}
-            Network Security Status
+            {t('security.networkSecurityStatus')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -93,7 +95,7 @@ export const KillSwitchSettings: React.FC = () => {
             {/* Connection Status */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="font-medium">Connection Status</span>
+                <span className="font-medium">{t('security.connectionStatus')}</span>
                 <Badge variant="outline" className={getConnectionStatusColor()}>
                   {getConnectionStatusText()}
                 </Badge>
@@ -102,12 +104,12 @@ export const KillSwitchSettings: React.FC = () => {
               {networkStatus.realIp && (
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Your IP:</span>
+                    <span className="text-muted-foreground">{t('security.yourIp')}</span>
                     <span className="font-mono">{networkStatus.realIp}</span>
                   </div>
                   {networkStatus.vpnIp && (
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">VPN IP:</span>
+                      <span className="text-muted-foreground">{t('security.vpnIp')}</span>
                       <span className="font-mono">{networkStatus.vpnIp}</span>
                     </div>
                   )}
@@ -138,44 +140,44 @@ export const KillSwitchSettings: React.FC = () => {
 
             {/* Quick Actions */}
             <div className="space-y-3">
-              <Button
-                onClick={activateKillSwitch}
-                variant="destructive"
-                className="w-full"
-                disabled={settings.emergencyDisconnect || !settings.killSwitchEnabled}
-              >
-                <ShieldAlert className="h-4 w-4 mr-2" />
-                Emergency Disconnect
-              </Button>
+            <Button
+              onClick={activateKillSwitch}
+              variant="destructive"
+              className="w-full"
+              disabled={settings.emergencyDisconnect || !settings.killSwitchEnabled}
+            >
+              <ShieldAlert className="h-4 w-4 mr-2" />
+              {t('security.emergencyDisconnect')}
+            </Button>
 
-              <Button
-                onClick={runDNSLeakTest}
-                variant="outline"
-                className="w-full"
-                disabled={isTestingDNS}
-              >
-                {isTestingDNS ? (
-                  <RotateCw className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Eye className="h-4 w-4 mr-2" />
-                )}
-                {isTestingDNS ? 'Testing...' : 'Test DNS Leaks'}
-              </Button>
+            <Button
+              onClick={runDNSLeakTest}
+              variant="outline"
+              className="w-full"
+              disabled={isTestingDNS}
+            >
+              {isTestingDNS ? (
+                <RotateCw className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Eye className="h-4 w-4 mr-2" />
+              )}
+              {isTestingDNS ? 'Testing...' : t('security.testDnsLeaks')}
+            </Button>
 
-              <Button
-                onClick={checkNetworkStatus}
-                variant="ghost"
-                className="w-full"
-              >
-                <RotateCw className="h-4 w-4 mr-2" />
-                Refresh Status
-              </Button>
+            <Button
+              onClick={checkNetworkStatus}
+              variant="ghost"
+              className="w-full"
+            >
+              <RotateCw className="h-4 w-4 mr-2" />
+              {t('security.refreshStatus')}
+            </Button>
             </div>
           </div>
 
           {networkStatus.lastCheckTime > 0 && (
             <div className="mt-4 text-xs text-muted-foreground">
-              Last checked: {formatDistanceToNow(networkStatus.lastCheckTime, { addSuffix: true })}
+              {t('security.lastChecked')}
             </div>
           )}
         </CardContent>
@@ -184,9 +186,9 @@ export const KillSwitchSettings: React.FC = () => {
       {/* Security Settings */}
       <Tabs defaultValue="protection" className="space-y-4">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="protection">Protection</TabsTrigger>
-          <TabsTrigger value="dns">DNS Settings</TabsTrigger>
-          <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          <TabsTrigger value="protection">{t('security.protection')}</TabsTrigger>
+          <TabsTrigger value="dns">{t('security.dnsSettings')}</TabsTrigger>
+          <TabsTrigger value="advanced">{t('security.advanced')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="protection" className="space-y-4">
@@ -194,7 +196,7 @@ export const KillSwitchSettings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="h-5 w-5" />
-                Core Protection
+                {t('security.coreProtection')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
