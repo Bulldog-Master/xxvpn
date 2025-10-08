@@ -512,6 +512,8 @@
     "createDashboard": "إنشاء لوحة تحكم"
   },
   "security": {
+    "title": "إعدادات الأمان",
+    "description": "إدارة طرق المصادقة وتفضيلات الأمان الخاصة بك",
     "networkSecurityStatus": "حالة أمان الشبكة",
     "connectionStatus": "حالة الاتصال",
     "yourIp": "عنوان IP الخاص بك:",
@@ -520,11 +522,58 @@
     "emergencyDisconnect": "قطع الاتصال الطارئ",
     "testDnsLeaks": "اختبار تسرب DNS",
     "refreshStatus": "تحديث الحالة",
-    "lastChecked": "آخر فحص: منذ أقل من دقيقة",
+    "lastChecked": "آخر فحص:",
     "protection": "الحماية",
     "dnsSettings": "إعدادات DNS",
     "advanced": "متقدم",
     "coreProtection": "الحماية الأساسية",
+    "tabs": {
+      "authentication": "المصادقة",
+      "activity": "النشاط",
+      "monitoring": "المراقبة"
+    },
+    "overview": {
+      "title": "حالة الأمان",
+      "description": "تكوين الأمان الحالي الخاص بك",
+      "protectedBy": "حسابك محمي بواسطة",
+      "multiLayer": "طبقات متعددة من الأمان",
+      "enhanced": "مصادقة محسنة",
+      "basic": "حماية كلمة المرور الأساسية"
+    },
+    "twoFactor": {
+      "title": "المصادقة الثنائية",
+      "active": "نشط",
+      "notConfigured": "غير مُهيأ"
+    },
+    "status": {
+      "enabled": "مُفعّل",
+      "disabled": "مُعطّل"
+    },
+    "biometric": {
+      "title": "المصادقة البيومترية",
+      "registered": "مفتاح المرور مسجل",
+      "notConfigured": "غير مُهيأ",
+      "setupDescription": "استخدم بصمتك أو Face ID أو مفتاح الأمان لتسجيل الدخول"
+    },
+    "activity": {
+      "title": "نشاط الأمان الأخير",
+      "description": "تتبع أحداث الأمان الأخيرة على حسابك",
+      "noEvents": "لا توجد أحداث أمان حديثة"
+    },
+    "monitoring": {
+      "title": "مراقبة الاختراقات",
+      "description": "راقب ما إذا كانت بيانات الاعتماد الخاصة بك قد تم اختراقها",
+      "checkDescription": "نحن نراقب بشكل مستمر اختراقات البيانات المعروفة للتحقق مما إذا كانت بيانات اعتماد حسابك قد تم كشفها. تستخدم جميع الفحوصات إخفاء الهوية لحماية خصوصيتك.",
+      "noBreaches": "لم يتم اكتشاف اختراقات",
+      "credentialsSafe": "لم يتم العثور على بيانات الاعتماد الخاصة بك في أي اختراقات بيانات معروفة."
+    },
+    "recommendations": {
+      "title": "توصيات الأمان",
+      "uniquePassword": "استخدم كلمة مرور فريدة لهذا الحساب",
+      "enable2FA": "تفعيل المصادقة الثنائية",
+      "registerPasskey": "تسجيل مفتاح مرور للمصادقة البيومترية",
+      "reviewSessions": "مراجعة الجلسات النشطة بانتظام"
+    },
     "dnsLeak": {
       "title": "حماية تسرب DNS",
       "description": "يمنع استعلامات DNS من تجاوز اتصال في بي إن الخاص بك"
@@ -1103,10 +1152,6 @@
   "splitTunneling": {
     "title": "النفق المقسم",
     "description": "اختر التطبيقات التي تستخدم في بي إن"
-  },
-  "security": {
-    "title": "ميزات الأمان النشطة",
-    "description": "آليات الحماية المقاومة للحوسبة الكمية"
   },
   "subscriptionPlansFeatures": {
     "singleDevice": "جهاز واحد",

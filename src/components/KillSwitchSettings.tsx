@@ -178,10 +178,10 @@ export const KillSwitchSettings: React.FC = () => {
 
           {networkStatus.lastCheckTime > 0 && (
             <div className="mt-4 text-xs text-muted-foreground">
-              {t('security.lastChecked')} {formatDistanceToNow(networkStatus.lastCheckTime, { 
-                addSuffix: true,
-                locale: i18n.language === 'ar' ? ar : undefined 
-              })}
+              {t('security.lastChecked')} {i18n.language === 'ar' 
+                ? formatDistanceToNow(networkStatus.lastCheckTime, { addSuffix: true, locale: ar })
+                : formatDistanceToNow(networkStatus.lastCheckTime, { addSuffix: true })
+              }
             </div>
           )}
         </CardContent>
