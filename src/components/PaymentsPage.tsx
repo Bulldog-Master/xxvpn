@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { CreditCard, Download, HelpCircle, Shield, User, Smartphone } from 'lucide-react';
 import PaymentMethodCard from './payments/PaymentMethodCard';
 import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
+import { toArabicNumerals } from '@/utils/numberFormat';
 
 interface PaymentOrder {
   id: string;
@@ -16,7 +17,7 @@ interface PaymentOrder {
 }
 
 const PaymentsPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>();
 
   const handlePlanSelect = (plan: SubscriptionPlan) => {
@@ -52,6 +53,10 @@ const PaymentsPage = () => {
       default:
         return 'text-muted-foreground';
     }
+  };
+
+  const formatForLocale = (text: string) => {
+    return i18n.language === 'ar' ? toArabicNumerals(text) : text;
   };
 
   return (
@@ -182,15 +187,15 @@ const PaymentsPage = () => {
                     {orders.length > 0 ? (
                       orders.map((order) => (
                         <TableRow key={order.id} className="hover:bg-muted/30">
-                          <TableCell className="font-mono text-sm">{order.id}</TableCell>
-                          <TableCell>{order.date}</TableCell>
+                          <TableCell className="font-mono text-sm">{formatForLocale(order.id)}</TableCell>
+                          <TableCell>{formatForLocale(order.date)}</TableCell>
                           <TableCell>{order.subscription}</TableCell>
                           <TableCell>
                             <span className={`font-medium ${getStatusColor(order.status)}`}>
                               {t(`payments.orders.status.${order.status.toLowerCase()}`)}
                             </span>
                           </TableCell>
-                          <TableCell className="text-right font-medium">{order.amount}</TableCell>
+                          <TableCell className="text-right font-medium">{formatForLocale(order.amount)}</TableCell>
                         </TableRow>
                       ))
                     ) : (
