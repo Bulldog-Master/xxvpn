@@ -186,8 +186,8 @@ export const CustomDNS: React.FC = () => {
     <div className="space-y-6">
       <Tabs defaultValue="dns" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="dns">DNS Settings</TabsTrigger>
-          <TabsTrigger value="blocking">Ad Blocking</TabsTrigger>
+          <TabsTrigger value="dns">{t('customDNS.dnsSettings')}</TabsTrigger>
+          <TabsTrigger value="blocking">{t('customDNS.adBlocking')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="dns" className="space-y-6">
@@ -197,10 +197,10 @@ export const CustomDNS: React.FC = () => {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <Globe className="h-5 w-5" />
-                    Custom DNS Settings
+                    {t('customDNS.title')}
                   </CardTitle>
                   <CardDescription>
-                    Configure custom DNS servers for improved performance and security
+                    {t('customDNS.description')}
                   </CardDescription>
                 </div>
                 <Switch
