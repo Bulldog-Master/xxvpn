@@ -91,14 +91,14 @@ const PaymentsPage = () => {
           <CardContent className="space-y-8">
             {/* Subscription Plans Section */}
             <div className="space-y-6">
-              <h2 className="text-xl font-medium">Select Your Plan</h2>
+              <h2 className="text-xl font-medium">{t('paymentMethods.selectPlan')}</h2>
               <SubscriptionPlans onPlanSelect={handlePlanSelect} selectedPlan={selectedPlan} />
             </div>
 
             {/* Payment Methods Section - Only show when plan is selected */}
             {selectedPlan && (
               <div className="space-y-6">
-                <h2 className="text-xl font-medium">Payment Methods for {selectedPlan.name}</h2>
+                <h2 className="text-xl font-medium">{t('payments.methods.title')} {selectedPlan.name}</h2>
                 
                 <div className="grid lg:grid-cols-2 gap-6">
                   {/* Quick Payment Options */}

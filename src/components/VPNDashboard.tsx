@@ -43,6 +43,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -89,7 +90,7 @@ const VPNDashboard = () => {
   const { user, logout, updateUser } = useAuth();
   const { isOnline } = useNetworkStatus();
   const { theme, setTheme } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { subscribed, subscription_tier, is_trial, trial_end, hasAccess } = useSubscription();
   const [vpnMode, setVpnMode] = useState<VPNMode>('off');
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
@@ -284,7 +285,7 @@ const VPNDashboard = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
                 <Coins className="w-4 h-4 text-warning" />
-                <span className="text-sm font-medium">{user?.xxCoinBalance?.toFixed(2) || '0.00'} XX</span>
+                <span className="text-sm font-medium">{formatNumber(user?.xxCoinBalance || 0, i18n.language, 2)} XX</span>
               </div>
               
               <Badge variant="outline" className="bg-card/50">
@@ -302,10 +303,10 @@ const VPNDashboard = () => {
                       <CardContent className="flex items-center gap-3 p-3">
                         <div className="flex items-center gap-2">
                           <Users className="w-4 h-4 text-primary" />
-                          <div className="text-xs">
-                            <div className="font-medium">{userReferrals} {t('dashboard.referrals.referrals')}</div>
-                            <div className="text-muted-foreground">{totalUsers.toLocaleString()} {t('dashboard.referrals.users')}</div>
-                          </div>
+                        <div className="text-xs">
+                          <div className="font-medium">{formatNumber(userReferrals, i18n.language)} {t('dashboard.referrals.referrals')}</div>
+                          <div className="text-muted-foreground">{formatNumber(totalUsers, i18n.language)} {t('dashboard.referrals.users')}</div>
+                        </div>
                         </div>
                         <ChevronDown className="w-3 h-3 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                       </CardContent>
@@ -318,11 +319,11 @@ const VPNDashboard = () => {
                         <div className="grid grid-cols-2 gap-4 text-xs">
                           <div>
                             <div className="text-muted-foreground">{t('dashboard.referrals.yourReferrals')}</div>
-                            <div className="font-semibold text-lg">{userReferrals}</div>
+                            <div className="font-semibold text-lg">{formatNumber(userReferrals, i18n.language)}</div>
                           </div>
                           <div>
                             <div className="text-muted-foreground">{t('dashboard.referrals.totalUsers')}</div>
-                            <div className="font-semibold text-lg">{totalUsers.toLocaleString()}</div>
+                            <div className="font-semibold text-lg">{formatNumber(totalUsers, i18n.language)}</div>
                           </div>
                         </div>
                       </div>

@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface CryptoPaymentModalProps {
   open: boolean;
@@ -31,6 +33,7 @@ interface CryptoPaymentModalProps {
 
 export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentModalProps) => {
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState<'xxcoin' | 'dao'>('xxcoin');
   const [copied, setCopied] = useState(false);
   
@@ -47,8 +50,8 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
     navigator.clipboard.writeText(walletAddress);
     setCopied(true);
     toast({
-      title: "Address copied",
-      description: "Wallet address copied to clipboard"
+      title: t('paymentMethods.addressCopied'),
+      description: t('paymentMethods.walletAddressCopied')
     });
     setTimeout(() => setCopied(false), 2000);
   };
@@ -60,8 +63,8 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
       
     if (!hasEnough) {
       toast({
-        title: "Insufficient balance",
-        description: `You need more ${paymentMethod === 'xxcoin' ? 'XX coins' : 'DAO tokens'}`,
+        title: t('common.error'),
+        description: t('xxCoin.toast.insufficientBalance'),
         variant: "destructive"
       });
       return;
@@ -69,8 +72,8 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
     
     // Process payment
     toast({
-      title: "Payment processing",
-      description: "Your subscription will be activated shortly"
+      title: t('paymentMethods.paymentProcessing'),
+      description: t('paymentMethods.subscriptionWillActivate')
     });
     onOpenChange(false);
   };
@@ -81,10 +84,10 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Coins className="w-5 h-5 text-primary" />
-            Pay with Crypto
+            {t('paymentMethods.payWithCrypto')}
           </DialogTitle>
           <DialogDescription>
-            Subscribe to {plan.name} using XX coins or DAO tokens
+            {t('paymentMethods.subscribeUsing', { plan: plan.name })}
           </DialogDescription>
         </DialogHeader>
 
@@ -104,19 +107,19 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
             <Card className="bg-muted/50">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Plan</span>
+                  <span className="text-sm text-muted-foreground">{t('paymentMethods.plan')}</span>
                   <span className="font-semibold">{plan.name}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Price</span>
-                  <span className="font-semibold">${plan.price}/{plan.interval}</span>
+                  <span className="text-sm text-muted-foreground">{t('paymentMethods.price')}</span>
+                  <span className="font-semibold">{formatNumber(plan.price, i18n.language, 2)} {t('common.currencySymbol')}/{plan.interval}</span>
                 </div>
                 <div className="border-t pt-3 mt-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total in XX Coins</span>
+                    <span className="text-sm text-muted-foreground">{t('paymentMethods.totalInXXCoins')}</span>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-warning">{xxCoinPrice} XX</div>
-                      <div className="text-xs text-muted-foreground">≈ ${plan.price} USD</div>
+                      <div className="text-2xl font-bold text-warning">{formatNumber(xxCoinPrice, i18n.language, 0)} XX</div>
+                      <div className="text-xs text-muted-foreground">≈ {formatNumber(plan.price, i18n.language, 2)} {t('common.currencySymbol')}</div>
                     </div>
                   </div>
                 </div>
@@ -125,24 +128,24 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
 
             <div className="bg-muted/30 rounded-lg p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm">Your XX Balance</span>
+                <span className="text-sm">{t('paymentMethods.yourXXBalance')}</span>
                 <Badge variant={userXXBalance >= xxCoinPrice ? "default" : "destructive"}>
-                  {userXXBalance.toFixed(2)} XX
+                  {formatNumber(userXXBalance, i18n.language, 2)} XX
                 </Badge>
               </div>
               
               {userXXBalance >= xxCoinPrice ? (
                 <Button className="w-full" onClick={handlePayWithBalance}>
                   <Wallet className="w-4 h-4 mr-2" />
-                  Pay with XX Balance
+                  {t('paymentMethods.payWithXXBalance')}
                 </Button>
               ) : (
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">
-                    Insufficient balance. Top up your XX coins:
+                    {t('paymentMethods.insufficientBalance')}
                   </p>
                   <div className="space-y-2">
-                    <Label>Send XX Coins to:</Label>
+                    <Label>{t('paymentMethods.sendXXCoinsTo')}</Label>
                     <div className="flex items-center gap-2">
                       <Input value={walletAddress} readOnly className="font-mono text-sm" />
                       <Button size="icon" variant="outline" onClick={handleCopy}>
@@ -152,7 +155,7 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <Clock className="w-3 h-3" />
-                    Payment confirmed in ~1 minute on xx Network
+                    {t('paymentMethods.paymentConfirmedIn')}
                   </div>
                 </div>
               )}
@@ -163,19 +166,19 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
             <Card className="bg-muted/50">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Plan</span>
+                  <span className="text-sm text-muted-foreground">{t('paymentMethods.plan')}</span>
                   <span className="font-semibold">{plan.name}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Price</span>
-                  <span className="font-semibold">${plan.price}/{plan.interval}</span>
+                  <span className="text-sm text-muted-foreground">{t('paymentMethods.price')}</span>
+                  <span className="font-semibold">{formatNumber(plan.price, i18n.language, 2)} {t('common.currencySymbol')}/{plan.interval}</span>
                 </div>
                 <div className="border-t pt-3 mt-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total in DAO Tokens</span>
+                    <span className="text-sm text-muted-foreground">{t('paymentMethods.totalInDAOTokens')}</span>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">{daoTokenPrice} DAO</div>
-                      <div className="text-xs text-muted-foreground">≈ ${plan.price} USD</div>
+                      <div className="text-2xl font-bold text-primary">{formatNumber(daoTokenPrice, i18n.language, 0)} DAO</div>
+                      <div className="text-xs text-muted-foreground">≈ {formatNumber(plan.price, i18n.language, 2)} {t('common.currencySymbol')}</div>
                     </div>
                   </div>
                 </div>
@@ -186,14 +189,14 @@ export const CryptoPaymentModal = ({ open, onOpenChange, plan }: CryptoPaymentMo
               <div className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-primary mt-0.5" />
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">Get DAO Tokens</h4>
+                  <h4 className="font-semibold text-sm">{t('paymentMethods.getDAOTokens')}</h4>
                   <p className="text-sm text-muted-foreground">
-                    DAO tokens will be available soon. You'll earn them through:
+                    {t('paymentMethods.daoTokensAvailableSoon')}
                   </p>
                   <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
-                    <li>Participating in governance votes</li>
-                    <li>Contributing to the community</li>
-                    <li>Staking XX coins</li>
+                    <li>{t('paymentMethods.participatingInVotes')}</li>
+                    <li>{t('paymentMethods.contributingToCommunity')}</li>
+                    <li>{t('paymentMethods.stakingXXCoins')}</li>
                   </ul>
                 </div>
               </div>

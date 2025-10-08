@@ -8,6 +8,7 @@ import { PayPalPaymentDialog } from './PayPalPaymentDialog';
 import { CryptoPaymentModal } from '../subscriptions/CryptoPaymentModal';
 import { CreditCard } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface PaymentMethodCardProps {
   selectedPlan: {
@@ -19,7 +20,7 @@ interface PaymentMethodCardProps {
 }
 
 const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
   const [paypalDialogOpen, setPaypalDialogOpen] = useState(false);
   const [cryptoModalOpen, setCryptoModalOpen] = useState(false);
@@ -55,17 +56,17 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
         <div className="text-center space-y-2">
           <h3 className="text-xl font-semibold">{selectedPlan.name}</h3>
           <p className="text-3xl font-bold text-primary">
-            ${getMonthlyPrice().toFixed(2)}
-            <span className="text-sm text-muted-foreground font-normal">/month</span>
+            {formatNumber(getMonthlyPrice(), i18n.language, 2)} {t('common.currencySymbol')}
+            <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
           </p>
           <p className="text-sm text-muted-foreground">
-            Total: ${(selectedPlan.price / 100).toFixed(2)} per {selectedPlan.duration}
+            {t('paymentMethods.total')}: {formatNumber(selectedPlan.price / 100, i18n.language, 2)} {t('common.currencySymbol')} {t('paymentMethods.per')} {selectedPlan.duration}
           </p>
         </div>
 
         <div className="space-y-4">
           <div className="text-sm font-medium text-muted-foreground text-center">
-            Choose your payment method:
+            {t('paymentMethods.choosePaymentMethod')}
           </div>
 
           {/* Digital Wallet Payments */}
@@ -90,7 +91,7 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
               <span className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">or</span>
+              <span className="bg-card px-2 text-muted-foreground">{t('paymentMethods.or')}</span>
             </div>
           </div>
 
@@ -104,7 +105,7 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
             >
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
-                Pay with Card
+                {t('paymentMethods.payWithCard')}
               </div>
             </Button>
 
@@ -118,7 +119,7 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
                 <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
                   P
                 </div>
-                Pay with PayPal
+                {t('paymentMethods.payWithPayPal')}
               </div>
             </Button>
 
@@ -134,16 +135,16 @@ const PaymentMethodCard = ({ selectedPlan }: PaymentMethodCardProps) => {
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
                 </div>
-                Pay with Crypto
+                {t('paymentMethods.payWithCrypto')}
               </div>
             </Button>
           </div>
         </div>
 
         <div className="text-xs text-muted-foreground text-center space-y-1">
-          <p>Secure payments powered by industry-leading encryption</p>
-          <p>Start your <span className="text-primary font-medium">7-day free trial</span> today</p>
-          <p>Cancel anytime during trial • No charge until trial ends</p>
+          <p>{t('paymentMethods.securePayment')}</p>
+          <p>{t('paymentMethods.startTrial', { days: 7 })}</p>
+          <p>{t('paymentMethods.cancelAnytime')}</p>
         </div>
       </CardContent>
 

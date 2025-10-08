@@ -9,6 +9,7 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { CryptoPaymentModal } from './CryptoPaymentModal';
+import { formatNumber } from '@/utils/numberFormat';
 
 export interface SubscriptionPlan {
   id: string;
@@ -29,7 +30,7 @@ interface SubscriptionPlansProps {
 }
 
 const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const { subscription_tier, is_trial, subscribed, startTrial, loading } = useSubscription();
@@ -231,19 +232,19 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <CardTitle className="text-lg font-semibold">{plan.name}</CardTitle>
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
-                ${getMonthlyPrice(plan).toFixed(2)}
+                {formatNumber(getMonthlyPrice(plan), i18n.language, 2)} {t('common.currencySymbol')}
                 <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
               </div>
               {plan.originalPrice && (
                 <div className="text-sm text-muted-foreground">
-                  <span className="line-through">${(plan.originalPrice / 100).toFixed(2)}</span>
+                  <span className="line-through">{formatNumber(plan.originalPrice / 100, i18n.language, 2)} {t('common.currencySymbol')}</span>
                   <Badge variant="secondary" className="ml-2 text-xs">
                     {plan.savings}
                   </Badge>
                 </div>
               )}
               <div className="text-sm text-muted-foreground">
-                {t('subscriptionPlans.billed', { price: (plan.price / 100).toFixed(2), duration: plan.duration })}
+                {t('subscriptionPlans.billed', { price: formatNumber(plan.price / 100, i18n.language, 2), duration: plan.duration })}
               </div>
             </div>
           </CardHeader>

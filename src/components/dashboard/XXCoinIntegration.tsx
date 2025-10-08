@@ -22,9 +22,10 @@ import { toast } from '@/hooks/use-toast';
 import { XXWalletService, WalletState, WalletType } from '@/services/xxWalletService';
 import { useWalletProfile } from '@/hooks/useWalletProfile';
 import { trackWalletConnection, trackPayment } from '@/utils/analytics';
+import { formatNumber } from '@/utils/numberFormat';
 
 export const XXCoinIntegration = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { savedWalletAddress, updateWalletAddress } = useWalletProfile();
   const [walletService] = useState(() => new XXWalletService());
@@ -429,7 +430,7 @@ export const XXCoinIntegration = () => {
               </CardDescription>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold text-warning">{(user?.xxCoinBalance || 0).toFixed(2)}</div>
+              <div className="text-3xl font-bold text-warning">{formatNumber(user?.xxCoinBalance || 0, i18n.language, 2)}</div>
               <div className="text-sm text-muted-foreground">{t('xxCoin.balance.coins')}</div>
             </div>
           </div>
@@ -441,21 +442,21 @@ export const XXCoinIntegration = () => {
                 <ArrowUpRight className="w-4 h-4 text-success" />
                 <span className="text-sm font-medium text-success">{t('xxCoin.balance.thisMonthEarned')}</span>
               </div>
-              <div className="text-2xl font-semibold">+{monthlyEarnings} XX</div>
+              <div className="text-2xl font-semibold">+{formatNumber(monthlyEarnings, i18n.language, 1)} XX</div>
             </div>
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <ArrowDownRight className="w-4 h-4 text-destructive" />
                 <span className="text-sm font-medium text-destructive">{t('xxCoin.balance.thisMonthSpent')}</span>
               </div>
-              <div className="text-2xl font-semibold">-{monthlySpending} XX</div>
+              <div className="text-2xl font-semibold">-{formatNumber(monthlySpending, i18n.language, 1)} XX</div>
             </div>
           </div>
 
           <div className="bg-muted/50 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">{t('xxCoin.balance.networkUsage')}</span>
-              <span className="text-sm font-medium">{networkUsage} GB / 500 GB</span>
+              <span className="text-sm font-medium">{formatNumber(networkUsage, i18n.language)} GB / {formatNumber(500, i18n.language)} GB</span>
             </div>
             <Progress value={(networkUsage / 500) * 100} className="h-2" />
             <p className="text-xs text-muted-foreground mt-2">
