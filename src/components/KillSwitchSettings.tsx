@@ -122,8 +122,8 @@ export const KillSwitchSettings: React.FC = () => {
                 <Alert variant="destructive">
                   <AlertTriangle className="h-4 w-4" />
                   <AlertDescription>
-                    {networkStatus.dnsLeaking && t('killSwitch.dnsLeakDetected')}
-                    {networkStatus.ipv6Leaking && t('killSwitch.ipv6LeakDetected')}
+                    {networkStatus.dnsLeaking && `${t('killSwitch.dnsLeakDetected')} `}
+                    {networkStatus.ipv6Leaking && `${t('killSwitch.ipv6LeakDetected')} `}
                     {t('killSwitch.checkSettings')}
                   </AlertDescription>
                 </Alert>
