@@ -23,6 +23,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface SecurityEvent {
   id: string;
@@ -33,6 +34,7 @@ interface SecurityEvent {
 }
 
 export const SecuritySettings = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [twoFAEnabled, setTwoFAEnabled] = useState(false);
@@ -115,27 +117,27 @@ export const SecuritySettings = () => {
       <div>
         <h2 className="text-2xl font-bold flex items-center gap-2">
           <Shield className="w-6 h-6 text-primary" />
-          Security Settings
+          {t('security.title')}
         </h2>
         <p className="text-muted-foreground mt-1">
-          Manage your authentication methods and security preferences
+          {t('security.description')}
         </p>
       </div>
 
       <Tabs defaultValue="authentication" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="authentication">Authentication</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
-          <TabsTrigger value="monitoring">Monitoring</TabsTrigger>
+          <TabsTrigger value="authentication">{t('security.tabs.authentication')}</TabsTrigger>
+          <TabsTrigger value="activity">{t('security.tabs.activity')}</TabsTrigger>
+          <TabsTrigger value="monitoring">{t('security.tabs.monitoring')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="authentication" className="space-y-4">
           {/* Security Overview */}
           <Card>
             <CardHeader>
-              <CardTitle>Security Status</CardTitle>
+              <CardTitle>{t('security.overview.title')}</CardTitle>
               <CardDescription>
-                Your current security configuration
+                {t('security.overview.description')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -143,14 +145,14 @@ export const SecuritySettings = () => {
                 <div className="flex items-center gap-3">
                   <Key className="w-5 h-5 text-muted-foreground" />
                   <div>
-                    <p className="font-medium">Two-Factor Authentication</p>
+                    <p className="font-medium">{t('security.twoFactor.title')}</p>
                     <p className="text-sm text-muted-foreground">
-                      {twoFAEnabled ? 'Active' : 'Not configured'}
+                      {twoFAEnabled ? t('security.twoFactor.active') : t('security.twoFactor.notConfigured')}
                     </p>
                   </div>
                 </div>
                 <Badge variant={twoFAEnabled ? 'default' : 'outline'}>
-                  {twoFAEnabled ? 'Enabled' : 'Disabled'}
+                  {twoFAEnabled ? t('security.status.enabled') : t('security.status.disabled')}
                 </Badge>
               </div>
 
@@ -158,26 +160,26 @@ export const SecuritySettings = () => {
                 <div className="flex items-center gap-3">
                   <Fingerprint className="w-5 h-5 text-muted-foreground" />
                   <div>
-                    <p className="font-medium">Biometric Authentication</p>
+                    <p className="font-medium">{t('security.biometric.title')}</p>
                     <p className="text-sm text-muted-foreground">
-                      {passkeyEnabled ? 'Passkey registered' : 'Not configured'}
+                      {passkeyEnabled ? t('security.biometric.registered') : t('security.biometric.notConfigured')}
                     </p>
                   </div>
                 </div>
                 <Badge variant={passkeyEnabled ? 'default' : 'outline'}>
-                  {passkeyEnabled ? 'Enabled' : 'Disabled'}
+                  {passkeyEnabled ? t('security.status.enabled') : t('security.status.disabled')}
                 </Badge>
               </div>
 
               <Alert>
                 <CheckCircle className="w-4 h-4" />
                 <AlertDescription>
-                  Your account is protected by{' '}
+                  {t('security.overview.protectedBy')}{' '}
                   {twoFAEnabled && passkeyEnabled
-                    ? 'multiple layers of security'
+                    ? t('security.overview.multiLayer')
                     : twoFAEnabled || passkeyEnabled
-                    ? 'enhanced authentication'
-                    : 'basic password protection'}
+                    ? t('security.overview.enhanced')
+                    : t('security.overview.basic')}
                 </AlertDescription>
               </Alert>
             </CardContent>
@@ -188,10 +190,10 @@ export const SecuritySettings = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Fingerprint className="w-5 h-5" />
-                Biometric Authentication
+                {t('security.biometric.title')}
               </CardTitle>
               <CardDescription>
-                Use your fingerprint, face ID, or security key to sign in
+                {t('security.biometric.setupDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -205,16 +207,16 @@ export const SecuritySettings = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="w-5 h-5" />
-                Recent Security Activity
+                {t('security.activity.title')}
               </CardTitle>
               <CardDescription>
-                Track recent security events on your account
+                {t('security.activity.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
               {securityEvents.length === 0 ? (
                 <Alert>
-                  <AlertDescription>No recent security events</AlertDescription>
+                  <AlertDescription>{t('security.activity.noEvents')}</AlertDescription>
                 </Alert>
               ) : (
                 <div className="space-y-3">
@@ -248,50 +250,48 @@ export const SecuritySettings = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Eye className="w-5 h-5" />
-                Breach Monitoring
+                {t('security.monitoring.title')}
               </CardTitle>
               <CardDescription>
-                Monitor if your credentials have been compromised
+                {t('security.monitoring.description')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert>
                 <Lock className="w-4 h-4" />
                 <AlertDescription>
-                  We continuously monitor known data breaches to check if your account
-                  credentials have been exposed. All checks use k-anonymity to protect
-                  your privacy.
+                  {t('security.monitoring.checkDescription')}
                 </AlertDescription>
               </Alert>
 
               <div className="p-4 border rounded-lg bg-success/5">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle className="w-5 h-5 text-success" />
-                  <span className="font-medium">No Breaches Detected</span>
+                  <span className="font-medium">{t('security.monitoring.noBreaches')}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Your credentials have not been found in any known data breaches.
+                  {t('security.monitoring.credentialsSafe')}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-medium">Security Recommendations</h4>
+                <h4 className="font-medium">{t('security.recommendations.title')}</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-success" />
-                    <span>Use a unique password for this account</span>
+                    <span>{t('security.recommendations.uniquePassword')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-success" />
-                    <span>Enable two-factor authentication</span>
+                    <span>{t('security.recommendations.enable2FA')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-success" />
-                    <span>Register a passkey for biometric authentication</span>
+                    <span>{t('security.recommendations.registerPasskey')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 mt-0.5 text-yellow-500" />
-                    <span>Review active sessions regularly</span>
+                    <span>{t('security.recommendations.reviewSessions')}</span>
                   </li>
                 </ul>
               </div>

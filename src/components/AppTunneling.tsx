@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Plus, Globe, Shield, Zap, Chrome, MessageSquare, Download, Music } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface App {
   id: string;
@@ -25,6 +26,7 @@ const defaultApps: App[] = [
 ];
 
 export const AppTunneling: React.FC = () => {
+  const { t } = useTranslation();
   const [apps, setApps] = useState<App[]>(defaultApps);
   const [searchTerm, setSearchTerm] = useState('');
   const [newAppName, setNewAppName] = useState('');
@@ -99,10 +101,10 @@ export const AppTunneling: React.FC = () => {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="h-5 w-5" />
-                Split Tunneling
+                {t('splitTunneling.title')}
               </CardTitle>
               <CardDescription>
-                Control which applications use the VPN connection
+                {t('splitTunneling.description')}
               </CardDescription>
             </div>
             <Switch
@@ -116,15 +118,14 @@ export const AppTunneling: React.FC = () => {
           <CardContent className="space-y-6">
             <Tabs value={tunnelingMode} onValueChange={(value) => setTunnelingMode(value as 'include' | 'exclude')}>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="include">Include Mode</TabsTrigger>
-                <TabsTrigger value="exclude">Exclude Mode</TabsTrigger>
+                <TabsTrigger value="include">{t('splitTunneling.includeMode')}</TabsTrigger>
+                <TabsTrigger value="exclude">{t('splitTunneling.excludeMode')}</TabsTrigger>
               </TabsList>
               
               <TabsContent value="include" className="space-y-4">
                 <div className="p-4 bg-primary/5 rounded-lg border">
                   <p className="text-sm text-muted-foreground">
-                    <strong>Include Mode:</strong> Only selected apps will use the VPN. 
-                    All other traffic goes through your regular internet connection.
+                    <strong>{t('splitTunneling.includeMode')}:</strong> {t('splitTunneling.includeModeDescription')}
                   </p>
                 </div>
               </TabsContent>
@@ -132,8 +133,7 @@ export const AppTunneling: React.FC = () => {
               <TabsContent value="exclude" className="space-y-4">
                 <div className="p-4 bg-destructive/5 rounded-lg border">
                   <p className="text-sm text-muted-foreground">
-                    <strong>Exclude Mode:</strong> Selected apps bypass the VPN. 
-                    All other traffic uses the VPN connection.
+                    <strong>{t('splitTunneling.excludeMode')}:</strong> {t('splitTunneling.excludeModeDescription')}
                   </p>
                 </div>
               </TabsContent>

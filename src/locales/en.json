@@ -464,6 +464,10 @@
     "medium": "Medium",
     "connectionQuality": "Connection Quality"
   },
+  "navigation": {
+    "mainVPN": "Main VPN",
+    "xxCoinDAO": "XX Coin & DAO"
+  },
   "analytics": {
     "title": "Analytics",
     "subtitle": "Track your VPN usage and performance",

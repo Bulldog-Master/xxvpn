@@ -1,0 +1,116 @@
+{
+  "security": {
+    "title": "Security Settings",
+    "description": "Manage your authentication methods and security preferences",
+    "tabs": {
+      "authentication": "Authentication",
+      "activity": "Activity",
+      "monitoring": "Monitoring"
+    },
+    "overview": {
+      "title": "Security Status",
+      "description": "Your current security configuration",
+      "protectedBy": "Your account is protected by",
+      "multiLayer": "multiple layers of security",
+      "enhanced": "enhanced authentication",
+      "basic": "basic password protection"
+    },
+    "twoFactor": {
+      "title": "Two-Factor Authentication",
+      "active": "Active",
+      "notConfigured": "Not configured"
+    },
+    "biometric": {
+      "title": "Biometric Authentication",
+      "registered": "Passkey registered",
+      "notConfigured": "Not configured",
+      "setupDescription": "Use your fingerprint, face ID, or security key to sign in"
+    },
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
+    "activity": {
+      "title": "Recent Security Activity",
+      "description": "Track recent security events on your account",
+      "noEvents": "No recent security events"
+    },
+    "monitoring": {
+      "title": "Breach Monitoring",
+      "description": "Monitor if your credentials have been compromised",
+      "checkDescription": "We continuously monitor known data breaches to check if your account credentials have been exposed. All checks use k-anonymity to protect your privacy.",
+      "noBreaches": "No Breaches Detected",
+      "credentialsSafe": "Your credentials have not been found in any known data breaches."
+    },
+    "recommendations": {
+      "title": "Security Recommendations",
+      "uniquePassword": "Use a unique password for this account",
+      "enable2FA": "Enable two-factor authentication",
+      "registerPasskey": "Register a passkey for biometric authentication",
+      "reviewSessions": "Review active sessions regularly"
+    },
+    "killSwitch": {
+      "title": "Kill Switch",
+      "description": "Blocks all internet traffic if VPN connection drops",
+      "enabled": "Kill Switch Enabled",
+      "disabled": "Kill Switch Disabled",
+      "allTrafficBlocked": "All traffic will be blocked if VPN disconnects",
+      "normalOperation": "Normal internet access if VPN disconnects"
+    },
+    "dnsLeak": {
+      "title": "DNS Leak Protection",
+      "description": "Prevents DNS queries from bypassing the VPN tunnel",
+      "enabled": "DNS Leak Protection Enabled",
+      "disabled": "DNS Leak Protection Disabled",
+      "allQueriesProtected": "All DNS queries are routed through VPN",
+      "standardDNS": "Standard DNS resolution"
+    },
+    "ipv6Leak": {
+      "title": "IPv6 Leak Protection",
+      "description": "Prevents IPv6 traffic from bypassing the VPN",
+      "enabled": "IPv6 Leak Protection Enabled",
+      "disabled": "IPv6 Leak Protection Disabled",
+      "ipv6Blocked": "IPv6 traffic is blocked or routed through VPN",
+      "ipv6Allowed": "IPv6 traffic is allowed"
+    },
+    "webRTC": {
+      "title": "WebRTC Leak Protection",
+      "description": "Prevents WebRTC from exposing your real IP",
+      "enabled": "WebRTC Protection Enabled",
+      "disabled": "WebRTC Protection Disabled",
+      "webRTCBlocked": "WebRTC requests are blocked",
+      "webRTCAllowed": "WebRTC is allowed"
+    }
+  },
+  "splitTunneling": {
+    "title": "Split Tunneling",
+    "description": "Control which applications use the VPN connection",
+    "includeMode": "Include Mode",
+    "excludeMode": "Exclude Mode",
+    "includeModeDescription": "Only selected apps will use the VPN. All other traffic goes through your regular internet connection.",
+    "excludeModeDescription": "Selected apps bypass the VPN. All other traffic uses the VPN connection.",
+    "searchPlaceholder": "Search applications...",
+    "addCustomApp": "Add custom application...",
+    "activeApps": "Active Apps",
+    "availableApplications": "Available Applications",
+    "tunnelingStatus": "Tunneling Status",
+    "mode": "Mode",
+    "appsConfigured": "Apps configured",
+    "status": "Status",
+    "active": "Active",
+    "include": "Include",
+    "exclude": "Exclude"
+  },
+  "realTimeStatus": {
+    "title": "Real-time Bandwidth Usage",
+    "connected": "Connected",
+    "notConnected": "Not Connected",
+    "active": "Active",
+    "clickToConnect": "Click the button below to establish a VPN connection",
+    "uploaded": "Uploaded",
+    "downloaded": "Downloaded",
+    "connectionQuality": "Connection Quality",
+    "disconnect": "Disconnect",
+    "connectToVPN": "Connect to VPN"
+  }
+}
