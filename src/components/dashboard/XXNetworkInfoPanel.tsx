@@ -120,7 +120,7 @@ export const XXNetworkInfoPanel = () => {
           </div>
 
           <div className="text-xs text-muted-foreground text-center pt-2">
-            {t('xxNetworkTechnology.learnMore')} <a href="https://xx.network" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">xx.network</a>
+            {t('xxNetworkTechnology.learnMore')} <a href="https://xx.network" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t('common.xxNetwork')}</a>
           </div>
         </div>
       </CardContent>
