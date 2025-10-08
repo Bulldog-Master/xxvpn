@@ -119,7 +119,7 @@ export const VPNModeSelector = ({ vpnMode, onConnect, onDisconnect, onUpgrade }:
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Badge variant="secondary" className="text-xs">CMIXX</Badge>
-                <span className="text-xs text-muted-foreground">XX Network</span>
+                <span className="text-xs text-muted-foreground">{t('common.xxNetwork')}</span>
               </div>
               <p className="text-xs text-muted-foreground">
                 {t('vpnModes.ultraFast.quantumResistant')}
