@@ -280,20 +280,20 @@ export const CustomDNS: React.FC = () => {
                   )}
 
                   <div className="space-y-3">
-                    <h4 className="text-sm font-medium">Add Custom DNS Server</h4>
+                    <h4 className="text-sm font-medium">{t('dns.addCustomServer')}</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                       <Input
-                        placeholder="Server name"
+                        placeholder={t('dns.serverName')}
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
                       />
                       <Input
-                        placeholder="Primary DNS (e.g., 1.1.1.1)"
+                        placeholder={t('dns.primaryDNS')}
                         value={newPrimary}
                         onChange={(e) => setNewPrimary(e.target.value)}
                       />
                       <Input
-                        placeholder="Secondary DNS (optional)"
+                        placeholder={t('dns.secondaryDNS')}
                         value={newSecondary}
                         onChange={(e) => setNewSecondary(e.target.value)}
                       />
@@ -334,22 +334,22 @@ export const CustomDNS: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div className="text-center p-4 bg-accent/50 rounded-lg">
                     <div className="text-2xl font-bold text-primary">{enabledBlockLists.length}</div>
-                    <div className="text-sm text-muted-foreground">Active Lists</div>
+                    <div className="text-sm text-muted-foreground">{t('dns.activeLists')}</div>
                   </div>
                   <div className="text-center p-4 bg-accent/50 rounded-lg">
                     <div className="text-2xl font-bold text-primary">{totalBlockedEntries.toLocaleString()}</div>
-                    <div className="text-sm text-muted-foreground">Blocked Entries</div>
+                    <div className="text-sm text-muted-foreground">{t('dns.blockedEntries')}</div>
                   </div>
                   <div className="text-center p-4 bg-accent/50 rounded-lg">
                     <div className="text-2xl font-bold text-green-500">
                       <CheckCircle className="h-6 w-6 mx-auto" />
                     </div>
-                    <div className="text-sm text-muted-foreground">Protection Active</div>
+                    <div className="text-sm text-muted-foreground">{t('dns.protectionActive')}</div>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="text-sm font-medium">Block Lists</h4>
+                  <h4 className="text-sm font-medium">{t('dns.blockLists')}</h4>
                   {blockLists.map((list) => (
                     <div
                       key={list.id}
@@ -379,10 +379,9 @@ export const CustomDNS: React.FC = () => {
                   <div className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm">
-                      <div className="font-medium text-amber-800 dark:text-amber-200">DNS-Level Blocking</div>
+                      <div className="font-medium text-amber-800 dark:text-amber-200">{t('dns.dnsBlocking')}</div>
                       <div className="text-amber-700 dark:text-amber-300 mt-1">
-                        This feature blocks content at the DNS level, which may affect some websites' functionality.
-                        You can disable specific lists if you encounter issues.
+                        {t('dns.blockingWarning')}
                       </div>
                     </div>
                   </div>

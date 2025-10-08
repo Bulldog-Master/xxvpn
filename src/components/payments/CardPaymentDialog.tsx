@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { CreditCard, Lock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface CardPaymentDialogProps {
   open: boolean;
@@ -15,6 +16,7 @@ interface CardPaymentDialogProps {
 }
 
 export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planName }: CardPaymentDialogProps) => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
@@ -66,10 +68,10 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="cardName">Cardholder Name</Label>
+            <Label htmlFor="cardName">{t('payment.cardholderName')}</Label>
             <Input
               id="cardName"
-              placeholder="John Doe"
+              placeholder={t('payment.cardholderPlaceholder')}
               value={cardName}
               onChange={(e) => setCardName(e.target.value)}
               required
@@ -77,10 +79,10 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="cardNumber">Card Number</Label>
+            <Label htmlFor="cardNumber">{t('payment.cardNumber')}</Label>
             <Input
               id="cardNumber"
-              placeholder="1234 5678 9012 3456"
+              placeholder={t('payment.cardNumberPlaceholder')}
               value={cardNumber}
               onChange={(e) => setCardNumber(formatCardNumber(e.target.value.replace(/\s/g, '')))}
               maxLength={19}
@@ -90,10 +92,10 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="expiryDate">Expiry Date</Label>
+              <Label htmlFor="expiryDate">{t('payment.expiryDate')}</Label>
               <Input
                 id="expiryDate"
-                placeholder="MM/YY"
+                placeholder={t('payment.expiryPlaceholder')}
                 value={expiryDate}
                 onChange={(e) => setExpiryDate(formatExpiryDate(e.target.value))}
                 maxLength={5}
@@ -102,11 +104,11 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="cvv">CVV</Label>
+              <Label htmlFor="cvv">{t('payment.cvv')}</Label>
               <Input
                 id="cvv"
                 type="password"
-                placeholder="123"
+                placeholder={t('payment.cvvPlaceholder')}
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value.replace(/\D/g, ''))}
                 maxLength={4}

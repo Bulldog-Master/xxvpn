@@ -10,6 +10,7 @@ import { Download, RefreshCw, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { useAuth } from '@/hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 interface AuditLog {
   id: string;
@@ -25,6 +26,7 @@ interface AuditLog {
 }
 
 export const AuditLogDashboard = () => {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -151,7 +153,7 @@ export const AuditLogDashboard = () => {
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-3">
           <Input
-            placeholder="Search by user ID, action, or table..."
+            placeholder={t('admin.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="max-w-xs"
@@ -159,10 +161,10 @@ export const AuditLogDashboard = () => {
           
           <Select value={actionFilter} onValueChange={setActionFilter}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by action" />
+              <SelectValue placeholder={t('admin.filterByAction')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Actions</SelectItem>
+              <SelectItem value="all">{t('admin.allActions')}</SelectItem>
               {uniqueActions.map(action => (
                 <SelectItem key={action} value={action}>{action}</SelectItem>
               ))}
@@ -171,10 +173,10 @@ export const AuditLogDashboard = () => {
 
           <Select value={tableFilter} onValueChange={setTableFilter}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by table" />
+              <SelectValue placeholder={t('admin.filterByTable')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tables</SelectItem>
+              <SelectItem value="all">{t('admin.allTables')}</SelectItem>
               {uniqueTables.map(table => (
                 <SelectItem key={table} value={table}>{table}</SelectItem>
               ))}

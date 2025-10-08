@@ -437,19 +437,19 @@ const AuthPage = () => {
                           type="text"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
-                          placeholder="Enter your full name"
+                          placeholder={t('auth.enterFullName')}
                           maxLength={100}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="signup-email">Email</Label>
+                        <Label htmlFor="signup-email">{t('auth.email')}</Label>
                         <Input
                           id="signup-email"
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="Enter your email"
+                          placeholder={t('auth.enterEmail')}
                           required
                           maxLength={255}
                         />

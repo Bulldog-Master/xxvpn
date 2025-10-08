@@ -1050,7 +1050,8 @@
     "protectionActive": "الحماية نشطة",
     "blockLists": "قوائم الحظر",
     "dnsBlocking": "الحظر على مستوى DNS",
-    "custom": "مخصص"
+    "custom": "مخصص",
+    "blockingWarning": "تحظر هذه الميزة المحتوى على مستوى DNS، مما قد يؤثر على وظائف بعض المواقع. يمكنك تعطيل قوائم معينة إذا واجهت مشاكل."
   },
   "serverMap": {
     "totalUsers": "إجمالي المستخدمين",
@@ -1087,6 +1088,25 @@
     "enterFullName": "أدخل اسمك الكامل",
     "authMethod": "طريقة المصادقة",
     "learnMoreAuth": "تعرف على المزيد حول طرق المصادقة واستعادة الحساب في الأسئلة الشائعة"
+  },
+  "payment": {
+    "cardholderName": "اسم حامل البطاقة",
+    "cardholderPlaceholder": "الاسم على البطاقة",
+    "cardNumber": "رقم البطاقة",
+    "cardNumberPlaceholder": "١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦",
+    "expiryDate": "تاريخ الانتهاء",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "١٢٣",
+    "payAmount": "دفع {amount} لـ {plan}",
+    "securePayment": "دفع آمن مشفر SSL"
+  },
+  "admin": {
+    "searchPlaceholder": "البحث عن معرف المستخدم أو الإجراء أو الجدول...",
+    "filterByAction": "تصفية حسب الإجراء",
+    "filterByTable": "تصفية حسب الجدول",
+    "allActions": "جميع الإجراءات",
+    "allTables": "جميع الجداول"
   },
   "tooltips": {
     "quickConnectSecure": "اتصال سريع بالوضع الآمن"

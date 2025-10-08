@@ -144,7 +144,7 @@ export const AppTunneling: React.FC = () => {
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search applications..."
+                    placeholder={t('appTunneling.searchApps')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -154,7 +154,7 @@ export const AppTunneling: React.FC = () => {
 
               <div className="flex gap-2">
                 <Input
-                  placeholder="Add custom application..."
+                  placeholder={t('appTunneling.addCustomApp')}
                   value={newAppName}
                   onChange={(e) => setNewAppName(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && addCustomApp()}
