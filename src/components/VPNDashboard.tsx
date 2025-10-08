@@ -285,7 +285,7 @@ const VPNDashboard = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 bg-card/50 rounded-lg px-3 py-2">
                 <Coins className="w-4 h-4 text-warning" />
-                <span className="text-sm font-medium">{formatNumber(user?.xxCoinBalance || 0, i18n.language, 2)} XX</span>
+                <span className="text-sm font-medium">{formatNumber(user?.xxCoinBalance || 0, i18n.language, 2)} {t('common.xx')}</span>
               </div>
               
               <Badge variant="outline" className="bg-card/50">

@@ -159,7 +159,10 @@
     "warning": "تحذير",
     "error": "خطأ",
     "success": "نجح",
-    "currencySymbol": "$"
+    "currencySymbol": "$",
+    "vpn": "في بي إن",
+    "xx": "إكس إكس",
+    "gbps": "جيجابت/ث"
   },
   "payments": {
     "title": "المدفوعات",
@@ -1254,8 +1257,5 @@
     "France": "فرنسا",
     "Paris": "باريس"
   },
-  "reliable": "موثوق",
-  "common": {
-    "gbps": "جيجابت/ث"
-  }
+  "reliable": "موثوق"
 }
