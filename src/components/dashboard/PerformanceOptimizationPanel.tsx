@@ -21,9 +21,10 @@ import {
 } from 'lucide-react';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 const PerformanceOptimizationPanel: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     settings,
     metrics,
@@ -93,8 +94,8 @@ const PerformanceOptimizationPanel: React.FC = () => {
               <Wifi className="h-4 w-4 text-green-500" />
               <span className="text-xs text-muted-foreground">{t('performance.bandwidth')}</span>
             </div>
-            <div className="text-2xl font-bold">{metrics.bandwidth}</div>
-            <div className="text-xs text-muted-foreground">Mbps</div>
+            <div className="text-2xl font-bold">{formatNumber(metrics.bandwidth, i18n.language)}</div>
+            <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
           </CardContent>
         </Card>
 
@@ -104,8 +105,8 @@ const PerformanceOptimizationPanel: React.FC = () => {
               <TrendingUp className="h-4 w-4 text-orange-500" />
               <span className="text-xs text-muted-foreground">{t('performance.throughput')}</span>
             </div>
-            <div className="text-2xl font-bold">{metrics.throughput}</div>
-            <div className="text-xs text-muted-foreground">Mbps</div>
+            <div className="text-2xl font-bold">{formatNumber(metrics.throughput, i18n.language)}</div>
+            <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
           </CardContent>
         </Card>
       </div>

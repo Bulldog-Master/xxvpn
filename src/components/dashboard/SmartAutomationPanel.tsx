@@ -8,9 +8,10 @@ import { Separator } from '@/components/ui/separator';
 import { Brain, Zap, Shield, TrendingUp, Clock, Wifi, Loader2 } from 'lucide-react';
 import { useSmartAutomation } from '@/hooks/useSmartAutomation';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 const SmartAutomationPanel: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     settings,
     recommendations,
@@ -221,7 +222,7 @@ const SmartAutomationPanel: React.FC = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <Wifi className="h-3 w-3" />
-                        {rec.expectedSpeed} Mbps
+                        {formatNumber(rec.expectedSpeed, i18n.language)} {t('units.mbps')}
                       </span>
                     </div>
                     <Button size="sm" variant="outline" className="hover-scale">

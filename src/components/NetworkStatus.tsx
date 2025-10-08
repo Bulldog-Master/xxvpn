@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatNumber, formatSpeed } from '@/utils/numberFormat';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -14,7 +15,7 @@ interface NetworkNode {
 }
 
 const NetworkStatus = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [nodes] = useState<NetworkNode[]>([
     { id: '1', location: t('network.nodes.gateway'), status: 'active', latency: 12, load: 45 },
     { id: '2', location: t('network.nodes.mixNode1'), status: 'active', latency: 28, load: 62 },
@@ -51,7 +52,7 @@ const NetworkStatus = () => {
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">98.7%</div>
+            <div className="text-2xl font-bold text-success">{formatNumber(98.7, i18n.language, 1)}%</div>
             <p className="text-xs text-muted-foreground">
               {t('network.nodesOperational')}
             </p>
@@ -64,7 +65,7 @@ const NetworkStatus = () => {
             <Zap className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">{throughput.toFixed(1)} Mbps</div>
+            <div className="text-2xl font-bold text-primary">{formatSpeed(throughput, i18n.language, t)}</div>
             <Progress value={throughput} className="h-2" />
           </CardContent>
         </Card>

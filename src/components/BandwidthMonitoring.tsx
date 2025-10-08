@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useTranslation } from 'react-i18next';
+import { formatNumber, formatSpeed } from '@/utils/numberFormat';
 
 interface BandwidthData {
   time: string;
@@ -87,7 +88,7 @@ const mockSpeedTests: SpeedTestResult[] = [
 ];
 
 export const BandwidthMonitoring: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [bandwidthData, setBandwidthData] = useState<BandwidthData[]>(generateMockData());
   const [isMonitoring, setIsMonitoring] = useState(true);
   const [isSpeedTesting, setIsSpeedTesting] = useState(false);
@@ -222,8 +223,8 @@ export const BandwidthMonitoring: React.FC = () => {
                   <Download className="h-4 w-4 text-green-500" />
                   <span className="text-sm font-medium">Download</span>
                 </div>
-                <div className="text-2xl font-bold">{currentDownload.toFixed(1)}</div>
-                <div className="text-xs text-muted-foreground">Mbps</div>
+                <div className="text-2xl font-bold">{formatNumber(currentDownload, i18n.language, 1)}</div>
+                <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
               </CardContent>
             </Card>
 
@@ -233,8 +234,8 @@ export const BandwidthMonitoring: React.FC = () => {
                   <Upload className="h-4 w-4 text-blue-500" />
                   <span className="text-sm font-medium">Upload</span>
                 </div>
-                <div className="text-2xl font-bold">{currentUpload.toFixed(1)}</div>
-                <div className="text-xs text-muted-foreground">Mbps</div>
+                <div className="text-2xl font-bold">{formatNumber(currentUpload, i18n.language, 1)}</div>
+                <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
               </CardContent>
             </Card>
 
@@ -343,13 +344,13 @@ export const BandwidthMonitoring: React.FC = () => {
                     <div className="text-center p-4 bg-accent/50 rounded-lg">
                       <div className="text-sm text-muted-foreground">Download</div>
                       <div className="text-xl font-bold">
-                        {currentSpeedTest.downloadSpeed ? `${currentSpeedTest.downloadSpeed.toFixed(1)} Mbps` : '--'}
+                        {currentSpeedTest.downloadSpeed ? formatSpeed(currentSpeedTest.downloadSpeed, i18n.language, t) : '--'}
                       </div>
                     </div>
                     <div className="text-center p-4 bg-accent/50 rounded-lg">
                       <div className="text-sm text-muted-foreground">Upload</div>
                       <div className="text-xl font-bold">
-                        {currentSpeedTest.uploadSpeed ? `${currentSpeedTest.uploadSpeed.toFixed(1)} Mbps` : '--'}
+                        {currentSpeedTest.uploadSpeed ? formatSpeed(currentSpeedTest.uploadSpeed, i18n.language, t) : '--'}
                       </div>
                     </div>
                   </div>
@@ -425,7 +426,7 @@ export const BandwidthMonitoring: React.FC = () => {
                   <TrendingUp className="h-4 w-4 text-green-500" />
                   <span className="text-sm font-medium">Peak Speed</span>
                 </div>
-                <div className="text-2xl font-bold">127 Mbps</div>
+                <div className="text-2xl font-bold">{formatSpeed(127, i18n.language, t)}</div>
                 <div className="text-xs text-muted-foreground">This session</div>
               </CardContent>
             </Card>
