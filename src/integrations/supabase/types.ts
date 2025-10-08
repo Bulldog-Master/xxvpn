@@ -483,6 +483,36 @@ export type Database = {
         }
         Relationships: []
       }
+      security_features: {
+        Row: {
+          created_at: string | null
+          enforcement_method: string
+          feature_name: string
+          id: string
+          implementation_details: string
+          last_verified_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string | null
+          enforcement_method: string
+          feature_name: string
+          id?: string
+          implementation_details: string
+          last_verified_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string | null
+          enforcement_method?: string
+          feature_name?: string
+          id?: string
+          implementation_details?: string
+          last_verified_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       stripe_webhook_log: {
         Row: {
           error_message: string | null
@@ -776,6 +806,10 @@ export type Database = {
       cancel_own_subscription: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      check_security_active: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
       cleanup_device_access_audit: {
         Args: Record<PropertyKey, never>
