@@ -30,10 +30,11 @@ import {
 import { useNetworkSecurity } from '@/hooks/useNetworkSecurity';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { ar } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 
 export const KillSwitchSettings: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     settings,
     networkStatus,
@@ -177,7 +178,10 @@ export const KillSwitchSettings: React.FC = () => {
 
           {networkStatus.lastCheckTime > 0 && (
             <div className="mt-4 text-xs text-muted-foreground">
-              {t('security.lastChecked')}
+              {t('security.lastChecked')} {formatDistanceToNow(networkStatus.lastCheckTime, { 
+                addSuffix: true,
+                locale: i18n.language === 'ar' ? ar : undefined 
+              })}
             </div>
           )}
         </CardContent>
