@@ -952,6 +952,17 @@ export type Database = {
           trial_end: string
         }[]
       }
+      get_users_admin_safe: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          created_at: string
+          display_name: string
+          subscription_tier: string
+          totp_enabled: boolean
+          user_id: string
+          xx_coin_balance: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

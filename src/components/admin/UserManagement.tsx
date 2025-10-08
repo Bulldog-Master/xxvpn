@@ -31,18 +31,18 @@ export const UserManagement = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('profiles')
-        .select('user_id, display_name, subscription_tier, xx_coin_balance, created_at, totp_enabled')
-        .order('created_at', { ascending: false })
-        .limit(50);
+        .rpc('get_users_admin_safe', {
+          limit_count: 50,
+          offset_count: 0
+        });
 
       if (error) throw error;
       setUsers(data || []);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching users');
       toast({
         title: "Error",
-        description: "Failed to load users",
+        description: "Failed to load users. Admin access required.",
         variant: "destructive",
       });
     } finally {
