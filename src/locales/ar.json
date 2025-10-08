@@ -598,6 +598,29 @@
     "quality": "الجودة",
     "started": "بدأ"
   },
+  "reporting": {
+    "title": "التقارير المتقدمة",
+    "subtitle": "تصدير التقارير التفصيلية وجدولة الرؤى الآلية",
+    "exportReports": "تصدير التقارير",
+    "scheduledReports": "التقارير المجدولة",
+    "customDashboards": "لوحات معلومات مخصصة",
+    "exportData": "تصدير البيانات",
+    "generateReports": "للتحليل CSV إنشاء وتنزيل تقارير",
+    "reportType": "نوع التقرير",
+    "bandwidthUsage": "استخدام النطاق",
+    "dateRange": "نطاق التاريخ",
+    "csvInfo": "أو أي تطبيق جداول بيانات آخر. يمكنك فتح ملف CSV في Google Sheets أو Excel ويمكن فتحه في برنامج",
+    "exportReport": "تصدير التقرير",
+    "bandwidthMonitor": "مراقب النطاق",
+    "trackBandwidth": "تتبع استخدام النطاق وأنماط الأداء",
+    "securityOverview": "نظرة عامة على الأمان",
+    "monitorSecurity": "مراقبة الأحداث الأمنية وتتبع الأنشطة",
+    "performanceMetrics": "مقاييس الأداء",
+    "trackPerformance": "تتبع أداء الشبكة ومقاييس الاتصال",
+    "usageAnalytics": "تحليلات الاستخدام",
+    "analyzeUsage": "تحليل أنماط الاستخدام والاتجاهات بمرور الوقت",
+    "createDashboard": "إنشاء لوحة معلومات"
+  },
   "xxNetworkTechnology": {
     "title": "تكنولوجيا شبكة إكس إكس",
     "description": "منصة خصوصية ثورية مقاومة للحوسبة الكمية",
@@ -753,7 +776,7 @@
     }
   },
   "bandwidth": {
-    "monitoring": "مراقبة عرض النطاق في الوقت الفعلي",
+    "monitoring": "المراقبة",
     "monitoringDesc": "مراقبة مباشرة لأداء شبكتك",
     "download": "التنزيل",
     "upload": "الرفع",
@@ -762,7 +785,7 @@
     "speedTest": "اختبار السرعة",
     "usageHistory": "سجل الاستخدام",
     "runSpeedTest": "تشغيل اختبار السرعة",
-    "pause": "إيقاف مؤقت",
+    "pause": "إيقاف",
     "resume": "استئناف",
     "testing": "جاري الاختبار",
     "complete": "مكتمل",
@@ -781,7 +804,14 @@
     "liveNetworkPerformance": "مراقبة مباشرة لأداء شبكتك",
     "bandwidthUsage": "استخدام عرض النطاق",
     "downloadVsUpload": "نسبة التنزيل مقابل الرفع",
-    "noDataAvailable": "لا توجد بيانات متاحة"
+    "noDataAvailable": "لا توجد بيانات متاحة",
+    "totalDownloaded": "إجمالي التنزيل",
+    "totalUploaded": "إجمالي الرفع",
+    "peakSpeed": "أقصى سرعة",
+    "avgLatency": "متوسط التأخير",
+    "today": "اليوم",
+    "thisSession": "هذه الجلسة",
+    "recentTests": "الاختبارات الأخيرة"
   },
   "subscriptionPlans": {
     "selectPlan": "اختر خطتك",
@@ -1044,7 +1074,23 @@
     "dnsConfiguration": "تكوين DNS",
     "currentDNSServers": "خوادم DNS الحالية",
     "customDNSServers": "خوادم DNS المخصصة",
-    "active": "نشط"
+    "active": "نشط",
+    "dnsLeak": {
+      "title": "حماية تسرب DNS",
+      "description": "يمنع استعلامات DNS من التجاوز لاتصال الشبكة الخاصة الافتراضية الخاص بك"
+    },
+    "ipv6Leak": {
+      "title": "حماية تسرب IPv6",
+      "description": "يحظر حركة مرور IPv6 لمنع تجاوز الشبكة الخاصة الافتراضية"
+    }
+  },
+  "splitTunneling": {
+    "title": "النفق المقسم",
+    "description": "اختر التطبيقات التي تستخدم الشبكة الخاصة الافتراضية"
+  },
+  "security": {
+    "title": "ميزات الأمان النشطة",
+    "description": "آليات الحماية المقاومة للحوسبة الكمية"
   },
   "subscriptionPlansFeatures": {
     "singleDevice": "جهاز واحد",
@@ -1159,10 +1205,30 @@
   "tooltips": {
     "quickConnectSecure": "اتصال سريع بالوضع الآمن"
   },
+  "xxCoinWallet": {
+    "title": "محفظة شبكة XX",
+    "description": "قم بتوصيل محفظتك المقاومة للكم للدفع برموز XX",
+    "chooseWallet": "اختر محفظتك:",
+    "noWalletDetected": "لم يتم اكتشاف محفظة",
+    "getXXWallet": "احصل على محفظة xx",
+    "getMetaMask": "احصل على MetaMask",
+    "balance": "الرصيد",
+    "usedForBandwidth": "يستخدم للدفع مقابل النطاق والخدمات على شبكة xx",
+    "thisMonthEarned": "تم كسبه هذا الشهر",
+    "thisMonthSpent": "تم إنفاقه هذا الشهر",
+    "networkUsageThisMonth": "استخدام الشبكة هذا الشهر",
+    "bandwidthPaid": "تم دفع النطاق بعملات XX - {{amount}} XX لكل جيجابايت",
+    "howToEarnXXCoins": "كيفية كسب عملات XX"
+  },
   "loadLevel": {
     "low": "منخفض",
     "medium": "متوسط",
     "high": "عالٍ"
+  },
+  "congestionLevel": {
+    "low": "ازدحام منخفض",
+    "medium": "ازدحام متوسط",
+    "high": "ازدحام مرتفع"
   },
   "serverLocations": {
     "United States": "الولايات المتحدة",
@@ -1188,6 +1254,7 @@
     "France": "فرنسا",
     "Paris": "باريس"
   },
+  "reliable": "موثوق",
   "common": {
     "gbps": "جيجابت/ث"
   }
