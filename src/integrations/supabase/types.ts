@@ -766,9 +766,21 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      security_status_summary: {
+        Row: {
+          enforcement_method: string | null
+          implementation: string | null
+          security_feature: string | null
+          status: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      anonymize_old_vpn_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cancel_own_subscription: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -1004,6 +1016,10 @@ export type Database = {
       }
       validate_device_ip_protection: {
         Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      validate_email_format: {
+        Args: { email: string }
         Returns: boolean
       }
       validate_subscribers_rls: {
