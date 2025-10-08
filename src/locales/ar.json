@@ -1,6 +1,6 @@
 {
   "dashboard": {
-    "title": "لوحة تحكم xxVPN",
+    "title": "لوحة تحكم الشبكة الخاصة الافتراضية",
     "welcomeBack": "مرحباً بعودتك",
     "status": {
       "connected": "متصل",
@@ -13,14 +13,14 @@
       "ultraSecure": "فائق الأمان",
       "off": "مطفئ",
       "gamingStreaming": "الألعاب والبث",
-      "standardProtection": "حماية VPN قياسية",
-      "noVPN": "بدون VPN",
+      "standardProtection": "حماية قياسية",
+      "noVPN": "بدون حماية",
       "ultraFastDesc": "اتصال فائق السرعة للألعاب والبث مع أدنى تأخير.",
       "maximumSpeed": "أقصى سرعة",
-      "secureDesc": "نفق VPN مشفر يوفر حماية خصوصية قياسية.",
+      "secureDesc": "نفق مشفر يوفر حماية خصوصية قياسية.",
       "encryptedTunnel": "نفق مشفر",
       "metadataShredding": "تدمير البيانات الوصفية",
-      "metadataShredDesc": "تدمير البيانات الوصفية باستخدام cMixx عبر شبكة XX.",
+      "metadataShredDesc": "تدمير البيانات الوصفية باستخدام سي-ميكس عبر شبكة إكس إكس.",
       "metadataProtection": "حماية البيانات الوصفية"
     },
     "localIP": "عنوان IP المحلي",
@@ -34,7 +34,7 @@
       "dataTransferred": "البيانات المنقولة",
       "sessionTime": "وقت الجلسة",
       "networkLatency": "تأخير الشبكة",
-      "xxCoinsEarned": "عملات XX المكتسبة",
+      "xxCoinsEarned": "عملات إكس إكس المكتسبة",
       "currentSession": "الجلسة الحالية",
       "averagePing": "متوسط الاستجابة"
     },
@@ -47,8 +47,8 @@
       "apps": "التطبيقات",
       "automation": "الأتمتة",
       "performance": "الأداء",
-      "xxcoin": "عملة XX",
-      "governance": "DAO",
+      "xxcoin": "عملة إكس إكس",
+      "governance": "منظمة لامركزية مستقلة",
       "devices": "الأجهزة",
       "payments": "المدفوعات",
       "advanced": "متقدم",
@@ -77,8 +77,8 @@
     },
     "connectionStatus": {
       "ultraFastActive": "وضع فائق السرعة: اتصال مباشر للألعاب والبث",
-      "secureActive": "الوضع الآمن: نفق VPN مشفر نشط",
-      "ultraSecureActive": "وضع فائق الأمان: تدمير البيانات الوصفية عبر XX Network cMixx نشط",
+      "secureActive": "الوضع الآمن: نفق مشفر نشط",
+      "ultraSecureActive": "وضع فائق الأمان: تدمير البيانات الوصفية عبر شبكة إكس إكس بروتوكول سي-ميكس نشط",
       "notProtected": "حركة المرور الخاصة بك غير محمية"
     },
     "referrals": {
@@ -86,7 +86,7 @@
       "yourReferrals": "إحالاتك",
       "totalUsers": "إجمالي المستخدمين", 
       "yourLink": "رابط الإحالة الخاص بك",
-      "shareMessage": "شارك رابط الإحالة الخاص بك لكسب عملات XX لكل مستخدم جديد ينضم!",
+      "shareMessage": "شارك رابط الإحالة الخاص بك لكسب عملات إكس إكس لكل مستخدم جديد ينضم!",
       "referrals": "إحالات",
       "users": "مستخدمين"
     },
@@ -97,8 +97,8 @@
     }
   },
   "auth": {
-    "title": "مرحباً بك في xxVPN",
-    "subtitle": "حماية VPN آمنة وخاصة ومقاومة للحوسبة الكمية",
+    "title": "مرحباً بك في الشبكة الخاصة الافتراضية",
+    "subtitle": "حماية آمنة وخاصة ومقاومة للحوسبة الكمية",
     "signIn": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "email": "البريد الإلكتروني",
@@ -146,7 +146,7 @@
     }
   },
   "common": {
-    "loading": "جاري تحميل xxVPN...",
+    "loading": "جاري التحميل...",
     "save": "حفظ",
     "cancel": "إلغاء",
     "close": "إغلاق",
@@ -181,21 +181,21 @@
       },
       "crypto": {
         "title": "العملة المشفرة", 
-        "description": "Bitcoin، Ethereum، XX Coin",
+        "description": "بيتكوين، إيثريوم، عملة إكس إكس",
         "action": "إعداد"
       }
     },
     "orders": {
       "title": "طلباتك",
-      "privacy": "بالتصميم، يفصل xxVPN معلومات الدفع والهوية عن نشاطك على الإنترنت. هذا يضمن حماية قوية ضد المراقبة غير المصرح بها لحركة المرور والبيانات الخاصة.",
+      "privacy": "بالتصميم، نحن نفصل معلومات الدفع والهوية عن نشاطك على الإنترنت. هذا يضمن حماية قوية ضد المراقبة غير المصرح بها لحركة المرور والبيانات الخاصة.",
       "table": {
         "id": "المعرف",
         "date": "التاريخ",
         "subscription": "الاشتراك",
         "status": "الحالة",
         "amount": "المبلغ",
-        "xxVPNPremium": "xxVPN المتميز",
-        "xxVPNBasic": "xxVPN الأساسي"
+        "xxVPNPremium": "الشبكة الخاصة الافتراضية المتميزة",
+        "xxVPNBasic": "الشبكة الخاصة الافتراضية الأساسية"
       },
       "status": {
         "active": "نشط",
@@ -211,7 +211,7 @@
   },
   "servers": {
     "title": "اختيار الخادم",
-    "description": "اختر موقع خادم VPN الخاص بك",
+    "description": "اختر موقع الخادم الخاص بك",
     "quickConnect": "اتصال سريع",
     "searchPlaceholder": "البحث عن البلدان أو المدن...",
     "stats": {
@@ -224,7 +224,7 @@
     },
     "list": {
       "title": "الخوادم المتاحة",
-      "description": "اختر موقع خادم لاتصال VPN الخاص بك",
+      "description": "اختر موقع خادم لاتصالك",
       "favorites": "المفضلة",
       "allLocations": "جميع المواقع",
       "premium": "متميز",
@@ -238,7 +238,7 @@
     "description": "إدارة أجهزتك المتصلة ({{used}}/{{total}} جهاز مستخدم)",
     "addDevice": "إضافة جهاز",
     "addNew": "إضافة جهاز جديد",
-    "addDescription": "سجل جهازاً جديداً للاستخدام مع xxVPN. يمكنك الحصول على {{limit}} جهاز.",
+    "addDescription": "سجل جهازاً جديداً للاستخدام مع الشبكة الخاصة الافتراضية. يمكنك الحصول على {{limit}} جهاز.",
     "types": {
       "desktop": "سطح المكتب",
       "mobile": "الهاتف المحمول",
@@ -269,7 +269,7 @@
     "removeToAdd": "احذف جهازاً لإضافة جهاز جديد.",
     "slotsRemaining": "لديك {{count}} فتحة جهاز متبقية.",
     "noDevices": "لا توجد أجهزة مسجلة",
-    "noDevicesDesc": "أضف جهازك الأول لبدء استخدام xxVPN",
+    "noDevicesDesc": "أضف جهازك الأول لبدء الاستخدام",
     "lastSeen": "آخر ظهور",
     "latency": "التأخير",
     "load": "التحميل"
@@ -280,9 +280,9 @@
     "throughput": "معدل النقل",
     "protectionLevel": "مستوى الحماية",
     "quantum": "كمي",
-    "encryptionActive": "تشفير cMixx نشط",
+    "encryptionActive": "تشفير سي-ميكس نشط",
     "topology": "طوبولوجيا الشبكة",
-    "topologyDesc": "اتصال شبكة مختلطة من 5 قفزات عبر شبكة XX",
+    "topologyDesc": "اتصال شبكة مختلطة من 5 قفزات عبر شبكة إكس إكس",
     "hop": "قفزة",
     "latency": "التأخير",
     "load": "التحميل",
@@ -311,7 +311,7 @@
   },
   "profile": {
     "signedOut": "تم تسجيل الخروج",
-    "signedOutDesc": "تم تسجيل الخروج بنجاح من xxVPN.",
+    "signedOutDesc": "تم تسجيل الخروج بنجاح.",
     "signOutError": "فشل تسجيل الخروج. حاول مرة أخرى.",
     "updated": "تم تحديث الملف الشخصي",
     "updatedDesc": "تم تحديث ملفك الشخصي بنجاح.",
@@ -522,14 +522,14 @@
   "tour": "جولة",
   "beta": {
     "joinTitle": "انضم للنسخة التجريبية",
-    "joinDescription": "كن من بين أول 100 مستخدم لتجربة VPN المقاوم للحوسبة الكمية",
+    "joinDescription": "كن من بين أول ١٠٠ مستخدم لتجربة الشبكة الخاصة الافتراضية المقاومة للحوسبة الكمية",
     "postQuantumSecure": "آمن ما بعد الكم",
     "30DaysFree": "٣٠ يوماً مجاناً",
     "20PercentDiscount": "خصم ٢٠٪ مدى الحياة",
     "joinWaitlist": "انضم إلى قائمة الانتظار",
     "limitedOffer": "محدود لأول ١٠٠ مستخدم • ينتهي قريباً",
     "joinQuantumBeta": "انضم للنسخة التجريبية الكمية الآمنة",
-    "firstUsers": "كن من بين أول ١٠٠ مستخدم لتجربة أول VPN مقاوم للكم في العالم مدعوم ببروتوكول cMixx من شبكة xx.",
+    "firstUsers": "كن من بين أول ١٠٠ مستخدم لتجربة أول شبكة خاصة افتراضية مقاومة للكم في العالم مدعومة ببروتوكول سي-ميكس من شبكة إكس إكس.",
     "freeTrial": "تجربة مجانية لمدة ٣٠ يوماً",
     "lifetimeDiscount": "خصم مدى الحياة ٢٠٪",
     "postQuantumEncryption": "تشفير ما بعد الكم",
@@ -537,7 +537,7 @@
     "limitedUsers": "محدود لأول ١٠٠ مستخدم"
   },
   "xxNetwork": {
-    "title": "شبكة xx",
+    "title": "شبكة إكس إكس",
     "quantumResistantMixnet": "شبكة مختلطة مقاومة للكم",
     "disconnected": "غير متصل",
     "checking": "جاري الفحص...",
@@ -545,21 +545,21 @@
     "degraded": "متدهور",
     "offline": "غير متصل",
     "unknown": "غير معروف",
-    "connectedToCMixx": "متصل بـ cMixx",
+    "connectedToCMixx": "متصل بسي-ميكس",
     "notConnected": "غير متصل",
     "secureQuantumTunnel": "نفق كمي آمن نشط",
     "readyToConnect": "جاهز للاتصال",
     "live": "مباشر",
     "initializingBtn": "جاري التهيئة...",
-    "initializeCMixxClient": "تهيئة عميل cMixx",
-    "initializeXXNetwork": "تهيئة عميل شبكة xx",
-    "initializeDescription": "أنشئ مخزن مفاتيحك المشفر لاتصالات P2P المقاومة للكم. تقوم كلمة المرور هذه بتشفير مفاتيحك التشفيرية محلياً.",
+    "initializeCMixxClient": "تهيئة عميل سي-ميكس",
+    "initializeXXNetwork": "تهيئة عميل شبكة إكس إكس",
+    "initializeDescription": "أنشئ مخزن مفاتيحك المشفر لاتصالات نظير إلى نظير المقاومة للكم. تقوم كلمة المرور هذه بتشفير مفاتيحك التشفيرية محلياً.",
     "keystorePassword": "كلمة مرور المخزن",
     "enterStrongPassword": "أدخل كلمة مرور قوية",
     "passwordWarning": "كلمة المرور هذه لا تغادر جهازك ولا يمكن استردادها.",
     "initializeClient": "تهيئة العميل",
     "connecting": "جاري الاتصال...",
-    "connectToXXNetwork": "اتصل بشبكة xx",
+    "connectToXXNetwork": "اتصل بشبكة إكس إكس",
     "disconnect": "قطع الاتصال",
     "networkNodeUptime": "وقت تشغيل عقد الشبكة",
     "totalNodes": "إجمالي العقد",
@@ -567,7 +567,7 @@
     "avgLatency": "متوسط التأخير",
     "lastRound": "آخر جولة",
     "refreshNetworkHealth": "تحديث صحة الشبكة",
-    "cMixxProtocolActive": "بروتوكول cMixx نشط",
+    "cMixxProtocolActive": "بروتوكول سي-ميكس نشط",
     "quantumResistantEncryption": "تشفير مقاوم للكم",
     "metadataShredding": "حماية تدمير البيانات الوصفية",
     "decentralizedMixnet": "توجيه شبكة مختلطة لامركزية"
@@ -581,43 +581,43 @@
     "connectionQuality": "جودة الاتصال",
     "disconnect": "قطع الاتصال",
     "notConnected": "غير متصل",
-    "clickToConnect": "انقر للاتصال لبدء جلسة VPN",
-    "connectToVPN": "اتصل بـ VPN"
+    "clickToConnect": "انقر للاتصال لبدء جلسة",
+    "connectToVPN": "اتصل"
   },
   "connectionHistory": {
     "title": "سجل الاتصالات",
     "noHistory": "لا يوجد سجل اتصالات بعد",
-    "sessionsAppear": "ستظهر جلسات VPN الخاصة بك هنا",
+    "sessionsAppear": "ستظهر جلساتك هنا",
     "duration": "المدة",
     "quality": "الجودة",
     "started": "بدأ"
   },
   "xxNetworkTechnology": {
-    "title": "تكنولوجيا شبكة xx",
+    "title": "تكنولوجيا شبكة إكس إكس",
     "description": "منصة خصوصية ثورية مقاومة للحوسبة الكمية",
-    "cMixxProtocol": "بروتوكول cMixx",
+    "cMixxProtocol": "بروتوكول سي-ميكس",
     "quantumResistant": "مقاوم للكم",
     "quantumResistantDesc": "تشفير ما بعد الكم يحمي من هجمات الكمبيوتر الكمي المستقبلية",
     "metadataShredding": "تدمير البيانات الوصفية",
-    "metadataShreddinDesc": "يدمر بروتوكول cMixx البيانات الوصفية - ماذا ومتى وأين وكيف تتواصل",
+    "metadataShreddinDesc": "يدمر بروتوكول سي-ميكس البيانات الوصفية - ماذا ومتى وأين وكيف تتواصل",
     "decentralizedMixnet": "شبكة مختلطة لامركزية",
     "decentralizedMixnetDesc": "شبكة نظير إلى نظير من العقد توجه حركة المرور عبر قفزات متعددة للخصوصية",
     "trueP2P": "حقيقي نظير إلى نظير",
     "trueP2PDesc": "اتصال مباشر من المتصفح إلى الشبكة المختلطة - لا يرى أي خادم خلفي حركة المرور الخاصة بك",
     "webAssembly": "تجميع الويب",
-    "webAssemblyDesc": "عميل cMixx الكامل يعمل في متصفحك باستخدام كود Go مترجم",
+    "webAssemblyDesc": "عميل سي-ميكس الكامل يعمل في متصفحك باستخدام كود جو مترجم",
     "daoGoverned": "يحكمها منظمة لامركزية مستقلة",
-    "daoGovernedDesc": "شبكة مملوكة للمجتمع مع حوكمة لامركزية عبر xxChain",
+    "daoGovernedDesc": "شبكة مملوكة للمجتمع مع حوكمة لامركزية عبر سلسلة إكس إكس",
     "implementationStatus": "حالة التنفيذ",
     "phase1Foundation": "المرحلة ١: الأساس ✓",
     "edgeFunctions": "وظائف الحافة",
     "ndfRetrieval": "استرجاع ملف تعريف الشبكة ومراقبة الصحة",
     "clientInterface": "واجهة العميل",
-    "mockWasm": "وحدة تجميع ويب وهمية جاهزة لـ xxdk الحقيقي",
+    "mockWasm": "وحدة تجميع ويب وهمية جاهزة للنسخة الحقيقية",
     "keystore": "مخزن المفاتيح",
-    "encryptedStorage": "تخزين محلي مشفر في IndexedDB",
+    "encryptedStorage": "تخزين محلي مشفر",
     "wasmModule": "وحدة تجميع الويب",
-    "needsBuild": "يحتاج إلى بناء من مستودع xxdk-wasm",
+    "needsBuild": "يحتاج إلى بناء من المستودع",
     "daoContracts": "عقود المنظمة اللامركزية المستقلة",
     "plannedPhase3": "مخطط للمرحلة ٣",
     "learnMore": "تعلم المزيد:"
