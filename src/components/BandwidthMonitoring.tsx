@@ -210,9 +210,9 @@ export const BandwidthMonitoring: React.FC = () => {
     <div className="space-y-6">
       <Tabs defaultValue="monitoring" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="monitoring">Real-time Monitoring</TabsTrigger>
-          <TabsTrigger value="speedtest">Speed Test</TabsTrigger>
-          <TabsTrigger value="history">Usage History</TabsTrigger>
+          <TabsTrigger value="monitoring">{t('bandwidth.tabs.monitoring')}</TabsTrigger>
+          <TabsTrigger value="speedtest">{t('bandwidth.tabs.speedTest')}</TabsTrigger>
+          <TabsTrigger value="history">{t('bandwidth.tabs.history')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="monitoring" className="space-y-6">
@@ -257,10 +257,10 @@ export const BandwidthMonitoring: React.FC = () => {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <Activity className="h-5 w-5" />
-                    Real-time Bandwidth Usage
+                    {t('bandwidth.realtimeUsage')}
                   </CardTitle>
                   <CardDescription>
-                    Live monitoring of your network performance
+                    {t('bandwidth.liveMonitoring')}
                   </CardDescription>
                 </div>
                 <Button
@@ -269,7 +269,7 @@ export const BandwidthMonitoring: React.FC = () => {
                   onClick={toggleMonitoring}
                 >
                   {isMonitoring ? <Square className="h-4 w-4 mr-1" /> : <Play className="h-4 w-4 mr-1" />}
-                  {isMonitoring ? 'Pause' : 'Start'}
+                  {isMonitoring ? t('bandwidth.pause') : t('bandwidth.start')}
                 </Button>
               </div>
             </CardHeader>

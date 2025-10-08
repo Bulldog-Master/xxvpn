@@ -1199,7 +1199,16 @@
     "avgLatency": "متوسط التأخير",
     "today": "اليوم",
     "thisSession": "هذه الجلسة",
-    "recentTests": "اختبارات السرعة الأخيرة"
+    "recentTests": "اختبارات السرعة الأخيرة",
+    "tabs": {
+      "monitoring": "المراقبة في الوقت الفعلي",
+      "speedTest": "اختبار السرعة",
+      "history": "سجل الاستخدام"
+    },
+    "realtimeUsage": "استخدام النطاق في الوقت الفعلي",
+    "liveMonitoring": "مراقبة مباشرة لأداء شبكتك",
+    "pause": "إيقاف مؤقت",
+    "start": "ابدأ"
   },
   "dns": {
     "selectProvider": "اختر مزود DNS",
