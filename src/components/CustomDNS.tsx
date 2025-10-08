@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Shield, Globe, Zap, Check, X, Plus, Trash2, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface DNSServer {
   id: string;
@@ -79,6 +80,7 @@ const defaultBlockLists: BlockList[] = [
 ];
 
 export const CustomDNS: React.FC = () => {
+  const { t } = useTranslation();
   const [customDNSEnabled, setCustomDNSEnabled] = useState(false);
   const [selectedDNS, setSelectedDNS] = useState<string>('cloudflare');
   const [customDNSServers, setCustomDNSServers] = useState<DNSServer[]>([]);
@@ -212,10 +214,10 @@ export const CustomDNS: React.FC = () => {
               <CardContent className="space-y-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Select DNS Provider</label>
+                    <label className="text-sm font-medium mb-2 block">{t('dns.selectProvider')}</label>
                     <Select value={selectedDNS} onValueChange={setSelectedDNS}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Choose a DNS provider" />
+                        <SelectValue placeholder={t('dns.chooseProvider')} />
                       </SelectTrigger>
                       <SelectContent>
                         {presetDNSServers.map((dns) => (
@@ -232,7 +234,7 @@ export const CustomDNS: React.FC = () => {
                           <SelectItem key={dns.id} value={dns.id}>
                             <div className="flex items-center gap-2">
                               <Badge className={`text-xs ${getDNSTypeColor(dns.type)}`}>
-                                custom
+                                {t('dns.custom')}
                               </Badge>
                               <span>{dns.name}</span>
                             </div>
@@ -253,12 +255,12 @@ export const CustomDNS: React.FC = () => {
                       <p className="text-sm text-muted-foreground mb-3">{currentDNS.description}</p>
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Primary:</span>
+                          <span className="text-muted-foreground">{t('dns.primary')}:</span>
                           <div className="font-mono">{currentDNS.primary}</div>
                         </div>
                         {currentDNS.secondary && (
                           <div>
-                            <span className="text-muted-foreground">Secondary:</span>
+                            <span className="text-muted-foreground">{t('dns.secondary')}:</span>
                             <div className="font-mono">{currentDNS.secondary}</div>
                           </div>
                         )}
@@ -271,7 +273,7 @@ export const CustomDNS: React.FC = () => {
                           onClick={() => removeCustomDNS(currentDNS.id)}
                         >
                           <Trash2 className="h-3 w-3 mr-1" />
-                          Remove
+                          {t('dns.remove')}
                         </Button>
                       )}
                     </div>

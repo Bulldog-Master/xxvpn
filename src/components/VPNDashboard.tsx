@@ -567,7 +567,7 @@ const VPNDashboard = () => {
               size="lg" 
               className="rounded-full w-16 h-16 gradient-primary shadow-quantum hover-lift hover:shadow-neural transition-all duration-300"
               onClick={() => connectVPN('secure')}
-              title="Quick connect to Secure mode"
+              title={t('tooltips.quickConnectSecure')}
             >
               <Shield className="w-6 h-6" />
             </Button>

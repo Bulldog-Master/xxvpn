@@ -485,7 +485,16 @@
     "dateRange": "نطاق التاريخ",
     "bandwidthUsage": "استخدام النطاق الترددي",
     "csvInfo": "يتم تصدير التقارير بتنسيق CSV ويمكن فتحها في Excel أو Google Sheets أو أي تطبيق جداول بيانات.",
-    "exportReport": "تصدير التقرير"
+    "exportReport": "تصدير التقرير",
+    "bandwidthMonitor": "مراقب النطاق الترددي",
+    "trackBandwidth": "تتبع استخدام النطاق الترددي في الوقت الفعلي والتاريخي",
+    "securityOverview": "نظرة عامة على الأمان",
+    "monitorSecurity": "مراقبة أحداث الأمان وتنبيهات التهديدات",
+    "performanceMetrics": "مقاييس الأداء",
+    "trackPerformance": "تتبع سرعة الاتصال والتأخير",
+    "usageAnalytics": "تحليلات الاستخدام",
+    "analyzeUsage": "تحليل أنماط واتجاهات الاستخدام",
+    "createDashboard": "إنشاء لوحة تحكم"
   },
   "security": {
     "networkSecurityStatus": "حالة أمان الشبكة",
@@ -514,10 +523,17 @@
     "joinTitle": "انضم للنسخة التجريبية",
     "joinDescription": "كن من بين أول 100 مستخدم لتجربة VPN المقاوم للحوسبة الكمية",
     "postQuantumSecure": "آمن ما بعد الكم",
-    "30DaysFree": "30 يوماً مجاناً",
-    "20PercentDiscount": "خصم 20% مدى الحياة",
+    "30DaysFree": "٣٠ يوماً مجاناً",
+    "20PercentDiscount": "خصم ٢٠٪ مدى الحياة",
     "joinWaitlist": "انضم إلى قائمة الانتظار",
-    "limitedOffer": "محدود لأول 100 مستخدم • ينتهي قريباً"
+    "limitedOffer": "محدود لأول ١٠٠ مستخدم • ينتهي قريباً",
+    "joinQuantumBeta": "انضم للنسخة التجريبية الكمية الآمنة",
+    "firstUsers": "كن من بين أول ١٠٠ مستخدم لتجربة أول VPN مقاوم للكم في العالم مدعوم ببروتوكول cMixx من شبكة xx.",
+    "freeTrial": "تجربة مجانية لمدة ٣٠ يوماً",
+    "lifetimeDiscount": "خصم مدى الحياة ٢٠٪",
+    "postQuantumEncryption": "تشفير ما بعد الكم",
+    "learnMoreFAQ": "تعلم المزيد في الأسئلة الشائعة",
+    "limitedUsers": "محدود لأول ١٠٠ مستخدم"
   },
   "xxNetwork": {
     "title": "شبكة xx",
@@ -1005,5 +1021,77 @@
     "year": "سنة",
     "startTrial": "ابدأ النسخة التجريبية لمدة ٧ أيام",
     "selectPlan": "اختر الخطة"
+  },
+  "bandwidth": {
+    "download": "التنزيل",
+    "upload": "الرفع",
+    "ping": "البينج",
+    "totalDownloaded": "إجمالي التنزيل",
+    "totalUploaded": "إجمالي الرفع",
+    "peakSpeed": "السرعة القصوى",
+    "avgLatency": "متوسط التأخير",
+    "today": "اليوم",
+    "thisSession": "هذه الجلسة",
+    "recentTests": "اختبارات السرعة الأخيرة"
+  },
+  "dns": {
+    "selectProvider": "اختر مزود DNS",
+    "chooseProvider": "اختر مزود DNS",
+    "primary": "أساسي",
+    "secondary": "ثانوي",
+    "remove": "إزالة",
+    "addCustomServer": "إضافة خادم DNS مخصص",
+    "serverName": "اسم الخادم",
+    "primaryDNS": "DNS الأساسي (مثل ١.١.١.١)",
+    "secondaryDNS": "DNS الثانوي (اختياري)",
+    "addServer": "إضافة خادم",
+    "activeLists": "القوائم النشطة",
+    "blockedEntries": "الإدخالات المحظورة",
+    "protectionActive": "الحماية نشطة",
+    "blockLists": "قوائم الحظر",
+    "dnsBlocking": "الحظر على مستوى DNS",
+    "custom": "مخصص"
+  },
+  "serverMap": {
+    "totalUsers": "إجمالي المستخدمين",
+    "onlineNow": "متصل الآن",
+    "activeServers": "الخوادم النشطة",
+    "worldwide": "في جميع أنحاء العالم",
+    "avgLoad": "متوسط الحمل",
+    "acrossServers": "عبر جميع الخوادم",
+    "totalBandwidth": "إجمالي النطاق الترددي",
+    "peakCapacity": "السعة القصوى",
+    "globalActivity": "نشاط الخادم العالمي",
+    "northAmerica": "أمريكا الشمالية",
+    "europe": "أوروبا",
+    "asia": "آسيا",
+    "southAmerica": "أمريكا الجنوبية",
+    "africa": "أفريقيا",
+    "oceania": "أوقيانوسيا"
+  },
+  "appTunneling": {
+    "availableApps": "التطبيقات المتاحة",
+    "tunnelingStatus": "حالة النفق",
+    "mode": "الوضع",
+    "include": "تضمين",
+    "exclude": "استبعاد",
+    "appsConfigured": "التطبيقات المُهيأة",
+    "trafficStatus": "حالة حركة المرور",
+    "active": "نشط",
+    "searchApps": "البحث عن التطبيقات...",
+    "addCustomApp": "إضافة تطبيق مخصص..."
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "enterFullName": "أدخل اسمك الكامل",
+    "authMethod": "طريقة المصادقة",
+    "learnMoreAuth": "تعرف على المزيد حول طرق المصادقة واستعادة الحساب في الأسئلة الشائعة"
+  },
+  "tooltips": {
+    "quickConnectSecure": "اتصال سريع بالوضع الآمن"
+  },
+  "common": {
+    "gbps": "جيجابت/ث"
   }
 }

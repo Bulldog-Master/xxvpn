@@ -369,13 +369,13 @@ const AuthPage = () => {
                   ) : (
                     <>
                       <div className="space-y-2">
-                        <Label htmlFor="signin-email">Email</Label>
+                        <Label htmlFor="signin-email">{t('auth.email')}</Label>
                         <Input
                           id="signin-email"
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="Enter your email"
+                          placeholder={t('auth.enterEmail')}
                           required
                           maxLength={255}
                         />

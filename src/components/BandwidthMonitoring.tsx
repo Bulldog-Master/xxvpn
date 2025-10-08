@@ -221,7 +221,7 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Download className="h-4 w-4 text-green-500" />
-                  <span className="text-sm font-medium">Download</span>
+                  <span className="text-sm font-medium">{t('bandwidth.download')}</span>
                 </div>
                 <div className="text-2xl font-bold">{formatNumber(currentDownload, i18n.language, 1)}</div>
                 <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
@@ -232,7 +232,7 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Upload className="h-4 w-4 text-blue-500" />
-                  <span className="text-sm font-medium">Upload</span>
+                  <span className="text-sm font-medium">{t('bandwidth.upload')}</span>
                 </div>
                 <div className="text-2xl font-bold">{formatNumber(currentUpload, i18n.language, 1)}</div>
                 <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
@@ -243,10 +243,10 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Timer className="h-4 w-4 text-orange-500" />
-                  <span className="text-sm font-medium">Ping</span>
+                  <span className="text-sm font-medium">{t('bandwidth.ping')}</span>
                 </div>
-                <div className="text-2xl font-bold">{currentPing.toFixed(0)}</div>
-                <div className="text-xs text-muted-foreground">ms</div>
+                <div className="text-2xl font-bold">{formatNumber(currentPing, i18n.language, 0)}</div>
+                <div className="text-xs text-muted-foreground">{t('units.ms')}</div>
               </CardContent>
             </Card>
           </div>
@@ -336,19 +336,19 @@ export const BandwidthMonitoring: React.FC = () => {
 
                   <div className="grid grid-cols-3 gap-4">
                     <div className="text-center p-4 bg-accent/50 rounded-lg">
-                      <div className="text-sm text-muted-foreground">Ping</div>
+                      <div className="text-sm text-muted-foreground">{t('bandwidth.ping')}</div>
                       <div className="text-xl font-bold">
-                        {currentSpeedTest.ping ? `${currentSpeedTest.ping.toFixed(0)} ms` : '--'}
+                        {currentSpeedTest.ping ? `${formatNumber(currentSpeedTest.ping, i18n.language, 0)} ${t('units.ms')}` : '--'}
                       </div>
                     </div>
                     <div className="text-center p-4 bg-accent/50 rounded-lg">
-                      <div className="text-sm text-muted-foreground">Download</div>
+                      <div className="text-sm text-muted-foreground">{t('bandwidth.download')}</div>
                       <div className="text-xl font-bold">
                         {currentSpeedTest.downloadSpeed ? formatSpeed(currentSpeedTest.downloadSpeed, i18n.language, t) : '--'}
                       </div>
                     </div>
                     <div className="text-center p-4 bg-accent/50 rounded-lg">
-                      <div className="text-sm text-muted-foreground">Upload</div>
+                      <div className="text-sm text-muted-foreground">{t('bandwidth.upload')}</div>
                       <div className="text-xl font-bold">
                         {currentSpeedTest.uploadSpeed ? formatSpeed(currentSpeedTest.uploadSpeed, i18n.language, t) : '--'}
                       </div>
@@ -359,7 +359,7 @@ export const BandwidthMonitoring: React.FC = () => {
 
               {speedTestHistory.length > 0 && (
                 <div className="space-y-3">
-                  <h4 className="text-sm font-medium">Recent Speed Tests</h4>
+                  <h4 className="text-sm font-medium">{t('bandwidth.recentTests')}</h4>
                   <div className="space-y-2">
                     {speedTestHistory.slice(0, 3).map((test) => (
                       <div key={test.id} className="flex items-center justify-between p-3 bg-accent/50 rounded-lg">
@@ -370,21 +370,21 @@ export const BandwidthMonitoring: React.FC = () => {
                         <div className="flex items-center gap-4 text-sm">
                           <div className="text-center">
                             <div className={getSpeedColor(test.downloadSpeed, 'download')}>
-                              ↓ {test.downloadSpeed.toFixed(1)}
+                              ↓ {formatNumber(test.downloadSpeed, i18n.language, 1)}
                             </div>
-                            <div className="text-xs text-muted-foreground">Mbps</div>
+                            <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
                           </div>
                           <div className="text-center">
                             <div className={getSpeedColor(test.uploadSpeed, 'upload')}>
-                              ↑ {test.uploadSpeed.toFixed(1)}
+                              ↑ {formatNumber(test.uploadSpeed, i18n.language, 1)}
                             </div>
-                            <div className="text-xs text-muted-foreground">Mbps</div>
+                            <div className="text-xs text-muted-foreground">{t('units.mbps')}</div>
                           </div>
                           <div className="text-center">
                             <div className={getSpeedColor(test.ping, 'ping')}>
-                              {test.ping.toFixed(0)}
+                              {formatNumber(test.ping, i18n.language, 0)}
                             </div>
-                            <div className="text-xs text-muted-foreground">ms</div>
+                            <div className="text-xs text-muted-foreground">{t('units.ms')}</div>
                           </div>
                         </div>
                       </div>
@@ -402,10 +402,10 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Download className="h-4 w-4 text-green-500" />
-                  <span className="text-sm font-medium">Total Downloaded</span>
+                  <span className="text-sm font-medium">{t('bandwidth.totalDownloaded')}</span>
                 </div>
                 <div className="text-2xl font-bold">2.4 GB</div>
-                <div className="text-xs text-muted-foreground">Today</div>
+                <div className="text-xs text-muted-foreground">{t('bandwidth.today')}</div>
               </CardContent>
             </Card>
 
@@ -413,10 +413,10 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Upload className="h-4 w-4 text-blue-500" />
-                  <span className="text-sm font-medium">Total Uploaded</span>
+                  <span className="text-sm font-medium">{t('bandwidth.totalUploaded')}</span>
                 </div>
                 <div className="text-2xl font-bold">487 MB</div>
-                <div className="text-xs text-muted-foreground">Today</div>
+                <div className="text-xs text-muted-foreground">{t('bandwidth.today')}</div>
               </CardContent>
             </Card>
 
@@ -424,10 +424,10 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <TrendingUp className="h-4 w-4 text-green-500" />
-                  <span className="text-sm font-medium">Peak Speed</span>
+                  <span className="text-sm font-medium">{t('bandwidth.peakSpeed')}</span>
                 </div>
                 <div className="text-2xl font-bold">{formatSpeed(127, i18n.language, t)}</div>
-                <div className="text-xs text-muted-foreground">This session</div>
+                <div className="text-xs text-muted-foreground">{t('bandwidth.thisSession')}</div>
               </CardContent>
             </Card>
 
@@ -435,10 +435,10 @@ export const BandwidthMonitoring: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Wifi className="h-4 w-4 text-orange-500" />
-                  <span className="text-sm font-medium">Avg. Latency</span>
+                  <span className="text-sm font-medium">{t('bandwidth.avgLatency')}</span>
                 </div>
-                <div className="text-2xl font-bold">12 ms</div>
-                <div className="text-xs text-muted-foreground">This session</div>
+                <div className="text-2xl font-bold">12 {t('units.ms')}</div>
+                <div className="text-xs text-muted-foreground">{t('bandwidth.thisSession')}</div>
               </CardContent>
             </Card>
           </div>

@@ -181,7 +181,7 @@ export const AppTunneling: React.FC = () => {
               )}
 
               <div className="space-y-3 max-h-96 overflow-y-auto">
-                <h4 className="text-sm font-medium">Available Applications</h4>
+                <h4 className="text-sm font-medium">{t('appTunneling.availableApps')}</h4>
                 {filteredApps.map((app) => (
                   <div
                     key={app.id}
@@ -214,18 +214,18 @@ export const AppTunneling: React.FC = () => {
       {splitTunnelingEnabled && enabledApps.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm">Tunneling Status</CardTitle>
+            <CardTitle className="text-sm">{t('appTunneling.tunnelingStatus')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span>Mode:</span>
+                <span>{t('appTunneling.mode')}:</span>
                 <Badge variant={tunnelingMode === 'include' ? 'default' : 'destructive'}>
-                  {tunnelingMode === 'include' ? 'Include' : 'Exclude'}
+                  {tunnelingMode === 'include' ? t('appTunneling.include') : t('appTunneling.exclude')}
                 </Badge>
               </div>
               <div className="flex justify-between text-sm">
-                <span>Apps configured:</span>
+                <span>{t('appTunneling.appsConfigured')}:</span>
                 <span className="font-medium">{enabledApps.length}</span>
               </div>
               <div className="flex justify-between text-sm">

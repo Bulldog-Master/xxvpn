@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useTranslation } from 'react-i18next';
 import { 
   Activity, 
   Users, 
@@ -86,6 +87,7 @@ const getLoadColor = (load: number) => {
 };
 
 export const ServerActivityMap: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredServer, setHoveredServer] = useState<string | null>(null);
 
@@ -112,10 +114,10 @@ export const ServerActivityMap: React.FC = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Users className="h-4 w-4 text-blue-500" />
-                  <span className="text-sm font-medium">Total Users</span>
+                  <span className="text-sm font-medium">{t('serverMap.totalUsers')}</span>
                 </div>
                 <div className="text-2xl font-bold">12,910</div>
-                <div className="text-xs text-muted-foreground">Online now</div>
+                <div className="text-xs text-muted-foreground">{t('serverMap.onlineNow')}</div>
               </CardContent>
             </Card>
             
@@ -123,10 +125,10 @@ export const ServerActivityMap: React.FC = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Server className="h-4 w-4 text-green-500" />
-                  <span className="text-sm font-medium">Active Servers</span>
+                  <span className="text-sm font-medium">{t('serverMap.activeServers')}</span>
                 </div>
                 <div className="text-2xl font-bold">12</div>
-                <div className="text-xs text-muted-foreground">Worldwide</div>
+                <div className="text-xs text-muted-foreground">{t('serverMap.worldwide')}</div>
               </CardContent>
             </Card>
 
@@ -134,10 +136,10 @@ export const ServerActivityMap: React.FC = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Activity className="h-4 w-4 text-purple-500" />
-                  <span className="text-sm font-medium">Avg Load</span>
+                  <span className="text-sm font-medium">{t('serverMap.avgLoad')}</span>
                 </div>
                 <div className="text-2xl font-bold">56%</div>
-                <div className="text-xs text-muted-foreground">Across all servers</div>
+                <div className="text-xs text-muted-foreground">{t('serverMap.acrossServers')}</div>
               </CardContent>
             </Card>
 
@@ -145,10 +147,10 @@ export const ServerActivityMap: React.FC = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="h-4 w-4 text-orange-500" />
-                  <span className="text-sm font-medium">Total Bandwidth</span>
+                  <span className="text-sm font-medium">{t('serverMap.totalBandwidth')}</span>
                 </div>
-                <div className="text-2xl font-bold">24.3 Gbps</div>
-                <div className="text-xs text-muted-foreground">Peak capacity</div>
+                <div className="text-2xl font-bold">24.3 {t('common.gbps')}</div>
+                <div className="text-xs text-muted-foreground">{t('serverMap.peakCapacity')}</div>
               </CardContent>
             </Card>
           </div>
@@ -156,8 +158,8 @@ export const ServerActivityMap: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Globe className="h-5 w-5" />
-                Global Server Activity
+                <Globe className="h-5 h-5" />
+                {t('serverMap.globalActivity')}
               </CardTitle>
               <CardDescription>
                 Real-time server load and user distribution worldwide

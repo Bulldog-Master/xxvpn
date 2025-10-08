@@ -422,42 +422,42 @@ export const AdvancedReporting = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Bandwidth Monitor</h4>
+                  <h4 className="font-medium mb-2">{t('reporting.bandwidthMonitor')}</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Track real-time and historical bandwidth usage
+                    {t('reporting.trackBandwidth')}
                   </p>
                   <Button variant="outline" size="sm" className="w-full">
-                    Create Dashboard
+                    {t('reporting.createDashboard')}
                   </Button>
                 </div>
 
                 <div className="p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Security Overview</h4>
+                  <h4 className="font-medium mb-2">{t('reporting.securityOverview')}</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Monitor security events and threat alerts
+                    {t('reporting.monitorSecurity')}
                   </p>
                   <Button variant="outline" size="sm" className="w-full">
-                    Create Dashboard
+                    {t('reporting.createDashboard')}
                   </Button>
                 </div>
 
                 <div className="p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Performance Metrics</h4>
+                  <h4 className="font-medium mb-2">{t('reporting.performanceMetrics')}</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Track connection speed and latency
+                    {t('reporting.trackPerformance')}
                   </p>
                   <Button variant="outline" size="sm" className="w-full">
-                    Create Dashboard
+                    {t('reporting.createDashboard')}
                   </Button>
                 </div>
 
                 <div className="p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Usage Analytics</h4>
+                  <h4 className="font-medium mb-2">{t('reporting.usageAnalytics')}</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Analyze usage patterns and trends
+                    {t('reporting.analyzeUsage')}
                   </p>
                   <Button variant="outline" size="sm" className="w-full">
-                    Create Dashboard
+                    {t('reporting.createDashboard')}
                   </Button>
                 </div>
               </div>
