@@ -1147,7 +1147,10 @@
     "ipv6Leak": {
       "title": "حماية تسرب IPv6",
       "description": "يحظر حركة مرور IPv6 لمنع تجاوز الشبكة الخاصة الافتراضية"
-    }
+    },
+    "dnsLeakDetected": "تم اكتشاف تسرب DNS!",
+    "ipv6LeakDetected": "تم اكتشاف تسرب IPv6!",
+    "checkSettings": "تحقق من إعدادات الحماية الخاصة بك."
   },
   "splitTunneling": {
     "title": "النفق المقسم",
