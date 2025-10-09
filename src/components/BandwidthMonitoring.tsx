@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useTranslation } from 'react-i18next';
-import { formatNumber, formatSpeed } from '@/utils/numberFormat';
+import { formatNumber, formatSpeed, toArabicNumerals } from '@/utils/numberFormat';
 
 interface BandwidthData {
   time: string;
@@ -277,22 +277,36 @@ export const BandwidthMonitoring: React.FC = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={bandwidthData}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="time" />
-                  <YAxis />
-                  <Tooltip />
+                  <XAxis 
+                    dataKey="time"
+                    tickFormatter={(value) => {
+                      // Format time labels to use Arabic numerals if Arabic language
+                      return i18n.language === 'ar' ? toArabicNumerals(value) : value;
+                    }}
+                  />
+                  <YAxis 
+                    tickFormatter={(value) => {
+                      // Format Y-axis labels
+                      return formatNumber(value, i18n.language, 0);
+                    }}
+                  />
+                  <Tooltip 
+                    formatter={(value: number) => formatNumber(value, i18n.language, 1)}
+                    labelFormatter={(label) => i18n.language === 'ar' ? toArabicNumerals(label) : label}
+                  />
                   <Line 
                     type="monotone" 
                     dataKey="download" 
                     stroke="#22c55e" 
                     strokeWidth={2}
-                    name="Download (Mbps)"
+                    name={t('bandwidth.download')}
                   />
                   <Line 
                     type="monotone" 
                     dataKey="upload" 
                     stroke="#3b82f6" 
                     strokeWidth={2}
-                    name="Upload (Mbps)"
+                    name={t('bandwidth.upload')}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -330,7 +344,7 @@ export const BandwidthMonitoring: React.FC = () => {
                     </div>
                     <Progress value={speedTestProgress} className="w-full mb-4" />
                     <div className="text-sm text-muted-foreground">
-                      {speedTestProgress.toFixed(0)}% complete
+                      {formatNumber(speedTestProgress, i18n.language, 0)}% complete
                     </div>
                   </div>
 
@@ -364,7 +378,7 @@ export const BandwidthMonitoring: React.FC = () => {
                     {speedTestHistory.slice(0, 3).map((test) => (
                       <div key={test.id} className="flex items-center justify-between p-3 bg-accent/50 rounded-lg">
                         <div>
-                          <div className="font-medium text-sm">{test.timestamp}</div>
+                          <div className="font-medium text-sm">{i18n.language === 'ar' ? toArabicNumerals(test.timestamp) : test.timestamp}</div>
                           <div className="text-xs text-muted-foreground">{test.server}</div>
                         </div>
                         <div className="flex items-center gap-4 text-sm">

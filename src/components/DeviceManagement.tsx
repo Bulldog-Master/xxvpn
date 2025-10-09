@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { formatNumber, toArabicNumerals } from '@/utils/numberFormat';
 
 type Device = {
   id: string;
@@ -37,7 +38,7 @@ type Device = {
 
 const DeviceManagement = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [addDeviceOpen, setAddDeviceOpen] = useState(false);
@@ -358,7 +359,7 @@ const DeviceManagement = () => {
                           <span>{device.operating_system}</span>
                         )}
                         <span>
-                          {t('devices.lastSeen')}: {lastSeen.toLocaleString()}
+                          {t('devices.lastSeen')}: {i18n.language === 'ar' ? toArabicNumerals(lastSeen.toLocaleString()) : lastSeen.toLocaleString()}
                         </span>
                       </div>
                     </div>
