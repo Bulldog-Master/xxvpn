@@ -1343,13 +1343,13 @@
       },
       "dailyLogin": {
         "title": "تسجيل الدخول اليومي",
-        "amount": "+١ XX",
+        "amount": "+١ إكس إكس",
         "description": "سجل الدخول يومياً لكسب المكافآت"
       },
       "staking": {
         "title": "مكافآت الرهن",
-        "amount": "+١٠٪ APY",
-        "description": "راهن برموز DAO لكسب XX"
+        "amount": "+١٠٪ عائد سنوي",
+        "description": "راهن برموز المنظمة اللامركزية المستقلة لكسب إكس إكس"
       }
     },
     "transactions": {

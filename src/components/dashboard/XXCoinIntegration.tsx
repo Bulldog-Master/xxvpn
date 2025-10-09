@@ -371,7 +371,7 @@ export const XXCoinIntegration = () => {
           <div className="flex items-center justify-between p-4 bg-accent/20 rounded-lg">
             <div>
               <p className="text-sm text-muted-foreground">{t('xxCoin.wallet.balance')}</p>
-              <p className="text-2xl font-bold">{walletState.balance || "0.00"} XX</p>
+              <p className="text-2xl font-bold">{formatNumber(walletState.balance ? parseFloat(walletState.balance) : 0, i18n.language, 2)} {t('common.xx')}</p>
             </div>
             <Shield className="h-8 w-8 text-primary" />
           </div>
@@ -388,7 +388,7 @@ export const XXCoinIntegration = () => {
                 >
                   {t('xxCoin.wallet.oneMonth')}
                   <br />
-                  <span className="text-xs">({formatNumber(5, i18n.language)} XX)</span>
+                  <span className="text-xs">({formatNumber(5, i18n.language)} {t('common.xx')})</span>
                 </Button>
                 <Button 
                   onClick={() => handleSubscribe(6)} 
@@ -398,7 +398,7 @@ export const XXCoinIntegration = () => {
                 >
                   {t('xxCoin.wallet.sixMonths')}
                   <br />
-                  <span className="text-xs">({formatNumber(30, i18n.language)} XX)</span>
+                  <span className="text-xs">({formatNumber(30, i18n.language)} {t('common.xx')})</span>
                 </Button>
                 <Button 
                   onClick={() => handleSubscribe(12)} 
@@ -408,7 +408,7 @@ export const XXCoinIntegration = () => {
                 >
                   {t('xxCoin.wallet.twelveMonths')}
                   <br />
-                  <span className="text-xs">({formatNumber(60, i18n.language)} XX)</span>
+                  <span className="text-xs">({formatNumber(60, i18n.language)} {t('common.xx')})</span>
                 </Button>
               </div>
             </div>
@@ -442,21 +442,21 @@ export const XXCoinIntegration = () => {
                 <ArrowUpRight className="w-4 h-4 text-success" />
                 <span className="text-sm font-medium text-success">{t('xxCoin.balance.thisMonthEarned')}</span>
               </div>
-              <div className="text-2xl font-semibold">+{formatNumber(monthlyEarnings, i18n.language, 1)} XX</div>
+              <div className="text-2xl font-semibold">+{formatNumber(monthlyEarnings, i18n.language, 1)} {t('common.xx')}</div>
             </div>
             <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 <ArrowDownRight className="w-4 h-4 text-destructive" />
                 <span className="text-sm font-medium text-destructive">{t('xxCoin.balance.thisMonthSpent')}</span>
               </div>
-              <div className="text-2xl font-semibold">-{formatNumber(monthlySpending, i18n.language, 1)} XX</div>
+              <div className="text-2xl font-semibold">-{formatNumber(monthlySpending, i18n.language, 1)} {t('common.xx')}</div>
             </div>
           </div>
 
           <div className="bg-muted/50 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">{t('xxCoin.balance.networkUsage')}</span>
-              <span className="text-sm font-medium">{formatNumber(networkUsage, i18n.language)} GB / {formatNumber(500, i18n.language)} GB</span>
+              <span className="text-sm font-medium">{formatNumber(networkUsage, i18n.language)} {t('units.gb')} / {formatNumber(500, i18n.language)} {t('units.gb')}</span>
             </div>
             <Progress value={(networkUsage / 500) * 100} className="h-2" />
             <p className="text-xs text-muted-foreground mt-2">
@@ -537,7 +537,7 @@ export const XXCoinIntegration = () => {
                 <div className={`font-semibold ${
                   tx.type === 'earn' ? 'text-success' : 'text-destructive'
                 }`}>
-                  {tx.amount > 0 ? '+' : ''}{tx.amount} XX
+                  {formatNumber(tx.amount, i18n.language, 1)} {t('common.xx')}
                 </div>
               </div>
             ))}
