@@ -287,13 +287,13 @@
   },
   "network": {
     "health": "صحة الشبكة",
-    "nodesOperational": "5 عقد تعمل",
+    "nodesOperational": "٥ عقد تعمل",
     "throughput": "معدل النقل",
     "protectionLevel": "مستوى الحماية",
     "quantum": "كمي",
     "encryptionActive": "تشفير سي-ميكس نشط",
     "topology": "طوبولوجيا الشبكة",
-    "topologyDesc": "اتصال شبكة مختلطة من 5 قفزات عبر شبكة إكس إكس",
+    "topologyDesc": "اتصال شبكة مختلطة من ٥ قفزات عبر شبكة إكس إكس",
     "hop": "قفزة",
     "latency": "التأخير",
     "load": "التحميل",
@@ -301,9 +301,9 @@
     "securityFeaturesDesc": "آليات الحماية المقاومة للحوسبة الكمية",
     "nodes": {
       "gateway": "البوابة",
-      "mixNode1": "عقدة الخلط 1",
-      "mixNode2": "عقدة الخلط 2", 
-      "mixNode3": "عقدة الخلط 3",
+      "mixNode1": "عقدة الخلط ١",
+      "mixNode2": "عقدة الخلط ٢", 
+      "mixNode3": "عقدة الخلط ٣",
       "exitNode": "عقدة الخروج"
     },
     "status": {
