@@ -252,7 +252,12 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
                 </div>
               )}
               <div className="text-sm text-muted-foreground">
-                {t('subscriptionPlans.billed', { price: formatNumber(plan.price / 100, i18n.language, 2), duration: t(`subscriptionPlans.${plan.duration}`) })}
+                {t('subscriptionPlans.billed', { 
+                  price: i18n.language === 'ar' 
+                    ? `${formatNumber(plan.price / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
+                    : `${t('common.currencySymbol')}${formatNumber(plan.price / 100, i18n.language, 2)}`,
+                  duration: t(`subscriptionPlans.${plan.duration}`) 
+                })}
               </div>
             </div>
           </CardHeader>
