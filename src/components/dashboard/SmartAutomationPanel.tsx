@@ -34,7 +34,7 @@ const SmartAutomationPanel: React.FC = () => {
               <CardTitle className="text-lg">{t('smartAutomation.score')}</CardTitle>
             </div>
             <Badge variant="secondary" className="text-primary font-semibold">
-              {automationScore}%
+              {formatNumber(automationScore, i18n.language)}%
             </Badge>
           </div>
           <CardDescription>
@@ -47,12 +47,12 @@ const SmartAutomationPanel: React.FC = () => {
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t('smartAutomation.activeFeatures')}:</span>
               <span className="font-medium">
-                {Object.values(settings).filter(Boolean).length}/6
+                {formatNumber(Object.values(settings).filter(Boolean).length, i18n.language)}/{formatNumber(6, i18n.language)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t('smartAutomation.optimizationsToday')}:</span>
-              <span className="font-medium text-primary">+23%</span>
+              <span className="font-medium text-primary">+{formatNumber(23, i18n.language)}%</span>
             </div>
           </div>
         </CardContent>
@@ -208,7 +208,7 @@ const SmartAutomationPanel: React.FC = () => {
                       </span>
                     </div>
                     <Badge variant="outline" className="text-primary">
-                      {Math.round(rec.confidence * 100)}% match
+                      {formatNumber(Math.round(rec.confidence * 100), i18n.language)}% match
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground mb-3">
@@ -218,7 +218,7 @@ const SmartAutomationPanel: React.FC = () => {
                     <div className="flex items-center gap-4">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {rec.estimatedLatency}ms
+                        {formatNumber(rec.estimatedLatency, i18n.language)}ms
                       </span>
                       <span className="flex items-center gap-1">
                         <Wifi className="h-3 w-3" />
