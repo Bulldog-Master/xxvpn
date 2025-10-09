@@ -225,7 +225,7 @@ export const DAOGovernance = () => {
                 {/* Voting Progress */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Quorum Progress</span>
+                    <span className="text-muted-foreground">{t('dao.voting.quorumProgress')}</span>
                     <span className="font-medium">
                       {Math.min(100, progress).toFixed(1)}%
                     </span>
@@ -233,11 +233,11 @@ export const DAOGovernance = () => {
                   <Progress value={Math.min(100, progress)} className="h-2" />
                    <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>
-                      {(proposal.votesFor + proposal.votesAgainst).toLocaleString()} / {proposal.quorum.toLocaleString()} DAO tokens
+                      {(proposal.votesFor + proposal.votesAgainst).toLocaleString()} / {proposal.quorum.toLocaleString()} {t('common.daoTokens')}
                     </span>
                     <div className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
-                      <span>{daysLeft} days left</span>
+                      <span>{daysLeft} {t('common.daysLeft')}</span>
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export const DAOGovernance = () => {
                   <div className="bg-success/10 border border-success/30 rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
                       <CheckCircle className="w-4 h-4 text-success" />
-                      <span className="text-xs font-medium text-success">For</span>
+                      <span className="text-xs font-medium text-success">{t('dao.voting.for')}</span>
                     </div>
                     <div className="text-lg font-semibold">
                       {proposal.votesFor.toLocaleString()}
@@ -257,7 +257,7 @@ export const DAOGovernance = () => {
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
                       <XCircle className="w-4 h-4 text-destructive" />
-                      <span className="text-xs font-medium text-destructive">Against</span>
+                      <span className="text-xs font-medium text-destructive">{t('dao.voting.against')}</span>
                     </div>
                     <div className="text-lg font-semibold">
                       {proposal.votesAgainst.toLocaleString()}
@@ -267,7 +267,7 @@ export const DAOGovernance = () => {
                   <div className="bg-muted/50 border border-border rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
                       <AlertCircle className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-xs font-medium text-muted-foreground">Abstain</span>
+                      <span className="text-xs font-medium text-muted-foreground">{t('dao.voting.abstain')}</span>
                     </div>
                     <div className="text-lg font-semibold">
                       {proposal.votesAbstain.toLocaleString()}
@@ -282,21 +282,21 @@ export const DAOGovernance = () => {
                       className="flex-1 bg-success hover:bg-success/90"
                       onClick={() => handleVote(proposal.id, 'for')}
                     >
-                      Vote For
+                      {t('dao.voting.voteFor')}
                     </Button>
                     <Button 
                       variant="destructive" 
                       className="flex-1"
                       onClick={() => handleVote(proposal.id, 'against')}
                     >
-                      Vote Against
+                      {t('dao.voting.voteAgainst')}
                     </Button>
                     <Button 
                       variant="outline" 
                       className="flex-1"
                       onClick={() => handleVote(proposal.id, 'abstain')}
                     >
-                      Abstain
+                      {t('dao.voting.abstain')}
                     </Button>
                   </div>
                 )}

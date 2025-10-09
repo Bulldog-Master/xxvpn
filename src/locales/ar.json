@@ -1009,6 +1009,8 @@
     "totalInXXCoins": "المجموع بعملات إكس إكس",
     "totalInDAOTokens": "المجموع برموز المنظمة اللامركزية المستقلة",
     "yourXXBalance": "رصيدك من عملات إكس إكس",
+    "daoTokens": "رموز المنظمة اللامركزية المستقلة",
+    "daysLeft": "أيام متبقية",
     "payWithXXBalance": "ادفع برصيد إكس إكس",
     "insufficientBalance": "رصيد غير كافٍ. أضف عملات إكس إكس:",
     "sendXXCoinsTo": "أرسل عملات إكس إكس إلى:",
@@ -1538,5 +1540,42 @@
   },
   "daoGovernance": {
     "quorumProgress": "تقدم النصاب القانوني"
+  },
+  "dao": {
+    "title": "المنظمة اللامركزية المستقلة خدمة إكس إكس في بي إن",
+    "description": "حوكمة المجتمع لقرارات خدمة إكس إكس في بي إن والخزانة",
+    "createProposal": "إنشاء مقترح",
+    "createServiceProposal": "إنشاء مقترح خدمة",
+    "proposeChanges": "اقترح تغييرات في الأسعار والميزات والشبكة",
+    "title2": "العنوان",
+    "proposalTitlePlaceholder": "على سبيل المثال: تخفيض أسعار الاشتراك الشهري بنسبة ١٠٪",
+    "type": "نوع المقترح",
+    "proposalTypes": {
+      "pricing": "التسعير",
+      "feature": "الميزة",
+      "treasury": "الخزانة",
+      "server": "الخادم",
+      "partnership": "الشراكة"
+    },
+    "proposalDescription": "الوصف",
+    "detailedDescription": "اشرح مقترحك بالتفصيل...",
+    "submitProposal": "إرسال المقترح",
+    "loadingGovernance": "جاري تحميل الحوكمة...",
+    "noProposals": "لا توجد مقترحات نشطة",
+    "beFirst": "كن أول من ينشئ مقترح حوكمة المجتمع!",
+    "status": {
+      "active": "نشط",
+      "passed": "تم التمرير",
+      "rejected": "مرفوض",
+      "executed": "تم التنفيذ"
+    },
+    "voting": {
+      "quorumProgress": "تقدم النصاب القانوني",
+      "for": "مع",
+      "against": "ضد",
+      "abstain": "امتناع",
+      "voteFor": "صوت مع",
+      "voteAgainst": "صوت ضد"
+    }
   }
 }
