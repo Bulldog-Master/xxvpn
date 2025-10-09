@@ -47,7 +47,7 @@ const generateMockData = (): BandwidthData[] => {
   for (let i = 29; i >= 0; i--) {
     const time = new Date(now.getTime() - i * 2000);
     data.push({
-      time: time.toLocaleTimeString(),
+      time: time.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       download: Math.random() * 50 + 10,
       upload: Math.random() * 20 + 5,
       ping: Math.random() * 20 + 10
@@ -111,7 +111,7 @@ export const BandwidthMonitoring: React.FC = () => {
         const newData = [...prev];
         const now = new Date();
         newData.push({
-          time: now.toLocaleTimeString(),
+          time: now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' }),
           download: Math.random() * 50 + 10,
           upload: Math.random() * 20 + 5,
           ping: Math.random() * 20 + 10
@@ -280,8 +280,12 @@ export const BandwidthMonitoring: React.FC = () => {
                   <XAxis 
                     dataKey="time"
                     tickFormatter={(value) => {
-                      // Format time labels to use Arabic numerals if Arabic language
-                      return i18n.language === 'ar' ? toArabicNumerals(value) : value;
+                      // Format time labels to use Arabic numerals and translate AM/PM
+                      if (i18n.language === 'ar') {
+                        const arabicTime = toArabicNumerals(value);
+                        return arabicTime.replace('PM', 'م').replace('AM', 'ص');
+                      }
+                      return value;
                     }}
                   />
                   <YAxis 
@@ -292,7 +296,13 @@ export const BandwidthMonitoring: React.FC = () => {
                   />
                   <Tooltip 
                     formatter={(value: number) => formatNumber(value, i18n.language, 1)}
-                    labelFormatter={(label) => i18n.language === 'ar' ? toArabicNumerals(label) : label}
+                    labelFormatter={(label) => {
+                      if (i18n.language === 'ar') {
+                        const arabicTime = toArabicNumerals(label);
+                        return arabicTime.replace('PM', 'م').replace('AM', 'ص');
+                      }
+                      return label;
+                    }}
                   />
                   <Line 
                     type="monotone" 
