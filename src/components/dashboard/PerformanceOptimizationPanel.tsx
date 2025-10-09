@@ -65,7 +65,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
             <div className="flex items-center justify-between mb-2">
               <Gauge className="h-5 w-5 text-primary" />
               <Badge variant="secondary" className="text-primary">
-                {performanceScore}%
+                {formatNumber(performanceScore, i18n.language)}{t('units.percent')}
               </Badge>
             </div>
             <div className="space-y-2">
@@ -81,7 +81,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
               <Clock className="h-4 w-4 text-blue-500" />
               <span className="text-xs text-muted-foreground">{t('performance.latency')}</span>
             </div>
-            <div className="text-2xl font-bold">{metrics.latency}ms</div>
+            <div className="text-2xl font-bold">{formatNumber(metrics.latency, i18n.language)} {t('units.ms')}</div>
             <div className={`text-xs ${getQualityColor(metrics.networkQuality)}`}>
               {metrics.networkQuality}
             </div>
@@ -132,7 +132,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">{t('performance.jitter')}</span>
-                <span className="text-sm font-medium">{metrics.jitter}ms</span>
+                <span className="text-sm font-medium">{formatNumber(metrics.jitter, i18n.language)} {t('units.ms')}</span>
               </div>
               <Progress value={(10 - metrics.jitter) * 10} className="h-2" />
             </div>
@@ -140,7 +140,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">{t('performance.packetLoss')}</span>
-                <span className="text-sm font-medium">{metrics.packetLoss}%</span>
+                <span className="text-sm font-medium">{formatNumber(metrics.packetLoss, i18n.language)}{t('units.percent')}</span>
               </div>
               <Progress value={Math.max(0, 100 - metrics.packetLoss * 50)} className="h-2" />
             </div>
@@ -148,7 +148,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">{t('performance.cpuUsage')}</span>
-                <span className="text-sm font-medium">{metrics.cpuUsage}%</span>
+                <span className="text-sm font-medium">{formatNumber(metrics.cpuUsage, i18n.language)}{t('units.percent')}</span>
               </div>
               <Progress value={metrics.cpuUsage} className="h-2" />
             </div>
@@ -156,7 +156,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">{t('performance.memory')}</span>
-                <span className="text-sm font-medium">{metrics.memoryUsage}%</span>
+                <span className="text-sm font-medium">{formatNumber(metrics.memoryUsage, i18n.language)}{t('units.percent')}</span>
               </div>
               <Progress value={metrics.memoryUsage} className="h-2" />
             </div>
@@ -322,7 +322,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
                     </Badge>
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {formatNumber(route.reliability, i18n.language)}% {t('performance.routes.reliable')}
+                    {formatNumber(route.reliability, i18n.language)}{t('units.percent')} {t('performance.routes.reliable')}
                   </div>
                 </div>
                 
@@ -333,11 +333,11 @@ const PerformanceOptimizationPanel: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-muted-foreground">{t('performance.latency')}: </span>
-                    <span className="font-medium">{formatNumber(route.latency, i18n.language)}ms</span>
+                    <span className="font-medium">{formatNumber(route.latency, i18n.language)} {t('units.ms')}</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground">{t('performance.routes.reliability')}: </span>
-                    <span className="font-medium">{formatNumber(route.reliability, i18n.language)}%</span>
+                    <span className="font-medium">{formatNumber(route.reliability, i18n.language)}{t('units.percent')}</span>
                   </div>
                 </div>
               </div>
@@ -386,7 +386,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-medium text-sm">{optimization.title}</h4>
                       <Badge variant="secondary" className="text-xs">
-                        +{optimization.improvement}%
+                        +{formatNumber(optimization.improvement, i18n.language)}{t('units.percent')}
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">{optimization.description}</p>
