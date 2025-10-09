@@ -120,7 +120,7 @@ const PerformanceOptimizationPanel: React.FC = () => {
               <CardTitle>{t('performance.realTimeMetrics')}</CardTitle>
             </div>
             <Badge variant={getQualityBadgeVariant(metrics.networkQuality)}>
-              {metrics.networkQuality.toUpperCase()}
+              {t(`quality.${metrics.networkQuality}`).toUpperCase()}
             </Badge>
           </div>
           <CardDescription>
