@@ -232,12 +232,20 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <CardTitle className="text-lg font-semibold">{plan.name}</CardTitle>
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
-                {formatNumber(getMonthlyPrice(plan), i18n.language, 2)} {t('common.currencySymbol')}
+                {i18n.language === 'ar' 
+                  ? `${formatNumber(getMonthlyPrice(plan), i18n.language, 2)} ${t('common.currencySymbol')}`
+                  : `${t('common.currencySymbol')}${formatNumber(getMonthlyPrice(plan), i18n.language, 2)}`
+                }
                 <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
               </div>
               {plan.originalPrice && (
                 <div className="text-sm text-muted-foreground">
-                  <span className="line-through">{formatNumber(plan.originalPrice / 100, i18n.language, 2)} {t('common.currencySymbol')}</span>
+                  <span className="line-through">
+                    {i18n.language === 'ar' 
+                      ? `${formatNumber(plan.originalPrice / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
+                      : `${t('common.currencySymbol')}${formatNumber(plan.originalPrice / 100, i18n.language, 2)}`
+                    }
+                  </span>
                   <Badge variant="secondary" className="ml-2 text-xs">
                     {plan.savings}
                   </Badge>
