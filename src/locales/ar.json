@@ -901,7 +901,7 @@
     "business": "الأعمال",
     "mostPopular": "الأكثر شعبية",
     "perMonth": "/شهر",
-    "billed": "يتم الفوترة بمبلغ {{price}} دولار كل {{duration}}",
+    "billed": "يتم الفوترة بمبلغ {{price}} كل {{duration}}",
     "freeTrial": "تجربة مجانية لمدة 7 أيام",
     "month": "شهر",
     "devices": "جهاز واحد فقط",
