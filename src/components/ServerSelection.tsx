@@ -389,7 +389,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       <Users className="h-4 w-4 text-blue-500" />
                       <span className="text-sm font-medium">{t('serverStats.totalUsers')}</span>
                     </div>
-                    <div className="text-2xl font-bold">12,910</div>
+                    <div className="text-2xl font-bold">{formatNumber(12910, i18n.language, 0)}</div>
                     <div className="text-xs text-muted-foreground">{t('common.onlineNow')}</div>
                   </CardContent>
                 </Card>
@@ -400,7 +400,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       <Server className="h-4 w-4 text-green-500" />
                       <span className="text-sm font-medium">{t('serverStats.activeServers')}</span>
                     </div>
-                    <div className="text-2xl font-bold">{vpnServers.length}</div>
+                    <div className="text-2xl font-bold">{formatNumber(vpnServers.length, i18n.language, 0)}</div>
                     <div className="text-xs text-muted-foreground">{t('common.worldwide')}</div>
                   </CardContent>
                 </Card>
@@ -412,7 +412,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       <span className="text-sm font-medium">{t('serverStats.avgLoad')}</span>
                     </div>
                     <div className="text-2xl font-bold">
-                      {Math.round(vpnServers.reduce((acc, s) => acc + s.load, 0) / vpnServers.length)}%
+                      {formatNumber(Math.round(vpnServers.reduce((acc, s) => acc + s.load, 0) / vpnServers.length), i18n.language, 0)}%
                     </div>
                     <div className="text-xs text-muted-foreground">{t('common.acrossAllServers')}</div>
                   </CardContent>
@@ -425,7 +425,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                       <span className="text-sm font-medium">{t('serverStats.premiumServers')}</span>
                     </div>
                     <div className="text-2xl font-bold">
-                      {vpnServers.filter(s => s.premium).length}
+                      {formatNumber(vpnServers.filter(s => s.premium).length, i18n.language, 0)}
                     </div>
                     <div className="text-xs text-muted-foreground">{t('common.highSpeedAccess')}</div>
                   </CardContent>
