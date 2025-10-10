@@ -233,8 +233,10 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
                 {(() => {
-                  const price = formatNumber(getMonthlyPrice(plan), i18n.language, 2);
+                  const monthlyPrice = getMonthlyPrice(plan);
+                  const price = formatNumber(monthlyPrice, i18n.language, 2);
                   const symbol = t('common.currencySymbol');
+                  console.log('Price formatting:', { monthlyPrice, price, language: i18n.language, symbol });
                   return i18n.language === 'ar' 
                     ? `${price} ${symbol}`
                     : `${symbol}${price}`;
