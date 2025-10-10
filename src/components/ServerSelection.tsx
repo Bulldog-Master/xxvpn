@@ -279,7 +279,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 hover:opacity-100 transition-opacity z-20">
                     <div className="bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                       {server.flag} {server.name}
-                      {ping && <div>{ping}ms</div>}
+                      {ping && <div>{formatNumber(ping, i18n.language, 0)}{t('units.ms')}</div>}
                     </div>
                   </div>
                 </div>
@@ -531,7 +531,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
             {filteredServers.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
                 <Globe className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>No servers found matching your criteria</p>
+                <p>{t('servers.noServersFound')}</p>
               </div>
             ) : (
               <div className="grid gap-3">
@@ -547,7 +547,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               <div>
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                   <Star className="h-5 w-5 text-yellow-500" />
-                  Fastest Servers
+                  {t('servers.fastestServers')}
                 </h3>
                 <div className="grid gap-3">
                   {bestServers.map((server) => (
