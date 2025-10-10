@@ -1432,6 +1432,14 @@
     "United Arab Emirates": "الإمارات العربية المتحدة",
     "Dubai": "دبي"
   },
+  "regions": {
+    "africa": "أفريقيا",
+    "asiapacific": "آسيا والمحيط الهادئ",
+    "europe": "أوروبا",
+    "middleeast": "الشرق الأوسط",
+    "northamerica": "أمريكا الشمالية",
+    "southamerica": "أمريكا الجنوبية"
+  },
   "reliable": "موثوق",
   "serverMap": {
     "regions": {
@@ -1451,12 +1459,21 @@
     "totalUsers": "إجمالي المستخدمين",
     "activeServers": "الخوادم النشطة",
     "avgLoad": "متوسط الحمل",
+    "avgLoadText": "متوسط الحمل",
     "premiumServers": "الخوادم المتميزة",
     "loadDistribution": "توزيع الحمل",
     "serverTypes": "أنواع الخوادم",
     "noSpeedTestResults": "لا توجد نتائج اختبار السرعة",
     "ofTotalTraffic": "من إجمالي حركة المرور",
-    "ofTotalServers": "من إجمالي الخوادم"
+    "ofTotalServers": "من إجمالي الخوادم",
+    "regionalDistribution": "التوزيع الإقليمي",
+    "serverPerformance": "أداء الخادم",
+    "servers": "خوادم",
+    "loadLow": "منخفض (٠-٣٠٪)",
+    "loadMedium": "متوسط (٣١-٧٠٪)",
+    "loadHigh": "عالي (٧١-١٠٠٪)",
+    "standard": "قياسي",
+    "maintenance": "صيانة"
   },
   "userPreferences": {
     "preferences": "التفضيلات",

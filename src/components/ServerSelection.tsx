@@ -435,7 +435,7 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               {/* Regional Statistics */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Regional Distribution</CardTitle>
+                  <CardTitle>{t('serverStats.regionalDistribution')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -450,15 +450,15 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
                             <div className="flex items-center gap-3">
                               <div className="w-4 h-4 rounded-full bg-primary"></div>
                               <div>
-                                <div className="font-medium">{region}</div>
+                                <div className="font-medium">{t(`regions.${region.toLowerCase().replace(/\s+/g, '')}`)}</div>
                                 <div className="text-sm text-muted-foreground">
-                                  {regionServers.length} servers • {avgLoad}% avg load
+                                  {formatNumber(regionServers.length, i18n.language, 0)} {t('serverStats.servers')} • {formatNumber(avgLoad, i18n.language, 0)}% {t('serverStats.avgLoadText')}
                                 </div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="font-bold text-lg">{percentage}%</div>
-                              <div className="text-xs text-muted-foreground">of total servers</div>
+                              <div className="font-bold text-lg">{formatNumber(percentage, i18n.language, 0)}%</div>
+                              <div className="text-xs text-muted-foreground">{t('serverStats.ofTotalServers')}</div>
                             </div>
                           </div>
                           <Progress value={percentage} className="h-2" />
@@ -472,52 +472,52 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
               {/* Server Performance Overview */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Server Performance</CardTitle>
+                  <CardTitle>{t('serverStats.serverPerformance')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold mb-3">Load Distribution</h4>
+                      <h4 className="font-semibold mb-3">{t('serverStats.loadDistribution')}</h4>
                       <div className="space-y-2">
                         {[
-                          { label: 'Low (0-30%)', count: vpnServers.filter(s => s.load <= 30).length, color: 'bg-green-500' },
-                          { label: 'Medium (31-70%)', count: vpnServers.filter(s => s.load > 30 && s.load <= 70).length, color: 'bg-yellow-500' },
-                          { label: 'High (71-100%)', count: vpnServers.filter(s => s.load > 70).length, color: 'bg-red-500' },
+                          { label: t('serverStats.loadLow'), count: vpnServers.filter(s => s.load <= 30).length, color: 'bg-green-500' },
+                          { label: t('serverStats.loadMedium'), count: vpnServers.filter(s => s.load > 30 && s.load <= 70).length, color: 'bg-yellow-500' },
+                          { label: t('serverStats.loadHigh'), count: vpnServers.filter(s => s.load > 70).length, color: 'bg-red-500' },
                         ].map((item) => (
                           <div key={item.label} className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
                               <span className="text-sm">{item.label}</span>
                             </div>
-                            <span className="font-medium">{item.count} servers</span>
+                            <span className="font-medium">{formatNumber(item.count, i18n.language, 0)} {t('serverStats.servers')}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                     
                     <div>
-                      <h4 className="font-semibold mb-3">Server Types</h4>
+                      <h4 className="font-semibold mb-3">{t('serverStats.serverTypes')}</h4>
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Crown className="w-3 h-3 text-yellow-500" />
-                            <span className="text-sm">Premium</span>
+                            <span className="text-sm">{t('common.premium')}</span>
                           </div>
-                          <span className="font-medium">{vpnServers.filter(s => s.premium).length} servers</span>
+                          <span className="font-medium">{formatNumber(vpnServers.filter(s => s.premium).length, i18n.language, 0)} {t('serverStats.servers')}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Globe className="w-3 h-3 text-blue-500" />
-                            <span className="text-sm">Standard</span>
+                            <span className="text-sm">{t('serverStats.standard')}</span>
                           </div>
-                          <span className="font-medium">{vpnServers.filter(s => !s.premium).length} servers</span>
+                          <span className="font-medium">{formatNumber(vpnServers.filter(s => !s.premium).length, i18n.language, 0)} {t('serverStats.servers')}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <AlertCircle className="w-3 h-3 text-red-500" />
-                            <span className="text-sm">Maintenance</span>
+                            <span className="text-sm">{t('serverStats.maintenance')}</span>
                           </div>
-                          <span className="font-medium">{vpnServers.filter(s => s.maintenance).length} servers</span>
+                          <span className="font-medium">{formatNumber(vpnServers.filter(s => s.maintenance).length, i18n.language, 0)} {t('serverStats.servers')}</span>
                         </div>
                       </div>
                     </div>
