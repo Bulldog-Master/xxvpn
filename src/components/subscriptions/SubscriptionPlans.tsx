@@ -39,6 +39,13 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const { user } = useAuth();
   const { toast } = useToast();
   const { subscription_tier, is_trial, subscribed, startTrial, loading } = useSubscription();
+  
+  console.log('🔍 SubscriptionPlans Language Check:', {
+    currentLanguage: i18n.language,
+    isArabic: i18n.language === 'ar',
+    testConversion: toArabic('12.99'),
+    rawNumber: '12.99'
+  });
   const [cryptoModalOpen, setCryptoModalOpen] = useState(false);
   const [selectedCryptoPlan, setSelectedCryptoPlan] = useState<SubscriptionPlan | null>(null);
 

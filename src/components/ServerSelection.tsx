@@ -558,13 +558,13 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
             ) : (
               <div className="text-center py-8">
                 <Activity className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                <h3 className="text-lg font-semibold mb-2">No Speed Test Results</h3>
+                <h3 className="text-lg font-semibold mb-2">{t('serverStats.noSpeedTestResults')}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Run speed tests to see recommended servers based on your connection
+                  {t('servers.runSpeedTestsDesc')}
                 </p>
                 <Button onClick={testAllServers}>
                   <Zap className="h-4 w-4 mr-2" />
-                  Test All Servers
+                  {t('servers.testAllServers')}
                 </Button>
               </div>
             )}
