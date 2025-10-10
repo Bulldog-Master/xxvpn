@@ -232,19 +232,25 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <CardTitle className="text-lg font-semibold">{plan.name}</CardTitle>
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
-                {i18n.language === 'ar' 
-                  ? `${formatNumber(getMonthlyPrice(plan), i18n.language, 2)} ${t('common.currencySymbol')}`
-                  : `${t('common.currencySymbol')}${formatNumber(getMonthlyPrice(plan), i18n.language, 2)}`
-                }
+                {(() => {
+                  const price = formatNumber(getMonthlyPrice(plan), i18n.language, 2);
+                  const symbol = t('common.currencySymbol');
+                  return i18n.language === 'ar' 
+                    ? `${price} ${symbol}`
+                    : `${symbol}${price}`;
+                })()}
                 <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
               </div>
               {plan.originalPrice && (
                 <div className="text-sm text-muted-foreground">
                   <span className="line-through">
-                    {i18n.language === 'ar' 
-                      ? `${formatNumber(plan.originalPrice / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
-                      : `${t('common.currencySymbol')}${formatNumber(plan.originalPrice / 100, i18n.language, 2)}`
-                    }
+                    {(() => {
+                      const price = formatNumber(plan.originalPrice / 100, i18n.language, 2);
+                      const symbol = t('common.currencySymbol');
+                      return i18n.language === 'ar' 
+                        ? `${price} ${symbol}`
+                        : `${symbol}${price}`;
+                    })()}
                   </span>
                   <Badge variant="secondary" className="ml-2 text-xs">
                     {plan.savings}
@@ -253,9 +259,13 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
               )}
               <div className="text-sm text-muted-foreground">
                 {t('subscriptionPlans.billed', { 
-                  price: i18n.language === 'ar' 
-                    ? `${formatNumber(plan.price / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
-                    : `${t('common.currencySymbol')}${formatNumber(plan.price / 100, i18n.language, 2)}`,
+                  price: (() => {
+                    const price = formatNumber(plan.price / 100, i18n.language, 2);
+                    const symbol = t('common.currencySymbol');
+                    return i18n.language === 'ar' 
+                      ? `${price} ${symbol}`
+                      : `${symbol}${price}`;
+                  })(),
                   duration: t(`subscriptionPlans.${plan.duration}`) 
                 })}
               </div>
