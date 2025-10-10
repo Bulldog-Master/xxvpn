@@ -6,14 +6,14 @@ import { Button } from '@/components/ui/button';
 import { CreditCard, Download, HelpCircle, Shield, User, Smartphone } from 'lucide-react';
 import PaymentMethodCard from './payments/PaymentMethodCard';
 import SubscriptionPlans, { SubscriptionPlan } from './subscriptions/SubscriptionPlans';
-import { toArabicNumerals } from '@/utils/numberFormat';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface PaymentOrder {
   id: string;
   date: string;
   subscription: string;
   status: 'Active' | 'Expired' | 'Pending';
-  amount: string;
+  amount: number; // Changed from string to number
 }
 
 const PaymentsPage = () => {
@@ -24,21 +24,20 @@ const PaymentsPage = () => {
     setSelectedPlan(plan);
   };
 
-  // Sample data - in a real app this would come from an API
   const orders: PaymentOrder[] = [
     {
       id: "ORD-2024-001",
       date: "2024-01-15",
       subscription: t('payments.orders.table.xxVPNPremium'),
       status: "Active",
-      amount: "$9.99"
+      amount: 9.99
     },
     {
       id: "ORD-2023-045",
       date: "2023-12-15",
       subscription: t('payments.orders.table.xxVPNBasic'),
       status: "Expired",
-      amount: "$4.99"
+      amount: 4.99
     }
   ];
 
@@ -56,7 +55,15 @@ const PaymentsPage = () => {
   };
 
   const formatForLocale = (text: string) => {
-    return i18n.language === 'ar' ? toArabicNumerals(text) : text;
+    return formatNumber(parseFloat(text) || 0, i18n.language, 0);
+  };
+
+  const formatAmount = (amount: number) => {
+    const formattedAmount = formatNumber(amount, i18n.language, 2);
+    const symbol = t('common.currencySymbol');
+    return i18n.language === 'ar' 
+      ? `${formattedAmount} ${symbol}`
+      : `${symbol}${formattedAmount}`;
   };
 
   return (
@@ -195,7 +202,7 @@ const PaymentsPage = () => {
                               {t(`payments.orders.status.${order.status.toLowerCase()}`)}
                             </span>
                           </TableCell>
-                          <TableCell className="text-right font-medium">{formatForLocale(order.amount)}</TableCell>
+                          <TableCell className="text-right font-medium">{formatAmount(order.amount)}</TableCell>
                         </TableRow>
                       ))
                     ) : (
