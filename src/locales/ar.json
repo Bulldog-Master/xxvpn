@@ -485,7 +485,10 @@
     "averageBandwidthPerDay": "متوسط عرض النطاق الترددي يوميًا",
     "noDataAvailable": "لا توجد بيانات متاحة",
     "topServers": "أفضل 5 خوادم حسب الاستخدام",
-    "mostUsedServers": "الخوادم الأكثر استخدامًا"
+    "mostUsedServers": "الخوادم الأكثر استخدامًا",
+    "connectionPerformance": "أداء الاتصال",
+    "speedAndStability": "السرعة والاستقرار بمرور الوقت",
+    "noPerformanceData": "لا توجد بيانات أداء متاحة"
   },
   "quality": {
     "excellent": "ممتاز",

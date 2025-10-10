@@ -441,8 +441,8 @@ export const AnalyticsDashboard = () => {
         <TabsContent value="performance">
           <Card className="glass-effect">
             <CardHeader>
-              <CardTitle>Connection Performance</CardTitle>
-              <CardDescription>Speed and stability over time</CardDescription>
+              <CardTitle>{t('analytics.connectionPerformance')}</CardTitle>
+              <CardDescription>{t('analytics.speedAndStability')}</CardDescription>
             </CardHeader>
             <CardContent>
               {bandwidthData.length > 0 ? (
@@ -458,7 +458,7 @@ export const AnalyticsDashboard = () => {
                 </ResponsiveContainer>
               ) : (
                 <div className="flex items-center justify-center h-64 text-muted-foreground">
-                  No performance data available
+                  {t('analytics.noPerformanceData')}
                 </div>
               )}
             </CardContent>
