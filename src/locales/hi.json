@@ -459,5 +459,6 @@
   "common": {
     "daoTokens": "DAO टोकन",
     "daysLeft": "दिन शेष"
-  }
+  },
+  "payments": {"sidebar": {"account": "खाता", "devices": "डिवाइस", "payments": "भुगतान", "download": "ऐप्स डाउनलोड करें", "support": "सहायता"}, "title": "भुगतान", "methods": {"title": "भुगतान के तरीके", "card": {"title": "क्रेडिट/डेबिट कार्ड", "description": "Visa, Mastercard, Amex स्वीकृत", "action": "कार्ड से भुगतान"}, "paypal": {"title": "PayPal", "description": "PayPal से सुरक्षित भुगतान", "action": "PayPal से भुगतान"}, "crypto": {"title": "XX सिक्के", "description": "क्रिप्टोकरेंसी से भुगतान", "action": "क्रिप्टो से भुगतान"}}, "orders": {"title": "आपके ऑर्डर", "privacy": "हम आपकी गोपनीयता को प्राथमिकता देते हैं। भुगतान की जानकारी एन्क्रिप्टेड और सुरक्षित रूप से संग्रहीत है।", "table": {"id": "ऑर्डर ID", "date": "तारीख", "subscription": "सदस्यता", "status": "स्थिति", "amount": "राशि", "xxVPNPremium": "xxVPN प्रीमियम", "xxVPNBasic": "xxVPN बेसिक"}, "status": {"active": "सक्रिय", "expired": "समाप्त", "pending": "लंबित"}, "noOrders": "कोई ऑर्डर नहीं", "invoice": {"text": "चालान चाहिए?", "link": "सहायता से संपर्क करें"}}}, "paymentMethods": {"selectPlan": "अपनी योजना चुनें"}, "regions": {"africa": "अफ्रीका", "asiapacific": "एशिया प्रशांत", "europe": "यूरोप", "middleeast": "मध्य पूर्व", "northamerica": "उत्तरी अमेरिका", "southamerica": "दक्षिण अमेरिका"}
 }

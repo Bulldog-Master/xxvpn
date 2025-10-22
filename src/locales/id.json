@@ -470,5 +470,6 @@
     "currencySymbol": "$",
     "daoTokens": "Token DAO",
     "daysLeft": "hari tersisa"
-  }
+  },
+  "payments": {"sidebar": {"account": "Akun", "devices": "Perangkat", "payments": "Pembayaran", "download": "Unduh Aplikasi", "support": "Dukungan"}, "title": "Pembayaran", "methods": {"title": "Metode pembayaran untuk", "card": {"title": "Kartu Kredit/Debit", "description": "Visa, Mastercard, Amex diterima", "action": "Bayar dengan Kartu"}, "paypal": {"title": "PayPal", "description": "Bayar dengan aman via PayPal", "action": "Bayar dengan PayPal"}, "crypto": {"title": "XX Coins", "description": "Bayar dengan mata uang kripto", "action": "Bayar dengan Kripto"}}, "orders": {"title": "Pesanan Anda", "privacy": "Kami memprioritaskan privasi Anda. Informasi pembayaran dienkripsi dan disimpan dengan aman.", "table": {"id": "ID Pesanan", "date": "Tanggal", "subscription": "Langganan", "status": "Status", "amount": "Jumlah", "xxVPNPremium": "xxVPN Premium", "xxVPNBasic": "xxVPN Dasar"}, "status": {"active": "Aktif", "expired": "Kedaluwarsa", "pending": "Tertunda"}, "noOrders": "Tidak ada pesanan", "invoice": {"text": "Perlu invoice?", "link": "hubungi dukungan"}}}, "paymentMethods": {"selectPlan": "Pilih Paket Anda"}, "regions": {"africa": "Afrika", "asiapacific": "Asia Pasifik", "europe": "Eropa", "middleeast": "Timur Tengah", "northamerica": "Amerika Utara", "southamerica": "Amerika Selatan"}
 }

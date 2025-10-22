@@ -206,5 +206,6 @@
   "common": {
     "daoTokens": "Token DAO",
     "daysLeft": "ngày còn lại"
-  }
+  },
+  "payments": {"sidebar": {"account": "Tài khoản", "devices": "Thiết bị", "payments": "Thanh toán", "download": "Tải Ứng dụng", "support": "Hỗ trợ"}, "title": "Thanh toán", "methods": {"title": "Phương thức thanh toán cho", "card": {"title": "Thẻ Tín dụng/Ghi nợ", "description": "Chấp nhận Visa, Mastercard, Amex", "action": "Thanh toán bằng Thẻ"}, "paypal": {"title": "PayPal", "description": "Thanh toán an toàn qua PayPal", "action": "Thanh toán qua PayPal"}, "crypto": {"title": "XX Coins", "description": "Thanh toán bằng tiền điện tử", "action": "Thanh toán bằng Crypto"}}, "orders": {"title": "Đơn hàng của Bạn", "privacy": "Chúng tôi ưu tiên quyền riêng tư của bạn. Thông tin thanh toán được mã hóa và lưu trữ an toàn.", "table": {"id": "ID Đơn hàng", "date": "Ngày", "subscription": "Gói đăng ký", "status": "Trạng thái", "amount": "Số tiền", "xxVPNPremium": "xxVPN Premium", "xxVPNBasic": "xxVPN Cơ bản"}, "status": {"active": "Đang hoạt động", "expired": "Đã hết hạn", "pending": "Đang chờ"}, "noOrders": "Không có đơn hàng", "invoice": {"text": "Cần hóa đơn?", "link": "liên hệ hỗ trợ"}}}, "paymentMethods": {"selectPlan": "Chọn Gói của Bạn"}, "regions": {"africa": "Châu Phi", "asiapacific": "Châu Á Thái Bình Dương", "europe": "Châu Âu", "middleeast": "Trung Đông", "northamerica": "Bắc Mỹ", "southamerica": "Nam Mỹ"}
 }

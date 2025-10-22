@@ -206,5 +206,6 @@
   "common": {
     "daoTokens": "Tokeny DAO",
     "daysLeft": "dni pozostało"
-  }
+  },
+  "payments": {"sidebar": {"account": "Konto", "devices": "Urządzenia", "payments": "Płatności", "download": "Pobierz Aplikacje", "support": "Wsparcie"}, "title": "Płatności", "methods": {"title": "Metody płatności dla", "card": {"title": "Karta Kredytowa/Debetowa", "description": "Akceptujemy Visa, Mastercard, Amex", "action": "Zapłać kartą"}, "paypal": {"title": "PayPal", "description": "Zapłać bezpiecznie przez PayPal", "action": "Zapłać przez PayPal"}, "crypto": {"title": "XX Coins", "description": "Zapłać kryptowalutą", "action": "Zapłać kryptowalutą"}}, "orders": {"title": "Twoje Zamówienia", "privacy": "Priorytetem jest Twoja prywatność. Informacje o płatności są zaszyfrowane i bezpiecznie przechowywane.", "table": {"id": "ID Zamówienia", "date": "Data", "subscription": "Subskrypcja", "status": "Status", "amount": "Kwota", "xxVPNPremium": "xxVPN Premium", "xxVPNBasic": "xxVPN Basic"}, "status": {"active": "Aktywny", "expired": "Wygasły", "pending": "Oczekujący"}, "noOrders": "Brak zamówień", "invoice": {"text": "Potrzebujesz faktury?", "link": "skontaktuj się z pomocą"}}}, "paymentMethods": {"selectPlan": "Wybierz Swój Plan"}, "regions": {"africa": "Afryka", "asiapacific": "Azja i Pacyfik", "europe": "Europa", "middleeast": "Bliski Wschód", "northamerica": "Ameryka Północna", "southamerica": "Ameryka Południowa"}
 }

@@ -206,5 +206,6 @@
   "common": {
     "daoTokens": "โทเค็น DAO",
     "daysLeft": "วันที่เหลือ"
-  }
+  },
+  "payments": {"sidebar": {"account": "บัญชี", "devices": "อุปกรณ์", "payments": "การชำระเงิน", "download": "ดาวน์โหลดแอป", "support": "ฝ่ายสนับสนุน"}, "title": "การชำระเงิน", "methods": {"title": "วิธีการชำระเงินสำหรับ", "card": {"title": "บัตรเครดิต/เดบิต", "description": "รับ Visa, Mastercard, Amex", "action": "จ่ายด้วยบัตร"}, "paypal": {"title": "PayPal", "description": "จ่ายอย่างปลอดภัยผ่าน PayPal", "action": "จ่ายด้วย PayPal"}, "crypto": {"title": "เหรียญ XX", "description": "จ่ายด้วยสกุลเงินดิจิทัล", "action": "จ่ายด้วยคริปโต"}}, "orders": {"title": "คำสั่งซื้อของคุณ", "privacy": "เราให้ความสำคัญกับความเป็นส่วนตัวของคุณ ข้อมูลการชำระเงินถูกเข้ารหัสและเก็บไว้อย่างปลอดภัย", "table": {"id": "หมายเลขคำสั่งซื้อ", "date": "วันที่", "subscription": "การสมัครสมาชิก", "status": "สถานะ", "amount": "จำนวนเงิน", "xxVPNPremium": "xxVPN พรีเมียม", "xxVPNBasic": "xxVPN พื้นฐาน"}, "status": {"active": "ใช้งานอยู่", "expired": "หมดอายุ", "pending": "รอดำเนินการ"}, "noOrders": "ไม่มีคำสั่งซื้อ", "invoice": {"text": "ต้องการใบแจ้งหนี้?", "link": "ติดต่อฝ่ายสนับสนุน"}}}, "paymentMethods": {"selectPlan": "เลือกแผนของคุณ"}, "regions": {"africa": "แอฟริกา", "asiapacific": "เอเชียแปซิฟิก", "europe": "ยุโรป", "middleeast": "ตะวันออกกลาง", "northamerica": "อเมริกาเหนือ", "southamerica": "อเมริกาใต้"}
 }

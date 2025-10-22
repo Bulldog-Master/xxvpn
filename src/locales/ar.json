@@ -815,5 +815,25 @@
     "currencySymbol": "$",
     "daoTokens": "رموز DAO",
     "daysLeft": "أيام متبقية"
-  }
+  },
+  "payments": {
+    "sidebar": {"account": "الحساب", "devices": "الأجهزة", "payments": "المدفوعات", "download": "تنزيل التطبيقات", "support": "دعم العملاء"},
+    "title": "المدفوعات",
+    "methods": {
+      "title": "طرق الدفع لـ",
+      "card": {"title": "بطاقة ائتمان / خصم", "description": "نقبل Visa وMastercard وAmex", "action": "الدفع بالبطاقة"},
+      "paypal": {"title": "PayPal", "description": "ادفع بأمان عبر PayPal", "action": "الدفع عبر PayPal"},
+      "crypto": {"title": "عملات XX", "description": "الدفع بالعملة المشفرة", "action": "الدفع بالعملة المشفرة"}
+    },
+    "orders": {
+      "title": "طلباتك",
+      "privacy": "نعطي الأولوية لخصوصيتك. معلومات الدفع مشفرة ومخزنة بشكل آمن.",
+      "table": {"id": "رقم الطلب", "date": "التاريخ", "subscription": "الاشتراك", "status": "الحالة", "amount": "المبلغ", "xxVPNPremium": "xxVPN بريميوم", "xxVPNBasic": "xxVPN أساسي"},
+      "status": {"active": "نشط", "expired": "منتهي", "pending": "قيد الانتظار"},
+      "noOrders": "لا توجد طلبات",
+      "invoice": {"text": "هل تحتاج إلى فاتورة؟", "link": "اتصل بالدعم"}
+    }
+  },
+  "paymentMethods": {"selectPlan": "اختر خطتك"},
+  "regions": {"africa": "أفريقيا", "asiapacific": "آسيا والمحيط الهادئ", "europe": "أوروبا", "middleeast": "الشرق الأوسط", "northamerica": "أمريكا الشمالية", "southamerica": "أمريكا الجنوبية"}
 }

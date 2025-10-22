@@ -533,5 +533,6 @@
     "currencySymbol": "$",
     "daoTokens": "Tokens DAO",
     "daysLeft": "dias restantes"
-  }
+  },
+  "payments": {"sidebar": {"account": "Conta", "devices": "Dispositivos", "payments": "Pagamentos", "download": "Baixar Apps", "support": "Suporte"}, "title": "Pagamentos", "methods": {"title": "Métodos de pagamento para", "card": {"title": "Cartão de Crédito/Débito", "description": "Visa, Mastercard, Amex aceitos", "action": "Pagar com Cartão"}, "paypal": {"title": "PayPal", "description": "Pague com segurança via PayPal", "action": "Pagar com PayPal"}, "crypto": {"title": "XX Coins", "description": "Pagar com criptomoeda", "action": "Pagar com Cripto"}}, "orders": {"title": "Seus Pedidos", "privacy": "Priorizamos sua privacidade. Informações de pagamento são criptografadas e armazenadas com segurança.", "table": {"id": "ID do Pedido", "date": "Data", "subscription": "Assinatura", "status": "Status", "amount": "Valor", "xxVPNPremium": "xxVPN Premium", "xxVPNBasic": "xxVPN Básico"}, "status": {"active": "Ativo", "expired": "Expirado", "pending": "Pendente"}, "noOrders": "Nenhum pedido", "invoice": {"text": "Precisa de nota fiscal?", "link": "contatar suporte"}}}, "paymentMethods": {"selectPlan": "Selecione seu Plano"}, "regions": {"africa": "África", "asiapacific": "Ásia-Pacífico", "europe": "Europa", "middleeast": "Oriente Médio", "northamerica": "América do Norte", "southamerica": "América do Sul"}
 }

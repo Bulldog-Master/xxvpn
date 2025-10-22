@@ -1179,5 +1179,67 @@
     "currencySymbol": "$",
     "daoTokens": "DAO Tokens",
     "daysLeft": "days left"
+  },
+  "payments": {
+    "sidebar": {
+      "account": "Account",
+      "devices": "Devices",
+      "payments": "Payments",
+      "download": "Download Apps",
+      "support": "Customer Support"
+    },
+    "title": "Payments",
+    "methods": {
+      "title": "Payment Methods for",
+      "card": {
+        "title": "Credit / Debit Card",
+        "description": "Visa, Mastercard, Amex accepted",
+        "action": "Pay with Card"
+      },
+      "paypal": {
+        "title": "PayPal",
+        "description": "Pay securely with PayPal",
+        "action": "Pay with PayPal"
+      },
+      "crypto": {
+        "title": "XX Coins",
+        "description": "Pay with cryptocurrency",
+        "action": "Pay with Crypto"
+      }
+    },
+    "orders": {
+      "title": "Your Orders",
+      "privacy": "We prioritize your privacy. Payment information is encrypted and securely stored. Transaction details are visible only to you and never shared with third parties.",
+      "table": {
+        "id": "Order ID",
+        "date": "Date",
+        "subscription": "Subscription",
+        "status": "Status",
+        "amount": "Amount",
+        "xxVPNPremium": "xxVPN Premium",
+        "xxVPNBasic": "xxVPN Basic"
+      },
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "pending": "Pending"
+      },
+      "noOrders": "No orders found",
+      "invoice": {
+        "text": "Need an invoice?",
+        "link": "contact support"
+      }
+    }
+  },
+  "paymentMethods": {
+    "selectPlan": "Select Your Plan"
+  },
+  "regions": {
+    "africa": "Africa",
+    "asiapacific": "Asia Pacific",
+    "europe": "Europe",
+    "middleeast": "Middle East",
+    "northamerica": "North America",
+    "southamerica": "South America"
   }
 }

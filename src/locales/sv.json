@@ -206,5 +206,6 @@
   "common": {
     "daoTokens": "DAO-tokens",
     "daysLeft": "dagar kvar"
-  }
+  },
+  "payments": {"sidebar": {"account": "Konto", "devices": "Enheter", "payments": "Betalningar", "download": "Ladda ner Appar", "support": "Support"}, "title": "Betalningar", "methods": {"title": "Betalningsmetoder för", "card": {"title": "Kredit-/Betalkort", "description": "Visa, Mastercard, Amex accepteras", "action": "Betala med Kort"}, "paypal": {"title": "PayPal", "description": "Betala säkert med PayPal", "action": "Betala med PayPal"}, "crypto": {"title": "XX Mynt", "description": "Betala med kryptovaluta", "action": "Betala med Krypto"}}, "orders": {"title": "Dina Beställningar", "privacy": "Vi prioriterar din integritet. Betalningsinformation är krypterad och säkert lagrad.", "table": {"id": "Order-ID", "date": "Datum", "subscription": "Prenumeration", "status": "Status", "amount": "Belopp", "xxVPNPremium": "xxVPN Premium", "xxVPNBasic": "xxVPN Basic"}, "status": {"active": "Aktiv", "expired": "Utgången", "pending": "Väntande"}, "noOrders": "Inga beställningar", "invoice": {"text": "Behöver du en faktura?", "link": "kontakta support"}}}, "paymentMethods": {"selectPlan": "Välj Din Plan"}, "regions": {"africa": "Afrika", "asiapacific": "Asien-Stillahavsområdet", "europe": "Europa", "middleeast": "Mellanöstern", "northamerica": "Nordamerika", "southamerica": "Sydamerika"}
 }
