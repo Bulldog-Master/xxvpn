@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 interface Proposal {
   id: string;
@@ -17,6 +18,7 @@ interface Proposal {
 }
 
 export const useDAO = () => {
+  const { t } = useTranslation();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +48,7 @@ export const useDAO = () => {
       setProposals(formattedProposals);
     } catch (error) {
       console.error('Error fetching proposals:', error);
-      toast.error('Failed to fetch proposals');
+      toast.error(t('dao.fetchFailed'));
     } finally {
       setLoading(false);
     }
@@ -82,11 +84,11 @@ export const useDAO = () => {
 
       if (error) throw error;
 
-      toast.success('Proposal created successfully');
+      toast.success(t('dao.proposalCreated'));
       await fetchProposals();
     } catch (error) {
       console.error('Error creating proposal:', error);
-      toast.error('Failed to create proposal');
+      toast.error(t('dao.proposalFailed'));
       throw error;
     }
   };
@@ -110,11 +112,11 @@ export const useDAO = () => {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      toast.success(`Vote recorded with ${data.votingPower} XX Coins`);
+      toast.success(t('dao.voteRecorded', { power: data.votingPower }));
       await fetchProposals();
     } catch (error: any) {
       console.error('Error voting:', error);
-      toast.error(error.message || 'Failed to record vote');
+      toast.error(error.message || t('dao.voteFailed'));
       throw error;
     }
   };

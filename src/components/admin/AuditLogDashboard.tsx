@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface AuditLog {
   id: string;
@@ -26,7 +27,7 @@ interface AuditLog {
 }
 
 export const AuditLogDashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,7 +56,7 @@ export const AuditLogDashboard = () => {
 
       if (error) {
         console.error('Error fetching audit logs:', error);
-        toast.error('Failed to load audit logs. Admin access required.');
+        toast.error(t('admin.failedToLoadLogs'));
         return;
       }
 
@@ -72,7 +73,7 @@ export const AuditLogDashboard = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to load audit logs');
+      toast.error(t('admin.failedToLoadLogs'));
     } finally {
       setLoading(false);
     }
@@ -101,7 +102,7 @@ export const AuditLogDashboard = () => {
     a.href = url;
     a.download = `audit-logs-${format(new Date(), 'yyyy-MM-dd')}.csv`;
     a.click();
-    toast.success('Audit logs exported successfully');
+    toast.success(t('admin.logsExported'));
 
     // Log export action
     if (user) {
@@ -144,10 +145,10 @@ export const AuditLogDashboard = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="w-5 h-5" />
-          Audit Log Dashboard
+          {t('admin.auditLogDashboard')}
         </CardTitle>
         <CardDescription>
-          Monitor all security-sensitive actions across your application
+          {t('admin.monitorActions')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -191,7 +192,7 @@ export const AuditLogDashboard = () => {
               disabled={loading}
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-              Refresh
+              {t('admin.refresh')}
             </Button>
             <Button
               variant="outline"
@@ -200,7 +201,7 @@ export const AuditLogDashboard = () => {
               disabled={filteredLogs.length === 0}
             >
               <Download className="w-4 h-4 mr-2" />
-              Export CSV
+              {t('admin.exportCSV')}
             </Button>
           </div>
         </div>
@@ -209,25 +210,25 @@ export const AuditLogDashboard = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Timestamp</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Table</TableHead>
-                <TableHead>User ID</TableHead>
-                <TableHead>Record ID</TableHead>
-                <TableHead>IP Address</TableHead>
+                <TableHead>{t('admin.timestamp')}</TableHead>
+                <TableHead>{t('admin.action')}</TableHead>
+                <TableHead>{t('admin.table')}</TableHead>
+                <TableHead>{t('admin.userId')}</TableHead>
+                <TableHead>{t('admin.recordId')}</TableHead>
+                <TableHead>{t('admin.ipAddress')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-8">
-                    Loading audit logs...
+                    {t('admin.loadingLogs')}
                   </TableCell>
                 </TableRow>
               ) : filteredLogs.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-8">
-                    No audit logs found
+                    {t('admin.noLogsFound')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -257,7 +258,7 @@ export const AuditLogDashboard = () => {
         </div>
 
         <div className="text-sm text-muted-foreground">
-          Showing {filteredLogs.length} of {logs.length} total audit logs
+          {t('admin.showingLogs', { filtered: formatNumber(filteredLogs.length, i18n.language), total: formatNumber(logs.length, i18n.language) })}
         </div>
       </CardContent>
     </Card>

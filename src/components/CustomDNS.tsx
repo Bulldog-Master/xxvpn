@@ -7,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Shield, Globe, Zap, Check, X, Plus, Trash2, AlertTriangle, CheckCircle } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface DNSServer {
   id: string;
@@ -80,7 +81,7 @@ const defaultBlockLists: BlockList[] = [
 ];
 
 export const CustomDNS: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [customDNSEnabled, setCustomDNSEnabled] = useState(false);
   const [selectedDNS, setSelectedDNS] = useState<string>('cloudflare');
   const [customDNSServers, setCustomDNSServers] = useState<DNSServer[]>([]);
@@ -302,7 +303,7 @@ export const CustomDNS: React.FC = () => {
                     </div>
                     <Button onClick={addCustomDNS} size="sm">
                       <Plus className="h-4 w-4 mr-1" />
-                      Add DNS Server
+                      {t('dns.addServer')}
                     </Button>
                   </div>
                 </div>
@@ -318,10 +319,10 @@ export const CustomDNS: React.FC = () => {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="h-5 w-5" />
-                    Ad & Malware Blocking
+                    {t('customDNS.adMalwareBlocking')}
                   </CardTitle>
                   <CardDescription>
-                    Block ads, trackers, and malicious content at the DNS level
+                    {t('customDNS.blockingDescription')}
                   </CardDescription>
                 </div>
                 <Switch
@@ -339,7 +340,7 @@ export const CustomDNS: React.FC = () => {
                     <div className="text-sm text-muted-foreground">{t('dns.activeLists')}</div>
                   </div>
                   <div className="text-center p-4 bg-accent/50 rounded-lg">
-                    <div className="text-2xl font-bold text-primary">{totalBlockedEntries.toLocaleString()}</div>
+                    <div className="text-2xl font-bold text-primary">{formatNumber(totalBlockedEntries, i18n.language)}</div>
                     <div className="text-sm text-muted-foreground">{t('dns.blockedEntries')}</div>
                   </div>
                   <div className="text-center p-4 bg-accent/50 rounded-lg">

@@ -64,7 +64,7 @@ export const DAOGovernance = () => {
         toast.error(error.errors[0].message);
       } else {
         console.error('Failed to create proposal:', error);
-        toast.error('Failed to create proposal');
+        toast.error(t('dao.proposalFailed'));
       }
     }
   };
