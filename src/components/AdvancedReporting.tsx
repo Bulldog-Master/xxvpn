@@ -62,7 +62,7 @@ export const AdvancedReporting = () => {
     setReports([
       {
         id: '1',
-        name: 'Weekly Bandwidth Report',
+        name: t('reporting.weeklyBandwidthReport'),
         type: 'bandwidth',
         schedule: 'weekly',
         lastGenerated: new Date().toISOString(),
@@ -70,7 +70,7 @@ export const AdvancedReporting = () => {
       },
       {
         id: '2',
-        name: 'Monthly Security Summary',
+        name: t('reporting.monthlySecuritySummary'),
         type: 'security',
         schedule: 'monthly',
         lastGenerated: new Date().toISOString(),
@@ -82,8 +82,8 @@ export const AdvancedReporting = () => {
   const generateCSV = (data: any[], filename: string) => {
     if (!data || data.length === 0) {
       toast({
-        title: 'No Data',
-        description: 'No data available for export',
+        title: t('reporting.noData'),
+        description: t('reporting.noDataDesc'),
         variant: 'destructive',
       });
       return;
@@ -149,14 +149,14 @@ export const AdvancedReporting = () => {
       generateCSV(reportData, 'bandwidth_report');
 
       toast({
-        title: 'Export Complete',
-        description: 'Bandwidth report downloaded successfully',
+        title: t('reporting.exportComplete'),
+        description: t('reporting.bandwidthReportSuccess'),
       });
     } catch (error) {
       console.error('Export error:', error);
       toast({
-        title: 'Export Failed',
-        description: 'Failed to generate report',
+        title: t('reporting.exportFailed'),
+        description: t('reporting.exportFailedDesc'),
         variant: 'destructive',
       });
     } finally {
@@ -188,14 +188,14 @@ export const AdvancedReporting = () => {
       generateCSV(reportData, 'security_report');
 
       toast({
-        title: 'Export Complete',
-        description: 'Security report downloaded successfully',
+        title: t('reporting.exportComplete'),
+        description: t('reporting.securityReportSuccess'),
       });
     } catch (error) {
       console.error('Export error:', error);
       toast({
-        title: 'Export Failed',
-        description: 'Failed to generate report',
+        title: t('reporting.exportFailed'),
+        description: t('reporting.exportFailedDesc'),
         variant: 'destructive',
       });
     } finally {
@@ -229,14 +229,14 @@ export const AdvancedReporting = () => {
       generateCSV(reportData, 'session_report');
 
       toast({
-        title: 'Export Complete',
-        description: 'Session report downloaded successfully',
+        title: t('reporting.exportComplete'),
+        description: t('reporting.sessionReportSuccess'),
       });
     } catch (error) {
       console.error('Export error:', error);
       toast({
-        title: 'Export Failed',
-        description: 'Failed to generate report',
+        title: t('reporting.exportFailed'),
+        description: t('reporting.exportFailedDesc'),
         variant: 'destructive',
       });
     } finally {
@@ -266,8 +266,8 @@ export const AdvancedReporting = () => {
     );
     
     toast({
-      title: enabled ? 'Report Enabled' : 'Report Disabled',
-      description: enabled ? 'You will receive scheduled reports via email' : 'Scheduled reports paused',
+      title: enabled ? t('reporting.reportEnabled') : t('reporting.reportDisabled'),
+      description: enabled ? t('reporting.receiveScheduledReports') : t('reporting.scheduledReportsPaused'),
     });
   };
 
@@ -311,8 +311,8 @@ export const AdvancedReporting = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="bandwidth">{t('reporting.bandwidthUsage')}</SelectItem>
-                      <SelectItem value="sessions">Session History</SelectItem>
-                      <SelectItem value="security">Security Events</SelectItem>
+                      <SelectItem value="sessions">{t('reporting.sessionHistory')}</SelectItem>
+                      <SelectItem value="security">{t('reporting.securityEvents')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -355,7 +355,7 @@ export const AdvancedReporting = () => {
                 {loading ? (
                   <>
                     <Activity className="w-4 h-4 mr-2 animate-spin" />
-                    Generating...
+                    {t('reporting.generating')}
                   </>
                 ) : (
                   <>
@@ -373,10 +373,10 @@ export const AdvancedReporting = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                Scheduled Reports
+                {t('reporting.scheduledReportsTitle')}
               </CardTitle>
               <CardDescription>
-                Receive automated reports via email on a regular schedule
+                {t('reporting.scheduledReportsDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -388,10 +388,10 @@ export const AdvancedReporting = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-medium">{report.name}</h4>
-                      <Badge variant="outline">{report.schedule}</Badge>
+                      <Badge variant="outline">{t(`reporting.${report.schedule}`)}</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Last generated: {format(new Date(report.lastGenerated), 'PPp')}
+                      {t('reporting.lastGenerated')}: {format(new Date(report.lastGenerated), 'PPp', { locale: getDateLocale() })}
                     </p>
                   </div>
                   <Switch
@@ -404,7 +404,7 @@ export const AdvancedReporting = () => {
               <Alert>
                 <Mail className="w-4 h-4" />
                 <AlertDescription>
-                  Scheduled reports will be sent to your registered email address
+                  {t('reporting.scheduledReportsInfo')}
                 </AlertDescription>
               </Alert>
             </CardContent>
@@ -416,17 +416,17 @@ export const AdvancedReporting = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
-                Custom Dashboards
+                {t('reporting.customDashboardsTitle')}
               </CardTitle>
               <CardDescription>
-                Create personalized dashboards with your most important metrics
+                {t('reporting.customDashboardsDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert>
                 <CheckCircle className="w-4 h-4" />
                 <AlertDescription>
-                  Custom dashboards allow you to track specific metrics and KPIs that matter most to your usage patterns.
+                  {t('reporting.customDashboardsInfo')}
                 </AlertDescription>
               </Alert>
 
