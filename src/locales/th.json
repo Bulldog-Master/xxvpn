@@ -184,6 +184,27 @@
     "proposalCreated": "สร้างข้อเสนอสำเร็จ",
     "proposalFailed": "สร้างข้อเสนอไม่สำเร็จ",
     "voteRecorded": "บันทึกการลงคะแนนด้วย {{power}} XX Coins",
-    "voteFailed": "บันทึกการลงคะแนนไม่สำเร็จ"
+    "voteFailed": "บันทึกการลงคะแนนไม่สำเร็จ",
+    "title": "การกำกับดูแล DAO",
+    "voting": {
+      "for": "เห็นด้วย",
+      "against": "ไม่เห็นด้วย",
+      "abstain": "งดออกเสียง"
+    }
+  },
+  "quality": {
+    "excellent": "ยอดเยี่ยม",
+    "good": "ดี",
+    "fair": "พอใช้",
+    "poor": "แย่"
+  },
+  "plans": {
+    "singleDevice": "อุปกรณ์เดียว",
+    "personal": "ส่วนบุคคล",
+    "business": "ธุรกิจ"
+  },
+  "common": {
+    "daoTokens": "โทเค็น DAO",
+    "daysLeft": "วันที่เหลือ"
   }
 }

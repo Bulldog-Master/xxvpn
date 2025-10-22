@@ -381,6 +381,94 @@
     "proposalCreated": "Proposal berhasil dibuat",
     "proposalFailed": "Gagal membuat proposal",
     "voteRecorded": "Suara dicatat dengan {{power}} XX Coins",
-    "voteFailed": "Gagal mencatat suara"
+    "voteFailed": "Gagal mencatat suara",
+    "title": "Tata Kelola DAO",
+    "description": "Pilih proposal dan bentuk masa depan xxVPN",
+    "loadingGovernance": "Memuat data tata kelola...",
+    "createProposal": "Buat Proposal",
+    "voting": {
+      "quorumProgress": "Kemajuan Kuorum",
+      "for": "Setuju",
+      "against": "Menentang",
+      "abstain": "Abstain",
+      "voteFor": "Pilih Setuju",
+      "voteAgainst": "Pilih Menentang"
+    },
+    "status": {
+      "active": "Aktif",
+      "passed": "Disetujui",
+      "rejected": "Ditolak",
+      "executed": "Dijalankan"
+    }
+  },
+  "quality": {
+    "excellent": "Sempurna",
+    "good": "Bagus",
+    "fair": "Cukup",
+    "poor": "Buruk"
+  },
+  "plans": {
+    "singleDevice": "Perangkat Tunggal",
+    "personal": "Personal",
+    "personalPro": "Personal Pro",
+    "personalPremium": "Personal Premium",
+    "business": "Bisnis",
+    "businessPlus": "Bisnis Plus",
+    "enterprise": "Enterprise"
+  },
+  "planFeatures": {
+    "oneDeviceOnly": "Hanya 1 perangkat",
+    "upTo5Devices": "Hingga 5 perangkat",
+    "upTo10Devices": "Hingga 10 perangkat",
+    "unlimitedBandwidth": "Bandwidth tidak terbatas",
+    "allServerLocations": "Semua lokasi server",
+    "advancedCmixxTech": "Teknologi cMixx canggih",
+    "emailSupport": "Dukungan email",
+    "prioritySupport": "Dukungan prioritas",
+    "premiumSupport": "Dukungan premium"
+  },
+  "subscriptionPlans": {
+    "authRequired": "Otentikasi Diperlukan",
+    "signInToStart": "Silakan masuk untuk memulai uji coba gratis",
+    "alreadySubscribed": "Sudah Berlangganan",
+    "trial": "uji coba",
+    "subscription": "langganan",
+    "trialStarted": "Uji Coba Dimulai",
+    "error": "Kesalahan",
+    "loading": "Memuat...",
+    "activeTrial": "Uji Coba Aktif",
+    "activePlan": "Paket Saat Ini",
+    "selected": "Dipilih",
+    "startFreeTrial": "Mulai Uji Coba Gratis 7 Hari",
+    "mostPopular": "Paling Populer",
+    "perMonth": "/bulan",
+    "month": "bulan",
+    "year": "tahun",
+    "payWithCrypto": "Bayar dengan XX Coins",
+    "chooseYourPlan": "Pilih Paket Anda",
+    "personal": "Paket Personal",
+    "business": "Paket Bisnis"
+  },
+  "common": {
+    "notAvailable": "T/A",
+    "users": "Pengguna",
+    "gbps": "Gbps",
+    "onlineNow": "online sekarang",
+    "worldwide": "di seluruh dunia",
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "add": "Tambah",
+    "remove": "Hapus",
+    "confirm": "Konfirmasi",
+    "close": "Tutup",
+    "xx": "XX",
+    "currencySymbol": "$",
+    "daoTokens": "Token DAO",
+    "daysLeft": "hari tersisa"
   }
 }

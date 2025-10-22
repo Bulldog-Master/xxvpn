@@ -444,6 +444,28 @@
     "proposalCreated": "Teklif başarıyla oluşturuldu",
     "proposalFailed": "Teklif oluşturulamadı",
     "voteRecorded": "{{power}} XX Coins ile oy kaydedildi",
-    "voteFailed": "Oy kaydedilemedi"
+    "voteFailed": "Oy kaydedilemedi",
+    "title": "DAO Yönetişimi",
+    "description": "Tekliflere oy verin ve xxVPN'in geleceğini şekillendirin",
+    "voting": {
+      "for": "Lehte",
+      "against": "Aleyhte",
+      "abstain": "Çekimser"
+    }
+  },
+  "quality": {
+    "excellent": "Mükemmel",
+    "good": "İyi",
+    "fair": "Orta",
+    "poor": "Zayıf"
+  },
+  "plans": {
+    "singleDevice": "Tek Cihaz",
+    "personal": "Kişisel",
+    "business": "İş"
+  },
+  "common": {
+    "daoTokens": "DAO Tokenları",
+    "daysLeft": "gün kaldı"
   }
 }

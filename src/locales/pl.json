@@ -184,6 +184,27 @@
     "proposalCreated": "Propozycja została pomyślnie utworzona",
     "proposalFailed": "Nie udało się utworzyć propozycji",
     "voteRecorded": "Głos zarejestrowany z {{power}} XX Coins",
-    "voteFailed": "Nie udało się zarejestrować głosu"
+    "voteFailed": "Nie udało się zarejestrować głosu",
+    "title": "Zarządzanie DAO",
+    "voting": {
+      "for": "Za",
+      "against": "Przeciw",
+      "abstain": "Wstrzymaj się"
+    }
+  },
+  "quality": {
+    "excellent": "Doskonała",
+    "good": "Dobra",
+    "fair": "Średnia",
+    "poor": "Słaba"
+  },
+  "plans": {
+    "singleDevice": "Pojedyncze Urządzenie",
+    "personal": "Osobisty",
+    "business": "Biznes"
+  },
+  "common": {
+    "daoTokens": "Tokeny DAO",
+    "daysLeft": "dni pozostało"
   }
 }

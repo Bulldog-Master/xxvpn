@@ -487,6 +487,94 @@
     "proposalCreated": "Forslag oprettet med succes",
     "proposalFailed": "Kunne ikke oprette forslag",
     "voteRecorded": "Stemme registreret med {{power}} XX Coins",
-    "voteFailed": "Kunne ikke registrere stemme"
+    "voteFailed": "Kunne ikke registrere stemme",
+    "title": "DAO Governance",
+    "description": "Stem på forslag og form fremtiden for xxVPN",
+    "loadingGovernance": "Indlæser governance-data...",
+    "createProposal": "Opret Forslag",
+    "voting": {
+      "quorumProgress": "Quorum Fremskridt",
+      "for": "For",
+      "against": "Imod",
+      "abstain": "Afholde",
+      "voteFor": "Stem For",
+      "voteAgainst": "Stem Imod"
+    },
+    "status": {
+      "active": "Aktiv",
+      "passed": "Vedtaget",
+      "rejected": "Afvist",
+      "executed": "Udført"
+    }
+  },
+  "quality": {
+    "excellent": "Fremragende",
+    "good": "God",
+    "fair": "Rimelig",
+    "poor": "Dårlig"
+  },
+  "plans": {
+    "singleDevice": "Enkelt Enhed",
+    "personal": "Personlig",
+    "personalPro": "Personlig Pro",
+    "personalPremium": "Personlig Premium",
+    "business": "Business",
+    "businessPlus": "Business Plus",
+    "enterprise": "Enterprise"
+  },
+  "planFeatures": {
+    "oneDeviceOnly": "Kun 1 enhed",
+    "upTo5Devices": "Op til 5 enheder",
+    "upTo10Devices": "Op til 10 enheder",
+    "unlimitedBandwidth": "Ubegrænset båndbredde",
+    "allServerLocations": "Alle serverplaceringer",
+    "advancedCmixxTech": "Avanceret cMixx-teknologi",
+    "emailSupport": "E-mail support",
+    "prioritySupport": "Prioriteret support",
+    "premiumSupport": "Premium support"
+  },
+  "subscriptionPlans": {
+    "authRequired": "Godkendelse Påkrævet",
+    "signInToStart": "Log venligst ind for at starte gratis prøveperiode",
+    "alreadySubscribed": "Allerede Abonneret",
+    "trial": "prøveperiode",
+    "subscription": "abonnement",
+    "trialStarted": "Prøveperiode Startet",
+    "error": "Fejl",
+    "loading": "Indlæser...",
+    "activeTrial": "Aktiv Prøveperiode",
+    "activePlan": "Nuværende Plan",
+    "selected": "Valgt",
+    "startFreeTrial": "Start 7-Dages Gratis Prøveperiode",
+    "mostPopular": "Mest Populær",
+    "perMonth": "/måned",
+    "month": "måned",
+    "year": "år",
+    "payWithCrypto": "Betal med XX Coins",
+    "chooseYourPlan": "Vælg Din Plan",
+    "personal": "Personlige Planer",
+    "business": "Business Planer"
+  },
+  "common": {
+    "notAvailable": "I/T",
+    "users": "Brugere",
+    "gbps": "Gbps",
+    "onlineNow": "online nu",
+    "worldwide": "verden over",
+    "loading": "Indlæser...",
+    "error": "Fejl",
+    "success": "Succes",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "edit": "Rediger",
+    "delete": "Slet",
+    "add": "Tilføj",
+    "remove": "Fjern",
+    "confirm": "Bekræft",
+    "close": "Luk",
+    "xx": "XX",
+    "currencySymbol": "$",
+    "daoTokens": "DAO Tokens",
+    "daysLeft": "dage tilbage"
   }
 }

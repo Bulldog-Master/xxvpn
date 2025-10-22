@@ -184,6 +184,27 @@
     "proposalCreated": "Đề xuất đã được tạo thành công",
     "proposalFailed": "Không thể tạo đề xuất",
     "voteRecorded": "Bỏ phiếu đã được ghi nhận với {{power}} XX Coins",
-    "voteFailed": "Không thể ghi nhận bỏ phiếu"
+    "voteFailed": "Không thể ghi nhận bỏ phiếu",
+    "title": "Quản trị DAO",
+    "voting": {
+      "for": "Ủng Hộ",
+      "against": "Phản Đối",
+      "abstain": "Không Ý Kiến"
+    }
+  },
+  "quality": {
+    "excellent": "Xuất sắc",
+    "good": "Tốt",
+    "fair": "Khá",
+    "poor": "Kém"
+  },
+  "plans": {
+    "singleDevice": "Thiết Bị Đơn",
+    "personal": "Cá Nhân",
+    "business": "Doanh Nghiệp"
+  },
+  "common": {
+    "daoTokens": "Token DAO",
+    "daysLeft": "ngày còn lại"
   }
 }

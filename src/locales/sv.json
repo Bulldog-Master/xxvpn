@@ -184,6 +184,27 @@
     "proposalCreated": "Förslag framgångsrikt skapat",
     "proposalFailed": "Misslyckades med att skapa förslag",
     "voteRecorded": "Röst registrerad med {{power}} XX Coins",
-    "voteFailed": "Misslyckades med att registrera röst"
+    "voteFailed": "Misslyckades med att registrera röst",
+    "title": "DAO-styrning",
+    "voting": {
+      "for": "För",
+      "against": "Mot",
+      "abstain": "Avstå"
+    }
+  },
+  "quality": {
+    "excellent": "Utmärkt",
+    "good": "Bra",
+    "fair": "Godtagbar",
+    "poor": "Dålig"
+  },
+  "plans": {
+    "singleDevice": "Enkel Enhet",
+    "personal": "Personlig",
+    "business": "Företag"
+  },
+  "common": {
+    "daoTokens": "DAO-tokens",
+    "daysLeft": "dagar kvar"
   }
 }

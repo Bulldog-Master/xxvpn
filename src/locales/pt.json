@@ -444,6 +444,94 @@
     "proposalCreated": "Proposta criada com sucesso",
     "proposalFailed": "Falha ao criar proposta",
     "voteRecorded": "Voto registrado com {{power}} XX Coins",
-    "voteFailed": "Falha ao registrar voto"
+    "voteFailed": "Falha ao registrar voto",
+    "title": "Governança DAO",
+    "description": "Vote em propostas e molde o futuro do xxVPN",
+    "loadingGovernance": "Carregando dados de governança...",
+    "createProposal": "Criar Proposta",
+    "voting": {
+      "quorumProgress": "Progresso do Quórum",
+      "for": "A Favor",
+      "against": "Contra",
+      "abstain": "Abstenção",
+      "voteFor": "Votar A Favor",
+      "voteAgainst": "Votar Contra"
+    },
+    "status": {
+      "active": "Ativa",
+      "passed": "Aprovada",
+      "rejected": "Rejeitada",
+      "executed": "Executada"
+    }
+  },
+  "quality": {
+    "excellent": "Excelente",
+    "good": "Bom",
+    "fair": "Razoável",
+    "poor": "Ruim"
+  },
+  "plans": {
+    "singleDevice": "Dispositivo Único",
+    "personal": "Pessoal",
+    "personalPro": "Pessoal Pro",
+    "personalPremium": "Pessoal Premium",
+    "business": "Negócios",
+    "businessPlus": "Negócios Plus",
+    "enterprise": "Empresarial"
+  },
+  "planFeatures": {
+    "oneDeviceOnly": "Apenas 1 dispositivo",
+    "upTo5Devices": "Até 5 dispositivos",
+    "upTo10Devices": "Até 10 dispositivos",
+    "unlimitedBandwidth": "Largura de banda ilimitada",
+    "allServerLocations": "Todas as localizações de servidores",
+    "advancedCmixxTech": "Tecnologia cMixx avançada",
+    "emailSupport": "Suporte por email",
+    "prioritySupport": "Suporte prioritário",
+    "premiumSupport": "Suporte premium"
+  },
+  "subscriptionPlans": {
+    "authRequired": "Autenticação Necessária",
+    "signInToStart": "Por favor, faça login para iniciar o teste gratuito",
+    "alreadySubscribed": "Já Inscrito",
+    "trial": "teste",
+    "subscription": "assinatura",
+    "trialStarted": "Teste Iniciado",
+    "error": "Erro",
+    "loading": "Carregando...",
+    "activeTrial": "Teste Ativo",
+    "activePlan": "Plano Atual",
+    "selected": "Selecionado",
+    "startFreeTrial": "Iniciar Teste Gratuito de 7 Dias",
+    "mostPopular": "Mais Popular",
+    "perMonth": "/mês",
+    "month": "mês",
+    "year": "ano",
+    "payWithCrypto": "Pagar com XX Coins",
+    "chooseYourPlan": "Escolha Seu Plano",
+    "personal": "Planos Pessoais",
+    "business": "Planos Empresariais"
+  },
+  "common": {
+    "notAvailable": "N/D",
+    "users": "Usuários",
+    "gbps": "Gbps",
+    "onlineNow": "online agora",
+    "worldwide": "em todo o mundo",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "add": "Adicionar",
+    "remove": "Remover",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "xx": "XX",
+    "currencySymbol": "$",
+    "daoTokens": "Tokens DAO",
+    "daysLeft": "dias restantes"
   }
 }

@@ -254,6 +254,94 @@
     "proposalCreated": "Voorstel succesvol aangemaakt",
     "proposalFailed": "Voorstel aanmaken mislukt",
     "voteRecorded": "Stem geregistreerd met {{power}} XX Coins",
-    "voteFailed": "Stem registreren mislukt"
+    "voteFailed": "Stem registreren mislukt",
+    "title": "DAO Governance",
+    "description": "Stem op voorstellen en vorm de toekomst van xxVPN",
+    "loadingGovernance": "Governance-gegevens laden...",
+    "createProposal": "Voorstel Aanmaken",
+    "voting": {
+      "quorumProgress": "Quorum Voortgang",
+      "for": "Voor",
+      "against": "Tegen",
+      "abstain": "Onthouding",
+      "voteFor": "Stem Voor",
+      "voteAgainst": "Stem Tegen"
+    },
+    "status": {
+      "active": "Actief",
+      "passed": "Aangenomen",
+      "rejected": "Afgewezen",
+      "executed": "Uitgevoerd"
+    }
+  },
+  "quality": {
+    "excellent": "Uitstekend",
+    "good": "Goed",
+    "fair": "Redelijk",
+    "poor": "Slecht"
+  },
+  "plans": {
+    "singleDevice": "Enkel Apparaat",
+    "personal": "Persoonlijk",
+    "personalPro": "Persoonlijk Pro",
+    "personalPremium": "Persoonlijk Premium",
+    "business": "Zakelijk",
+    "businessPlus": "Zakelijk Plus",
+    "enterprise": "Enterprise"
+  },
+  "planFeatures": {
+    "oneDeviceOnly": "Slechts 1 apparaat",
+    "upTo5Devices": "Tot 5 apparaten",
+    "upTo10Devices": "Tot 10 apparaten",
+    "unlimitedBandwidth": "Onbeperkte bandbreedte",
+    "allServerLocations": "Alle serverlocaties",
+    "advancedCmixxTech": "Geavanceerde cMixx-technologie",
+    "emailSupport": "E-mailondersteuning",
+    "prioritySupport": "Prioriteitsondersteuning",
+    "premiumSupport": "Premium ondersteuning"
+  },
+  "subscriptionPlans": {
+    "authRequired": "Authenticatie Vereist",
+    "signInToStart": "Meld u aan om de gratis proefperiode te starten",
+    "alreadySubscribed": "Al Geabonneerd",
+    "trial": "proefperiode",
+    "subscription": "abonnement",
+    "trialStarted": "Proefperiode Gestart",
+    "error": "Fout",
+    "loading": "Laden...",
+    "activeTrial": "Actieve Proefperiode",
+    "activePlan": "Huidig Plan",
+    "selected": "Geselecteerd",
+    "startFreeTrial": "Start 7-Daagse Gratis Proefperiode",
+    "mostPopular": "Meest Populair",
+    "perMonth": "/maand",
+    "month": "maand",
+    "year": "jaar",
+    "payWithCrypto": "Betaal met XX Coins",
+    "chooseYourPlan": "Kies Uw Plan",
+    "personal": "Persoonlijke Plannen",
+    "business": "Zakelijke Plannen"
+  },
+  "common": {
+    "notAvailable": "N.v.t.",
+    "users": "Gebruikers",
+    "gbps": "Gbps",
+    "onlineNow": "nu online",
+    "worldwide": "wereldwijd",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "add": "Toevoegen",
+    "remove": "Verwijderen",
+    "confirm": "Bevestigen",
+    "close": "Sluiten",
+    "xx": "XX",
+    "currencySymbol": "$",
+    "daoTokens": "DAO Tokens",
+    "daysLeft": "dagen over"
   }
 }

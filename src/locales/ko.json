@@ -483,6 +483,41 @@
     "proposalCreated": "제안이 성공적으로 생성되었습니다",
     "proposalFailed": "제안 생성 실패",
     "voteRecorded": "{{power}} XX Coins로 투표가 기록되었습니다",
-    "voteFailed": "투표 기록 실패"
+    "voteFailed": "투표 기록 실패",
+    "title": "DAO 거버넌스",
+    "description": "제안에 투표하고 xxVPN의 미래를 만들어가세요",
+    "loadingGovernance": "거버넌스 데이터 로딩 중...",
+    "createProposal": "제안 만들기",
+    "voting": {
+      "quorumProgress": "정족수 진행률",
+      "for": "찬성",
+      "against": "반대",
+      "abstain": "기권",
+      "voteFor": "찬성 투표",
+      "voteAgainst": "반대 투표"
+    },
+    "status": {
+      "active": "활성",
+      "passed": "통과",
+      "rejected": "거부됨",
+      "executed": "실행됨"
+    }
+  },
+  "quality": {
+    "excellent": "우수",
+    "good": "양호",
+    "fair": "보통",
+    "poor": "불량"
+  },
+  "plans": {
+    "singleDevice": "단일 기기",
+    "personal": "개인",
+    "personalPro": "개인 프로",
+    "business": "비즈니스",
+    "enterprise": "엔터프라이즈"
+  },
+  "common": {
+    "daoTokens": "DAO 토큰",
+    "daysLeft": "남은 일수"
   }
 }
