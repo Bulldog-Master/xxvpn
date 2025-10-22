@@ -109,8 +109,8 @@ export const ServerActivityMap: React.FC = () => {
     <div className="space-y-6">
       <Tabs defaultValue="activity" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="activity">Server Activity</TabsTrigger>
-          <TabsTrigger value="performance">Performance Stats</TabsTrigger>
+          <TabsTrigger value="activity">{t('serverMap.globalActivity')}</TabsTrigger>
+          <TabsTrigger value="performance">{t('serverMap.topPerformingServers')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="activity" className="space-y-6">
@@ -122,7 +122,7 @@ export const ServerActivityMap: React.FC = () => {
                   <Users className="h-4 w-4 text-blue-500" />
                   <span className="text-sm font-medium">{t('serverMap.totalUsers')}</span>
                 </div>
-                <div className="text-2xl font-bold">12,910</div>
+                <div className="text-2xl font-bold">{formatNumber(12910, i18n.language)}</div>
                 <div className="text-xs text-muted-foreground">{t('serverMap.onlineNow')}</div>
               </CardContent>
             </Card>
@@ -133,7 +133,7 @@ export const ServerActivityMap: React.FC = () => {
                   <Server className="h-4 w-4 text-green-500" />
                   <span className="text-sm font-medium">{t('serverMap.activeServers')}</span>
                 </div>
-                <div className="text-2xl font-bold">12</div>
+                <div className="text-2xl font-bold">{formatNumber(12, i18n.language)}</div>
                 <div className="text-xs text-muted-foreground">{t('serverMap.worldwide')}</div>
               </CardContent>
             </Card>
@@ -144,7 +144,7 @@ export const ServerActivityMap: React.FC = () => {
                   <Activity className="h-4 w-4 text-purple-500" />
                   <span className="text-sm font-medium">{t('serverMap.avgLoad')}</span>
                 </div>
-                <div className="text-2xl font-bold">56%</div>
+                <div className="text-2xl font-bold">{formatNumber(56, i18n.language)}{t('units.percent')}</div>
                 <div className="text-xs text-muted-foreground">{t('serverMap.acrossServers')}</div>
               </CardContent>
             </Card>
@@ -168,7 +168,7 @@ export const ServerActivityMap: React.FC = () => {
                 {t('serverMap.globalActivity')}
               </CardTitle>
               <CardDescription>
-                Real-time server load and user distribution worldwide
+                {t('serverMap.realTimeActivity')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -223,27 +223,27 @@ export const ServerActivityMap: React.FC = () => {
 
                 {/* Regional Percentage Labels */}
                 <div className="absolute top-8 left-16 text-white font-bold text-xl">
-                  22%
+                  {formatNumber(22, i18n.language)}{t('units.percent')}
                   <div className="text-xs font-normal opacity-80">{t('serverMap.regions.northAmerica').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute top-6 left-1/2 text-white font-bold text-xl">
-                  42%
+                  {formatNumber(42, i18n.language)}{t('units.percent')}
                   <div className="text-xs font-normal opacity-80">{t('serverMap.regions.europe').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute top-8 right-16 text-white font-bold text-xl">
-                  28%
+                  {formatNumber(28, i18n.language)}{t('units.percent')}
                   <div className="text-xs font-normal opacity-80">{t('serverMap.regions.asia').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute bottom-16 right-12 text-white font-bold text-lg">
-                  5%
+                  {formatNumber(5, i18n.language)}{t('units.percent')}
                   <div className="text-xs font-normal opacity-80">{t('serverMap.regions.australia').toUpperCase()}</div>
                 </div>
                 
                 <div className="absolute bottom-12 left-20 text-white font-bold text-lg">
-                  3%
+                  {formatNumber(3, i18n.language)}{t('units.percent')}
                   <div className="text-xs font-normal opacity-80">{t('serverMap.regions.southAmerica').toUpperCase()}</div>
                 </div>
 
@@ -282,10 +282,10 @@ export const ServerActivityMap: React.FC = () => {
                             </div>
                           </div>
                           
-                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div className="grid grid-cols-2 gap-3 text-sm">
                             <div className="bg-white/10 rounded p-2">
                               <div className="opacity-70">{t('serverMap.activeUsers')}</div>
-                              <div className="font-bold text-lg text-blue-400">{server.users.toLocaleString()}</div>
+                              <div className="font-bold text-lg text-blue-400">{formatNumber(server.users, i18n.language)}</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
                               <div className="opacity-70">{t('serverMap.serverLoad')}</div>
@@ -317,8 +317,8 @@ export const ServerActivityMap: React.FC = () => {
           {/* Regional Statistics */}
           <Card>
             <CardHeader>
-              <CardTitle>Regional Distribution</CardTitle>
-              <CardDescription>Server load and user activity by region</CardDescription>
+              <CardTitle>{t('serverMap.regionalDistribution')}</CardTitle>
+              <CardDescription>{t('serverMap.regionDescription')}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -331,15 +331,15 @@ export const ServerActivityMap: React.FC = () => {
                           style={{ backgroundColor: region.color }}
                         ></div>
                         <div>
-                          <div className="font-medium">{region.name}</div>
+                          <div className="font-medium">{t(`serverMap.regions.${region.name.toLowerCase().replace(' ', '')}`)}</div>
                           <div className="text-sm text-muted-foreground">
-                            {region.servers} servers • {region.totalUsers.toLocaleString()} users
+                            {formatNumber(region.servers, i18n.language)} {t('serverMap.servers')} • {formatNumber(region.totalUsers, i18n.language)} {t('serverMap.users')}
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-lg">{region.percentage}%</div>
-                        <div className="text-xs text-muted-foreground">of total traffic</div>
+                        <div className="font-bold text-lg">{formatNumber(region.percentage, i18n.language)}{t('units.percent')}</div>
+                        <div className="text-xs text-muted-foreground">{t('serverMap.ofTotalTraffic')}</div>
                       </div>
                     </div>
                     <Progress value={region.percentage} className="h-2" />
@@ -353,8 +353,8 @@ export const ServerActivityMap: React.FC = () => {
         <TabsContent value="performance" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Top Performing Servers</CardTitle>
-              <CardDescription>Servers ranked by user count and performance metrics</CardDescription>
+              <CardTitle>{t('serverMap.topPerformingServers')}</CardTitle>
+              <CardDescription>{t('serverMap.serversRanked')}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
