@@ -442,6 +442,22 @@
     "proposalCreated": "प्रस्ताव सफलतापूर्वक बनाया गया",
     "proposalFailed": "प्रस्ताव बनाने में विफल",
     "voteRecorded": "{{power}} XX Coins के साथ वोट रिकॉर्ड किया गया",
-    "voteFailed": "वोट रिकॉर्ड करने में विफल"
+    "voteFailed": "वोट रिकॉर्ड करने में विफल",
+    "title": "DAO शासन",
+    "voting": {
+      "for": "पक्ष में",
+      "against": "विरोध में",
+      "abstain": "अनुपस्थित"
+    }
+  },
+  "quality": {
+    "excellent": "उत्कृष्ट",
+    "good": "अच्छा",
+    "fair": "साधारण",
+    "poor": "खराब"
+  },
+  "common": {
+    "daoTokens": "DAO टोकन",
+    "daysLeft": "दिन शेष"
   }
 }

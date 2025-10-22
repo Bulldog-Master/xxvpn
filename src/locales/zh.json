@@ -683,6 +683,22 @@
     "proposalCreated": "提案创建成功",
     "proposalFailed": "创建提案失败",
     "voteRecorded": "已记录投票，使用 {{power}} XX Coins",
-    "voteFailed": "记录投票失败"
+    "voteFailed": "记录投票失败",
+    "title": "DAO治理",
+    "voting": {
+      "for": "赞成",
+      "against": "反对",
+      "abstain": "弃权"
+    }
+  },
+  "quality": {
+    "excellent": "优秀",
+    "good": "良好",
+    "fair": "一般",
+    "poor": "差"
+  },
+  "common": {
+    "daoTokens": "DAO代币",
+    "daysLeft": "剩余天数"
   }
 }

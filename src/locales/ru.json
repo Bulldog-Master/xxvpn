@@ -444,6 +444,38 @@
     "proposalCreated": "Предложение успешно создано",
     "proposalFailed": "Не удалось создать предложение",
     "voteRecorded": "Голос записан с {{power}} XX Coins",
-    "voteFailed": "Не удалось записать голос"
+    "voteFailed": "Не удалось записать голос",
+    "title": "DAO Управление",
+    "description": "Голосуйте за предложения и формируйте будущее xxVPN",
+    "voting": {
+      "quorumProgress": "Прогресс кворума",
+      "for": "За",
+      "against": "Против",
+      "abstain": "Воздержаться",
+      "voteFor": "Голосовать За",
+      "voteAgainst": "Голосовать Против"
+    }
+  },
+  "quality": {
+    "excellent": "Отлично",
+    "good": "Хорошо",
+    "fair": "Удовлетворительно",
+    "poor": "Плохо"
+  },
+  "plans": {
+    "singleDevice": "Одно Устройство",
+    "personal": "Личный",
+    "personalPro": "Личный Про",
+    "business": "Бизнес",
+    "enterprise": "Предприятие"
+  },
+  "common": {
+    "notAvailable": "Н/Д",
+    "users": "Пользователи",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "daoTokens": "DAO Токены",
+    "daysLeft": "дней осталось"
   }
 }
