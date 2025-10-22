@@ -52,8 +52,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       // Check if we have a proper Supabase session
       if (!session?.user?.id) {
         toast({
-          title: 'Authentication Required',
-          description: 'Please sign out and sign back in with email/password to enable 2FA.',
+          title: t('twoFactor.authRequired'),
+          description: t('twoFactor.signInWithEmail'),
           variant: 'destructive',
         });
         setShowSetup(false);
@@ -122,15 +122,15 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       console.error('❌ Error generating TOTP secret:', error);
       
       // More specific error messages
-      let errorMessage = 'Failed to generate 2FA setup. Please try again.';
+      let errorMessage = t('twoFactor.setupFailed');
       if (error?.message?.includes('webauthn_user') || error?.message?.includes('passphrase_user')) {
-        errorMessage = '2FA is not available for this authentication method.';
+        errorMessage = t('twoFactor.notAvailableForMethod');
       } else if (error?.message?.includes('UUID')) {
-        errorMessage = 'Invalid user ID format. Please sign in with email/password.';
+        errorMessage = t('twoFactor.invalidUserId');
       }
       
       toast({
-        title: 'Error',
+        title: t('common.error'),
         description: errorMessage,
         variant: 'destructive',
       });
@@ -140,8 +140,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   const verifyAndEnable2FA = async () => {
     if (!verificationCode || verificationCode.length !== 6) {
       toast({
-        title: 'Invalid Code',
-        description: 'Please enter a 6-digit verification code.',
+        title: t('twoFactor.invalidCode'),
+        description: t('twoFactor.enterSixDigit'),
         variant: 'destructive',
       });
       return;
@@ -170,8 +170,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       
       if (!isValid) {
         toast({
-          title: 'Invalid Code',
-          description: 'The verification code is incorrect. Please try again.',
+          title: t('twoFactor.invalidCode'),
+          description: t('twoFactor.codeIncorrect'),
           variant: 'destructive',
         });
         return;
@@ -211,8 +211,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       if (profileError) throw profileError;
 
       toast({
-        title: 'Success',
-        description: '2FA has been successfully enabled for your account.',
+        title: t('common.success'),
+        description: t('twoFactor.enabledSuccess'),
       });
 
       setShowSetup(false);
@@ -221,8 +221,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
     } catch (error) {
       console.error('Error enabling 2FA:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to enable 2FA. Please try again.',
+        title: t('common.error'),
+        description: t('twoFactor.enableFailed'),
         variant: 'destructive',
       });
     } finally {
@@ -252,16 +252,16 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
       if (profileError) throw profileError;
 
       toast({
-        title: 'Success',
-        description: '2FA has been disabled for your account.',
+        title: t('common.success'),
+        description: t('twoFactor.disabledSuccess'),
       });
 
       onStatusChange(false);
     } catch (error) {
       console.error('Error disabling 2FA:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to disable 2FA. Please try again.',
+        title: t('common.error'),
+        description: t('twoFactor.disableFailed'),
         variant: 'destructive',
       });
     } finally {
@@ -272,8 +272,8 @@ const TwoFactorSetup = ({ isEnabled, onStatusChange }: TwoFactorSetupProps) => {
   const copySecret = () => {
     navigator.clipboard.writeText(secret);
     toast({
-      title: 'Copied',
-      description: 'Secret key copied to clipboard.',
+      title: t('twoFactor.copied'),
+      description: t('twoFactor.secretCopied'),
     });
   };
 

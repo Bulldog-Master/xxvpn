@@ -196,7 +196,36 @@
       "title": "Two-Factor Authentication",
       "active": "Active and protecting your account",
       "notConfigured": "Not configured"
-    }
+    },
+    "protected": "Protected",
+    "networkSecurityStatus": "Network Security Status",
+    "connectionStatus": "Connection Status",
+    "yourIp": "Your IP",
+    "vpnIp": "VPN IP"
+  },
+  "twoFactor": {
+    "authRequired": "Authentication Required",
+    "signInWithEmail": "Please sign out and sign back in with email/password to enable 2FA",
+    "setupFailed": "Failed to generate 2FA setup. Please try again",
+    "notAvailableForMethod": "2FA is not available for this authentication method",
+    "invalidUserId": "Invalid user ID format. Please sign in with email/password",
+    "invalidCode": "Invalid Code",
+    "enterSixDigit": "Please enter a 6-digit verification code",
+    "codeIncorrect": "The verification code is incorrect. Please try again",
+    "enabledSuccess": "2FA has been successfully enabled for your account",
+    "enableFailed": "Failed to enable 2FA. Please try again",
+    "disabledSuccess": "2FA has been disabled for your account",
+    "disableFailed": "Failed to disable 2FA. Please try again",
+    "copied": "Copied",
+    "secretCopied": "Secret key copied to clipboard"
+  },
+  "killSwitch": {
+    "killSwitchActive": "Kill Switch Active",
+    "unprotected": "Unprotected",
+    "dnsLeakDetected": "DNS leak detected!",
+    "ipv6LeakDetected": "IPv6 leak detected!",
+    "checkSettings": "Check your settings.",
+    "blockAllTraffic": "Kill switch is active - blocking all traffic"
   },
   "serverSelection": {
     "excellent": "Excellent",
