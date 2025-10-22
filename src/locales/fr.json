@@ -410,5 +410,46 @@
       "quantumResistant": "Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s."
     }
   },
-  "tour": "Tour"
+  "tour": "Tour",
+  "analytics": {
+    "title": "Analyses",
+    "subtitle": "Suivez votre utilisation VPN et vos performances",
+    "last24Hours": "Dernières 24 Heures",
+    "last7Days": "7 Derniers Jours",
+    "last30Days": "30 Derniers Jours",
+    "last90Days": "90 Derniers Jours",
+    "totalDownload": "Téléchargement Total",
+    "totalUpload": "Téléversement Total",
+    "totalTime": "Temps Total",
+    "avgSpeed": "Vitesse Moyenne",
+    "sessions": "Sessions",
+    "perSession": "Par session",
+    "bandwidthUsage": "Utilisation de la Bande Passante",
+    "serverUsage": "Utilisation du Serveur",
+    "performance": "Performance",
+    "bandwidthOverTime": "Utilisation de la Bande Passante au Fil du Temps",
+    "downloadUploadData": "Données de téléchargement et téléversement sur la période",
+    "noBandwidthData": "Aucune donnée de bande passante disponible pour cette période",
+    "averageBandwidthPerDay": "Bande Passante Moyenne par Jour",
+    "noDataAvailable": "Aucune donnée disponible",
+    "topServers": "Top 5 des Serveurs par Utilisation",
+    "mostUsedServers": "Serveurs les Plus Utilisés",
+    "connectionPerformance": "Performance de Connexion",
+    "speedAndStability": "Vitesse et stabilité au fil du temps",
+    "noPerformanceData": "Aucune donnée de performance disponible"
+  },
+  "units": {
+    "mb": "Mo",
+    "gb": "Go",
+    "tb": "To",
+    "mbps": "Mbit/s",
+    "gbps": "Gbit/s",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Connecté",
+    "disconnected": "Déconnecté",
+    "connecting": "Connexion",
+    "active": "Actif"
+  }
 }

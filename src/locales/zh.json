@@ -357,5 +357,46 @@
       "vpnDesc": "VPN - 平衡",
       "mixnetDesc": "混合网络 - 最安全"
     }
+  },
+  "analytics": {
+    "title": "分析",
+    "subtitle": "跟踪您的VPN使用和性能",
+    "last24Hours": "过去24小时",
+    "last7Days": "过去7天",
+    "last30Days": "过去30天",
+    "last90Days": "过去90天",
+    "totalDownload": "总下载",
+    "totalUpload": "总上传",
+    "totalTime": "总时间",
+    "avgSpeed": "平均速度",
+    "sessions": "会话",
+    "perSession": "每个会话",
+    "bandwidthUsage": "带宽使用",
+    "serverUsage": "服务器使用",
+    "performance": "性能",
+    "bandwidthOverTime": "带宽使用随时间变化",
+    "downloadUploadData": "期间内的下载和上传数据",
+    "noBandwidthData": "此期间没有可用的带宽数据",
+    "averageBandwidthPerDay": "每天平均带宽",
+    "noDataAvailable": "没有可用数据",
+    "topServers": "使用量前5名服务器",
+    "mostUsedServers": "最常用的服务器",
+    "connectionPerformance": "连接性能",
+    "speedAndStability": "速度和稳定性随时间变化",
+    "noPerformanceData": "没有可用的性能数据"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "已连接",
+    "disconnected": "已断开",
+    "connecting": "正在连接",
+    "active": "活动"
   }
 }

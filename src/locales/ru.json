@@ -363,5 +363,46 @@
       "vpnDesc": "VPN - Сбалансированный",
       "mixnetDesc": "Mixnet - Самый Безопасный"
     }
+  },
+  "analytics": {
+    "title": "Аналитика",
+    "subtitle": "Отслеживайте использование VPN и производительность",
+    "last24Hours": "Последние 24 Часа",
+    "last7Days": "Последние 7 Дней",
+    "last30Days": "Последние 30 Дней",
+    "last90Days": "Последние 90 Дней",
+    "totalDownload": "Всего Загружено",
+    "totalUpload": "Всего Отправлено",
+    "totalTime": "Общее Время",
+    "avgSpeed": "Средняя Скорость",
+    "sessions": "Сессий",
+    "perSession": "За сессию",
+    "bandwidthUsage": "Использование Полосы",
+    "serverUsage": "Использование Сервера",
+    "performance": "Производительность",
+    "bandwidthOverTime": "Использование Полосы с Течением Времени",
+    "downloadUploadData": "Данные загрузки и выгрузки за период",
+    "noBandwidthData": "Нет данных о полосе пропускания за этот период",
+    "averageBandwidthPerDay": "Средняя Полоса в День",
+    "noDataAvailable": "Нет доступных данных",
+    "topServers": "Топ 5 Серверов по Использованию",
+    "mostUsedServers": "Наиболее Используемые Серверы",
+    "connectionPerformance": "Производительность Соединения",
+    "speedAndStability": "Скорость и стабильность со временем",
+    "noPerformanceData": "Нет данных о производительности"
+  },
+  "units": {
+    "mb": "МБ",
+    "gb": "ГБ",
+    "tb": "ТБ",
+    "mbps": "Мбит/с",
+    "gbps": "Гбит/с",
+    "ms": "мс"
+  },
+  "status": {
+    "connected": "Подключено",
+    "disconnected": "Отключено",
+    "connecting": "Подключение",
+    "active": "Активно"
   }
 }

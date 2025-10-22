@@ -53,5 +53,46 @@
       "fullAccess": "เข้าถึงคุณสมบัติทั้งหมด",
       "upgradeDescription": "อัปเกรดเพื่อการเข้าถึงไม่จำกัด"
     }
+  },
+  "analytics": {
+    "title": "การวิเคราะห์",
+    "subtitle": "ติดตามการใช้งาน VPN และประสิทธิภาพ",
+    "last24Hours": "24 ชั่วโมงล่าสุด",
+    "last7Days": "7 วันล่าสุด",
+    "last30Days": "30 วันล่าสุด",
+    "last90Days": "90 วันล่าสุด",
+    "totalDownload": "ดาวน์โหลดทั้งหมด",
+    "totalUpload": "อัปโหลดทั้งหมด",
+    "totalTime": "เวลารวม",
+    "avgSpeed": "ความเร็วเฉลี่ย",
+    "sessions": "เซสชัน",
+    "perSession": "ต่อเซสชัน",
+    "bandwidthUsage": "การใช้แบนด์วิดท์",
+    "serverUsage": "การใช้เซิร์ฟเวอร์",
+    "performance": "ประสิทธิภาพ",
+    "bandwidthOverTime": "การใช้แบนด์วิดท์ตามช่วงเวลา",
+    "downloadUploadData": "ข้อมูลดาวน์โหลดและอัปโหลดตลอดช่วงเวลา",
+    "noBandwidthData": "ไม่มีข้อมูลแบนด์วิดท์สำหรับช่วงเวลานี้",
+    "averageBandwidthPerDay": "แบนด์วิดท์เฉลี่ยต่อวัน",
+    "noDataAvailable": "ไม่มีข้อมูล",
+    "topServers": "5 เซิร์ฟเวอร์อันดับต้นตามการใช้งาน",
+    "mostUsedServers": "เซิร์ฟเวอร์ที่ใช้มากที่สุด",
+    "connectionPerformance": "ประสิทธิภาพการเชื่อมต่อ",
+    "speedAndStability": "ความเร็วและความเสถียรตามช่วงเวลา",
+    "noPerformanceData": "ไม่มีข้อมูลประสิทธิภาพ"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ตัดการเชื่อมต่อ",
+    "connecting": "กำลังเชื่อมต่อ",
+    "active": "ใช้งานอยู่"
   }
 }

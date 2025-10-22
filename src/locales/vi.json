@@ -53,5 +53,46 @@
       "fullAccess": "Truy cập đầy đủ tất cả tính năng",
       "upgradeDescription": "Nâng cấp để truy cập không giới hạn"
     }
+  },
+  "analytics": {
+    "title": "Phân tích",
+    "subtitle": "Theo dõi việc sử dụng VPN và hiệu suất",
+    "last24Hours": "24 Giờ Qua",
+    "last7Days": "7 Ngày Qua",
+    "last30Days": "30 Ngày Qua",
+    "last90Days": "90 Ngày Qua",
+    "totalDownload": "Tổng Tải Xuống",
+    "totalUpload": "Tổng Tải Lên",
+    "totalTime": "Tổng Thời Gian",
+    "avgSpeed": "Tốc Độ Trung Bình",
+    "sessions": "Phiên",
+    "perSession": "Mỗi phiên",
+    "bandwidthUsage": "Sử Dụng Băng Thông",
+    "serverUsage": "Sử Dụng Máy Chủ",
+    "performance": "Hiệu Suất",
+    "bandwidthOverTime": "Sử Dụng Băng Thông Theo Thời Gian",
+    "downloadUploadData": "Dữ liệu tải xuống và tải lên trong khoảng thời gian",
+    "noBandwidthData": "Không có dữ liệu băng thông cho khoảng thời gian này",
+    "averageBandwidthPerDay": "Băng Thông Trung Bình Mỗi Ngày",
+    "noDataAvailable": "Không có dữ liệu",
+    "topServers": "Top 5 Máy Chủ Theo Sử Dụng",
+    "mostUsedServers": "Máy Chủ Được Sử Dụng Nhiều Nhất",
+    "connectionPerformance": "Hiệu Suất Kết Nối",
+    "speedAndStability": "Tốc độ và độ ổn định theo thời gian",
+    "noPerformanceData": "Không có dữ liệu hiệu suất"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Đã kết nối",
+    "disconnected": "Đã ngắt kết nối",
+    "connecting": "Đang kết nối",
+    "active": "Hoạt động"
   }
 }

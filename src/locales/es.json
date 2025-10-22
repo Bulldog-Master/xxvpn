@@ -400,6 +400,47 @@
     }
   },
   "tour": "Tour",
+  "analytics": {
+    "title": "Análisis",
+    "subtitle": "Rastrea tu uso de VPN y rendimiento",
+    "last24Hours": "Últimas 24 Horas",
+    "last7Days": "Últimos 7 Días",
+    "last30Days": "Últimos 30 Días",
+    "last90Days": "Últimos 90 Días",
+    "totalDownload": "Descarga Total",
+    "totalUpload": "Carga Total",
+    "totalTime": "Tiempo Total",
+    "avgSpeed": "Velocidad Promedio",
+    "sessions": "Sesiones",
+    "perSession": "Por sesión",
+    "bandwidthUsage": "Uso de Ancho de Banda",
+    "serverUsage": "Uso del Servidor",
+    "performance": "Rendimiento",
+    "bandwidthOverTime": "Uso de Ancho de Banda a lo Largo del Tiempo",
+    "downloadUploadData": "Datos de descarga y carga durante el período",
+    "noBandwidthData": "No hay datos de ancho de banda disponibles para este período",
+    "averageBandwidthPerDay": "Ancho de Banda Promedio por Día",
+    "noDataAvailable": "No hay datos disponibles",
+    "topServers": "Top 5 Servidores por Uso",
+    "mostUsedServers": "Servidores Más Utilizados",
+    "connectionPerformance": "Rendimiento de Conexión",
+    "speedAndStability": "Velocidad y estabilidad a lo largo del tiempo",
+    "noPerformanceData": "No hay datos de rendimiento disponibles"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "connecting": "Conectando",
+    "active": "Activo"
+  },
   "xxCoin": {
     "wallet": {
       "title": "Billetera XX Network",

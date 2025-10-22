@@ -367,6 +367,47 @@
       "directDesc": "Nessun VPN - Più veloce",
       "vpnDesc": "VPN - Bilanciato",
         "mixnetDesc": "Mixnet - Più sicuro"
-      }
     }
+  },
+  "analytics": {
+    "title": "Analisi",
+    "subtitle": "Traccia l'uso VPN e le prestazioni",
+    "last24Hours": "Ultime 24 Ore",
+    "last7Days": "Ultimi 7 Giorni",
+    "last30Days": "Ultimi 30 Giorni",
+    "last90Days": "Ultimi 90 Giorni",
+    "totalDownload": "Download Totale",
+    "totalUpload": "Upload Totale",
+    "totalTime": "Tempo Totale",
+    "avgSpeed": "Velocità Media",
+    "sessions": "Sessioni",
+    "perSession": "Per sessione",
+    "bandwidthUsage": "Utilizzo Banda",
+    "serverUsage": "Utilizzo Server",
+    "performance": "Prestazioni",
+    "bandwidthOverTime": "Utilizzo Banda nel Tempo",
+    "downloadUploadData": "Dati di download e upload nel periodo",
+    "noBandwidthData": "Nessun dato di banda disponibile per questo periodo",
+    "averageBandwidthPerDay": "Banda Media per Giorno",
+    "noDataAvailable": "Nessun dato disponibile",
+    "topServers": "Top 5 Server per Utilizzo",
+    "mostUsedServers": "Server Più Utilizzati",
+    "connectionPerformance": "Prestazioni di Connessione",
+    "speedAndStability": "Velocità e stabilità nel tempo",
+    "noPerformanceData": "Nessun dato di prestazioni disponibile"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Connesso",
+    "disconnected": "Disconnesso",
+    "connecting": "Connessione",
+    "active": "Attivo"
+  }
 }

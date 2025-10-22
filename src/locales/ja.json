@@ -359,5 +359,46 @@
       "vpnDesc": "VPN - バランス",
       "mixnetDesc": "ミックスネット - 最も安全"
     }
+  },
+  "analytics": {
+    "title": "分析",
+    "subtitle": "VPN使用状況とパフォーマンスを追跡",
+    "last24Hours": "過去24時間",
+    "last7Days": "過去7日間",
+    "last30Days": "過去30日間",
+    "last90Days": "過去90日間",
+    "totalDownload": "総ダウンロード",
+    "totalUpload": "総アップロード",
+    "totalTime": "総時間",
+    "avgSpeed": "平均速度",
+    "sessions": "セッション",
+    "perSession": "セッションあたり",
+    "bandwidthUsage": "帯域幅使用量",
+    "serverUsage": "サーバー使用量",
+    "performance": "パフォーマンス",
+    "bandwidthOverTime": "時間経過による帯域幅使用量",
+    "downloadUploadData": "期間中のダウンロードとアップロードデータ",
+    "noBandwidthData": "この期間の帯域幅データはありません",
+    "averageBandwidthPerDay": "1日あたりの平均帯域幅",
+    "noDataAvailable": "利用可能なデータがありません",
+    "topServers": "使用量トップ5サーバー",
+    "mostUsedServers": "最も使用されているサーバー",
+    "connectionPerformance": "接続パフォーマンス",
+    "speedAndStability": "時間経過による速度と安定性",
+    "noPerformanceData": "パフォーマンスデータがありません"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "接続済み",
+    "disconnected": "切断中",
+    "connecting": "接続中",
+    "active": "アクティブ"
   }
 }

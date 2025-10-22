@@ -363,5 +363,46 @@
       "precomputation": "Ön Hesaplama Aşaması",
       "realtimeMixing": "Gerçek Zamanlı Karıştırma"
     }
+  },
+  "analytics": {
+    "title": "Analitik",
+    "subtitle": "VPN kullanımınızı ve performansınızı takip edin",
+    "last24Hours": "Son 24 Saat",
+    "last7Days": "Son 7 Gün",
+    "last30Days": "Son 30 Gün",
+    "last90Days": "Son 90 Gün",
+    "totalDownload": "Toplam İndirme",
+    "totalUpload": "Toplam Yükleme",
+    "totalTime": "Toplam Süre",
+    "avgSpeed": "Ortalama Hız",
+    "sessions": "Oturumlar",
+    "perSession": "Oturum başına",
+    "bandwidthUsage": "Bant Genişliği Kullanımı",
+    "serverUsage": "Sunucu Kullanımı",
+    "performance": "Performans",
+    "bandwidthOverTime": "Zaman İçinde Bant Genişliği Kullanımı",
+    "downloadUploadData": "Dönem boyunca indirme ve yükleme verileri",
+    "noBandwidthData": "Bu dönem için bant genişliği verisi yok",
+    "averageBandwidthPerDay": "Günlük Ortalama Bant Genişliği",
+    "noDataAvailable": "Veri mevcut değil",
+    "topServers": "Kullanıma Göre İlk 5 Sunucu",
+    "mostUsedServers": "En Çok Kullanılan Sunucular",
+    "connectionPerformance": "Bağlantı Performansı",
+    "speedAndStability": "Zaman içinde hız ve stabilite",
+    "noPerformanceData": "Performans verisi mevcut değil"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Bağlı",
+    "disconnected": "Bağlantı Kesildi",
+    "connecting": "Bağlanıyor",
+    "active": "Aktif"
   }
 }

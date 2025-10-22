@@ -53,5 +53,46 @@
       "fullAccess": "Full åtkomst till alla funktioner",
       "upgradeDescription": "Uppgradera för obegränsad åtkomst"
     }
+  },
+  "analytics": {
+    "title": "Analyser",
+    "subtitle": "Spåra din VPN-användning och prestanda",
+    "last24Hours": "Senaste 24 Timmarna",
+    "last7Days": "Senaste 7 Dagarna",
+    "last30Days": "Senaste 30 Dagarna",
+    "last90Days": "Senaste 90 Dagarna",
+    "totalDownload": "Total Nedladdning",
+    "totalUpload": "Total Uppladdning",
+    "totalTime": "Total Tid",
+    "avgSpeed": "Medelshastighet",
+    "sessions": "Sessioner",
+    "perSession": "Per session",
+    "bandwidthUsage": "Bandbreddsanvändning",
+    "serverUsage": "Serveranvändning",
+    "performance": "Prestanda",
+    "bandwidthOverTime": "Bandbreddsanvändning Över Tid",
+    "downloadUploadData": "Nedladdnings- och uppladdningsdata under perioden",
+    "noBandwidthData": "Ingen bandbreddsdata tillgänglig för denna period",
+    "averageBandwidthPerDay": "Genomsnittlig Bandbredd Per Dag",
+    "noDataAvailable": "Ingen data tillgänglig",
+    "topServers": "Topp 5 Servrar efter Användning",
+    "mostUsedServers": "Mest Använda Servrar",
+    "connectionPerformance": "Anslutningsprestanda",
+    "speedAndStability": "Hastighet och stabilitet över tid",
+    "noPerformanceData": "Ingen prestandadata tillgänglig"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Ansluten",
+    "disconnected": "Frånkopplad",
+    "connecting": "Ansluter",
+    "active": "Aktiv"
   }
 }

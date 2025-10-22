@@ -363,5 +363,46 @@
       "precomputation": "Forberegnings Fase",
       "realtimeMixing": "Realtids Blanding"
     }
+  },
+  "analytics": {
+    "title": "Analyse",
+    "subtitle": "Spor din VPN-brug og ydeevne",
+    "last24Hours": "Sidste 24 Timer",
+    "last7Days": "Sidste 7 Dage",
+    "last30Days": "Sidste 30 Dage",
+    "last90Days": "Sidste 90 Dage",
+    "totalDownload": "Samlet Download",
+    "totalUpload": "Samlet Upload",
+    "totalTime": "Samlet Tid",
+    "avgSpeed": "Gennemsnitshastighed",
+    "sessions": "Sessioner",
+    "perSession": "Per session",
+    "bandwidthUsage": "Båndbreddebrug",
+    "serverUsage": "Serverbrug",
+    "performance": "Ydeevne",
+    "bandwidthOverTime": "Båndbreddebrug Over Tid",
+    "downloadUploadData": "Download- og uploaddata gennem perioden",
+    "noBandwidthData": "Ingen båndbreddedata tilgængelig for denne periode",
+    "averageBandwidthPerDay": "Gennemsnitlig Båndbredde Per Dag",
+    "noDataAvailable": "Ingen data tilgængelig",
+    "topServers": "Top 5 Servere Efter Brug",
+    "mostUsedServers": "Mest Brugte Servere",
+    "connectionPerformance": "Forbindelsesydeevne",
+    "speedAndStability": "Hastighed og stabilitet over tid",
+    "noPerformanceData": "Ingen ydeevnedata tilgængelig"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Forbundet",
+    "disconnected": "Afbrudt",
+    "connecting": "Forbinder",
+    "active": "Aktiv"
   }
 }

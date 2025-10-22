@@ -53,5 +53,46 @@
       "fullAccess": "Pełny dostęp do wszystkich funkcji",
       "upgradeDescription": "Uaktualnij dla nieograniczonego dostępu"
     }
+  },
+  "analytics": {
+    "title": "Analityka",
+    "subtitle": "Śledź użycie VPN i wydajność",
+    "last24Hours": "Ostatnie 24 Godziny",
+    "last7Days": "Ostatnie 7 Dni",
+    "last30Days": "Ostatnie 30 Dni",
+    "last90Days": "Ostatnie 90 Dni",
+    "totalDownload": "Całkowite Pobieranie",
+    "totalUpload": "Całkowite Przesyłanie",
+    "totalTime": "Całkowity Czas",
+    "avgSpeed": "Śred. Prędkość",
+    "sessions": "Sesje",
+    "perSession": "Na sesję",
+    "bandwidthUsage": "Użycie Przepustowości",
+    "serverUsage": "Użycie Serwera",
+    "performance": "Wydajność",
+    "bandwidthOverTime": "Użycie Przepustowości w Czasie",
+    "downloadUploadData": "Dane pobierania i przesyłania w okresie",
+    "noBandwidthData": "Brak danych przepustowości dla tego okresu",
+    "averageBandwidthPerDay": "Średnia Przepustowość na Dzień",
+    "noDataAvailable": "Brak dostępnych danych",
+    "topServers": "Top 5 Serwerów według Użycia",
+    "mostUsedServers": "Najczęściej Używane Serwery",
+    "connectionPerformance": "Wydajność Połączenia",
+    "speedAndStability": "Prędkość i stabilność w czasie",
+    "noPerformanceData": "Brak danych wydajności"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mb/s",
+    "gbps": "Gb/s",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Połączono",
+    "disconnected": "Rozłączono",
+    "connecting": "Łączenie",
+    "active": "Aktywny"
   }
 }

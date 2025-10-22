@@ -410,5 +410,46 @@
       "quantumResistant": "Quantum-resistant P2P mixnet using xx network's cMixx protocol. Shreds metadata through 850+ decentralized nodes. Latency: ~2-3s."
     }
   },
-  "tour": "Tour"
+  "tour": "Tour",
+  "analytics": {
+    "title": "Analysen",
+    "subtitle": "Verfolgen Sie Ihre VPN-Nutzung und Leistung",
+    "last24Hours": "Letzte 24 Stunden",
+    "last7Days": "Letzte 7 Tage",
+    "last30Days": "Letzte 30 Tage",
+    "last90Days": "Letzte 90 Tage",
+    "totalDownload": "Gesamt-Download",
+    "totalUpload": "Gesamt-Upload",
+    "totalTime": "Gesamtzeit",
+    "avgSpeed": "Durchschn. Geschwindigkeit",
+    "sessions": "Sitzungen",
+    "perSession": "Pro Sitzung",
+    "bandwidthUsage": "Bandbreitennutzung",
+    "serverUsage": "Servernutzung",
+    "performance": "Leistung",
+    "bandwidthOverTime": "Bandbreitennutzung im Zeitverlauf",
+    "downloadUploadData": "Download- und Upload-Daten im gesamten Zeitraum",
+    "noBandwidthData": "Keine Bandbreitendaten für diesen Zeitraum verfügbar",
+    "averageBandwidthPerDay": "Durchschnittliche Bandbreite pro Tag",
+    "noDataAvailable": "Keine Daten verfügbar",
+    "topServers": "Top 5 Server nach Nutzung",
+    "mostUsedServers": "Am meisten genutzte Server",
+    "connectionPerformance": "Verbindungsleistung",
+    "speedAndStability": "Geschwindigkeit und Stabilität im Zeitverlauf",
+    "noPerformanceData": "Keine Leistungsdaten verfügbar"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbit/s",
+    "gbps": "Gbit/s",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "connecting": "Verbindung wird hergestellt",
+    "active": "Aktiv"
+  }
 }

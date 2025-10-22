@@ -180,5 +180,46 @@
       "transaction": "Transaksi: {{hash}}",
       "subscriptionFailed": "Langganan Gagal"
     }
+  },
+  "analytics": {
+    "title": "Analitik",
+    "subtitle": "Lacak penggunaan VPN dan kinerja Anda",
+    "last24Hours": "24 Jam Terakhir",
+    "last7Days": "7 Hari Terakhir",
+    "last30Days": "30 Hari Terakhir",
+    "last90Days": "90 Hari Terakhir",
+    "totalDownload": "Total Unduhan",
+    "totalUpload": "Total Unggahan",
+    "totalTime": "Total Waktu",
+    "avgSpeed": "Kecepatan Rata-rata",
+    "sessions": "Sesi",
+    "perSession": "Per sesi",
+    "bandwidthUsage": "Penggunaan Bandwidth",
+    "serverUsage": "Penggunaan Server",
+    "performance": "Kinerja",
+    "bandwidthOverTime": "Penggunaan Bandwidth Sepanjang Waktu",
+    "downloadUploadData": "Data unduhan dan unggahan selama periode",
+    "noBandwidthData": "Tidak ada data bandwidth yang tersedia untuk periode ini",
+    "averageBandwidthPerDay": "Bandwidth Rata-rata Per Hari",
+    "noDataAvailable": "Tidak ada data tersedia",
+    "topServers": "5 Server Teratas Berdasarkan Penggunaan",
+    "mostUsedServers": "Server Paling Banyak Digunakan",
+    "connectionPerformance": "Kinerja Koneksi",
+    "speedAndStability": "Kecepatan dan stabilitas seiring waktu",
+    "noPerformanceData": "Tidak ada data kinerja tersedia"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Terhubung",
+    "disconnected": "Terputus",
+    "connecting": "Menghubungkan",
+    "active": "Aktif"
   }
 }

@@ -53,5 +53,46 @@
       "fullAccess": "Volledige toegang tot alle functies",
       "upgradeDescription": "Upgrade voor onbeperkte toegang"
     }
+  },
+  "analytics": {
+    "title": "Analyses",
+    "subtitle": "Volg uw VPN-gebruik en prestaties",
+    "last24Hours": "Laatste 24 Uur",
+    "last7Days": "Laatste 7 Dagen",
+    "last30Days": "Laatste 30 Dagen",
+    "last90Days": "Laatste 90 Dagen",
+    "totalDownload": "Totale Download",
+    "totalUpload": "Totale Upload",
+    "totalTime": "Totale Tijd",
+    "avgSpeed": "Gem. Snelheid",
+    "sessions": "Sessies",
+    "perSession": "Per sessie",
+    "bandwidthUsage": "Bandbreedtegebruik",
+    "serverUsage": "Servergebruik",
+    "performance": "Prestaties",
+    "bandwidthOverTime": "Bandbreedtegebruik in de Tijd",
+    "downloadUploadData": "Download- en uploadgegevens gedurende de periode",
+    "noBandwidthData": "Geen bandbreedtegegevens beschikbaar voor deze periode",
+    "averageBandwidthPerDay": "Gemiddelde Bandbreedte Per Dag",
+    "noDataAvailable": "Geen gegevens beschikbaar",
+    "topServers": "Top 5 Servers op Gebruik",
+    "mostUsedServers": "Meest Gebruikte Servers",
+    "connectionPerformance": "Verbindingsprestaties",
+    "speedAndStability": "Snelheid en stabiliteit in de tijd",
+    "noPerformanceData": "Geen prestatiegegevens beschikbaar"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Verbonden",
+    "disconnected": "Niet verbonden",
+    "connecting": "Verbinden",
+    "active": "Actief"
   }
 }

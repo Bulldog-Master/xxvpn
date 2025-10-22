@@ -359,5 +359,46 @@
       "vpnDesc": "VPN - 균형",
       "mixnetDesc": "믹스넷 - 가장 안전"
     }
+  },
+  "analytics": {
+    "title": "분석",
+    "subtitle": "VPN 사용량 및 성능 추적",
+    "last24Hours": "최근 24시간",
+    "last7Days": "최근 7일",
+    "last30Days": "최근 30일",
+    "last90Days": "최근 90일",
+    "totalDownload": "총 다운로드",
+    "totalUpload": "총 업로드",
+    "totalTime": "총 시간",
+    "avgSpeed": "평균 속도",
+    "sessions": "세션",
+    "perSession": "세션당",
+    "bandwidthUsage": "대역폭 사용량",
+    "serverUsage": "서버 사용량",
+    "performance": "성능",
+    "bandwidthOverTime": "시간 경과에 따른 대역폭 사용량",
+    "downloadUploadData": "기간 동안의 다운로드 및 업로드 데이터",
+    "noBandwidthData": "이 기간에 대한 대역폭 데이터가 없습니다",
+    "averageBandwidthPerDay": "일일 평균 대역폭",
+    "noDataAvailable": "사용 가능한 데이터 없음",
+    "topServers": "사용량 기준 상위 5개 서버",
+    "mostUsedServers": "가장 많이 사용된 서버",
+    "connectionPerformance": "연결 성능",
+    "speedAndStability": "시간 경과에 따른 속도와 안정성",
+    "noPerformanceData": "성능 데이터 없음"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "연결됨",
+    "disconnected": "연결 해제됨",
+    "connecting": "연결 중",
+    "active": "활성"
   }
 }

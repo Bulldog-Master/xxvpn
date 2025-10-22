@@ -363,5 +363,46 @@
       "precomputation": "Fase de Pré-computação",
       "realtimeMixing": "Mistura em Tempo Real"
     }
+  },
+  "analytics": {
+    "title": "Análises",
+    "subtitle": "Acompanhe o uso da VPN e o desempenho",
+    "last24Hours": "Últimas 24 Horas",
+    "last7Days": "Últimos 7 Dias",
+    "last30Days": "Últimos 30 Dias",
+    "last90Days": "Últimos 90 Dias",
+    "totalDownload": "Download Total",
+    "totalUpload": "Upload Total",
+    "totalTime": "Tempo Total",
+    "avgSpeed": "Velocidade Média",
+    "sessions": "Sessões",
+    "perSession": "Por sessão",
+    "bandwidthUsage": "Uso de Largura de Banda",
+    "serverUsage": "Uso do Servidor",
+    "performance": "Desempenho",
+    "bandwidthOverTime": "Uso de Largura de Banda ao Longo do Tempo",
+    "downloadUploadData": "Dados de download e upload ao longo do período",
+    "noBandwidthData": "Nenhum dado de largura de banda disponível para este período",
+    "averageBandwidthPerDay": "Largura de Banda Média por Dia",
+    "noDataAvailable": "Nenhum dado disponível",
+    "topServers": "Top 5 Servidores por Uso",
+    "mostUsedServers": "Servidores Mais Utilizados",
+    "connectionPerformance": "Desempenho de Conexão",
+    "speedAndStability": "Velocidade e estabilidade ao longo do tempo",
+    "noPerformanceData": "Nenhum dado de desempenho disponível"
+  },
+  "units": {
+    "mb": "MB",
+    "gb": "GB",
+    "tb": "TB",
+    "mbps": "Mbps",
+    "gbps": "Gbps",
+    "ms": "ms"
+  },
+  "status": {
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "connecting": "Conectando",
+    "active": "Ativo"
   }
 }
