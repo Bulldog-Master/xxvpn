@@ -1679,5 +1679,28 @@
     "expiryPlaceholder": "شهر/سنة",
     "cvv": "CVV",
     "cvvPlaceholder": "١٢٣"
+  },
+  "loadLevel": {
+    "low": "منخفض",
+    "medium": "متوسط",
+    "high": "عالي"
+  },
+  "toast": {
+    "referralCopied": "تم نسخ رابط الإحالة!",
+    "referralDesc": "شاركه مع الأصدقاء لكسب عملات إكس إكس",
+    "loggedOut": "تم تسجيل الخروج بنجاح",
+    "loggedOutDesc": "نراك قريباً!",
+    "noInternet": "لا يوجد اتصال بالإنترنت",
+    "noInternetDesc": "يرجى التحقق من اتصال الشبكة والمحاولة مرة أخرى",
+    "authRequired": "مطلوب المصادقة",
+    "authRequiredDesc": "يرجى تسجيل الدخول لاستخدام ميزات VPN",
+    "connected": "متصل",
+    "connectedDesc": "تم الاتصال بنجاح بوضع {{mode}}",
+    "disconnected": "منقطع",
+    "disconnectedDesc": "تم إنهاء اتصال VPN",
+    "avatarUpdated": "تم تحديث الصورة الرمزية",
+    "avatarUpdatedDesc": "تم تحديث صورة ملفك الشخصي بنجاح",
+    "nameUpdated": "تم تحديث الاسم",
+    "nameUpdatedDesc": "تم تحديث اسم العرض الخاص بك بنجاح"
   }
 }

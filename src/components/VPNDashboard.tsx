@@ -116,8 +116,8 @@ const VPNDashboard = () => {
   const copyReferralLink = () => {
     navigator.clipboard.writeText(userReferralLink);
     toast({
-      title: "Referral link copied!",
-      description: "Share it with friends to earn XX coins.",
+      title: t('toast.referralCopied'),
+      description: t('toast.referralDesc'),
     });
   };
 
@@ -125,8 +125,8 @@ const VPNDashboard = () => {
     try {
       await logout();
       toast({
-        title: "Logged out successfully",
-        description: "See you soon!",
+        title: t('toast.loggedOut'),
+        description: t('toast.loggedOutDesc'),
       });
       // Force immediate redirect if logout doesn't redirect automatically
       setTimeout(() => {
@@ -144,8 +144,8 @@ const VPNDashboard = () => {
     // Check network connection
     if (!isOnline) {
       toast({
-        title: "No Internet Connection",
-        description: "Please check your network connection and try again.",
+        title: t('toast.noInternet'),
+        description: t('toast.noInternetDesc'),
         variant: "destructive",
       });
       return;
@@ -154,8 +154,8 @@ const VPNDashboard = () => {
     // Check if user is authenticated
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please sign in to use VPN features.",
+        title: t('toast.authRequired'),
+        description: t('toast.authRequiredDesc'),
         variant: "destructive",
       });
       setActiveTab('dashboard');
@@ -182,8 +182,8 @@ const VPNDashboard = () => {
     setTimeout(() => {
       setConnectionStatus('connected');
       toast({
-        title: "Connected",
-        description: `Successfully connected to ${mode} mode.`,
+        title: t('toast.connected'),
+        description: t('toast.connectedDesc', { mode }),
       });
     }, 2000);
   };
@@ -192,8 +192,8 @@ const VPNDashboard = () => {
     setConnectionStatus('disconnected');
     setVpnMode('off');
     toast({
-      title: "Disconnected",
-      description: "VPN connection has been terminated.",
+      title: t('toast.disconnected'),
+      description: t('toast.disconnectedDesc'),
     });
   };
 
@@ -212,8 +212,8 @@ const VPNDashboard = () => {
         updateUser({ avatarUrl });
         setAvatarOpen(false);
         toast({
-          title: "Avatar updated",
-          description: "Your profile picture has been updated successfully."
+          title: t('toast.avatarUpdated'),
+          description: t('toast.avatarUpdatedDesc')
         });
       };
       reader.readAsDataURL(file);
@@ -224,8 +224,8 @@ const VPNDashboard = () => {
     if (tempName.trim() && tempName !== user?.fullName) {
       updateUser({ fullName: tempName.trim() });
       toast({
-        title: "Name updated",
-        description: "Your display name has been updated successfully."
+        title: t('toast.nameUpdated'),
+        description: t('toast.nameUpdatedDesc')
       });
     }
     setEditingName(false);
@@ -262,7 +262,7 @@ const VPNDashboard = () => {
             <CardContent className="flex items-center gap-3 p-4">
               <Wifi className="w-5 h-5 text-destructive" />
               <p className="text-sm text-destructive font-medium">
-                No internet connection. VPN features are unavailable.
+                {t('toast.noInternetDesc')}
               </p>
             </CardContent>
           </Card>

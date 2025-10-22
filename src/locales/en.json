@@ -320,5 +320,213 @@
     "h": "h",
     "m": "m",
     "s": "s"
+  },
+  "loadLevel": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "servers": {
+    "title": "Server Selection",
+    "description": "Choose from our global network of secure servers",
+    "quickConnect": "Quick Connect",
+    "searchPlaceholder": "Search by country or city...",
+    "stats": {
+      "availableServers": "Available Servers",
+      "acrossCountries": "Across 12 countries",
+      "averageLoad": "Average Load",
+      "optimalPerformance": "Optimal performance",
+      "yourLatency": "Your Latency",
+      "toSelectedServer": "To selected server"
+    },
+    "list": {
+      "title": "Server List",
+      "description": "Select a server location to connect",
+      "favorites": "Favorites",
+      "allLocations": "All Locations",
+      "premium": "Premium",
+      "serverId": "Server ID",
+      "latency": "Latency",
+      "load": "Load"
+    }
+  },
+  "serverLocations": {
+    "United States": "United States",
+    "New York": "New York",
+    "Los Angeles": "Los Angeles",
+    "United Kingdom": "United Kingdom",
+    "London": "London",
+    "Germany": "Germany",
+    "Berlin": "Berlin",
+    "Japan": "Japan",
+    "Tokyo": "Tokyo",
+    "Singapore": "Singapore",
+    "Canada": "Canada",
+    "Toronto": "Toronto",
+    "Australia": "Australia",
+    "Sydney": "Sydney",
+    "Netherlands": "Netherlands",
+    "Amsterdam": "Amsterdam",
+    "Sweden": "Sweden",
+    "Stockholm": "Stockholm",
+    "Switzerland": "Switzerland",
+    "Zurich": "Zurich",
+    "France": "France",
+    "Paris": "Paris"
+  },
+  "subscription": {
+    "required": "Subscription Required",
+    "requiredDesc": "Please upgrade your plan to access VPN features",
+    "signInRequired": "Please sign in to use VPN features",
+    "loadingStatus": "Loading subscription status...",
+    "noActive": "No Active Subscription",
+    "noActiveDesc": "Upgrade to access premium VPN features",
+    "viewPlans": "View Plans",
+    "freeTrialActive": "Free Trial Active",
+    "subscriptionActive": "Subscription Active",
+    "trial": "Trial",
+    "subscription": "Subscription",
+    "endsOn": "ends on",
+    "daysRemaining": "{{count}} days remaining",
+    "expiresToday": "Expires today",
+    "trialEndingSoon": "Your trial is ending soon. Subscribe now to continue using premium features.",
+    "subscribeNow": "Subscribe Now",
+    "manageSubscription": "Manage Subscription",
+    "tiers": {
+      "personal": "Personal",
+      "personalPro": "Personal Pro",
+      "personalPremium": "Personal Premium",
+      "business": "Business",
+      "businessPlus": "Business Plus",
+      "enterprise": "Enterprise"
+    }
+  },
+  "xxCoin": {
+    "wallet": {
+      "title": "XX Network Wallet",
+      "description": "Connect your wallet to pay with XX Coins",
+      "previouslyConnected": "Previously connected wallet",
+      "chooseWallet": "Choose a wallet to connect",
+      "xxWallet": "XX Wallet",
+      "metamask": "MetaMask",
+      "recommended": "Recommended",
+      "postQuantum": "Native post-quantum secure wallet",
+      "standardWallet": "Standard Web3 wallet",
+      "noWalletDetected": "No wallet detected",
+      "getXXWallet": "Get XX Wallet",
+      "getMetaMask": "Get MetaMask",
+      "connectedVia": "Connected via",
+      "quantumSecure": "Quantum Secure",
+      "balance": "Balance",
+      "subscribeWithTokens": "Subscribe with XX Coins",
+      "oneMonth": "1 Month",
+      "sixMonths": "6 Months",
+      "twelveMonths": "12 Months"
+    },
+    "balance": {
+      "title": "XX Coin Balance",
+      "description": "Earn and spend XX Coins for VPN services",
+      "coins": "XX Coins",
+      "thisMonthEarned": "This Month Earned",
+      "thisMonthSpent": "This Month Spent"
+    },
+    "earning": {
+      "title": "Earning Methods",
+      "description": "Ways to earn XX Coins",
+      "referrals": {
+        "title": "Refer Friends",
+        "amount": "5 XX",
+        "description": "Per successful referral"
+      },
+      "dailyLogin": {
+        "title": "Daily Login",
+        "amount": "1 XX",
+        "description": "Connect every day"
+      },
+      "staking": {
+        "title": "Network Staking",
+        "amount": "10 XX",
+        "description": "Per month staked"
+      }
+    },
+    "transactions": {
+      "title": "Recent Transactions",
+      "noTransactions": "No transactions yet",
+      "referralBonus": "Referral bonus",
+      "vpnBandwidth": "VPN bandwidth ({{gb}}GB)",
+      "monthlyStaking": "Monthly staking reward",
+      "premiumFeature": "Premium feature unlock",
+      "dailyBonus": "Daily login bonus",
+      "hoursAgo": "{{hours}}h ago",
+      "daysAgo": "{{days}}d ago"
+    },
+    "toast": {
+      "walletDisconnected": "Wallet Disconnected",
+      "reconnectWallet": "Please reconnect your wallet",
+      "metamaskNotFound": "MetaMask Not Found",
+      "installMetamask": "Please install MetaMask extension",
+      "xxWalletNotFound": "XX Wallet Not Found",
+      "installXXWallet": "Please install XX Wallet extension",
+      "walletConnected": "Wallet Connected",
+      "connectionFailed": "Connection Failed",
+      "balanceUpdated": "Balance Updated",
+      "currentBalance": "Current balance: {{balance}} XX",
+      "refreshFailed": "Refresh Failed",
+      "walletNotConnected": "Wallet Not Connected",
+      "connectWalletFirst": "Please connect your wallet first",
+      "subscriptionSuccessful": "Subscription Successful",
+      "transaction": "Transaction: {{hash}}",
+      "subscriptionFailed": "Subscription Failed"
+    }
+  },
+  "toast": {
+    "referralCopied": "Referral link copied!",
+    "referralDesc": "Share it with friends to earn XX coins",
+    "loggedOut": "Logged out successfully",
+    "loggedOutDesc": "See you soon!",
+    "noInternet": "No Internet Connection",
+    "noInternetDesc": "Please check your network connection and try again",
+    "authRequired": "Authentication Required",
+    "authRequiredDesc": "Please sign in to use VPN features",
+    "connected": "Connected",
+    "connectedDesc": "Successfully connected to {{mode}} mode",
+    "disconnected": "Disconnected",
+    "disconnectedDesc": "VPN connection has been terminated",
+    "avatarUpdated": "Avatar updated",
+    "avatarUpdatedDesc": "Your profile picture has been updated successfully",
+    "nameUpdated": "Name updated",
+    "nameUpdatedDesc": "Your display name has been updated successfully"
+  },
+  "settings": {
+    "title": "Settings"
+  },
+  "dao": {
+    "title": "DAO Governance",
+    "description": "Vote on proposals and shape the future of xxVPN",
+    "loadingGovernance": "Loading governance data...",
+    "createProposal": "Create Proposal",
+    "createServiceProposal": "Create Service Proposal",
+    "proposeChanges": "Propose changes to pricing, features, or service improvements",
+    "title2": "Title",
+    "proposalTitlePlaceholder": "e.g., Reduce monthly subscription price",
+    "type": "Proposal Type",
+    "proposalTypes": {
+      "pricing": "Pricing Change",
+      "feature": "New Feature",
+      "treasury": "Treasury Allocation",
+      "server": "Server Addition/Removal",
+      "partnership": "Partnership"
+    },
+    "proposalDescription": "Description",
+    "detailedDescription": "Provide a detailed description of your proposal...",
+    "submitProposal": "Submit Proposal",
+    "noProposals": "No Active Proposals",
+    "beFirst": "Be the first to propose a change to the service",
+    "status": {
+      "active": "Active",
+      "passed": "Passed",
+      "rejected": "Rejected",
+      "executed": "Executed"
+    }
   }
 }
