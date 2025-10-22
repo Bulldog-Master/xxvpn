@@ -134,14 +134,33 @@
   },
   "analytics": {
     "title": "Analytics",
+    "subtitle": "Track your VPN usage and performance",
+    "last24Hours": "Last 24 Hours",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "last90Days": "Last 90 Days",
     "totalDownload": "Total Download",
     "totalUpload": "Total Upload",
+    "totalTime": "Total Time",
+    "avgSpeed": "Avg Speed",
+    "sessions": "Sessions",
+    "perSession": "per session",
     "total": "Total",
     "totalBandwidth": "Total Bandwidth",
     "speedAndStability": "Speed and stability over time",
     "connectionPerformance": "Connection Performance",
     "noPerformanceData": "No performance data available",
-    "noBandwidthData": "No bandwidth data available"
+    "noBandwidthData": "No bandwidth data available for this period",
+    "bandwidthUsage": "Bandwidth Usage",
+    "serverUsage": "Server Usage",
+    "performance": "Performance",
+    "bandwidthOverTime": "Bandwidth Usage Over Time",
+    "downloadUploadData": "Download and upload data over the period",
+    "averageBandwidthPerDay": "Average Bandwidth Per Day",
+    "noDataAvailable": "No data available",
+    "topServers": "Top 5 Servers by Usage",
+    "mostUsedServers": "Most Used Servers",
+    "dailyAverage": "Daily Average"
   },
   "comingSoon": {
     "title": "Exciting Features Coming Soon",
@@ -290,18 +309,38 @@
     },
     "overview": {
       "title": "Security Overview",
-      "description": "Your current security status and enabled features"
+      "description": "Your current security status and enabled features",
+      "protectedBy": "Protected by",
+      "multiLayer": "multi-layer security",
+      "enhanced": "enhanced security",
+      "basic": "basic security"
     },
     "twoFactor": {
       "title": "Two-Factor Authentication",
       "active": "Active and protecting your account",
       "notConfigured": "Not configured"
     },
+    "biometric": {
+      "title": "Biometric Authentication",
+      "registered": "Registered and active",
+      "notConfigured": "Not configured"
+    },
+    "status": {
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
     "protected": "Protected",
     "networkSecurityStatus": "Network Security Status",
     "connectionStatus": "Connection Status",
     "yourIp": "Your IP",
-    "vpnIp": "VPN IP"
+    "vpnIp": "VPN IP",
+    "emergencyDisconnect": "Emergency Disconnect",
+    "testDnsLeaks": "Test DNS Leaks",
+    "refreshStatus": "Refresh Status",
+    "lastChecked": "Last checked",
+    "protection": "Protection",
+    "dnsSettings": "DNS Settings",
+    "advanced": "Advanced"
   },
   "twoFactor": {
     "authRequired": "Authentication Required",
