@@ -146,6 +146,56 @@
     "signInWithGoogle": "Googleでサインイン",
     "signUpWithGoogle": "Googleでサインアップ"
   },
+  "performance": {
+    "score": "パフォーマンススコア",
+    "latency": "レイテンシー",
+    "bandwidth": "帯域幅",
+    "throughput": "スループット",
+    "realTimeMetrics": "リアルタイムメトリクス",
+    "liveMonitoring": "ネットワークパフォーマンスのライブモニタリング",
+    "jitter": "ジッター",
+    "packetLoss": "パケット損失",
+    "cpuUsage": "CPU使用率",
+    "memory": "メモリ",
+    "optimization": {
+      "title": "パフォーマンス最適化",
+      "description": "最高のパフォーマンスのために自動的に接続を最適化",
+      "optimizing": "最適化中...",
+      "optimizeNow": "今すぐ最適化",
+      "adaptiveQuality": "適応的品質",
+      "adaptiveQualityDesc": "ネットワーク状況に基づいて品質を自動調整",
+      "intelligentRouting": "インテリジェントルーティング",
+      "intelligentRoutingDesc": "最低レイテンシーのために最適なルートを選択",
+      "compression": "圧縮最適化",
+      "compressionDesc": "スマート圧縮で帯域幅使用量を削減",
+      "buffer": "バッファ最適化",
+      "bufferDesc": "バッファリングを最小化してストリーミング品質を向上",
+      "priorityTraffic": "優先トラフィック整形",
+      "priorityTrafficDesc": "より良いパフォーマンスのために重要なトラフィックを優先",
+      "dynamicProtocol": "動的プロトコル切り替え",
+      "dynamicProtocolDesc": "最高のパフォーマンスのためにプロトコルを自動切り替え"
+    },
+    "routes": {
+      "title": "ネットワークルート",
+      "description": "利用可能なネットワークパスとそのステータス",
+      "recommended": "推奨",
+      "reliable": "信頼性",
+      "hops": "ホップ",
+      "reliability": "信頼性",
+      "direct": "直接ルート",
+      "balanced": "バランスルート",
+      "secure": "セキュアルート",
+      "congestion": {
+        "low": "低トラフィック",
+        "medium": "中トラフィック",
+        "high": "高トラフィック"
+      }
+    },
+    "recentOptimizations": "最近の最適化",
+    "recentOptimizationsDesc": "自動的に適用されたパフォーマンス改善",
+    "noOptimizations": "まだ最適化が適用されていません",
+    "runToSeeImprovements": "'今すぐ最適化'をクリックして改善を確認"
+  },
   "settings": {
     "title": "設定",
     "appearance": {

@@ -65,11 +65,13 @@
       "network": "Network",
       "apps": "Apps",
       "automation": "Automation",
+      "performance": "Performance",
       "devices": "Devices",
       "payments": "Payments",
       "governance": "Governance",
       "settings": "Settings",
-      "xxcoin": "XX Coin"
+      "xxcoin": "XX Coin",
+      "advanced": "Advanced"
     },
     "connectionStatus": {
       "ultraFastActive": "Ultra-fast Mode: Direct connection",
@@ -744,6 +746,56 @@
   },
   "settings": {
     "title": "Settings"
+  },
+  "performance": {
+    "score": "Performance Score",
+    "latency": "Latency",
+    "bandwidth": "Bandwidth",
+    "throughput": "Throughput",
+    "realTimeMetrics": "Real-Time Metrics",
+    "liveMonitoring": "Live monitoring of network performance",
+    "jitter": "Jitter",
+    "packetLoss": "Packet Loss",
+    "cpuUsage": "CPU Usage",
+    "memory": "Memory",
+    "optimization": {
+      "title": "Performance Optimization",
+      "description": "Automatically optimize your connection for best performance",
+      "optimizing": "Optimizing...",
+      "optimizeNow": "Optimize Now",
+      "adaptiveQuality": "Adaptive Quality",
+      "adaptiveQualityDesc": "Automatically adjust quality based on network conditions",
+      "intelligentRouting": "Intelligent Routing",
+      "intelligentRoutingDesc": "Select optimal routes for lowest latency",
+      "compression": "Compression Optimization",
+      "compressionDesc": "Reduce bandwidth usage with smart compression",
+      "buffer": "Buffer Optimization",
+      "bufferDesc": "Minimize buffering and improve streaming quality",
+      "priorityTraffic": "Priority Traffic Shaping",
+      "priorityTrafficDesc": "Prioritize important traffic for better performance",
+      "dynamicProtocol": "Dynamic Protocol Switching",
+      "dynamicProtocolDesc": "Automatically switch protocols for best performance"
+    },
+    "routes": {
+      "title": "Network Routes",
+      "description": "Available network paths and their status",
+      "recommended": "Recommended",
+      "reliable": "reliable",
+      "hops": "Hops",
+      "reliability": "Reliability",
+      "direct": "Direct Route",
+      "balanced": "Balanced Route",
+      "secure": "Secure Route",
+      "congestion": {
+        "low": "Low Traffic",
+        "medium": "Medium Traffic",
+        "high": "High Traffic"
+      }
+    },
+    "recentOptimizations": "Recent Optimizations",
+    "recentOptimizationsDesc": "Performance improvements applied automatically",
+    "noOptimizations": "No optimizations applied yet",
+    "runToSeeImprovements": "Click 'Optimize Now' to see improvements"
   },
   "smartAutomation": {
     "score": "Smart Automation Score",

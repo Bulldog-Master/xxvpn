@@ -81,9 +81,14 @@
       "servers": "Servidores", 
       "network": "Red",
       "apps": "Aplicaciones",
+      "automation": "Automatización",
+      "performance": "Rendimiento",
       "devices": "Dispositivos",
       "payments": "Pagos",
+      "governance": "Gobernanza",
       "settings": "Configuración",
+      "xxcoin": "XX Coin",
+      "advanced": "Avanzado",
       "usage": "Uso",
       "history": "Historial"
     },
@@ -131,6 +136,56 @@
       "premium": "Premium", 
       "enterprise": "Empresarial"
     }
+  },
+  "performance": {
+    "score": "Puntuación de Rendimiento",
+    "latency": "Latencia",
+    "bandwidth": "Ancho de Banda",
+    "throughput": "Rendimiento",
+    "realTimeMetrics": "Métricas en Tiempo Real",
+    "liveMonitoring": "Monitoreo en vivo del rendimiento de la red",
+    "jitter": "Jitter",
+    "packetLoss": "Pérdida de Paquetes",
+    "cpuUsage": "Uso de CPU",
+    "memory": "Memoria",
+    "optimization": {
+      "title": "Optimización del Rendimiento",
+      "description": "Optimiza automáticamente tu conexión para el mejor rendimiento",
+      "optimizing": "Optimizando...",
+      "optimizeNow": "Optimizar Ahora",
+      "adaptiveQuality": "Calidad Adaptativa",
+      "adaptiveQualityDesc": "Ajustar automáticamente la calidad según las condiciones de la red",
+      "intelligentRouting": "Enrutamiento Inteligente",
+      "intelligentRoutingDesc": "Seleccionar rutas óptimas para menor latencia",
+      "compression": "Optimización de Compresión",
+      "compressionDesc": "Reducir el uso de ancho de banda con compresión inteligente",
+      "buffer": "Optimización de Buffer",
+      "bufferDesc": "Minimizar el buffering y mejorar la calidad de streaming",
+      "priorityTraffic": "Gestión de Tráfico Prioritario",
+      "priorityTrafficDesc": "Priorizar tráfico importante para mejor rendimiento",
+      "dynamicProtocol": "Cambio Dinámico de Protocolo",
+      "dynamicProtocolDesc": "Cambiar automáticamente protocolos para el mejor rendimiento"
+    },
+    "routes": {
+      "title": "Rutas de Red",
+      "description": "Rutas de red disponibles y su estado",
+      "recommended": "Recomendado",
+      "reliable": "confiable",
+      "hops": "Saltos",
+      "reliability": "Confiabilidad",
+      "direct": "Ruta Directa",
+      "balanced": "Ruta Equilibrada",
+      "secure": "Ruta Segura",
+      "congestion": {
+        "low": "Tráfico Bajo",
+        "medium": "Tráfico Medio",
+        "high": "Tráfico Alto"
+      }
+    },
+    "recentOptimizations": "Optimizaciones Recientes",
+    "recentOptimizationsDesc": "Mejoras de rendimiento aplicadas automáticamente",
+    "noOptimizations": "No se han aplicado optimizaciones aún",
+    "runToSeeImprovements": "Haz clic en 'Optimizar Ahora' para ver mejoras"
   },
   "settings": {
     "title": "Configuración",

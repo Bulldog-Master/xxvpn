@@ -147,6 +147,56 @@
     "signInWithGoogle": "Accedi con Google",
     "signUpWithGoogle": "Registrati con Google"
   },
+  "performance": {
+    "score": "Punteggio Prestazioni",
+    "latency": "Latenza",
+    "bandwidth": "Larghezza di Banda",
+    "throughput": "Throughput",
+    "realTimeMetrics": "Metriche in Tempo Reale",
+    "liveMonitoring": "Monitoraggio in tempo reale delle prestazioni di rete",
+    "jitter": "Jitter",
+    "packetLoss": "Perdita Pacchetti",
+    "cpuUsage": "Uso CPU",
+    "memory": "Memoria",
+    "optimization": {
+      "title": "Ottimizzazione delle Prestazioni",
+      "description": "Ottimizza automaticamente la tua connessione per le migliori prestazioni",
+      "optimizing": "Ottimizzazione...",
+      "optimizeNow": "Ottimizza Ora",
+      "adaptiveQuality": "Qualità Adattativa",
+      "adaptiveQualityDesc": "Regola automaticamente la qualità in base alle condizioni di rete",
+      "intelligentRouting": "Routing Intelligente",
+      "intelligentRoutingDesc": "Seleziona percorsi ottimali per la latenza più bassa",
+      "compression": "Ottimizzazione Compressione",
+      "compressionDesc": "Ridurre l'utilizzo della larghezza di banda con compressione intelligente",
+      "buffer": "Ottimizzazione Buffer",
+      "bufferDesc": "Minimizzare il buffering e migliorare la qualità dello streaming",
+      "priorityTraffic": "Gestione Traffico Prioritario",
+      "priorityTrafficDesc": "Priorizzare il traffico importante per prestazioni migliori",
+      "dynamicProtocol": "Commutazione Dinamica Protocollo",
+      "dynamicProtocolDesc": "Cambiare automaticamente i protocolli per le migliori prestazioni"
+    },
+    "routes": {
+      "title": "Percorsi di Rete",
+      "description": "Percorsi di rete disponibili e il loro stato",
+      "recommended": "Consigliato",
+      "reliable": "affidabile",
+      "hops": "Hop",
+      "reliability": "Affidabilità",
+      "direct": "Percorso Diretto",
+      "balanced": "Percorso Bilanciato",
+      "secure": "Percorso Sicuro",
+      "congestion": {
+        "low": "Traffico Basso",
+        "medium": "Traffico Medio",
+        "high": "Traffico Alto"
+      }
+    },
+    "recentOptimizations": "Ottimizzazioni Recenti",
+    "recentOptimizationsDesc": "Miglioramenti delle prestazioni applicati automaticamente",
+    "noOptimizations": "Nessuna ottimizzazione applicata ancora",
+    "runToSeeImprovements": "Clicca 'Ottimizza Ora' per vedere i miglioramenti"
+  },
   "settings": {
     "title": "Impostazioni",
     "appearance": {

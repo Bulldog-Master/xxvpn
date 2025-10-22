@@ -1,0 +1,38 @@
+{
+  "es": {
+    "score": "Puntuación de Rendimiento",
+    "latency": "Latencia",
+    "bandwidth": "Ancho de Banda",
+    "throughput": "Rendimiento",
+    "realTimeMetrics": "Métricas en Tiempo Real",
+    "liveMonitoring": "Monitoreo en vivo del rendimiento de la red",
+    "jitter": "Jitter",
+    "packetLoss": "Pérdida de Paquetes",
+    "cpuUsage": "Uso de CPU",
+    "memory": "Memoria"
+  },
+  "de": {
+    "score": "Leistungswert",
+    "latency": "Latenz",
+    "bandwidth": "Bandbreite",
+    "throughput": "Durchsatz",
+    "realTimeMetrics": "Echtzeit-Metriken",
+    "liveMonitoring": "Live-Überwachung der Netzwerkleistung",
+    "jitter": "Jitter",
+    "packetLoss": "Paketverlust",
+    "cpuUsage": "CPU-Auslastung",
+    "memory": "Speicher"
+  },
+  "fr": {
+    "score": "Score de Performance",
+    "latency": "Latence",
+    "bandwidth": "Bande Passante",
+    "throughput": "Débit",
+    "realTimeMetrics": "Métriques en Temps Réel",
+    "liveMonitoring": "Surveillance en direct des performances réseau",
+    "jitter": "Gigue",
+    "packetLoss": "Perte de Paquets",
+    "cpuUsage": "Utilisation CPU",
+    "memory": "Mémoire"
+  }
+}
