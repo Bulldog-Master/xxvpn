@@ -166,6 +166,12 @@
     "excludeModeDescription": "Selected apps will bypass the VPN. All other traffic uses the VPN."
   },
   "customDNS": {
+    "title": "Custom DNS",
+    "description": "Configure your preferred DNS servers for enhanced privacy and security",
+    "dnsSettings": "DNS Settings",
+    "adBlocking": "Ad Blocking",
+    "adMalwareBlocking": "Ad & Malware Blocking",
+    "blockingDescription": "Block ads, trackers, and malicious content at the DNS level",
     "missingInfo": "Missing Information",
     "missingInfoDesc": "Please provide both a name and primary DNS server",
     "invalidIP": "Invalid IP Address",
@@ -177,6 +183,26 @@
     "blockListUpdated": "Block List Updated",
     "blockListEnabled": "{{name}} is now enabled",
     "blockListDisabled": "{{name}} is now disabled"
+  },
+  "dns": {
+    "selectProvider": "Select DNS Provider",
+    "chooseProvider": "Choose a DNS provider",
+    "custom": "Custom",
+    "primary": "Primary DNS",
+    "secondary": "Secondary DNS",
+    "remove": "Remove",
+    "addCustomServer": "Add Custom DNS Server",
+    "serverName": "Server Name",
+    "primaryDNS": "Primary DNS (e.g., 1.1.1.1)",
+    "secondaryDNS": "Secondary DNS (optional)",
+    "addServer": "Add DNS Server",
+    "activeLists": "Active Lists",
+    "blockedEntries": "Blocked Entries",
+    "protectionActive": "Protection Active",
+    "blockLists": "Block Lists",
+    "entries": "entries",
+    "dnsBlocking": "DNS-Level Blocking",
+    "blockingWarning": "Some websites may not load correctly with aggressive blocking enabled. You can disable specific lists if needed."
   },
   "security": {
     "title": "Security & Privacy",
