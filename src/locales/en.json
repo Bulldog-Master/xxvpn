@@ -21,7 +21,13 @@
       "main": "Main",
       "servers": "Servers",
       "analytics": "Analytics",
+      "reports": "Reports",
       "network": "Network",
+      "apps": "Apps",
+      "automation": "Automation",
+      "devices": "Devices",
+      "payments": "Payments",
+      "governance": "Governance",
       "settings": "Settings"
     },
     "connectionStatus": {
@@ -254,6 +260,20 @@
     "blockAllTraffic": "Kill switch is active - blocking all traffic"
   },
   "serverSelection": {
+    "title": "Server Selection",
+    "listView": "List View",
+    "recommended": "Recommended",
+    "statistics": "Statistics",
+    "searchPlaceholder": "Search servers...",
+    "allRegions": "All Regions",
+    "premiumOnly": "Premium Only",
+    "testAll": "Test All",
+    "clearResults": "Clear Results",
+    "load": "Load",
+    "ping": "Ping",
+    "speed": "Speed",
+    "connected": "Connected",
+    "connectionQuality": "Connection Quality",
     "excellent": "Excellent",
     "good": "Good",
     "poor": "Poor",
@@ -455,6 +475,10 @@
     "description": "Choose from our global network of secure servers",
     "quickConnect": "Quick Connect",
     "searchPlaceholder": "Search by country or city...",
+    "noServersFound": "No servers found",
+    "fastestServers": "Fastest Servers",
+    "runSpeedTestsDesc": "Run speed tests to find the fastest servers for your location",
+    "testAllServers": "Test All Servers",
     "stats": {
       "availableServers": "Available Servers",
       "acrossCountries": "Across 12 countries",
@@ -473,6 +497,25 @@
       "latency": "Latency",
       "load": "Load"
     }
+  },
+  "serverStats": {
+    "totalUsers": "Total Users",
+    "activeServers": "Active Servers",
+    "avgLoad": "Average Load",
+    "premiumServers": "Premium Servers",
+    "regionalDistribution": "Regional Distribution",
+    "servers": "servers",
+    "avgLoadText": "avg load",
+    "ofTotalServers": "of total servers",
+    "serverPerformance": "Server Performance",
+    "loadDistribution": "Load Distribution",
+    "loadLow": "Low Load (0-30%)",
+    "loadMedium": "Medium Load (30-70%)",
+    "loadHigh": "High Load (70-100%)",
+    "serverTypes": "Server Types",
+    "standard": "Standard",
+    "maintenance": "Maintenance",
+    "noSpeedTestResults": "No Speed Test Results"
   },
   "serverLocations": {
     "United States": "United States",
@@ -623,6 +666,42 @@
   },
   "settings": {
     "title": "Settings"
+  },
+  "smartAutomation": {
+    "score": "Smart Automation Score",
+    "scoreDesc": "AI-optimized network performance based on your usage patterns",
+    "activeFeatures": "Active Features",
+    "optimizationsToday": "Optimizations Today",
+    "smartFeatures": "Smart Features",
+    "smartFeaturesDesc": "AI-powered features that adapt to your needs",
+    "features": {
+      "aiServerSelection": "AI Server Selection",
+      "aiServerSelectionDesc": "Automatically selects the best server based on your location and usage",
+      "smartKillSwitch": "Smart Kill Switch",
+      "smartKillSwitchDesc": "Intelligent protection that adapts to network conditions",
+      "adaptiveProtocol": "Adaptive Protocol",
+      "adaptiveProtocolDesc": "Automatically switches protocols for optimal performance",
+      "bandwidthOptimization": "Bandwidth Optimization",
+      "bandwidthOptimizationDesc": "Optimizes bandwidth usage based on your activity",
+      "predictiveConnection": "Predictive Connection",
+      "predictiveConnectionDesc": "Anticipates connection needs and pre-connects to servers",
+      "smartDNSRouting": "Smart DNS Routing",
+      "smartDNSRoutingDesc": "Intelligent DNS routing for faster page loads"
+    },
+    "recommendations": {
+      "title": "AI Recommendations",
+      "description": "Personalized suggestions based on your usage patterns",
+      "analyzing": "Analyzing...",
+      "refresh": "Refresh Recommendations"
+    },
+    "insights": {
+      "title": "Network Insights",
+      "description": "Real-time analysis of your connection quality",
+      "optimizeNow": "Optimize Now",
+      "analyzing": "Analyzing your network...",
+      "willAppear": "Insights will appear here",
+      "applied": "Applied"
+    }
   },
   "dao": {
     "title": "DAO Governance",
