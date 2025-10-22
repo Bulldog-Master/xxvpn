@@ -1100,5 +1100,18 @@
     "usageAnalytics": "Usage Analytics",
     "analyzeUsage": "Analyze overall VPN usage patterns",
     "createDashboard": "Create Dashboard"
+  },
+  "payment": {
+    "pay": "Pay",
+    "for": "for",
+    "processing": "Processing...",
+    "cardholderName": "Cardholder Name",
+    "cardholderPlaceholder": "John Doe",
+    "cardNumber": "Card Number",
+    "cardNumberPlaceholder": "1234 5678 9012 3456",
+    "expiryDate": "Expiry Date",
+    "expiryPlaceholder": "MM/YY",
+    "cvv": "CVV",
+    "cvvPlaceholder": "123"
   }
 }

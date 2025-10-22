@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface ApplePayButtonProps {
   amount: number;
@@ -20,7 +21,7 @@ const ApplePayButton = ({
 }: ApplePayButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleApplePay = async () => {
     if (!window.ApplePaySession) {
@@ -51,7 +52,7 @@ const ApplePayButton = ({
         merchantCapabilities: ['supports3DS'],
         total: {
           label: 'xxVPN Subscription',
-          amount: (amount / 100).toFixed(2),
+          amount: formatNumber(amount / 100, 'en', 2), // Apple Pay requires Western numerals
         },
       };
 

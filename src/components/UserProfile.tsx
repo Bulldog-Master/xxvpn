@@ -22,13 +22,14 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { formatNumber } from '@/utils/numberFormat';
 import TwoFactorSetup from './TwoFactorSetup';
 import { SecuritySettings } from './SecuritySettings';
 
 const UserProfile = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(user?.fullName || '');
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
@@ -305,7 +306,7 @@ const UserProfile = () => {
               <div className="space-y-4">
                 <div className="text-center p-6 border rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10">
                   <div className="text-3xl font-bold text-primary">
-                    {user?.xxCoinBalance?.toFixed(2) || '0.00'} {t('common.xx')}
+                    {formatNumber(user?.xxCoinBalance || 0, i18n.language, 2)} {t('common.xx')}
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
                     {t('rewards.currentBalance')}

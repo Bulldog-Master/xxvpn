@@ -1652,5 +1652,18 @@
     "usageAnalytics": "تحليلات الاستخدام",
     "analyzeUsage": "تحليل أنماط استخدام VPN الإجمالية",
     "createDashboard": "إنشاء لوحة معلومات"
+  },
+  "payment": {
+    "pay": "دفع",
+    "for": "لـ",
+    "processing": "جاري المعالجة...",
+    "cardholderName": "اسم حامل البطاقة",
+    "cardholderPlaceholder": "محمد أحمد",
+    "cardNumber": "رقم البطاقة",
+    "cardNumberPlaceholder": "١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦",
+    "expiryDate": "تاريخ الانتهاء",
+    "expiryPlaceholder": "شهر/سنة",
+    "cvv": "CVV",
+    "cvvPlaceholder": "١٢٣"
   }
 }

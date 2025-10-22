@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { CreditCard, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface CardPaymentDialogProps {
   open: boolean;
@@ -16,7 +17,7 @@ interface CardPaymentDialogProps {
 }
 
 export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planName }: CardPaymentDialogProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
@@ -62,7 +63,10 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
             Card Payment
           </DialogTitle>
           <DialogDescription>
-            Pay ${(amount / 100).toFixed(2)} for {planName}
+            {i18n.language === 'ar'
+              ? `${t('payment.pay')} ${formatNumber(amount / 100, i18n.language, 2)} ${t('common.currencySymbol')} ${t('payment.for')} ${planName}`
+              : `${t('payment.pay')} ${t('common.currencySymbol')}${formatNumber(amount / 100, i18n.language, 2)} ${t('payment.for')} ${planName}`
+            }
           </DialogDescription>
         </DialogHeader>
 
@@ -123,7 +127,11 @@ export const CardPaymentDialog = ({ open, onOpenChange, amount, currency, planNa
           </div>
 
           <Button type="submit" className="w-full" disabled={isProcessing}>
-            {isProcessing ? 'Processing...' : `Pay $${(amount / 100).toFixed(2)}`}
+            {isProcessing ? t('payment.processing') : (
+              i18n.language === 'ar'
+                ? `${t('payment.pay')} ${formatNumber(amount / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
+                : `${t('payment.pay')} ${t('common.currencySymbol')}${formatNumber(amount / 100, i18n.language, 2)}`
+            )}
           </Button>
         </form>
       </DialogContent>

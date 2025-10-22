@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface GooglePayButtonProps {
   amount: number;
@@ -21,7 +22,7 @@ const GooglePayButton = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isGooglePayReady, setIsGooglePayReady] = useState(false);
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     // Load Google Pay API
@@ -111,7 +112,7 @@ const GooglePayButton = ({
       transactionInfo: {
         totalPriceStatus: 'FINAL',
         totalPriceLabel: 'Total',
-        totalPrice: (amount / 100).toFixed(2),
+        totalPrice: formatNumber(amount / 100, 'en', 2), // Google Pay requires Western numerals
         currencyCode: currency
       }
     };
