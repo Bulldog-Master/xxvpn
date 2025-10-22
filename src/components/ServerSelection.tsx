@@ -293,15 +293,15 @@ export const ServerSelection: React.FC<ServerSelectionProps> = ({
           <div className="text-xs font-medium mb-2">{t('serverSelection.connectionQuality')}</div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span>{t('serverSelection.excellent')} (&lt;50ms)</span>
+            <span>{t('serverSelection.excellent')} (&lt;{formatNumber(50, i18n.language)}{t('units.ms')})</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-yellow-500" />
-            <span>{t('serverSelection.good')} (50-100ms)</span>
+            <span>{t('serverSelection.good')} ({formatNumber(50, i18n.language)}-{formatNumber(100, i18n.language)}{t('units.ms')})</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-red-500" />
-            <span>{t('serverSelection.poor')} (&gt;100ms)</span>
+            <span>{t('serverSelection.poor')} (&gt;{formatNumber(100, i18n.language)}{t('units.ms')})</span>
           </div>
         </div>
       </div>

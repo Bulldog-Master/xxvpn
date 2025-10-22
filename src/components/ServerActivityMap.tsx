@@ -5,7 +5,8 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
-import { 
+import { formatNumber } from '@/utils/numberFormat';
+import {
   Activity, 
   Users, 
   Zap, 
@@ -87,9 +88,14 @@ const getLoadColor = (load: number) => {
 };
 
 export const ServerActivityMap: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredServer, setHoveredServer] = useState<string | null>(null);
+
+  const formatBandwidth = (bandwidth: string) => {
+    const value = parseFloat(bandwidth);
+    return `${formatNumber(value, i18n.language, 1)} ${t('units.gbps')}`;
+  };
 
   const filteredServers = selectedRegion 
     ? mockServerActivity.filter(server => server.region === selectedRegion)
@@ -149,7 +155,7 @@ export const ServerActivityMap: React.FC = () => {
                   <Zap className="h-4 w-4 text-orange-500" />
                   <span className="text-sm font-medium">{t('serverMap.totalBandwidth')}</span>
                 </div>
-                <div className="text-2xl font-bold">24.3 {t('common.gbps')}</div>
+                <div className="text-2xl font-bold">{formatNumber(24.3, i18n.language, 1)} {t('units.gbps')}</div>
                 <div className="text-xs text-muted-foreground">{t('serverMap.peakCapacity')}</div>
               </CardContent>
             </Card>
@@ -283,15 +289,15 @@ export const ServerActivityMap: React.FC = () => {
                             </div>
                             <div className="bg-white/10 rounded p-2">
                               <div className="opacity-70">{t('serverMap.serverLoad')}</div>
-                              <div className={`font-bold text-lg ${getLoadColor(server.load)}`}>{server.load}%</div>
+                              <div className={`font-bold text-lg ${getLoadColor(server.load)}`}>{formatNumber(server.load, i18n.language)}{t('units.percent')}</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
                               <div className="opacity-70">{t('serverMap.latency')}</div>
-                              <div className="font-bold text-lg text-green-400">{server.ping}ms</div>
+                              <div className="font-bold text-lg text-green-400">{formatNumber(server.ping, i18n.language)} {t('units.ms')}</div>
                             </div>
                             <div className="bg-white/10 rounded p-2">
                               <div className="opacity-70">{t('serverMap.bandwidth')}</div>
-                              <div className="font-bold text-lg text-purple-400">{server.bandwidth}</div>
+                              <div className="font-bold text-lg text-purple-400">{formatBandwidth(server.bandwidth)}</div>
                             </div>
                           </div>
                         </div>
@@ -368,20 +374,20 @@ export const ServerActivityMap: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-6 text-sm">
                       <div className="text-center">
-                        <div className="font-medium">{server.users.toLocaleString()}</div>
-                        <div className="text-muted-foreground">Users</div>
+                        <div className="font-medium">{formatNumber(server.users, i18n.language, 0)}</div>
+                        <div className="text-muted-foreground">{t('common.users')}</div>
                       </div>
                       <div className="text-center">
-                        <div className={`font-medium ${getLoadColor(server.load)}`}>{server.load}%</div>
-                        <div className="text-muted-foreground">Load</div>
+                        <div className={`font-medium ${getLoadColor(server.load)}`}>{formatNumber(server.load, i18n.language)}{t('units.percent')}</div>
+                        <div className="text-muted-foreground">{t('serverMap.load')}</div>
                       </div>
                       <div className="text-center">
-                        <div className="font-medium">{server.ping}ms</div>
-                        <div className="text-muted-foreground">Ping</div>
+                        <div className="font-medium">{formatNumber(server.ping, i18n.language)} {t('units.ms')}</div>
+                        <div className="text-muted-foreground">{t('serverMap.ping')}</div>
                       </div>
                       <div className="text-center">
-                        <div className="font-medium">{server.bandwidth}</div>
-                        <div className="text-muted-foreground">Bandwidth</div>
+                        <div className="font-medium">{formatBandwidth(server.bandwidth)}</div>
+                        <div className="text-muted-foreground">{t('serverMap.bandwidth')}</div>
                       </div>
                       <Badge className={getStatusColor(server.status)}>
                         {server.status}

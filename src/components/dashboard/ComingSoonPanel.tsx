@@ -3,58 +3,60 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Shield, Building2, Sparkles, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ComingSoonFeature {
   title: string;
   description: string;
   icon: React.ReactNode;
   features: string[];
-  tier: 'Advanced Security' | 'Enterprise-Grade';
+  tier: string;
   estimatedDate: string;
 }
 
-const COMING_SOON_FEATURES: ComingSoonFeature[] = [
-  {
-    title: 'Advanced Security Suite',
-    description: 'Military-grade security features for ultimate protection',
-    icon: <Shield className="h-6 w-6" />,
-    tier: 'Advanced Security',
-    estimatedDate: 'Q2 2024',
-    features: [
-      'Multi-hop VPN chaining',
-      'Advanced threat detection',
-      'Quantum-resistant encryption',
-      'Stealth mode protocols',
-      'Advanced malware protection',
-      'Network intrusion detection'
-    ]
-  },
-  {
-    title: 'Enterprise Management',
-    description: 'Professional-grade management and deployment tools',
-    icon: <Building2 className="h-6 w-6" />,
-    tier: 'Enterprise-Grade',
-    estimatedDate: 'Q3 2024',
-    features: [
-      'Centralized team management',
-      'Advanced user provisioning',
-      'Compliance reporting',
-      'Custom branding options',
-      'API access & integrations',
-      'Advanced analytics dashboard'
-    ]
-  }
-];
-
 const ComingSoonPanel: React.FC = () => {
+  const { t } = useTranslation();
+  
+  const COMING_SOON_FEATURES: ComingSoonFeature[] = [
+    {
+      title: t('comingSoon.advancedSecurity.title'),
+      description: t('comingSoon.advancedSecurity.description'),
+      icon: <Shield className="h-6 w-6" />,
+      tier: t('comingSoon.advancedSecurity.tier'),
+      estimatedDate: t('comingSoon.advancedSecurity.estimatedDate'),
+      features: [
+        t('comingSoon.advancedSecurity.features.multiHop'),
+        t('comingSoon.advancedSecurity.features.threatDetection'),
+        t('comingSoon.advancedSecurity.features.quantumEncryption'),
+        t('comingSoon.advancedSecurity.features.stealthMode'),
+        t('comingSoon.advancedSecurity.features.malwareProtection'),
+        t('comingSoon.advancedSecurity.features.intrusionDetection')
+      ]
+    },
+    {
+      title: t('comingSoon.enterpriseManagement.title'),
+      description: t('comingSoon.enterpriseManagement.description'),
+      icon: <Building2 className="h-6 w-6" />,
+      tier: t('comingSoon.enterpriseManagement.tier'),
+      estimatedDate: t('comingSoon.enterpriseManagement.estimatedDate'),
+      features: [
+        t('comingSoon.enterpriseManagement.features.teamManagement'),
+        t('comingSoon.enterpriseManagement.features.userProvisioning'),
+        t('comingSoon.enterpriseManagement.features.complianceReporting'),
+        t('comingSoon.enterpriseManagement.features.customBranding'),
+        t('comingSoon.enterpriseManagement.features.apiAccess'),
+        t('comingSoon.enterpriseManagement.features.advancedAnalytics')
+      ]
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="text-center py-8">
         <Sparkles className="h-16 w-16 mx-auto mb-4 text-primary animate-float" />
-        <h2 className="text-2xl font-bold mb-2">Exciting Features Coming Soon</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('comingSoon.title')}</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          We're working on advanced features that will take your VPN experience to the next level. 
-          Get ready for military-grade security and enterprise-level management capabilities.
+          {t('comingSoon.description')}
         </p>
       </div>
 
@@ -88,7 +90,7 @@ const ComingSoonPanel: React.FC = () => {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium mb-3 text-primary">Planned Features:</h4>
+                  <h4 className="font-medium mb-3 text-primary">{t('comingSoon.plannedFeatures')}</h4>
                   <div className="grid gap-2">
                     {feature.features.map((featureName, featureIndex) => (
                       <div 
@@ -109,7 +111,7 @@ const ComingSoonPanel: React.FC = () => {
                     disabled
                   >
                     <Sparkles className="h-4 w-4 mr-2" />
-                    Notify Me When Available
+                    {t('comingSoon.notifyMe')}
                   </Button>
                 </div>
               </div>
@@ -121,13 +123,13 @@ const ComingSoonPanel: React.FC = () => {
       <Card className="glass-card border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
         <CardContent className="pt-6">
           <div className="text-center">
-            <h3 className="text-lg font-semibold mb-2">Want Early Access?</h3>
+            <h3 className="text-lg font-semibold mb-2">{t('comingSoon.earlyAccess.title')}</h3>
             <p className="text-muted-foreground mb-4">
-              Join our beta program to get exclusive early access to new features and help shape the future of xxVPN.
+              {t('comingSoon.earlyAccess.description')}
             </p>
             <Button className="hover-lift">
               <Sparkles className="h-4 w-4 mr-2" />
-              Join Beta Program
+              {t('comingSoon.earlyAccess.joinBeta')}
             </Button>
           </div>
         </CardContent>

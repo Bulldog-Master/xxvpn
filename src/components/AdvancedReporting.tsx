@@ -140,9 +140,9 @@ export const AdvancedReporting = () => {
         Date: format(new Date(session.connected_at), 'yyyy-MM-dd HH:mm'),
         Server: session.server_name,
         Location: session.server_location,
-        Duration: session.duration_seconds ? `${Math.floor(session.duration_seconds / 60)} min` : 'N/A',
-        'Data Sent': session.bytes_sent ? `${formatNumber(session.bytes_sent / 1024 / 1024, i18n.language, 2)} MB` : '0 MB',
-        'Data Received': session.bytes_received ? `${formatNumber(session.bytes_received / 1024 / 1024, i18n.language, 2)} MB` : '0 MB',
+        Duration: session.duration_seconds ? `${formatNumber(Math.floor(session.duration_seconds / 60), i18n.language)} ${t('time.min')}` : t('common.notAvailable'),
+        'Data Sent': session.bytes_sent ? `${formatNumber(session.bytes_sent / 1024 / 1024, i18n.language, 2)} ${t('units.mb')}` : `0 ${t('units.mb')}`,
+        'Data Received': session.bytes_received ? `${formatNumber(session.bytes_received / 1024 / 1024, i18n.language, 2)} ${t('units.mb')}` : `0 ${t('units.mb')}`,
         Status: session.status,
       }));
 
