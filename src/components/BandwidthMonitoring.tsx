@@ -199,9 +199,9 @@ export const BandwidthMonitoring: React.FC = () => {
   };
 
   const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 B';
+    if (bytes === 0) return `0 ${t('units.b')}`;
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const sizes = [t('units.b'), t('units.kb'), t('units.mb'), t('units.gb')];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return formatNumber(bytes / Math.pow(k, i), i18n.language, 1) + ' ' + sizes[i];
   };
@@ -329,10 +329,10 @@ export const BandwidthMonitoring: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Zap className="h-5 w-5" />
-                Internet Speed Test
+                {t('bandwidth.internetSpeedTest')}
               </CardTitle>
               <CardDescription>
-                Test your connection speed through the VPN
+                {t('bandwidth.testConnectionSpeed')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -340,21 +340,21 @@ export const BandwidthMonitoring: React.FC = () => {
                 <div className="text-center space-y-4">
                   <Button onClick={startSpeedTest} size="lg" className="w-full">
                     <Play className="h-5 w-5 mr-2" />
-                    Start Speed Test
+                    {t('bandwidth.startSpeedTest')}
                   </Button>
                   <p className="text-sm text-muted-foreground">
-                    This will test your download speed, upload speed, and ping latency
+                    {t('bandwidth.testDescription')}
                   </p>
                 </div>
               ) : (
                 <div className="space-y-6">
                   <div className="text-center">
                     <div className="text-lg font-medium mb-2">
-                      Testing {speedTestPhase === 'ping' ? 'Ping' : speedTestPhase === 'download' ? 'Download Speed' : speedTestPhase === 'upload' ? 'Upload Speed' : 'Complete'}
+                      {t('bandwidth.testingPhase', { phase: speedTestPhase === 'ping' ? t('bandwidth.ping') : speedTestPhase === 'download' ? t('bandwidth.downloadSpeed') : speedTestPhase === 'upload' ? t('bandwidth.uploadSpeed') : t('bandwidth.complete') })}
                     </div>
                     <Progress value={speedTestProgress} className="w-full mb-4" />
                     <div className="text-sm text-muted-foreground">
-                      {formatNumber(speedTestProgress, i18n.language, 0)}% complete
+                      {formatNumber(speedTestProgress, i18n.language, 0)}{t('units.percent')} {t('bandwidth.complete')}
                     </div>
                   </div>
 
@@ -428,7 +428,7 @@ export const BandwidthMonitoring: React.FC = () => {
                   <Download className="h-4 w-4 text-green-500" />
                   <span className="text-sm font-medium">{t('bandwidth.totalDownloaded')}</span>
                 </div>
-                <div className="text-2xl font-bold">2.4 GB</div>
+                <div className="text-2xl font-bold">{formatNumber(2.4, i18n.language, 1)} {t('units.gb')}</div>
                 <div className="text-xs text-muted-foreground">{t('bandwidth.today')}</div>
               </CardContent>
             </Card>

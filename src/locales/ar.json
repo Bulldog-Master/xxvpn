@@ -893,7 +893,21 @@
     "avgLatency": "متوسط التأخير",
     "today": "اليوم",
     "thisSession": "هذه الجلسة",
-    "recentTests": "الاختبارات الأخيرة"
+    "recentTests": "الاختبارات الأخيرة",
+    "internetSpeedTest": "اختبار سرعة الإنترنت",
+    "testConnectionSpeed": "اختبر سرعة اتصالك عبر VPN",
+    "startSpeedTest": "بدء اختبار السرعة",
+    "testDescription": "سيختبر هذا سرعة التنزيل والرفع وزمن الاستجابة",
+    "downloadSpeed": "سرعة التنزيل",
+    "uploadSpeed": "سرعة الرفع",
+    "tabs": {
+      "monitoring": "المراقبة",
+      "speedTest": "اختبار السرعة",
+      "history": "السجل"
+    },
+    "realtimeUsage": "الاستخدام في الوقت الفعلي",
+    "liveMonitoring": "مراقبة مباشرة لأداء شبكتك",
+    "start": "بدء"
   },
   "subscriptionPlans": {
     "selectPlan": "اختر خطتك",

@@ -270,7 +270,7 @@ export const XXNetworkStatus = () => {
               </div>
               <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
                 <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.avgLatency')}</div>
-                <div className="text-2xl font-bold">{networkHealth.averageLatency}<span className="text-sm font-normal">ms</span></div>
+                <div className="text-2xl font-bold">{networkHealth.averageLatency}<span className="text-sm font-normal"> {t('units.ms')}</span></div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/30 transition-colors">
                 <div className="text-sm text-muted-foreground mb-2">{t('xxNetwork.lastRound')}</div>

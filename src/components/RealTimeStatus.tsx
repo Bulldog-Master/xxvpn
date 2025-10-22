@@ -121,7 +121,7 @@ export const RealTimeStatus: React.FC = () => {
   };
 
   const formatBytes = (bytes: number) => {
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const sizes = [t('units.b'), t('units.kb'), t('units.mb'), t('units.gb')];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${formatNumber(bytes / Math.pow(1024, i), i18n.language, 1)} ${sizes[i]}`;
   };

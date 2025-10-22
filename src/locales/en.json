@@ -493,7 +493,12 @@
     "performance": "Performance",
     "bandwidthOverTime": "Bandwidth Usage Over Time",
     "downloadUploadData": "Download and upload data throughout the period",
-    "noBandwidthData": "No bandwidth data available for this period"
+    "noBandwidthData": "No bandwidth data available for this period",
+    "total": "Total",
+    "totalBandwidth": "Total Bandwidth",
+    "speedAndStability": "Speed and stability over time",
+    "connectionPerformance": "Connection Performance",
+    "noPerformanceData": "No performance data available"
   },
   "reporting": {
     "title": "Advanced Reporting",
@@ -860,7 +865,24 @@
     "liveNetworkPerformance": "Live monitoring of your network performance",
     "bandwidthUsage": "Bandwidth Usage",
     "downloadVsUpload": "Download vs Upload ratio",
-    "noDataAvailable": "No data available"
+    "noDataAvailable": "No data available",
+    "internetSpeedTest": "Internet Speed Test",
+    "testConnectionSpeed": "Test your connection speed through the VPN",
+    "startSpeedTest": "Start Speed Test",
+    "testDescription": "This will test your download speed, upload speed, and ping latency",
+    "downloadSpeed": "Download Speed",
+    "uploadSpeed": "Upload Speed",
+    "tabs": {
+      "monitoring": "Monitoring",
+      "speedTest": "Speed Test",
+      "history": "History"
+    },
+    "realtimeUsage": "Real-time Usage",
+    "liveMonitoring": "Live monitoring of your network performance",
+    "start": "Start",
+    "recentTests": "Recent Tests",
+    "totalDownloaded": "Total Downloaded",
+    "today": "Today"
   },
   "subscriptionPlans": {
     "selectPlan": "Select Your Plan",

@@ -307,13 +307,13 @@ export const AnalyticsDashboard = () => {
                   <AreaChart data={bandwidthData}>
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                     <XAxis dataKey="date" className="text-xs" />
-                    <YAxis className="text-xs" label={{ value: 'GB', angle: -90, position: 'insideLeft' }} />
+                    <YAxis className="text-xs" label={{ value: t('units.gb'), angle: -90, position: 'insideLeft' }} />
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
                     />
                     <Legend />
-                    <Area type="monotone" dataKey="download" stackId="1" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.6} name="Download (GB)" />
-                    <Area type="monotone" dataKey="upload" stackId="1" stroke="#10b981" fill="#10b981" fillOpacity={0.6} name="Upload (GB)" />
+                    <Area type="monotone" dataKey="download" stackId="1" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.6} name={`${t('bandwidth.download')} (${t('units.gb')})`} />
+                    <Area type="monotone" dataKey="upload" stackId="1" stroke="#10b981" fill="#10b981" fillOpacity={0.6} name={`${t('bandwidth.upload')} (${t('units.gb')})`} />
                   </AreaChart>
                 </ResponsiveContainer>
               ) : (
@@ -375,7 +375,7 @@ export const AnalyticsDashboard = () => {
                       <XAxis dataKey="date" className="text-xs" />
                       <YAxis className="text-xs" />
                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }} />
-                      <Bar dataKey="total" fill="#8b5cf6" name="Total (GB)" />
+                      <Bar dataKey="total" fill="#8b5cf6" name={`${t('analytics.total')} (${t('units.gb')})`} />
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
@@ -450,10 +450,10 @@ export const AnalyticsDashboard = () => {
                   <LineChart data={bandwidthData}>
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                     <XAxis dataKey="date" className="text-xs" />
-                    <YAxis className="text-xs" label={{ value: 'GB', angle: -90, position: 'insideLeft' }} />
+                    <YAxis className="text-xs" label={{ value: t('units.gb'), angle: -90, position: 'insideLeft' }} />
                     <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }} />
                     <Legend />
-                    <Line type="monotone" dataKey="total" stroke="#8b5cf6" strokeWidth={2} name="Total Bandwidth (GB)" />
+                    <Line type="monotone" dataKey="total" stroke="#8b5cf6" strokeWidth={2} name={`${t('analytics.totalBandwidth')} (${t('units.gb')})`} />
                   </LineChart>
                 </ResponsiveContainer>
               ) : (
