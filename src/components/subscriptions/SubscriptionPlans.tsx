@@ -9,12 +9,7 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { CryptoPaymentModal } from './CryptoPaymentModal';
-
-// Direct Arabic numeral conversion
-const toArabic = (str: string) => {
-  const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  return str.replace(/\d/g, d => arabicNums[parseInt(d)]);
-};
+import { formatNumber } from '@/utils/numberFormat';
 
 export interface SubscriptionPlan {
   id: string;
@@ -39,13 +34,6 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
   const { user } = useAuth();
   const { toast } = useToast();
   const { subscription_tier, is_trial, subscribed, startTrial, loading } = useSubscription();
-  
-  console.log('🔍 SubscriptionPlans Language Check:', {
-    currentLanguage: i18n.language,
-    isArabic: i18n.language === 'ar',
-    testConversion: toArabic('12.99'),
-    rawNumber: '12.99'
-  });
   const [cryptoModalOpen, setCryptoModalOpen] = useState(false);
   const [selectedCryptoPlan, setSelectedCryptoPlan] = useState<SubscriptionPlan | null>(null);
 
@@ -245,8 +233,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
             <div className="space-y-1">
               <div className="text-3xl font-bold text-primary">
                 {i18n.language === 'ar' 
-                  ? `${toArabic(getMonthlyPrice(plan).toFixed(2))} ${t('common.currencySymbol')}`
-                  : `${t('common.currencySymbol')}${getMonthlyPrice(plan).toFixed(2)}`
+                  ? `${formatNumber(getMonthlyPrice(plan), i18n.language, 2)} ${t('common.currencySymbol')}`
+                  : `${t('common.currencySymbol')}${formatNumber(getMonthlyPrice(plan), i18n.language, 2)}`
                 }
                 <span className="text-sm text-muted-foreground font-normal">{t('subscriptionPlans.perMonth')}</span>
               </div>
@@ -254,8 +242,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
                 <div className="text-sm text-muted-foreground">
                   <span className="line-through">
                     {i18n.language === 'ar'
-                      ? `${toArabic((plan.originalPrice / 100).toFixed(2))} ${t('common.currencySymbol')}`
-                      : `${t('common.currencySymbol')}${(plan.originalPrice / 100).toFixed(2)}`
+                      ? `${formatNumber(plan.originalPrice / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
+                      : `${t('common.currencySymbol')}${formatNumber(plan.originalPrice / 100, i18n.language, 2)}`
                     }
                   </span>
                   <Badge variant="secondary" className="ml-2 text-xs">
@@ -266,8 +254,8 @@ const SubscriptionPlans = ({ onPlanSelect, selectedPlan }: SubscriptionPlansProp
               <div className="text-sm text-muted-foreground">
                 {t('subscriptionPlans.billed', { 
                   price: i18n.language === 'ar'
-                    ? `${toArabic((plan.price / 100).toFixed(2))} ${t('common.currencySymbol')}`
-                    : `${t('common.currencySymbol')}${(plan.price / 100).toFixed(2)}`,
+                    ? `${formatNumber(plan.price / 100, i18n.language, 2)} ${t('common.currencySymbol')}`
+                    : `${t('common.currencySymbol')}${formatNumber(plan.price / 100, i18n.language, 2)}`,
                   duration: t(`subscriptionPlans.${plan.duration}`) 
                 })}
               </div>
