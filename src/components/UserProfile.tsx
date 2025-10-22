@@ -358,13 +358,13 @@ const UserProfile = () => {
             <CardContent>
               <div className="grid gap-4">
                 {[
-                  { platform: 'Windows', icon: '🪟', status: 'Available', version: 'v2.1.0' },
-                  { platform: 'macOS', icon: '🍎', status: 'Available', version: 'v2.1.0' },
-                  { platform: 'Linux', icon: '🐧', status: 'Available', version: 'v2.1.0' },
-                  { platform: 'Android', icon: '🤖', status: 'Available', version: 'v2.0.5' },
-                  { platform: 'iOS', icon: '📱', status: 'Available', version: 'v2.0.5' },
-                  { platform: 'Chrome Extension', icon: '🌐', status: 'Beta', version: 'v1.0.0' },
-                  { platform: 'Router Firmware', icon: '📡', status: 'Coming Soon', version: 'TBA' },
+                  { platform: 'Windows', icon: '🪟', status: t('profile.available'), version: 'v2.1.0' },
+                  { platform: 'macOS', icon: '🍎', status: t('profile.available'), version: 'v2.1.0' },
+                  { platform: 'Linux', icon: '🐧', status: t('profile.available'), version: 'v2.1.0' },
+                  { platform: 'Android', icon: '🤖', status: t('profile.available'), version: 'v2.0.5' },
+                  { platform: 'iOS', icon: '📱', status: t('profile.available'), version: 'v2.0.5' },
+                  { platform: 'Chrome Extension', icon: '🌐', status: t('profile.beta'), version: 'v1.0.0' },
+                  { platform: 'Router Firmware', icon: '📡', status: t('profile.comingSoon'), version: 'TBA' },
                 ].map((item) => (
                   <div key={item.platform} className="flex items-center justify-between p-4 border rounded-lg">
                     <div className="flex items-center gap-3">

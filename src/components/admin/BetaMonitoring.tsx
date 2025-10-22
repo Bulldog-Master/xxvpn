@@ -22,6 +22,7 @@ import {
   Zap
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface BetaSignup {
   id: string;
@@ -37,6 +38,7 @@ interface BetaSignup {
 }
 
 export const BetaMonitoring = () => {
+  const { t } = useTranslation();
   const [signups, setSignups] = useState<BetaSignup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -216,7 +218,7 @@ export const BetaMonitoring = () => {
     const config = {
       healthy: { color: 'text-success', bg: 'bg-success/20', label: 'Healthy' },
       degraded: { color: 'text-warning', bg: 'bg-warning/20', label: 'Degraded' },
-      offline: { color: 'text-destructive', bg: 'bg-destructive/20', label: 'Offline' },
+      offline: { color: 'text-destructive', bg: 'bg-destructive/20', label: t('admin.health.offline') },
     };
     
     const { color, bg, label } = config[status];

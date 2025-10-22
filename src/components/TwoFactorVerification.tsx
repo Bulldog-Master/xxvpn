@@ -42,7 +42,7 @@ const TwoFactorVerification = ({ email, password, onSuccess, onCancel }: TwoFact
       await verifyTwoFactorAndSignIn(email, password, verificationCode);
       
       toast({
-        title: 'Success',
+        title: t('twoFactor.success'),
         description: 'Two-factor authentication verified successfully.',
       });
       

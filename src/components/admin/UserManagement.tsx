@@ -20,8 +20,8 @@ interface UserData {
 }
 
 export const UserManagement = () => {
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
-  const { i18n } = useTranslation();
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,8 +44,8 @@ export const UserManagement = () => {
     } catch (error) {
       console.error('Error fetching users');
       toast({
-        title: "Error",
-        description: "Failed to load users. Admin access required.",
+        title: t('admin.error'),
+        description: t('admin.failedToLoad'),
         variant: "destructive",
       });
     } finally {
@@ -91,14 +91,14 @@ export const UserManagement = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="w-5 h-5" />
-            User Management
+            {t('admin.userManagement')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
             <Search className="w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search by name or user ID..."
+              placeholder={t('admin.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="max-w-sm"
@@ -109,19 +109,19 @@ export const UserManagement = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>User</TableHead>
-                  <TableHead>Subscription</TableHead>
-                  <TableHead>XX Coins</TableHead>
-                  <TableHead>2FA</TableHead>
-                  <TableHead>Joined</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>{t('admin.user')}</TableHead>
+                  <TableHead>{t('admin.subscription')}</TableHead>
+                  <TableHead>{t('admin.xxCoins')}</TableHead>
+                  <TableHead>{t('admin.twoFA')}</TableHead>
+                  <TableHead>{t('admin.joined')}</TableHead>
+                  <TableHead className="text-right">{t('admin.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredUsers.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                      No users found
+                      {t('admin.noUsersFound')}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -129,7 +129,7 @@ export const UserManagement = () => {
                     <TableRow key={user.user_id}>
                       <TableCell>
                         <div>
-                          <p className="font-medium">{user.display_name || 'Unnamed User'}</p>
+                          <p className="font-medium">{user.display_name || t('admin.unnamedUser')}</p>
                           <p className="text-xs text-muted-foreground">{user.user_id.slice(0, 8)}...</p>
                         </div>
                       </TableCell>
@@ -156,9 +156,9 @@ export const UserManagement = () => {
           </div>
 
           <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <p>Showing {filteredUsers.length} of {users.length} users</p>
+            <p>{t('admin.showing', { filtered: formatNumber(filteredUsers.length, i18n.language), total: formatNumber(users.length, i18n.language) })}</p>
             <Button variant="outline" size="sm" onClick={fetchUsers}>
-              Refresh
+              {t('admin.refresh')}
             </Button>
           </div>
         </CardContent>

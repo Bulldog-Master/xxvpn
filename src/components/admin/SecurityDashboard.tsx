@@ -20,6 +20,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface SecurityAlert {
   id: string;
@@ -38,6 +39,7 @@ interface SecurityMetric {
 }
 
 export const SecurityDashboard = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
   const [metrics, setMetrics] = useState<SecurityMetric[]>([]);
@@ -58,7 +60,7 @@ export const SecurityDashboard = () => {
     } catch (error) {
       console.error('Error loading security data:', error);
       toast({
-        title: 'Error',
+        title: t('admin.error'),
         description: 'Failed to load security data',
         variant: 'destructive',
       });

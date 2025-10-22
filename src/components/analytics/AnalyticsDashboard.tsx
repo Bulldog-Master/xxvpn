@@ -147,7 +147,7 @@ export const AnalyticsDashboard = () => {
             server,
             duration: Math.round(data.duration / 60), // Convert to minutes
             bandwidth: Number(formatNumber(data.bandwidth, 'en', 2)),
-            quality: data.bandwidth / data.count > 1 ? 'Excellent' : data.bandwidth / data.count > 0.5 ? 'Good' : 'Fair',
+            quality: data.bandwidth / data.count > 1 ? t('quality.excellent') : data.bandwidth / data.count > 0.5 ? t('quality.good') : t('quality.fair'),
           }))
           .sort((a, b) => b.duration - a.duration)
           .slice(0, 5);

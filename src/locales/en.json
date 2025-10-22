@@ -745,27 +745,61 @@
     "rank": "Rank",
     "status": "Status"
   },
-  "serverLocations": {
-    "New York": "New York",
-    "Los Angeles": "Los Angeles",
-    "Toronto": "Toronto",
-    "London": "London",
-    "Frankfurt": "Frankfurt",
-    "Paris": "Paris",
-    "Amsterdam": "Amsterdam",
-    "Tokyo": "Tokyo",
-    "Singapore": "Singapore",
-    "Hong Kong": "Hong Kong",
-    "Sydney": "Sydney",
-    "São Paulo": "São Paulo",
-    "USA": "USA",
-    "Canada": "Canada",
-    "UK": "UK",
-    "Germany": "Germany",
-    "France": "France",
-    "Netherlands": "Netherlands",
-    "Japan": "Japan",
-    "Australia": "Australia",
-    "Brazil": "Brazil"
+  "admin": {
+    "error": "Error",
+    "failedToLoad": "Failed to load users. Admin access required.",
+    "userManagement": "User Management",
+    "searchPlaceholder": "Search by name or user ID...",
+    "user": "User",
+    "subscription": "Subscription",
+    "xxCoins": "XX Coins",
+    "twoFA": "2FA",
+    "joined": "Joined",
+    "actions": "Actions",
+    "noUsersFound": "No users found",
+    "unnamedUser": "Unnamed User",
+    "showing": "Showing {{filtered}} of {{total}} users",
+    "refresh": "Refresh",
+    "health": {
+      "offline": "Offline"
+    }
+  },
+  "onboarding": {
+    "step": "Step {{current}} of {{total}}",
+    "welcome": {
+      "title": "Welcome to xxVPN",
+      "description": "Your quantum-resistant VPN powered by the xx network",
+      "tip1": "Military-grade quantum-resistant encryption",
+      "tip2": "Metadata shredding for complete privacy",
+      "tip3": "Decentralized mixnet architecture"
+    },
+    "servers": {
+      "title": "Choose Your Server",
+      "description": "Select from our global network of secure servers",
+      "tip1": "Servers across 50+ countries",
+      "tip2": "Smart routing for best performance",
+      "tip3": "Real-time server load indicators"
+    },
+    "connect": {
+      "title": "One-Click Connection",
+      "description": "Connect to the VPN with a single click",
+      "tip1": "Quick connect to optimal server",
+      "tip2": "Auto-reconnect on disconnect",
+      "tip3": "Kill switch protection available"
+    },
+    "features": {
+      "title": "Advanced Features",
+      "description": "Explore powerful privacy and security features",
+      "tip1": "Custom DNS configuration",
+      "tip2": "Split tunneling for apps",
+      "tip3": "Ad & malware blocking",
+      "tip4": "DNS leak protection"
+    },
+    "complete": "🎉 You're all set! Start exploring xxVPN and enjoy complete privacy.",
+    "skipTour": "Skip Tour",
+    "previous": "Previous",
+    "next": "Next",
+    "completing": "Completing...",
+    "getStarted": "Get Started"
   }
 }

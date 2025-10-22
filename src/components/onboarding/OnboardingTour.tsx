@@ -13,65 +13,67 @@ import {
   X
 } from 'lucide-react';
 import { useUserSettings } from '@/hooks/useUserSettings';
+import { useTranslation } from 'react-i18next';
 
 interface OnboardingStep {
   id: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   icon: React.ReactNode;
-  tips: string[];
+  tipsKeys: string[];
 }
 
-const onboardingSteps: OnboardingStep[] = [
-  {
-    id: 'welcome',
-    title: 'Welcome to xxVPN',
-    description: 'Your quantum-resistant VPN powered by the xx network',
-    icon: <Shield className="w-12 h-12 text-primary" />,
-    tips: [
-      'Military-grade quantum-resistant encryption',
-      'Metadata shredding for complete privacy',
-      'Decentralized mixnet architecture'
-    ]
-  },
-  {
-    id: 'server-selection',
-    title: 'Choose Your Server',
-    description: 'Select from our global network of secure servers',
-    icon: <Server className="w-12 h-12 text-primary" />,
-    tips: [
-      'Servers across 50+ countries',
-      'Smart routing for best performance',
-      'Real-time server load indicators'
-    ]
-  },
-  {
-    id: 'connect',
-    title: 'One-Click Connection',
-    description: 'Connect to the VPN with a single click',
-    icon: <Zap className="w-12 h-12 text-primary" />,
-    tips: [
-      'Quick connect to optimal server',
-      'Auto-reconnect on disconnect',
-      'Kill switch protection available'
-    ]
-  },
-  {
-    id: 'features',
-    title: 'Advanced Features',
-    description: 'Explore powerful privacy and security features',
-    icon: <Settings className="w-12 h-12 text-primary" />,
-    tips: [
-      'Custom DNS configuration',
-      'Split tunneling for apps',
-      'Ad & malware blocking',
-      'DNS leak protection'
-    ]
-  }
-];
-
 export const OnboardingTour = () => {
+  const { t } = useTranslation();
   const { settings, saveSettings, loading } = useUserSettings('onboarding', { completed: false });
+  
+  const onboardingSteps: OnboardingStep[] = [
+    {
+      id: 'welcome',
+      titleKey: 'onboarding.welcome.title',
+      descriptionKey: 'onboarding.welcome.description',
+      icon: <Shield className="w-12 h-12 text-primary" />,
+      tipsKeys: [
+        'onboarding.welcome.tip1',
+        'onboarding.welcome.tip2',
+        'onboarding.welcome.tip3'
+      ]
+    },
+    {
+      id: 'server-selection',
+      titleKey: 'onboarding.servers.title',
+      descriptionKey: 'onboarding.servers.description',
+      icon: <Server className="w-12 h-12 text-primary" />,
+      tipsKeys: [
+        'onboarding.servers.tip1',
+        'onboarding.servers.tip2',
+        'onboarding.servers.tip3'
+      ]
+    },
+    {
+      id: 'connect',
+      titleKey: 'onboarding.connect.title',
+      descriptionKey: 'onboarding.connect.description',
+      icon: <Zap className="w-12 h-12 text-primary" />,
+      tipsKeys: [
+        'onboarding.connect.tip1',
+        'onboarding.connect.tip2',
+        'onboarding.connect.tip3'
+      ]
+    },
+    {
+      id: 'features',
+      titleKey: 'onboarding.features.title',
+      descriptionKey: 'onboarding.features.description',
+      icon: <Settings className="w-12 h-12 text-primary" />,
+      tipsKeys: [
+        'onboarding.features.tip1',
+        'onboarding.features.tip2',
+        'onboarding.features.tip3',
+        'onboarding.features.tip4'
+      ]
+    }
+  ];
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompleting, setIsCompleting] = useState(false);
@@ -129,7 +131,7 @@ export const OnboardingTour = () => {
         <DialogHeader>
           <div className="flex items-center justify-between mb-4">
             <Badge variant="outline">
-              Step {currentStep + 1} of {onboardingSteps.length}
+              {t('onboarding.step', { current: currentStep + 1, total: onboardingSteps.length })}
             </Badge>
             <Progress value={progress} className="w-32 h-2" />
           </div>
@@ -138,19 +140,19 @@ export const OnboardingTour = () => {
             <div className="p-4 rounded-full bg-primary/10 mb-4">
               {step.icon}
             </div>
-            <DialogTitle className="text-2xl mb-2">{step.title}</DialogTitle>
+            <DialogTitle className="text-2xl mb-2">{t(step.titleKey)}</DialogTitle>
             <DialogDescription className="text-base">
-              {step.description}
+              {t(step.descriptionKey)}
             </DialogDescription>
           </div>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-            {step.tips.map((tip, index) => (
+            {step.tipsKeys.map((tipKey, index) => (
               <div key={index} className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
-                <span className="text-sm">{tip}</span>
+                <span className="text-sm">{t(tipKey)}</span>
               </div>
             ))}
           </div>
@@ -158,7 +160,7 @@ export const OnboardingTour = () => {
           {currentStep === onboardingSteps.length - 1 && (
             <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
               <p className="text-sm text-center">
-                🎉 You're all set! Start exploring xxVPN and enjoy complete privacy.
+                {t('onboarding.complete')}
               </p>
             </div>
           )}
@@ -170,7 +172,7 @@ export const OnboardingTour = () => {
             onClick={handleSkip}
             disabled={isCompleting}
           >
-            Skip Tour
+            {t('onboarding.skipTour')}
           </Button>
 
           <div className="flex gap-2">
@@ -180,7 +182,7 @@ export const OnboardingTour = () => {
                 onClick={handlePrevious}
                 disabled={isCompleting}
               >
-                Previous
+                {t('onboarding.previous')}
               </Button>
             )}
             
@@ -190,15 +192,15 @@ export const OnboardingTour = () => {
               className="gap-2"
             >
               {isCompleting ? (
-                'Completing...'
+                t('onboarding.completing')
               ) : currentStep === onboardingSteps.length - 1 ? (
                 <>
-                  Get Started
+                  {t('onboarding.getStarted')}
                   <CheckCircle2 className="w-4 h-4" />
                 </>
               ) : (
                 <>
-                  Next
+                  {t('onboarding.next')}
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}

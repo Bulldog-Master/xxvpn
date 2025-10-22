@@ -219,7 +219,7 @@ export const AdvancedReporting = () => {
       const reportData = (sessions || []).map(session => ({
         'Session ID': session.id.substring(0, 8),
         'Connected At': format(new Date(session.connected_at), 'yyyy-MM-dd HH:mm'),
-        'Disconnected At': session.disconnected_at ? format(new Date(session.disconnected_at), 'yyyy-MM-dd HH:mm') : 'Active',
+        'Disconnected At': session.disconnected_at ? format(new Date(session.disconnected_at), 'yyyy-MM-dd HH:mm') : t('status.active'),
         Server: session.server_name,
         Location: session.server_location,
         Device: session.device_name,
