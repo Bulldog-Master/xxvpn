@@ -45,7 +45,7 @@ export type Database = {
           admin_user_id: string
           filters_applied: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           record_count: number | null
         }
         Insert: {
@@ -54,7 +54,7 @@ export type Database = {
           admin_user_id: string
           filters_applied?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_count?: number | null
         }
         Update: {
@@ -63,7 +63,7 @@ export type Database = {
           admin_user_id?: string
           filters_applied?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_count?: number | null
         }
         Relationships: []
@@ -73,7 +73,7 @@ export type Database = {
           action: string
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           new_values: Json | null
           old_values: Json | null
           record_id: string | null
@@ -85,7 +85,7 @@ export type Database = {
           action: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -97,7 +97,7 @@ export type Database = {
           action?: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -214,7 +214,7 @@ export type Database = {
           device_name: string
           device_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           is_active: boolean | null
           last_seen: string | null
           operating_system: string | null
@@ -226,7 +226,7 @@ export type Database = {
           device_name: string
           device_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           is_active?: boolean | null
           last_seen?: string | null
           operating_system?: string | null
@@ -238,7 +238,7 @@ export type Database = {
           device_name?: string
           device_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           is_active?: boolean | null
           last_seen?: string | null
           operating_system?: string | null
@@ -435,7 +435,7 @@ export type Database = {
           created_at: string | null
           details: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           severity: string
           user_id: string | null
         }
@@ -444,7 +444,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           severity: string
           user_id?: string | null
         }
@@ -453,7 +453,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           severity?: string
           user_id?: string | null
         }
@@ -519,7 +519,7 @@ export type Database = {
           event_id: string
           event_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           processed_at: string | null
           processing_status: string
           received_at: string | null
@@ -530,7 +530,7 @@ export type Database = {
           event_id: string
           event_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           processed_at?: string | null
           processing_status: string
           received_at?: string | null
@@ -541,7 +541,7 @@ export type Database = {
           event_id?: string
           event_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           processed_at?: string | null
           processing_status?: string
           received_at?: string | null
@@ -799,54 +799,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      anonymize_old_vpn_sessions: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cancel_own_subscription: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      check_security_active: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      cleanup_device_access_audit: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_analytics_events: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_audit_logs: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_device_data: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_device_ips: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_error_logs: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_vpn_sessions: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_webhook_logs: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_vpn_session_ips: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      anonymize_old_vpn_sessions: { Args: never; Returns: undefined }
+      cancel_own_subscription: { Args: never; Returns: undefined }
+      check_security_active: { Args: never; Returns: boolean }
+      cleanup_device_access_audit: { Args: never; Returns: undefined }
+      cleanup_old_analytics_events: { Args: never; Returns: undefined }
+      cleanup_old_audit_logs: { Args: never; Returns: undefined }
+      cleanup_old_device_data: { Args: never; Returns: undefined }
+      cleanup_old_device_ips: { Args: never; Returns: undefined }
+      cleanup_old_error_logs: { Args: never; Returns: undefined }
+      cleanup_old_vpn_sessions: { Args: never; Returns: undefined }
+      cleanup_old_webhook_logs: { Args: never; Returns: undefined }
+      cleanup_vpn_session_ips: { Args: never; Returns: undefined }
       get_anonymized_proposer: {
         Args: { proposal_proposer: string }
         Returns: string
@@ -867,7 +831,7 @@ export type Database = {
         }[]
       }
       get_audit_logs_sanitized: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           action: string
           created_at: string
@@ -896,12 +860,9 @@ export type Database = {
           status: string
         }[]
       }
-      get_device_ip_admin: {
-        Args: { device_id: string }
-        Returns: string
-      }
+      get_device_ip_admin: { Args: { device_id: string }; Returns: string }
       get_governance_proposals_anonymized: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           description: string
@@ -942,8 +903,22 @@ export type Database = {
           operating_system: string
         }[]
       }
+      get_scheduled_security_jobs: {
+        Args: never
+        Returns: {
+          active: boolean
+          command: string
+          database: string
+          jobid: number
+          jobname: string
+          nodename: string
+          nodeport: number
+          schedule: string
+          username: string
+        }[]
+      }
       get_security_status: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           enforcement_method: string
           implementation: string
@@ -967,7 +942,7 @@ export type Database = {
         }[]
       }
       get_user_devices_safe: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           device_name: string
@@ -994,7 +969,7 @@ export type Database = {
         }[]
       }
       get_user_subscription_safe: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           is_trial: boolean
           subscribed: boolean
@@ -1025,12 +1000,9 @@ export type Database = {
         Args: { p_amount: number; p_field: string; p_proposal_id: string }
         Returns: undefined
       }
-      is_super_admin: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
+      is_super_admin: { Args: { _user_id: string }; Returns: boolean }
       run_security_checks: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           check_name: string
           message: string
@@ -1041,26 +1013,11 @@ export type Database = {
         Args: { p_data?: Json; p_operation: string; p_table_name: string }
         Returns: undefined
       }
-      sanitize_sensitive_data: {
-        Args: { data: Json }
-        Returns: Json
-      }
-      validate_beta_signup: {
-        Args: { p_email: string }
-        Returns: boolean
-      }
-      validate_device_ip_protection: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      validate_email_format: {
-        Args: { email: string }
-        Returns: boolean
-      }
-      validate_subscribers_rls: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      sanitize_sensitive_data: { Args: { data: Json }; Returns: Json }
+      validate_beta_signup: { Args: { p_email: string }; Returns: boolean }
+      validate_device_ip_protection: { Args: never; Returns: boolean }
+      validate_email_format: { Args: { email: string }; Returns: boolean }
+      validate_subscribers_rls: { Args: never; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user" | "super_admin"
