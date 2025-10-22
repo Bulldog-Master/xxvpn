@@ -99,8 +99,8 @@ export const SecuritySettings = () => {
   const handlePasskeySetup = (credential: any) => {
     setPasskeyEnabled(true);
     toast({
-      title: 'Passkey Configured',
-      description: 'Your biometric authentication is now active',
+      title: t('security.passkeyConfigured'),
+      description: t('security.passkeyConfiguredDesc'),
     });
   };
 

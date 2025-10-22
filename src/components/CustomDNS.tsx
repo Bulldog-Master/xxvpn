@@ -98,8 +98,8 @@ export const CustomDNS: React.FC = () => {
   const addCustomDNS = () => {
     if (!newPrimary || !newName) {
       toast({
-        title: "Missing Information",
-        description: "Please provide both a name and primary DNS server.",
+        title: t('customDNS.missingInfo'),
+        description: t('customDNS.missingInfoDesc'),
         variant: "destructive"
       });
       return;
@@ -109,8 +109,8 @@ export const CustomDNS: React.FC = () => {
     const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
     if (!ipPattern.test(newPrimary) || (newSecondary && !ipPattern.test(newSecondary))) {
       toast({
-        title: "Invalid IP Address",
-        description: "Please enter valid IP addresses for the DNS servers.",
+        title: t('customDNS.invalidIP'),
+        description: t('customDNS.invalidIPDesc'),
         variant: "destructive"
       });
       return;
@@ -131,8 +131,8 @@ export const CustomDNS: React.FC = () => {
     setNewName('');
     
     toast({
-      title: "DNS Server Added",
-      description: `${newName} has been added to your DNS options.`
+      title: t('customDNS.dnsAdded'),
+      description: t('customDNS.dnsAddedDesc', { name: newName })
     });
   };
 
@@ -142,8 +142,8 @@ export const CustomDNS: React.FC = () => {
       setSelectedDNS('cloudflare');
     }
     toast({
-      title: "DNS Server Removed",
-      description: "Custom DNS server has been removed."
+      title: t('customDNS.dnsRemoved'),
+      description: t('customDNS.dnsRemovedDesc')
     });
   };
 
@@ -155,8 +155,10 @@ export const CustomDNS: React.FC = () => {
     const list = blockLists.find(l => l.id === id);
     if (list) {
       toast({
-        title: list.enabled ? "Block List Disabled" : "Block List Enabled",
-        description: `${list.name} has been ${list.enabled ? 'disabled' : 'enabled'}.`
+        title: t('customDNS.blockListUpdated'),
+        description: list.enabled 
+          ? t('customDNS.blockListDisabled', { name: list.name })
+          : t('customDNS.blockListEnabled', { name: list.name })
       });
     }
   };

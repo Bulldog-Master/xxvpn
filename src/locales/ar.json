@@ -168,7 +168,65 @@
     "onlineNow": "متصل الآن",
     "acrossAllServers": "عبر جميع الخوادم",
     "highSpeedAccess": "وصول عالي السرعة",
-    "premium": "متميز"
+    "premium": "متميز",
+    "add": "إضافة",
+    "remove": "إزالة"
+  },
+  "appTunneling": {
+    "searchApps": "البحث عن التطبيقات...",
+    "addCustomApp": "إضافة تطبيق مخصص",
+    "customAppPlaceholder": "أدخل اسم التطبيق...",
+    "appRemoved": "تمت إزالة التطبيق",
+    "appAdded": "تمت إضافة التطبيق",
+    "appRemovedDesc": "تمت إزالة {{name}} من نفق VPN",
+    "appAddedDesc": "تمت إضافة {{name}} إلى نفق VPN",
+    "customAppAdded": "تمت إضافة التطبيق المخصص",
+    "customAppAddedDesc": "تمت إضافة {{name}} إلى قائمة التطبيقات",
+    "splitTunnelingDisabled": "تم تعطيل النفق المقسم",
+    "splitTunnelingEnabled": "تم تمكين النفق المقسم",
+    "allTrafficVPN": "سيستخدم كل حركة المرور الآن VPN",
+    "selectedAppsVPN": "ستستخدم التطبيقات المحددة النفق المقسم"
+  },
+  "splitTunneling": {
+    "title": "النفق المقسم للتطبيقات",
+    "description": "التحكم في التطبيقات التي تستخدم اتصال VPN",
+    "includeMode": "وضع التضمين",
+    "excludeMode": "وضع الاستبعاد",
+    "includeModeDescription": "فقط التطبيقات المحددة ستستخدم VPN. كل حركة المرور الأخرى تتجاوز VPN.",
+    "excludeModeDescription": "التطبيقات المحددة ستتجاوز VPN. كل حركة المرور الأخرى تستخدم VPN."
+  },
+  "customDNS": {
+    "missingInfo": "معلومات مفقودة",
+    "missingInfoDesc": "يرجى تقديم كل من الاسم وخادم DNS الأساسي",
+    "invalidIP": "عنوان IP غير صالح",
+    "invalidIPDesc": "يرجى إدخال عناوين IP صالحة لخوادم DNS",
+    "dnsAdded": "تمت إضافة خادم DNS",
+    "dnsAddedDesc": "تمت إضافة {{name}} إلى خيارات DNS الخاصة بك",
+    "dnsRemoved": "تمت إزالة خادم DNS",
+    "dnsRemovedDesc": "تمت إزالة خادم DNS المخصص",
+    "blockListUpdated": "تم تحديث قائمة الحظر",
+    "blockListEnabled": "تم تمكين {{name}}",
+    "blockListDisabled": "تم تعطيل {{name}}"
+  },
+  "security": {
+    "title": "الأمان والخصوصية",
+    "description": "إدارة أمان حسابك وطرق المصادقة",
+    "passkeyConfigured": "تم تكوين مفتاح المرور",
+    "passkeyConfiguredDesc": "المصادقة البيومترية الخاصة بك نشطة الآن",
+    "tabs": {
+      "authentication": "المصادقة",
+      "activity": "النشاط",
+      "monitoring": "المراقبة"
+    },
+    "overview": {
+      "title": "نظرة عامة على الأمان",
+      "description": "حالة الأمان الحالية والميزات المفعلة"
+    },
+    "twoFactor": {
+      "title": "المصادقة الثنائية",
+      "active": "نشط ويحمي حسابك",
+      "notConfigured": "غير مكون"
+    }
   },
   "payments": {
     "title": "المدفوعات",

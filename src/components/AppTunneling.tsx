@@ -48,8 +48,10 @@ export const AppTunneling: React.FC = () => {
     const app = apps.find(a => a.id === appId);
     if (app) {
       toast({
-        title: app.isEnabled ? "App Removed" : "App Added",
-        description: `${app.name} ${app.isEnabled ? 'removed from' : 'added to'} VPN tunneling`,
+        title: app.isEnabled ? t('appTunneling.appRemoved') : t('appTunneling.appAdded'),
+        description: app.isEnabled 
+          ? t('appTunneling.appRemovedDesc', { name: app.name })
+          : t('appTunneling.appAddedDesc', { name: app.name }),
       });
     }
   };
@@ -68,18 +70,18 @@ export const AppTunneling: React.FC = () => {
     setApps([...apps, newApp]);
     setNewAppName('');
     toast({
-      title: "Custom App Added",
-      description: `${newAppName} has been added to the app list`,
+      title: t('appTunneling.customAppAdded'),
+      description: t('appTunneling.customAppAddedDesc', { name: newAppName }),
     });
   };
 
   const toggleSplitTunneling = () => {
     setSplitTunnelingEnabled(!splitTunnelingEnabled);
     toast({
-      title: splitTunnelingEnabled ? "Split Tunneling Disabled" : "Split Tunneling Enabled",
+      title: splitTunnelingEnabled ? t('appTunneling.splitTunnelingDisabled') : t('appTunneling.splitTunnelingEnabled'),
       description: splitTunnelingEnabled 
-        ? "All traffic will now use the VPN" 
-        : "Selected apps will use split tunneling",
+        ? t('appTunneling.allTrafficVPN')
+        : t('appTunneling.selectedAppsVPN'),
     });
   };
 

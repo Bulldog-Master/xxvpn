@@ -127,7 +127,76 @@
     "gbps": "Gbps",
     "onlineNow": "online now",
     "worldwide": "worldwide",
-    "acrossAllServers": "across all servers"
+    "acrossAllServers": "across all servers",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "remove": "Remove",
+    "confirm": "Confirm",
+    "close": "Close",
+    "xx": "XX",
+    "currencySymbol": "$"
+  },
+  "appTunneling": {
+    "searchApps": "Search apps...",
+    "addCustomApp": "Add custom app",
+    "customAppPlaceholder": "Enter application name...",
+    "appRemoved": "App Removed",
+    "appAdded": "App Added",
+    "appRemovedDesc": "{{name}} removed from VPN tunneling",
+    "appAddedDesc": "{{name}} added to VPN tunneling",
+    "customAppAdded": "Custom App Added",
+    "customAppAddedDesc": "{{name}} has been added to the app list",
+    "splitTunnelingDisabled": "Split Tunneling Disabled",
+    "splitTunnelingEnabled": "Split Tunneling Enabled",
+    "allTrafficVPN": "All traffic will now use the VPN",
+    "selectedAppsVPN": "Selected apps will use split tunneling"
+  },
+  "splitTunneling": {
+    "title": "App Split Tunneling",
+    "description": "Control which apps use the VPN connection",
+    "includeMode": "Include Mode",
+    "excludeMode": "Exclude Mode",
+    "includeModeDescription": "Only selected apps will use the VPN. All other traffic bypasses the VPN.",
+    "excludeModeDescription": "Selected apps will bypass the VPN. All other traffic uses the VPN."
+  },
+  "customDNS": {
+    "missingInfo": "Missing Information",
+    "missingInfoDesc": "Please provide both a name and primary DNS server",
+    "invalidIP": "Invalid IP Address",
+    "invalidIPDesc": "Please enter valid IP addresses for the DNS servers",
+    "dnsAdded": "DNS Server Added",
+    "dnsAddedDesc": "{{name}} has been added to your DNS options",
+    "dnsRemoved": "DNS Server Removed",
+    "dnsRemovedDesc": "Custom DNS server has been removed",
+    "blockListUpdated": "Block List Updated",
+    "blockListEnabled": "{{name}} is now enabled",
+    "blockListDisabled": "{{name}} is now disabled"
+  },
+  "security": {
+    "title": "Security & Privacy",
+    "description": "Manage your account security and authentication methods",
+    "passkeyConfigured": "Passkey Configured",
+    "passkeyConfiguredDesc": "Your biometric authentication is now active",
+    "tabs": {
+      "authentication": "Authentication",
+      "activity": "Activity",
+      "monitoring": "Monitoring"
+    },
+    "overview": {
+      "title": "Security Overview",
+      "description": "Your current security status and enabled features"
+    },
+    "twoFactor": {
+      "title": "Two-Factor Authentication",
+      "active": "Active and protecting your account",
+      "notConfigured": "Not configured"
+    }
   },
   "serverSelection": {
     "excellent": "Excellent",
