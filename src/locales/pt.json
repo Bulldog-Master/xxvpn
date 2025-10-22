@@ -404,5 +404,46 @@
     "disconnected": "Desconectado",
     "connecting": "Conectando",
     "active": "Ativo"
+  },
+  "admin": {
+    "error": "Erro",
+    "failedToLoad": "Falha ao carregar dados",
+    "failedToLoadLogs": "Falha ao carregar logs de auditoria",
+    "logsExported": "Logs de auditoria exportados com sucesso",
+    "auditLogDashboard": "Painel de Logs de Auditoria",
+    "monitorActions": "Monitore todas as ações sensíveis à segurança em sua aplicação",
+    "refresh": "Atualizar",
+    "exportCSV": "Exportar CSV",
+    "timestamp": "Carimbo de tempo",
+    "action": "Ação",
+    "table": "Tabela",
+    "userId": "ID do Usuário",
+    "recordId": "ID do Registro",
+    "ipAddress": "Endereço IP",
+    "loadingLogs": "Carregando logs de auditoria...",
+    "noLogsFound": "Nenhum log de auditoria encontrado",
+    "showingLogs": "Mostrando {{filtered}} de {{total}} logs de auditoria",
+    "searchPlaceholder": "Pesquisar logs...",
+    "filterByAction": "Filtrar por ação",
+    "filterByTable": "Filtrar por tabela",
+    "allActions": "Todas as Ações",
+    "allTables": "Todas as Tabelas"
+  },
+  "dns": {
+    "addServer": "Adicionar Servidor DNS",
+    "entries": "entradas"
+  },
+  "customDNS": {
+    "dnsSettings": "Configurações de DNS",
+    "adBlocking": "Bloqueio de Anúncios",
+    "adMalwareBlocking": "Bloqueio de Anúncios e Malware",
+    "blockingDescription": "Bloqueie anúncios, rastreadores e conteúdo malicioso no nível DNS"
+  },
+  "dao": {
+    "fetchFailed": "Falha ao buscar propostas",
+    "proposalCreated": "Proposta criada com sucesso",
+    "proposalFailed": "Falha ao criar proposta",
+    "voteRecorded": "Voto registrado com {{power}} XX Coins",
+    "voteFailed": "Falha ao registrar voto"
   }
 }

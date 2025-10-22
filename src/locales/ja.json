@@ -400,5 +400,46 @@
     "disconnected": "切断中",
     "connecting": "接続中",
     "active": "アクティブ"
+  },
+  "admin": {
+    "error": "エラー",
+    "failedToLoad": "データの読み込みに失敗しました",
+    "failedToLoadLogs": "監査ログの読み込みに失敗しました",
+    "logsExported": "監査ログが正常にエクスポートされました",
+    "auditLogDashboard": "監査ログダッシュボード",
+    "monitorActions": "アプリケーション全体のセキュリティに敏感なすべてのアクションを監視",
+    "refresh": "更新",
+    "exportCSV": "CSVエクスポート",
+    "timestamp": "タイムスタンプ",
+    "action": "アクション",
+    "table": "テーブル",
+    "userId": "ユーザーID",
+    "recordId": "レコードID",
+    "ipAddress": "IPアドレス",
+    "loadingLogs": "監査ログを読み込んでいます...",
+    "noLogsFound": "監査ログが見つかりません",
+    "showingLogs": "{{total}}件中{{filtered}}件の監査ログを表示",
+    "searchPlaceholder": "ログを検索...",
+    "filterByAction": "アクションでフィルタ",
+    "filterByTable": "テーブルでフィルタ",
+    "allActions": "すべてのアクション",
+    "allTables": "すべてのテーブル"
+  },
+  "dns": {
+    "addServer": "DNSサーバーを追加",
+    "entries": "エントリ"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS設定",
+    "adBlocking": "広告ブロック",
+    "adMalwareBlocking": "広告とマルウェアのブロック",
+    "blockingDescription": "DNSレベルで広告、トラッカー、悪意のあるコンテンツをブロック"
+  },
+  "dao": {
+    "fetchFailed": "提案の取得に失敗しました",
+    "proposalCreated": "提案が正常に作成されました",
+    "proposalFailed": "提案の作成に失敗しました",
+    "voteRecorded": "{{power}} XX Coinsで投票が記録されました",
+    "voteFailed": "投票の記録に失敗しました"
   }
 }

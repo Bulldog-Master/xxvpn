@@ -144,5 +144,46 @@
     "usageAnalytics": "Användningsanalys",
     "analyzeUsage": "Analysera övergripande VPN-användningsmönster",
     "createDashboard": "Skapa Instrumentpanel"
+  },
+  "admin": {
+    "error": "Fel",
+    "failedToLoad": "Misslyckades med att ladda data",
+    "failedToLoadLogs": "Misslyckades med att ladda granskningsloggar",
+    "logsExported": "Granskningsloggar exporterade framgångsrikt",
+    "auditLogDashboard": "Granskningslogg-instrumentpanel",
+    "monitorActions": "Övervaka alla säkerhetskänsliga åtgärder i din applikation",
+    "refresh": "Uppdatera",
+    "exportCSV": "Exportera CSV",
+    "timestamp": "Tidsstämpel",
+    "action": "Åtgärd",
+    "table": "Tabell",
+    "userId": "Användar-ID",
+    "recordId": "Post-ID",
+    "ipAddress": "IP-adress",
+    "loadingLogs": "Laddar granskningsloggar...",
+    "noLogsFound": "Inga granskningsloggar hittades",
+    "showingLogs": "Visar {{filtered}} av {{total}} granskningsloggar",
+    "searchPlaceholder": "Sök loggar...",
+    "filterByAction": "Filtrera efter åtgärd",
+    "filterByTable": "Filtrera efter tabell",
+    "allActions": "Alla Åtgärder",
+    "allTables": "Alla Tabeller"
+  },
+  "dns": {
+    "addServer": "Lägg till DNS-server",
+    "entries": "poster"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS-inställningar",
+    "adBlocking": "Annonsblockering",
+    "adMalwareBlocking": "Annonser och Skadlig Programvara-blockering",
+    "blockingDescription": "Blockera annonser, spårare och skadligt innehåll på DNS-nivå"
+  },
+  "dao": {
+    "fetchFailed": "Misslyckades med att hämta förslag",
+    "proposalCreated": "Förslag framgångsrikt skapat",
+    "proposalFailed": "Misslyckades med att skapa förslag",
+    "voteRecorded": "Röst registrerad med {{power}} XX Coins",
+    "voteFailed": "Misslyckades med att registrera röst"
   }
 }

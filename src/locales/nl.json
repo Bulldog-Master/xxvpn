@@ -144,5 +144,46 @@
     "usageAnalytics": "Gebruiksanalyses",
     "analyzeUsage": "Analyseer algemene VPN-gebruikspatronen",
     "createDashboard": "Dashboard Maken"
+  },
+  "admin": {
+    "error": "Fout",
+    "failedToLoad": "Gegevens laden mislukt",
+    "failedToLoadLogs": "Auditlogboeken laden mislukt",
+    "logsExported": "Auditlogboeken succesvol geëxporteerd",
+    "auditLogDashboard": "Auditlogboek Dashboard",
+    "monitorActions": "Bewaak alle beveiligingsgevoelige acties in uw applicatie",
+    "refresh": "Vernieuwen",
+    "exportCSV": "Exporteer CSV",
+    "timestamp": "Tijdstempel",
+    "action": "Actie",
+    "table": "Tabel",
+    "userId": "Gebruikers-ID",
+    "recordId": "Record-ID",
+    "ipAddress": "IP-adres",
+    "loadingLogs": "Auditlogboeken laden...",
+    "noLogsFound": "Geen auditlogboeken gevonden",
+    "showingLogs": "{{filtered}} van {{total}} auditlogboeken worden weergegeven",
+    "searchPlaceholder": "Zoek logboeken...",
+    "filterByAction": "Filter op actie",
+    "filterByTable": "Filter op tabel",
+    "allActions": "Alle Acties",
+    "allTables": "Alle Tabellen"
+  },
+  "dns": {
+    "addServer": "DNS-server toevoegen",
+    "entries": "items"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS-instellingen",
+    "adBlocking": "Advertentieblokkering",
+    "adMalwareBlocking": "Advertenties en Malware Blokkeren",
+    "blockingDescription": "Blokkeer advertenties, trackers en schadelijke inhoud op DNS-niveau"
+  },
+  "dao": {
+    "fetchFailed": "Voorstellen ophalen mislukt",
+    "proposalCreated": "Voorstel succesvol aangemaakt",
+    "proposalFailed": "Voorstel aanmaken mislukt",
+    "voteRecorded": "Stem geregistreerd met {{power}} XX Coins",
+    "voteFailed": "Stem registreren mislukt"
   }
 }

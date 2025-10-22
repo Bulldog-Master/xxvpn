@@ -404,5 +404,46 @@
     "disconnected": "Отключено",
     "connecting": "Подключение",
     "active": "Активно"
+  },
+  "admin": {
+    "error": "Ошибка",
+    "failedToLoad": "Не удалось загрузить данные",
+    "failedToLoadLogs": "Не удалось загрузить журналы аудита",
+    "logsExported": "Журналы аудита успешно экспортированы",
+    "auditLogDashboard": "Панель Журналов Аудита",
+    "monitorActions": "Отслеживайте все действия, критичные для безопасности, в вашем приложении",
+    "refresh": "Обновить",
+    "exportCSV": "Экспорт CSV",
+    "timestamp": "Временная метка",
+    "action": "Действие",
+    "table": "Таблица",
+    "userId": "ID Пользователя",
+    "recordId": "ID Записи",
+    "ipAddress": "IP-адрес",
+    "loadingLogs": "Загрузка журналов аудита...",
+    "noLogsFound": "Журналы аудита не найдены",
+    "showingLogs": "Показано {{filtered}} из {{total}} журналов аудита",
+    "searchPlaceholder": "Поиск журналов...",
+    "filterByAction": "Фильтр по действию",
+    "filterByTable": "Фильтр по таблице",
+    "allActions": "Все Действия",
+    "allTables": "Все Таблицы"
+  },
+  "dns": {
+    "addServer": "Добавить DNS-сервер",
+    "entries": "записей"
+  },
+  "customDNS": {
+    "dnsSettings": "Настройки DNS",
+    "adBlocking": "Блокировка Рекламы",
+    "adMalwareBlocking": "Блокировка Рекламы и Вредоносного ПО",
+    "blockingDescription": "Блокировка рекламы, трекеров и вредоносного контента на уровне DNS"
+  },
+  "dao": {
+    "fetchFailed": "Не удалось получить предложения",
+    "proposalCreated": "Предложение успешно создано",
+    "proposalFailed": "Не удалось создать предложение",
+    "voteRecorded": "Голос записан с {{power}} XX Coins",
+    "voteFailed": "Не удалось записать голос"
   }
 }

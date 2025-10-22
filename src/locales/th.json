@@ -144,5 +144,46 @@
     "usageAnalytics": "การวิเคราะห์การใช้งาน",
     "analyzeUsage": "วิเคราะห์รูปแบบการใช้งาน VPN โดยรวม",
     "createDashboard": "สร้างแดชบอร์ด"
+  },
+  "admin": {
+    "error": "ข้อผิดพลาด",
+    "failedToLoad": "โหลดข้อมูลไม่สำเร็จ",
+    "failedToLoadLogs": "โหลดบันทึกการตรวจสอบไม่สำเร็จ",
+    "logsExported": "ส่งออกบันทึกการตรวจสอบสำเร็จ",
+    "auditLogDashboard": "แดชบอร์ดบันทึกการตรวจสอบ",
+    "monitorActions": "ตรวจสอบการดำเนินการที่ละเอียดอ่อนด้านความปลอดภัยทั้งหมดในแอปพลิเคชันของคุณ",
+    "refresh": "รีเฟรช",
+    "exportCSV": "ส่งออก CSV",
+    "timestamp": "ประทับเวลา",
+    "action": "การกระทำ",
+    "table": "ตาราง",
+    "userId": "รหัสผู้ใช้",
+    "recordId": "รหัสบันทึก",
+    "ipAddress": "ที่อยู่ IP",
+    "loadingLogs": "กำลังโหลดบันทึกการตรวจสอบ...",
+    "noLogsFound": "ไม่พบบันทึกการตรวจสอบ",
+    "showingLogs": "แสดง {{filtered}} จาก {{total}} บันทึกการตรวจสอบทั้งหมด",
+    "searchPlaceholder": "ค้นหาบันทึก...",
+    "filterByAction": "กรองตามการกระทำ",
+    "filterByTable": "กรองตามตาราง",
+    "allActions": "การกระทำทั้งหมด",
+    "allTables": "ตารางทั้งหมด"
+  },
+  "dns": {
+    "addServer": "เพิ่มเซิร์ฟเวอร์ DNS",
+    "entries": "รายการ"
+  },
+  "customDNS": {
+    "dnsSettings": "การตั้งค่า DNS",
+    "adBlocking": "การบล็อกโฆษณา",
+    "adMalwareBlocking": "การบล็อกโฆษณาและมัลแวร์",
+    "blockingDescription": "บล็อกโฆษณา ตัวติดตาม และเนื้อหาที่เป็นอันตรายในระดับ DNS"
+  },
+  "dao": {
+    "fetchFailed": "ดึงข้อเสนอไม่สำเร็จ",
+    "proposalCreated": "สร้างข้อเสนอสำเร็จ",
+    "proposalFailed": "สร้างข้อเสนอไม่สำเร็จ",
+    "voteRecorded": "บันทึกการลงคะแนนด้วย {{power}} XX Coins",
+    "voteFailed": "บันทึกการลงคะแนนไม่สำเร็จ"
   }
 }

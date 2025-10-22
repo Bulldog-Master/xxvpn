@@ -451,5 +451,46 @@
     "disconnected": "Getrennt",
     "connecting": "Verbindung wird hergestellt",
     "active": "Aktiv"
+  },
+  "admin": {
+    "error": "Fehler",
+    "failedToLoad": "Daten konnten nicht geladen werden",
+    "failedToLoadLogs": "Audit-Protokolle konnten nicht geladen werden",
+    "logsExported": "Audit-Protokolle erfolgreich exportiert",
+    "auditLogDashboard": "Audit-Protokoll-Dashboard",
+    "monitorActions": "Überwachen Sie alle sicherheitsrelevanten Aktionen in Ihrer Anwendung",
+    "refresh": "Aktualisieren",
+    "exportCSV": "CSV exportieren",
+    "timestamp": "Zeitstempel",
+    "action": "Aktion",
+    "table": "Tabelle",
+    "userId": "Benutzer-ID",
+    "recordId": "Datensatz-ID",
+    "ipAddress": "IP-Adresse",
+    "loadingLogs": "Audit-Protokolle werden geladen...",
+    "noLogsFound": "Keine Audit-Protokolle gefunden",
+    "showingLogs": "Zeige {{filtered}} von {{total}} Audit-Protokollen",
+    "searchPlaceholder": "Protokolle durchsuchen...",
+    "filterByAction": "Nach Aktion filtern",
+    "filterByTable": "Nach Tabelle filtern",
+    "allActions": "Alle Aktionen",
+    "allTables": "Alle Tabellen"
+  },
+  "dns": {
+    "addServer": "DNS-Server hinzufügen",
+    "entries": "Einträge"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS-Einstellungen",
+    "adBlocking": "Werbeblocker",
+    "adMalwareBlocking": "Werbe- und Malware-Blockierung",
+    "blockingDescription": "Blockieren Sie Werbung, Tracker und bösartige Inhalte auf DNS-Ebene"
+  },
+  "dao": {
+    "fetchFailed": "Vorschläge konnten nicht abgerufen werden",
+    "proposalCreated": "Vorschlag erfolgreich erstellt",
+    "proposalFailed": "Vorschlag konnte nicht erstellt werden",
+    "voteRecorded": "Abstimmung mit {{power}} XX Coins aufgezeichnet",
+    "voteFailed": "Abstimmung konnte nicht aufgezeichnet werden"
   }
 }

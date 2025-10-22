@@ -359,5 +359,46 @@
       "vpnDesc": "VPN - संतुलित",
       "mixnetDesc": "मिक्सनेट - सबसे सुरक्षित"
     }
+  },
+  "admin": {
+    "error": "त्रुटि",
+    "failedToLoad": "डेटा लोड करने में विफल",
+    "failedToLoadLogs": "ऑडिट लॉग लोड करने में विफल",
+    "logsExported": "ऑडिट लॉग सफलतापूर्वक निर्यात किए गए",
+    "auditLogDashboard": "ऑडिट लॉग डैशबोर्ड",
+    "monitorActions": "अपने एप्लिकेशन में सभी सुरक्षा-संवेदनशील कार्यों की निगरानी करें",
+    "refresh": "ताज़ा करें",
+    "exportCSV": "CSV निर्यात करें",
+    "timestamp": "टाइमस्टैम्प",
+    "action": "कार्रवाई",
+    "table": "तालिका",
+    "userId": "उपयोगकर्ता ID",
+    "recordId": "रिकॉर्ड ID",
+    "ipAddress": "IP पता",
+    "loadingLogs": "ऑडिट लॉग लोड हो रहे हैं...",
+    "noLogsFound": "कोई ऑडिट लॉग नहीं मिला",
+    "showingLogs": "कुल {{total}} ऑडिट लॉग में से {{filtered}} दिखा रहे हैं",
+    "searchPlaceholder": "लॉग खोजें...",
+    "filterByAction": "कार्रवाई के अनुसार फ़िल्टर करें",
+    "filterByTable": "तालिका के अनुसार फ़िल्टर करें",
+    "allActions": "सभी कार्रवाइयाँ",
+    "allTables": "सभी तालिकाएँ"
+  },
+  "dns": {
+    "addServer": "DNS सर्वर जोड़ें",
+    "entries": "प्रविष्टियाँ"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS सेटिंग्स",
+    "adBlocking": "विज्ञापन अवरुद्ध करना",
+    "adMalwareBlocking": "विज्ञापन और मैलवेयर अवरोधन",
+    "blockingDescription": "DNS स्तर पर विज्ञापन, ट्रैकर्स और दुर्भावनापूर्ण सामग्री को ब्लॉक करें"
+  },
+  "dao": {
+    "fetchFailed": "प्रस्ताव प्राप्त करने में विफल",
+    "proposalCreated": "प्रस्ताव सफलतापूर्वक बनाया गया",
+    "proposalFailed": "प्रस्ताव बनाने में विफल",
+    "voteRecorded": "{{power}} XX Coins के साथ वोट रिकॉर्ड किया गया",
+    "voteFailed": "वोट रिकॉर्ड करने में विफल"
   }
 }

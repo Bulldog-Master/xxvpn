@@ -451,5 +451,46 @@
     "disconnected": "Déconnecté",
     "connecting": "Connexion",
     "active": "Actif"
+  },
+  "admin": {
+    "error": "Erreur",
+    "failedToLoad": "Échec du chargement des données",
+    "failedToLoadLogs": "Échec du chargement des journaux d'audit",
+    "logsExported": "Journaux d'audit exportés avec succès",
+    "auditLogDashboard": "Tableau de Bord des Journaux d'Audit",
+    "monitorActions": "Surveiller toutes les actions sensibles à la sécurité dans votre application",
+    "refresh": "Actualiser",
+    "exportCSV": "Exporter CSV",
+    "timestamp": "Horodatage",
+    "action": "Action",
+    "table": "Table",
+    "userId": "ID Utilisateur",
+    "recordId": "ID Enregistrement",
+    "ipAddress": "Adresse IP",
+    "loadingLogs": "Chargement des journaux d'audit...",
+    "noLogsFound": "Aucun journal d'audit trouvé",
+    "showingLogs": "Affichage de {{filtered}} sur {{total}} journaux d'audit",
+    "searchPlaceholder": "Rechercher dans les journaux...",
+    "filterByAction": "Filtrer par action",
+    "filterByTable": "Filtrer par table",
+    "allActions": "Toutes les Actions",
+    "allTables": "Toutes les Tables"
+  },
+  "dns": {
+    "addServer": "Ajouter un Serveur DNS",
+    "entries": "entrées"
+  },
+  "customDNS": {
+    "dnsSettings": "Paramètres DNS",
+    "adBlocking": "Blocage des Publicités",
+    "adMalwareBlocking": "Blocage des Publicités et Malwares",
+    "blockingDescription": "Bloquer les publicités, les trackers et le contenu malveillant au niveau DNS"
+  },
+  "dao": {
+    "fetchFailed": "Échec de la récupération des propositions",
+    "proposalCreated": "Proposition créée avec succès",
+    "proposalFailed": "Échec de la création de la proposition",
+    "voteRecorded": "Vote enregistré avec {{power}} XX Coins",
+    "voteFailed": "Échec de l'enregistrement du vote"
   }
 }

@@ -271,5 +271,46 @@
     "usageAnalytics": "Analitik Penggunaan",
     "analyzeUsage": "Analisis pola penggunaan VPN secara keseluruhan",
     "createDashboard": "Buat Dashboard"
+  },
+  "admin": {
+    "error": "Kesalahan",
+    "failedToLoad": "Gagal memuat data",
+    "failedToLoadLogs": "Gagal memuat log audit",
+    "logsExported": "Log audit berhasil diekspor",
+    "auditLogDashboard": "Dashboard Log Audit",
+    "monitorActions": "Pantau semua tindakan sensitif keamanan di aplikasi Anda",
+    "refresh": "Segarkan",
+    "exportCSV": "Ekspor CSV",
+    "timestamp": "Stempel waktu",
+    "action": "Tindakan",
+    "table": "Tabel",
+    "userId": "ID Pengguna",
+    "recordId": "ID Rekaman",
+    "ipAddress": "Alamat IP",
+    "loadingLogs": "Memuat log audit...",
+    "noLogsFound": "Log audit tidak ditemukan",
+    "showingLogs": "Menampilkan {{filtered}} dari {{total}} log audit",
+    "searchPlaceholder": "Cari log...",
+    "filterByAction": "Filter berdasarkan tindakan",
+    "filterByTable": "Filter berdasarkan tabel",
+    "allActions": "Semua Tindakan",
+    "allTables": "Semua Tabel"
+  },
+  "dns": {
+    "addServer": "Tambah Server DNS",
+    "entries": "entri"
+  },
+  "customDNS": {
+    "dnsSettings": "Pengaturan DNS",
+    "adBlocking": "Pemblokiran Iklan",
+    "adMalwareBlocking": "Pemblokiran Iklan dan Malware",
+    "blockingDescription": "Blokir iklan, pelacak, dan konten berbahaya di tingkat DNS"
+  },
+  "dao": {
+    "fetchFailed": "Gagal mengambil proposal",
+    "proposalCreated": "Proposal berhasil dibuat",
+    "proposalFailed": "Gagal membuat proposal",
+    "voteRecorded": "Suara dicatat dengan {{power}} XX Coins",
+    "voteFailed": "Gagal mencatat suara"
   }
 }

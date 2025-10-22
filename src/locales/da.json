@@ -404,5 +404,46 @@
     "disconnected": "Afbrudt",
     "connecting": "Forbinder",
     "active": "Aktiv"
+  },
+  "admin": {
+    "error": "Fejl",
+    "failedToLoad": "Kunne ikke indlæse data",
+    "failedToLoadLogs": "Kunne ikke indlæse revisionslogfiler",
+    "logsExported": "Revisionslogfiler eksporteret med succes",
+    "auditLogDashboard": "Revisionslog Dashboard",
+    "monitorActions": "Overvåg alle sikkerhedsfølsomme handlinger i din applikation",
+    "refresh": "Opdater",
+    "exportCSV": "Eksporter CSV",
+    "timestamp": "Tidsstempel",
+    "action": "Handling",
+    "table": "Tabel",
+    "userId": "Bruger-ID",
+    "recordId": "Post-ID",
+    "ipAddress": "IP-adresse",
+    "loadingLogs": "Indlæser revisionslogfiler...",
+    "noLogsFound": "Ingen revisionslogfiler fundet",
+    "showingLogs": "Viser {{filtered}} af {{total}} revisionslogfiler",
+    "searchPlaceholder": "Søg i logfiler...",
+    "filterByAction": "Filtrer efter handling",
+    "filterByTable": "Filtrer efter tabel",
+    "allActions": "Alle Handlinger",
+    "allTables": "Alle Tabeller"
+  },
+  "dns": {
+    "addServer": "Tilføj DNS-server",
+    "entries": "poster"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS-indstillinger",
+    "adBlocking": "Annonceblokering",
+    "adMalwareBlocking": "Annonce- og Malware-blokering",
+    "blockingDescription": "Bloker annoncer, sporingssoftware og ondsindet indhold på DNS-niveau"
+  },
+  "dao": {
+    "fetchFailed": "Kunne ikke hente forslag",
+    "proposalCreated": "Forslag oprettet med succes",
+    "proposalFailed": "Kunne ikke oprette forslag",
+    "voteRecorded": "Stemme registreret med {{power}} XX Coins",
+    "voteFailed": "Kunne ikke registrere stemme"
   }
 }

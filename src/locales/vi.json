@@ -144,5 +144,46 @@
     "usageAnalytics": "Phân tích Sử dụng",
     "analyzeUsage": "Phân tích các mẫu sử dụng VPN tổng thể",
     "createDashboard": "Tạo Bảng điều khiển"
+  },
+  "admin": {
+    "error": "Lỗi",
+    "failedToLoad": "Không thể tải dữ liệu",
+    "failedToLoadLogs": "Không thể tải nhật ký kiểm toán",
+    "logsExported": "Nhật ký kiểm toán đã được xuất thành công",
+    "auditLogDashboard": "Bảng Điều Khiển Nhật Ký Kiểm Toán",
+    "monitorActions": "Giám sát tất cả các hành động nhạy cảm về bảo mật trong ứng dụng của bạn",
+    "refresh": "Làm mới",
+    "exportCSV": "Xuất CSV",
+    "timestamp": "Dấu thời gian",
+    "action": "Hành động",
+    "table": "Bảng",
+    "userId": "ID Người dùng",
+    "recordId": "ID Bản ghi",
+    "ipAddress": "Địa chỉ IP",
+    "loadingLogs": "Đang tải nhật ký kiểm toán...",
+    "noLogsFound": "Không tìm thấy nhật ký kiểm toán",
+    "showingLogs": "Hiển thị {{filtered}} trong số {{total}} nhật ký kiểm toán",
+    "searchPlaceholder": "Tìm kiếm nhật ký...",
+    "filterByAction": "Lọc theo hành động",
+    "filterByTable": "Lọc theo bảng",
+    "allActions": "Tất cả Hành động",
+    "allTables": "Tất cả Bảng"
+  },
+  "dns": {
+    "addServer": "Thêm Máy chủ DNS",
+    "entries": "mục"
+  },
+  "customDNS": {
+    "dnsSettings": "Cài đặt DNS",
+    "adBlocking": "Chặn Quảng cáo",
+    "adMalwareBlocking": "Chặn Quảng cáo và Phần mềm Độc hại",
+    "blockingDescription": "Chặn quảng cáo, trình theo dõi và nội dung độc hại ở cấp độ DNS"
+  },
+  "dao": {
+    "fetchFailed": "Không thể tải đề xuất",
+    "proposalCreated": "Đề xuất đã được tạo thành công",
+    "proposalFailed": "Không thể tạo đề xuất",
+    "voteRecorded": "Bỏ phiếu đã được ghi nhận với {{power}} XX Coins",
+    "voteFailed": "Không thể ghi nhận bỏ phiếu"
   }
 }

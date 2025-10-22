@@ -404,5 +404,46 @@
     "disconnected": "Bağlantı Kesildi",
     "connecting": "Bağlanıyor",
     "active": "Aktif"
+  },
+  "admin": {
+    "error": "Hata",
+    "failedToLoad": "Veri yüklenemedi",
+    "failedToLoadLogs": "Denetim günlükleri yüklenemedi",
+    "logsExported": "Denetim günlükleri başarıyla dışa aktarıldı",
+    "auditLogDashboard": "Denetim Günlüğü Panosu",
+    "monitorActions": "Uygulamanızdaki tüm güvenlik açısından hassas eylemleri izleyin",
+    "refresh": "Yenile",
+    "exportCSV": "CSV Dışa Aktar",
+    "timestamp": "Zaman Damgası",
+    "action": "Eylem",
+    "table": "Tablo",
+    "userId": "Kullanıcı ID",
+    "recordId": "Kayıt ID",
+    "ipAddress": "IP Adresi",
+    "loadingLogs": "Denetim günlükleri yükleniyor...",
+    "noLogsFound": "Denetim günlüğü bulunamadı",
+    "showingLogs": "Toplam {{total}} denetim günlüğünden {{filtered}} tanesi gösteriliyor",
+    "searchPlaceholder": "Günlüklerde ara...",
+    "filterByAction": "Eyleme göre filtrele",
+    "filterByTable": "Tabloya göre filtrele",
+    "allActions": "Tüm Eylemler",
+    "allTables": "Tüm Tablolar"
+  },
+  "dns": {
+    "addServer": "DNS Sunucusu Ekle",
+    "entries": "giriş"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS Ayarları",
+    "adBlocking": "Reklam Engelleme",
+    "adMalwareBlocking": "Reklam ve Kötü Amaçlı Yazılım Engelleme",
+    "blockingDescription": "DNS seviyesinde reklamları, izleyicileri ve kötü amaçlı içeriği engelleyin"
+  },
+  "dao": {
+    "fetchFailed": "Teklifler alınamadı",
+    "proposalCreated": "Teklif başarıyla oluşturuldu",
+    "proposalFailed": "Teklif oluşturulamadı",
+    "voteRecorded": "{{power}} XX Coins ile oy kaydedildi",
+    "voteFailed": "Oy kaydedilemedi"
   }
 }

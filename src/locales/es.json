@@ -520,5 +520,46 @@
       "transaction": "Transacción: {{hash}}",
       "subscriptionFailed": "Suscripción Fallida"
     }
+  },
+  "admin": {
+    "error": "Error",
+    "failedToLoad": "Error al cargar datos",
+    "failedToLoadLogs": "Error al cargar registros de auditoría",
+    "logsExported": "Registros de auditoría exportados exitosamente",
+    "auditLogDashboard": "Panel de Registros de Auditoría",
+    "monitorActions": "Supervise todas las acciones sensibles a la seguridad en su aplicación",
+    "refresh": "Actualizar",
+    "exportCSV": "Exportar CSV",
+    "timestamp": "Marca de tiempo",
+    "action": "Acción",
+    "table": "Tabla",
+    "userId": "ID de Usuario",
+    "recordId": "ID de Registro",
+    "ipAddress": "Dirección IP",
+    "loadingLogs": "Cargando registros de auditoría...",
+    "noLogsFound": "No se encontraron registros de auditoría",
+    "showingLogs": "Mostrando {{filtered}} de {{total}} registros de auditoría",
+    "searchPlaceholder": "Buscar registros...",
+    "filterByAction": "Filtrar por acción",
+    "filterByTable": "Filtrar por tabla",
+    "allActions": "Todas las Acciones",
+    "allTables": "Todas las Tablas"
+  },
+  "dns": {
+    "addServer": "Añadir Servidor DNS",
+    "entries": "entradas"
+  },
+  "customDNS": {
+    "dnsSettings": "Configuración de DNS",
+    "adBlocking": "Bloqueo de Anuncios",
+    "adMalwareBlocking": "Bloqueo de Anuncios y Malware",
+    "blockingDescription": "Bloquear anuncios, rastreadores y contenido malicioso a nivel DNS"
+  },
+  "dao": {
+    "fetchFailed": "Error al obtener propuestas",
+    "proposalCreated": "Propuesta creada exitosamente",
+    "proposalFailed": "Error al crear propuesta",
+    "voteRecorded": "Voto registrado con {{power}} XX Coins",
+    "voteFailed": "Error al registrar voto"
   }
 }

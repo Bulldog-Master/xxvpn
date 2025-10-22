@@ -144,5 +144,46 @@
     "usageAnalytics": "Analityka Użytkowania",
     "analyzeUsage": "Analizuj ogólne wzorce użytkowania VPN",
     "createDashboard": "Utwórz Pulpit"
+  },
+  "admin": {
+    "error": "Błąd",
+    "failedToLoad": "Nie udało się załadować danych",
+    "failedToLoadLogs": "Nie udało się załadować dzienników audytu",
+    "logsExported": "Dzienniki audytu zostały pomyślnie wyeksportowane",
+    "auditLogDashboard": "Panel Dzienników Audytu",
+    "monitorActions": "Monitoruj wszystkie działania wrażliwe na bezpieczeństwo w aplikacji",
+    "refresh": "Odśwież",
+    "exportCSV": "Eksportuj CSV",
+    "timestamp": "Znacznik czasu",
+    "action": "Akcja",
+    "table": "Tabela",
+    "userId": "ID Użytkownika",
+    "recordId": "ID Rekordu",
+    "ipAddress": "Adres IP",
+    "loadingLogs": "Ładowanie dzienników audytu...",
+    "noLogsFound": "Nie znaleziono dzienników audytu",
+    "showingLogs": "Pokazywanie {{filtered}} z {{total}} dzienników audytu",
+    "searchPlaceholder": "Szukaj dzienników...",
+    "filterByAction": "Filtruj według akcji",
+    "filterByTable": "Filtruj według tabeli",
+    "allActions": "Wszystkie Akcje",
+    "allTables": "Wszystkie Tabele"
+  },
+  "dns": {
+    "addServer": "Dodaj serwer DNS",
+    "entries": "wpisy"
+  },
+  "customDNS": {
+    "dnsSettings": "Ustawienia DNS",
+    "adBlocking": "Blokowanie Reklam",
+    "adMalwareBlocking": "Blokowanie Reklam i Złośliwego Oprogramowania",
+    "blockingDescription": "Blokuj reklamy, trackery i złośliwe treści na poziomie DNS"
+  },
+  "dao": {
+    "fetchFailed": "Nie udało się pobrać propozycji",
+    "proposalCreated": "Propozycja została pomyślnie utworzona",
+    "proposalFailed": "Nie udało się utworzyć propozycji",
+    "voteRecorded": "Głos zarejestrowany z {{power}} XX Coins",
+    "voteFailed": "Nie udało się zarejestrować głosu"
   }
 }

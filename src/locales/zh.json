@@ -600,5 +600,46 @@
     "expiryPlaceholder": "月/年",
     "cvv": "CVV",
     "cvvPlaceholder": "123"
+  },
+  "admin": {
+    "error": "错误",
+    "failedToLoad": "加载数据失败",
+    "failedToLoadLogs": "加载审计日志失败",
+    "logsExported": "审计日志导出成功",
+    "auditLogDashboard": "审计日志仪表板",
+    "monitorActions": "监控应用程序中所有安全敏感操作",
+    "refresh": "刷新",
+    "exportCSV": "导出 CSV",
+    "timestamp": "时间戳",
+    "action": "操作",
+    "table": "表",
+    "userId": "用户 ID",
+    "recordId": "记录 ID",
+    "ipAddress": "IP 地址",
+    "loadingLogs": "正在加载审计日志...",
+    "noLogsFound": "未找到审计日志",
+    "showingLogs": "显示 {{filtered}} / {{total}} 条审计日志",
+    "searchPlaceholder": "搜索日志...",
+    "filterByAction": "按操作筛选",
+    "filterByTable": "按表筛选",
+    "allActions": "所有操作",
+    "allTables": "所有表"
+  },
+  "dns": {
+    "addServer": "添加 DNS 服务器",
+    "entries": "条目"
+  },
+  "customDNS": {
+    "dnsSettings": "DNS 设置",
+    "adBlocking": "广告拦截",
+    "adMalwareBlocking": "广告和恶意软件拦截",
+    "blockingDescription": "在 DNS 级别拦截广告、跟踪器和恶意内容"
+  },
+  "dao": {
+    "fetchFailed": "获取提案失败",
+    "proposalCreated": "提案创建成功",
+    "proposalFailed": "创建提案失败",
+    "voteRecorded": "已记录投票，使用 {{power}} XX Coins",
+    "voteFailed": "记录投票失败"
   }
 }

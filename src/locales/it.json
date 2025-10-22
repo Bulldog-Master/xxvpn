@@ -409,5 +409,46 @@
     "disconnected": "Disconnesso",
     "connecting": "Connessione",
     "active": "Attivo"
+  },
+  "admin": {
+    "error": "Errore",
+    "failedToLoad": "Impossibile caricare i dati",
+    "failedToLoadLogs": "Impossibile caricare i log di audit",
+    "logsExported": "Log di audit esportati con successo",
+    "auditLogDashboard": "Dashboard Log di Audit",
+    "monitorActions": "Monitora tutte le azioni sensibili alla sicurezza nella tua applicazione",
+    "refresh": "Aggiorna",
+    "exportCSV": "Esporta CSV",
+    "timestamp": "Timestamp",
+    "action": "Azione",
+    "table": "Tabella",
+    "userId": "ID Utente",
+    "recordId": "ID Record",
+    "ipAddress": "Indirizzo IP",
+    "loadingLogs": "Caricamento log di audit...",
+    "noLogsFound": "Nessun log di audit trovato",
+    "showingLogs": "Mostrando {{filtered}} di {{total}} log di audit totali",
+    "searchPlaceholder": "Cerca nei log...",
+    "filterByAction": "Filtra per azione",
+    "filterByTable": "Filtra per tabella",
+    "allActions": "Tutte le Azioni",
+    "allTables": "Tutte le Tabelle"
+  },
+  "dns": {
+    "addServer": "Aggiungi Server DNS",
+    "entries": "voci"
+  },
+  "customDNS": {
+    "dnsSettings": "Impostazioni DNS",
+    "adBlocking": "Blocco Annunci",
+    "adMalwareBlocking": "Blocco Annunci e Malware",
+    "blockingDescription": "Blocca annunci, tracker e contenuti dannosi a livello DNS"
+  },
+  "dao": {
+    "fetchFailed": "Impossibile recuperare le proposte",
+    "proposalCreated": "Proposta creata con successo",
+    "proposalFailed": "Impossibile creare la proposta",
+    "voteRecorded": "Voto registrato con {{power}} XX Coins",
+    "voteFailed": "Impossibile registrare il voto"
   }
 }
