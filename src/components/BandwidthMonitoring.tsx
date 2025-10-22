@@ -174,7 +174,7 @@ export const BandwidthMonitoring: React.FC = () => {
 
     toast({
       title: t('bandwidth.complete'),
-      description: `${t('bandwidth.download')}: ${newResult.downloadSpeed.toFixed(1)} ${t('bandwidth.mbps')}, ${t('bandwidth.upload')}: ${newResult.uploadSpeed.toFixed(1)} ${t('bandwidth.mbps')}`
+      description: `${t('bandwidth.download')}: ${formatNumber(newResult.downloadSpeed, i18n.language, 1)} ${t('bandwidth.mbps')}, ${t('bandwidth.upload')}: ${formatNumber(newResult.uploadSpeed, i18n.language, 1)} ${t('bandwidth.mbps')}`
     });
   };
 
@@ -203,7 +203,7 @@ export const BandwidthMonitoring: React.FC = () => {
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    return formatNumber(bytes / Math.pow(k, i), i18n.language, 1) + ' ' + sizes[i];
   };
 
   return (

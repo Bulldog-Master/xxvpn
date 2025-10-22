@@ -22,6 +22,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 // Input validation schemas for DAO proposals
 const proposalSchema = z.object({
@@ -37,7 +38,7 @@ const proposalSchema = z.object({
 });
 
 export const DAOGovernance = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { proposals, loading, createProposal, vote } = useDAO();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [newProposal, setNewProposal] = useState({
@@ -227,7 +228,7 @@ export const DAOGovernance = () => {
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">{t('dao.voting.quorumProgress')}</span>
                     <span className="font-medium">
-                      {Math.min(100, progress).toFixed(1)}%
+                      {formatNumber(Math.min(100, progress), i18n.language, 1)}%
                     </span>
                   </div>
                   <Progress value={Math.min(100, progress)} className="h-2" />

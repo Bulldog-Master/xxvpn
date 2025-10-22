@@ -7,6 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Users, Search, Shield, Ban, CheckCircle, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface UserData {
   user_id: string;
@@ -19,6 +21,7 @@ interface UserData {
 
 export const UserManagement = () => {
   const { toast } = useToast();
+  const { i18n } = useTranslation();
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -131,7 +134,7 @@ export const UserManagement = () => {
                         </div>
                       </TableCell>
                       <TableCell>{getTierBadge(user.subscription_tier)}</TableCell>
-                      <TableCell>{user.xx_coin_balance.toFixed(2)}</TableCell>
+                      <TableCell>{formatNumber(user.xx_coin_balance, i18n.language, 2)}</TableCell>
                       <TableCell>
                         {user.totp_enabled ? (
                           <CheckCircle className="w-4 h-4 text-green-500" />

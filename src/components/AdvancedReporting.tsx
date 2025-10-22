@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
-import { toArabicNumerals } from '@/utils/numberFormat';
+import { formatNumber } from '@/utils/numberFormat';
 import {
   Download,
   Calendar as CalendarIcon,
@@ -141,8 +141,8 @@ export const AdvancedReporting = () => {
         Server: session.server_name,
         Location: session.server_location,
         Duration: session.duration_seconds ? `${Math.floor(session.duration_seconds / 60)} min` : 'N/A',
-        'Data Sent': session.bytes_sent ? `${(session.bytes_sent / 1024 / 1024).toFixed(2)} MB` : '0 MB',
-        'Data Received': session.bytes_received ? `${(session.bytes_received / 1024 / 1024).toFixed(2)} MB` : '0 MB',
+        'Data Sent': session.bytes_sent ? `${formatNumber(session.bytes_sent / 1024 / 1024, i18n.language, 2)} MB` : '0 MB',
+        'Data Received': session.bytes_received ? `${formatNumber(session.bytes_received / 1024 / 1024, i18n.language, 2)} MB` : '0 MB',
         Status: session.status,
       }));
 
@@ -323,13 +323,7 @@ export const AdvancedReporting = () => {
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {(() => {
-                          const fromFormatted = format(dateRange.from, 'MMM dd', { locale: getDateLocale() });
-                          const toFormatted = format(dateRange.to, 'MMM dd, yyyy', { locale: getDateLocale() });
-                          return i18n.language === 'ar' 
-                            ? `${toArabicNumerals(fromFormatted)} - ${toArabicNumerals(toFormatted)}`
-                            : `${fromFormatted} - ${toFormatted}`;
-                        })()}
+                        {format(dateRange.from, 'MMM dd', { locale: getDateLocale() })} - {format(dateRange.to, 'MMM dd, yyyy', { locale: getDateLocale() })}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">

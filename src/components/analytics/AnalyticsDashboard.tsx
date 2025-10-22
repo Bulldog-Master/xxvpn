@@ -136,9 +136,9 @@ export const AnalyticsDashboard = () => {
         // Format bandwidth data for charts
         const bandwidthArray: BandwidthData[] = Array.from(bandwidthMap.entries()).map(([date, data]) => ({
           date,
-          download: Number(data.download.toFixed(2)),
-          upload: Number(data.upload.toFixed(2)),
-          total: Number((data.download + data.upload).toFixed(2)),
+          download: Number(formatNumber(data.download, 'en', 2)),
+          upload: Number(formatNumber(data.upload, 'en', 2)),
+          total: Number(formatNumber(data.download + data.upload, 'en', 2)),
         }));
 
         // Format connection data
@@ -146,7 +146,7 @@ export const AnalyticsDashboard = () => {
           .map(([server, data]) => ({
             server,
             duration: Math.round(data.duration / 60), // Convert to minutes
-            bandwidth: Number(data.bandwidth.toFixed(2)),
+            bandwidth: Number(formatNumber(data.bandwidth, 'en', 2)),
             quality: data.bandwidth / data.count > 1 ? 'Excellent' : data.bandwidth / data.count > 0.5 ? 'Good' : 'Fair',
           }))
           .sort((a, b) => b.duration - a.duration)
@@ -156,10 +156,10 @@ export const AnalyticsDashboard = () => {
         setConnectionData(connectionArray);
         
         setStats({
-          totalDownload: Number(totalDown.toFixed(2)),
-          totalUpload: Number(totalUp.toFixed(2)),
+          totalDownload: Number(formatNumber(totalDown, 'en', 2)),
+          totalUpload: Number(formatNumber(totalUp, 'en', 2)),
           totalDuration: Math.round(totalDur / 60), // Minutes
-          avgSpeed: sessions.length > 0 ? Number(((totalDown + totalUp) / sessions.length).toFixed(2)) : 0,
+          avgSpeed: sessions.length > 0 ? Number(formatNumber((totalDown + totalUp) / sessions.length, 'en', 2)) : 0,
           sessionsCount: sessions.length,
         });
       } else {

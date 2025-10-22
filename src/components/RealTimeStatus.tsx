@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useVPNSession } from '@/hooks/useVPNSession';
 import { useTranslation } from 'react-i18next';
+import { formatNumber } from '@/utils/numberFormat';
 
 interface ActiveSession {
   id: string;
@@ -20,7 +21,7 @@ interface ActiveSession {
 }
 
 export const RealTimeStatus: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeSession, setActiveSession] = useState<ActiveSession | null>(null);
   const [connectionTime, setConnectionTime] = useState<string>('00:00:00');
   const { user } = useAuth();
@@ -122,7 +123,7 @@ export const RealTimeStatus: React.FC = () => {
   const formatBytes = (bytes: number) => {
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
+    return `${formatNumber(bytes / Math.pow(1024, i), i18n.language, 1)} ${sizes[i]}`;
   };
 
   const getQualityColor = (quality: string | null) => {
