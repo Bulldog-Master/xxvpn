@@ -92,8 +92,13 @@
     },
     "subscriptionTier": {
       "free": "مجاني",
+      "personal": "شخصي",
+      "personal-pro": "شخصي برو",
+      "personal-premium": "شخصي بريميوم",
+      "business": "أعمال",
+      "business-plus": "أعمال+",
       "premium": "متميز", 
-      "enterprise": "المؤسسات"
+      "enterprise": "مؤسسات"
     }
   },
   "auth": {

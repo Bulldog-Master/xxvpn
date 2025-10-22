@@ -85,6 +85,11 @@
     },
     "subscriptionTier": {
       "free": "Gratis",
+      "personal": "Personlig",
+      "personal-pro": "Personlig Pro",
+      "personal-premium": "Personlig Premium",
+      "business": "Erhverv",
+      "business-plus": "Erhverv Plus",
       "premium": "Premium", 
       "enterprise": "Virksomhed"
     }

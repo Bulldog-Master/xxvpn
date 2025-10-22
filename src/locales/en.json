@@ -2,6 +2,8 @@
   "dashboard": {
     "title": "xxVPN Dashboard",
     "welcomeBack": "Welcome back",
+    "defaultUserName": "User",
+    "auto": "Auto",
     "status": {
       "connected": "Connected",
       "connecting": "Connecting...",
@@ -28,13 +30,39 @@
       "devices": "Devices",
       "payments": "Payments",
       "governance": "Governance",
-      "settings": "Settings"
+      "settings": "Settings",
+      "xxcoin": "XX Coin"
     },
     "connectionStatus": {
       "ultraFastActive": "Ultra-fast Mode: Direct connection",
       "secureActive": "Secure Mode: Encrypted tunnel active",
       "ultraSecureActive": "Ultra Secure Mode: Metadata-shredding active",
       "notProtected": "Your traffic is not protected"
+    },
+    "referrals": {
+      "referrals": "referrals",
+      "users": "users",
+      "program": "Referral Program",
+      "yourReferrals": "Your Referrals",
+      "totalUsers": "Total Users",
+      "yourLink": "Your Referral Link",
+      "shareMessage": "Share this link with friends to earn rewards"
+    },
+    "menu": {
+      "editName": "Edit Name",
+      "customerSupport": "Customer Support",
+      "devices": "Manage Devices",
+      "payments": "Payments & Billing",
+      "logout": "Logout"
+    },
+    "subscriptionTier": {
+      "free": "Free",
+      "personal": "Personal",
+      "personal-pro": "Personal Pro",
+      "personal-premium": "Personal Premium",
+      "business": "Business",
+      "business-plus": "Business Plus",
+      "enterprise": "Enterprise"
     }
   },
   "bandwidth": {
@@ -545,6 +573,7 @@
     "required": "Subscription Required",
     "requiredDesc": "Please upgrade your plan to access VPN features",
     "signInRequired": "Please sign in to use VPN features",
+    "signInToContinue": "Sign In to Continue",
     "loadingStatus": "Loading subscription status...",
     "noActive": "No Active Subscription",
     "noActiveDesc": "Upgrade to access premium VPN features",
@@ -559,6 +588,17 @@
     "trialEndingSoon": "Your trial is ending soon. Subscribe now to continue using premium features.",
     "subscribeNow": "Subscribe Now",
     "manageSubscription": "Manage Subscription",
+    "ultraFastMode": "Ultra-Fast Mode",
+    "secureMode": "Secure Mode",
+    "ultraSecureMode": "Ultra-Secure Mode",
+    "vpnMode": "VPN Mode",
+    "requiresTier": "Requires {{tier}} tier or higher",
+    "currentPlan": "Current Plan",
+    "freeTrialOffer": "Start with a 7-day free trial",
+    "upgradePlan": "Upgrade Plan",
+    "trialActive": "Trial Active",
+    "subscribed": "Subscribed",
+    "trialEnds": "Trial ends",
     "tiers": {
       "personal": "Personal",
       "personalPro": "Personal Pro",

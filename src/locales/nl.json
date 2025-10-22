@@ -22,15 +22,47 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "defaultUserName": "Gebruiker",
+    "auto": "Automatisch",
+    "welcomeBack": "Welkom terug",
     "tabs": {
       "main": "Hoofdmenu",
       "servers": "Servers",
       "analytics": "Analyses",
+      "reports": "Rapporten",
       "network": "Netwerk",
       "apps": "Apps",
+      "automation": "Automatisering",
       "devices": "Apparaten",
       "payments": "Betalingen",
-      "settings": "Instellingen"
+      "governance": "Bestuur",
+      "settings": "Instellingen",
+      "xxcoin": "XX Coin"
+    },
+    "referrals": {
+      "referrals": "verwijzingen",
+      "users": "gebruikers",
+      "program": "Verwijzingsprogramma",
+      "yourReferrals": "Jouw Verwijzingen",
+      "totalUsers": "Totaal Gebruikers",
+      "yourLink": "Jouw Verwijzingslink",
+      "shareMessage": "Deel deze link met vrienden om beloningen te verdienen"
+    },
+    "menu": {
+      "editName": "Naam Bewerken",
+      "customerSupport": "Klantenondersteuning",
+      "devices": "Apparaten Beheren",
+      "payments": "Betalingen & Facturering",
+      "logout": "Uitloggen"
+    },
+    "subscriptionTier": {
+      "free": "Gratis",
+      "personal": "Persoonlijk",
+      "personal-pro": "Persoonlijk Pro",
+      "personal-premium": "Persoonlijk Premium",
+      "business": "Zakelijk",
+      "business-plus": "Zakelijk Plus",
+      "enterprise": "Enterprise"
     }
   },
   "vpn": {

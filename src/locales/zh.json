@@ -83,6 +83,11 @@
     },
     "subscriptionTier": {
       "free": "免费",
+      "personal": "个人",
+      "personal-pro": "个人专业版",
+      "personal-premium": "个人高级版",
+      "business": "商业",
+      "business-plus": "商业增强版",
       "premium": "高级版", 
       "enterprise": "企业版"
     }

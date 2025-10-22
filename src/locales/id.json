@@ -22,15 +22,47 @@
   },
   "dashboard": {
     "title": "Dasbor",
+    "defaultUserName": "Pengguna",
+    "auto": "Otomatis",
+    "welcomeBack": "Selamat datang kembali",
     "tabs": {
       "main": "Utama",
       "servers": "Server",
       "analytics": "Analitik",
+      "reports": "Laporan",
       "network": "Jaringan",
       "apps": "Aplikasi",
+      "automation": "Otomasi",
       "devices": "Perangkat",
       "payments": "Pembayaran",
-      "settings": "Pengaturan"
+      "governance": "Tata Kelola",
+      "settings": "Pengaturan",
+      "xxcoin": "XX Coin"
+    },
+    "referrals": {
+      "referrals": "rujukan",
+      "users": "pengguna",
+      "program": "Program Rujukan",
+      "yourReferrals": "Rujukan Anda",
+      "totalUsers": "Total Pengguna",
+      "yourLink": "Tautan Rujukan Anda",
+      "shareMessage": "Bagikan tautan ini dengan teman untuk mendapatkan hadiah"
+    },
+    "menu": {
+      "editName": "Edit Nama",
+      "customerSupport": "Dukungan Pelanggan",
+      "devices": "Kelola Perangkat",
+      "payments": "Pembayaran & Tagihan",
+      "logout": "Keluar"
+    },
+    "subscriptionTier": {
+      "free": "Gratis",
+      "personal": "Personal",
+      "personal-pro": "Personal Pro",
+      "personal-premium": "Personal Premium",
+      "business": "Bisnis",
+      "business-plus": "Bisnis Plus",
+      "enterprise": "Enterprise"
     }
   },
   "vpn": {

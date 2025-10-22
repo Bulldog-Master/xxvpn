@@ -85,6 +85,11 @@
     },
     "subscriptionTier": {
       "free": "무료",
+      "personal": "개인",
+      "personal-pro": "개인 프로",
+      "personal-premium": "개인 프리미엄",
+      "business": "비즈니스",
+      "business-plus": "비즈니스 플러스",
       "premium": "프리미엄", 
       "enterprise": "기업"
     }

@@ -85,6 +85,11 @@
     },
     "subscriptionTier": {
       "free": "Gratuito",
+      "personal": "Personal",
+      "personal-pro": "Personal Pro",
+      "personal-premium": "Personal Premium",
+      "business": "Negocios",
+      "business-plus": "Negocios Plus",
       "premium": "Premium", 
       "enterprise": "Empresarial"
     }

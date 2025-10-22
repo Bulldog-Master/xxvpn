@@ -85,6 +85,11 @@
     },
     "subscriptionTier": {
       "free": "मुफ्त",
+      "personal": "व्यक्तिगत",
+      "personal-pro": "व्यक्तिगत प्रो",
+      "personal-premium": "व्यक्तिगत प्रीमियम",
+      "business": "व्यवसाय",
+      "business-plus": "व्यवसाय प्लस",
       "premium": "प्रीमियम", 
       "enterprise": "एंटरप्राइज"
     }

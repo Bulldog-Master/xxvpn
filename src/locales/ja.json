@@ -85,6 +85,11 @@
     },
     "subscriptionTier": {
       "free": "無料",
+      "personal": "パーソナル",
+      "personal-pro": "パーソナルプロ",
+      "personal-premium": "パーソナルプレミアム",
+      "business": "ビジネス",
+      "business-plus": "ビジネスプラス",
       "premium": "プレミアム", 
       "enterprise": "エンタープライズ"
     }
