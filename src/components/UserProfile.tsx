@@ -149,7 +149,7 @@ const UserProfile = () => {
       <Tabs defaultValue="account" className="space-y-4">
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="account">{t('profile.tabs.account')}</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
+          <TabsTrigger value="security">{t('profile.security')}</TabsTrigger>
           <TabsTrigger value="subscription">{t('profile.tabs.subscription')}</TabsTrigger>
           <TabsTrigger value="rewards">{t('profile.tabs.rewards')}</TabsTrigger>
           <TabsTrigger value="downloads">{t('profile.tabs.downloads')}</TabsTrigger>
@@ -158,17 +158,17 @@ const UserProfile = () => {
         <TabsContent value="account" className="space-y-4">
           <Card className="bg-card/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Account Settings</CardTitle>
-              <CardDescription>Manage your account preferences</CardDescription>
+              <CardTitle>{t('profile.accountSettings')}</CardTitle>
+              <CardDescription>{t('profile.managePreferences')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t('profile.email')}</Label>
                   <Input id="email" value={user?.email} disabled />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="fullname">Full Name</Label>
+                  <Label htmlFor="fullname">{t('profile.fullName')}</Label>
                   <Input 
                     id="fullname" 
                     value={fullName}
@@ -224,7 +224,7 @@ const UserProfile = () => {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-medium">Security</h4>
+                <h4 className="font-medium">{t('profile.security')}</h4>
                 <div className="space-y-4">
                   <TwoFactorSetup 
                     isEnabled={twoFactorEnabled}
@@ -349,10 +349,10 @@ const UserProfile = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Download className="w-5 h-5" />
-                Download xxVPN
+                {t('profile.download')} xxVPN
               </CardTitle>
               <CardDescription>
-                Get xxVPN on all your devices
+                {t('profile.getOnDevices')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -378,7 +378,7 @@ const UserProfile = () => {
                       variant={item.status === 'Available' ? 'default' : 'outline'}
                       disabled={item.status !== 'Available'}
                     >
-                      {item.status === 'Available' ? 'Download' : item.status}
+                      {item.status === 'Available' ? t('profile.download') : t(`profile.${item.status.toLowerCase().replace(' ', '')}`)}
                     </Button>
                   </div>
                 ))}

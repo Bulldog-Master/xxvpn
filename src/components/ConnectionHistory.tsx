@@ -71,13 +71,13 @@ export const ConnectionHistory: React.FC = () => {
   }, [user]);
 
   const formatDuration = (seconds: number | null) => {
-    if (!seconds) return 'N/A';
+    if (!seconds) return t('common.notAvailable');
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     if (hours > 0) {
-      return `${hours}${t('timeUnits.h')} ${minutes}${t('timeUnits.m')}`;
+      return `${formatNumber(hours, i18n.language)}${t('timeUnits.h')} ${formatNumber(minutes, i18n.language)}${t('timeUnits.m')}`;
     }
-    return `${minutes}${t('timeUnits.m')}`;
+    return `${formatNumber(minutes, i18n.language)}${t('timeUnits.m')}`;
   };
 
   const formatBytes = (bytes: number | null) => {

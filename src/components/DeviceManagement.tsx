@@ -85,7 +85,7 @@ const DeviceManagement = () => {
         console.error('Error loading devices:', error);
         toast({
           title: t('devices.error'),
-          description: 'Failed to load devices',
+          description: t('devices.loadFailed'),
           variant: "destructive"
         });
       } finally {
@@ -100,7 +100,7 @@ const DeviceManagement = () => {
     if (!user) {
       toast({
         title: t('devices.error'),
-        description: 'Please sign in to add devices',
+        description: t('devices.signInToAdd'),
         variant: "destructive"
       });
       return;
@@ -166,7 +166,7 @@ const DeviceManagement = () => {
       console.error('Error adding device:', error);
       toast({
         title: t('devices.error'),
-        description: 'Failed to add device',
+        description: t('devices.addFailed'),
         variant: "destructive"
       });
     }
@@ -191,7 +191,7 @@ const DeviceManagement = () => {
       console.error('Error removing device:', error);
       toast({
         title: t('devices.error'),
-        description: 'Failed to remove device',
+        description: t('devices.removeFailed'),
         variant: "destructive"
       });
     }
@@ -214,7 +214,7 @@ const DeviceManagement = () => {
         <CardContent className="flex items-center gap-3 p-6">
           <AlertTriangle className="w-5 h-5 text-warning" />
           <p className="text-muted-foreground">
-            Please sign in to manage your devices.
+            {t('devices.signInRequired')}
           </p>
         </CardContent>
       </Card>

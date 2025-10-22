@@ -150,5 +150,175 @@
   },
   "realTimeStatus": {
     "title": "Real-time Status"
+  },
+  "network": {
+    "health": "Network Health",
+    "nodesOperational": "Nodes Operational",
+    "throughput": "Throughput",
+    "protectionLevel": "Protection Level",
+    "quantum": "Quantum",
+    "encryptionActive": "Encryption Active",
+    "topology": "Network Topology",
+    "topologyDesc": "Real-time view of your connection path through the xx network",
+    "hop": "Hop",
+    "latency": "Latency",
+    "load": "Load",
+    "securityFeatures": "Active Security Features",
+    "securityFeaturesDesc": "Quantum-resistant protections currently active",
+    "status": {
+      "active": "Active",
+      "standby": "Standby",
+      "offline": "Offline"
+    },
+    "features": {
+      "metadataShredding": "Metadata shredding",
+      "quantumEncryption": "Quantum-resistant encryption",
+      "trafficMixing": "Traffic mixing",
+      "dpiBypass": "DPI bypass",
+      "precomputation": "cMix precomputation",
+      "realtimeMixing": "Real-time mixing"
+    },
+    "nodes": {
+      "gateway": "Gateway Node",
+      "mixNode1": "Mix Node 1",
+      "mixNode2": "Mix Node 2",
+      "mixNode3": "Mix Node 3",
+      "exitNode": "Exit Node"
+    }
+  },
+  "devices": {
+    "title": "Device Management",
+    "description": "Manage connected devices ({{used}}/{{total}})",
+    "addDevice": "Add Device",
+    "addNew": "Add New Device",
+    "addDescription": "Add a new device to your account (limit: {{limit}})",
+    "error": "Error",
+    "signInRequired": "Please sign in to manage your devices",
+    "signInToAdd": "Please sign in to add devices",
+    "loadFailed": "Failed to load devices",
+    "addFailed": "Failed to add device",
+    "removeFailed": "Failed to remove device",
+    "limitReached": "Device Limit Reached",
+    "approachingLimit": "Approaching Device Limit",
+    "removeToAdd": "Remove a device before adding a new one",
+    "slotsRemaining": "{{count}} slots remaining",
+    "noDevices": "No Devices Added",
+    "noDevicesDesc": "Add your first device to get started",
+    "lastSeen": "Last seen",
+    "form": {
+      "deviceName": "Device Name",
+      "deviceNamePlaceholder": "e.g., My Laptop",
+      "deviceType": "Device Type",
+      "operatingSystem": "Operating System",
+      "osPlaceholder": "e.g., Windows 11"
+    },
+    "types": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "router": "Router",
+      "tv": "TV",
+      "other": "Other"
+    },
+    "toast": {
+      "nameRequired": "Device Name Required",
+      "nameRequiredDesc": "Please enter a device name",
+      "limitReached": "Device Limit Reached",
+      "limitReachedDesc": "You've reached the maximum number of devices for your plan",
+      "added": "Device Added",
+      "addedDesc": "Your device has been added successfully",
+      "removed": "Device Removed",
+      "removedDesc": "{{deviceName}} has been removed"
+    }
+  },
+  "profile": {
+    "signedOut": "Signed Out",
+    "signedOutDesc": "You have been successfully signed out",
+    "signOutError": "Failed to sign out. Please try again.",
+    "updated": "Profile Updated",
+    "updatedDesc": "Your profile has been updated successfully",
+    "anonymousUser": "Anonymous User",
+    "signOut": "Sign Out",
+    "accountSettings": "Account Settings",
+    "managePreferences": "Manage your account preferences",
+    "email": "Email",
+    "fullName": "Full Name",
+    "security": "Security",
+    "getOnDevices": "Get xxVPN on all your devices",
+    "download": "Download",
+    "available": "Available",
+    "beta": "Beta",
+    "comingSoon": "Coming Soon",
+    "tabs": {
+      "account": "Account",
+      "subscription": "Subscription",
+      "rewards": "Rewards",
+      "downloads": "Downloads"
+    },
+    "subscription": {
+      "enterprise": "Enterprise",
+      "premium": "Premium",
+      "free": "Free",
+      "upgradeDescription": "Upgrade to unlock more features and benefits",
+      "upgradeToPremium": "Upgrade to Premium",
+      "premiumPlan": "Premium Plan",
+      "fullAccess": "Full access to all features"
+    }
+  },
+  "subscriptionInfo": {
+    "subscriptionPlan": "Subscription Plan",
+    "freePlan": "Free Plan",
+    "limitedFeatures": "Limited features for basic VPN usage",
+    "monthlyData": "{{amount}} GB monthly data",
+    "serverLocations": "{{count}} server locations",
+    "gamingModeOnly": "Gaming mode only",
+    "unlimitedData": "Unlimited data",
+    "allServerLocations": "All server locations",
+    "gamingPrivacyModes": "Gaming & Privacy modes",
+    "xxNetworkIntegration": "XX Network integration",
+    "crossPlatformSupport": "Cross-platform support",
+    "manageSubscription": "Manage Subscription"
+  },
+  "userPreferences": {
+    "preferences": "Preferences",
+    "defaultVpnMode": "Default VPN Mode",
+    "choosePreferredMode": "Choose your preferred connection mode",
+    "autoConnect": "Auto-connect on Startup",
+    "autoConnectDesc": "Automatically connect when the app starts",
+    "networkNotifications": "Network Notifications",
+    "networkNotificationsDesc": "Get notified about connection changes",
+    "modes": {
+      "ultraFast": "Ultra-fast",
+      "secure": "Secure",
+      "ultraSecure": "Ultra-secure",
+      "auto": "Auto"
+    }
+  },
+  "rewards": {
+    "xxCoinRewards": "XX Coin Rewards",
+    "earnByContributing": "Earn XX Coins by contributing to the network",
+    "currentBalance": "Current Balance",
+    "earningOpportunities": "Earning Opportunities",
+    "dailyConnection": "Daily Connection",
+    "dailyConnectionDesc": "Connect to the VPN daily",
+    "nodeContribution": "Node Contribution",
+    "nodeContributionDesc": "Run a network node",
+    "privacyModeUsage": "Privacy Mode Usage",
+    "privacyModeUsageDesc": "Use Ultra-secure mode",
+    "perDay": "/day",
+    "perSession": "/session"
+  },
+  "connectionHistory": {
+    "title": "Connection History",
+    "noHistory": "No connection history yet",
+    "sessionsAppear": "Your VPN sessions will appear here",
+    "duration": "Duration",
+    "quality": "Quality",
+    "started": "Started"
+  },
+  "timeUnits": {
+    "h": "h",
+    "m": "m",
+    "s": "s"
   }
 }
