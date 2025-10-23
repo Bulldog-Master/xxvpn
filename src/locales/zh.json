@@ -762,5 +762,8 @@
   "common": {
     "daoTokens": "DAO代币",
     "daysLeft": "剩余天数"
-  }
+  },
+  "serverLocations": {"New York": "纽约", "United States": "美国", "London": "伦敦", "United Kingdom": "英国", "Tokyo": "东京", "Japan": "日本", "Singapore": "新加坡", "Frankfurt": "法兰克福", "Germany": "德国", "Sydney": "悉尼", "Australia": "澳大利亚", "Toronto": "多伦多", "Canada": "加拿大", "Paris": "巴黎", "France": "法国", "Amsterdam": "阿姆斯特丹", "Netherlands": "荷兰", "Stockholm": "斯德哥尔摩", "Sweden": "瑞典", "Hong Kong": "香港", "São Paulo": "圣保罗", "Brazil": "巴西", "Cape Town": "开普敦", "South Africa": "南非", "Dubai": "迪拜", "United Arab Emirates": "阿联酋", "Mumbai": "孟买", "India": "印度", "Seoul": "首尔", "South Korea": "韩国", "Moscow": "莫斯科", "Russia": "俄罗斯", "Mexico City": "墨西哥城", "Mexico": "墨西哥"},
+  "reporting": {"title": "高级报告", "subtitle": "生成全面的报告和洞察", "exportReports": "导出报告", "scheduledReports": "定期报告", "customDashboards": "自定义仪表板", "exportData": "导出数据", "generateReports": "从您的VPN使用数据生成全面报告", "reportType": "报告类型", "dateRange": "日期范围", "bandwidthUsage": "带宽使用", "securityEvents": "安全事件", "connectionLogs": "连接日志", "performanceMetrics": "性能指标", "csvInfo": "导出为CSV", "pdfInfo": "导出为PDF", "jsonInfo": "导出为JSON", "exportReport": "导出报告", "scheduledReportsTitle": "自动报告", "scheduledReportsDesc": "配置自动报告生成和交付", "weeklyBandwidthReport": "每周带宽报告", "weekly": "每周", "monthly": "每月", "daily": "每天", "lastGenerated": "最后生成", "monthlySecuritySummary": "每月安全摘要", "scheduledReportsInfo": "管理定期报告", "customDashboardsTitle": "自定义仪表板", "customDashboardsDesc": "创建个性化分析视图", "customDashboardsInfo": "创建自定义仪表板", "bandwidthMonitor": "带宽监控", "trackBandwidth": "跟踪带宽使用趋势", "createDashboard": "创建仪表板", "securityOverview": "安全概览", "monitorSecurity": "监控安全事件", "trackPerformance": "跟踪连接性能", "usageAnalytics": "使用分析", "analyzeUsage": "分析使用模式"},
+  "regions": {"africa": "非洲", "asiapacific": "亚太地区", "europe": "欧洲", "middleeast": "中东", "northamerica": "北美", "southamerica": "南美"}
 }
